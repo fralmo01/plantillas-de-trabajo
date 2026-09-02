@@ -1,14 +1,10 @@
-# Catalogo de Plantillas Web (Showroom) — Astro
+# Catálogo de Plantillas Web (Showroom) — Astro
 
-Showroom de plantillas web. Dos niveles, misma regla en ambos: **cero
-conflicto de CSS/JS entre plantillas** y **ningun `index.html` que crezca
-sin control**.
+Showroom de plantillas web modernas y modulares. Dos niveles, misma regla en ambos: **cero conflicto de CSS/JS entre plantillas** y **ningún `index.html` que crezca sin control**.
 
-La diferencia con la version vainilla + Vite: **Astro compone todo en
-tiempo de compilacion**. El HTML que se sirve ya viene armado y plano —
-no hay `fetch` en el navegador para pegar las secciones, asi que no
-puede "romperse" por carga asincrona, y cada pagina de plantilla
-funciona incluso abierta con doble clic.
+![Catálogo de Plantillas](./assets/preview.png)
+
+La diferencia con la versión vainilla + Vite: **Astro compone todo en tiempo de compilación**. El HTML que se sirve ya viene armado y plano — no hay `fetch` en el navegador para pegar las secciones, así que no puede "romperse" por carga asíncrona, y cada página de plantilla funciona de forma ultra rápida y aislada.
 
 ---
 
