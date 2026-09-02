@@ -132,6 +132,5 @@ Falta solo dejar `public/previews/barberia-clasica.webp` (y opcional
 ## Notas
 
 - Requiere Node 18.20+ / 20.3+ / 22+.
-- El plan largo esta en `estructura-actualizada.md`.
 - `scripts/generar-previews.mjs` es un stub: automatizar capturas con
   Playwright queda como mejora futura.
