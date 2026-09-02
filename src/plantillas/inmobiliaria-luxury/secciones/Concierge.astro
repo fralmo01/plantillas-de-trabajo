@@ -1,0 +1,99 @@
+<section class="il-seccion il-wrap" id="concierge">
+  <div class="il-conc">
+    <div class="il-conc__texto">
+      <p class="il-eyebrow">Concierge</p>
+      <h2 class="il-titulo">Un asesor dedicado, de la visita a la entrega</h2>
+      <p class="il-sub">
+        Coordina un recorrido presencial o virtual, resuelve dudas legales y de financiamiento,
+        y recibe un cronograma de pagos a tu medida.
+      </p>
+      <ul class="il-conc__lista">
+        <li>Visitas guiadas de lunes a domingo</li>
+        <li>Asesoría hipotecaria con bancos aliados</li>
+        <li>Revisión de minuta y partida registral</li>
+      </ul>
+    </div>
+
+    <form class="il-conc__form" onsubmit="return false">
+      <label>Nombre<input type="text" name="nombre" autocomplete="name" required /></label>
+      <label>Correo<input type="email" name="correo" autocomplete="email" required /></label>
+      <label>Teléfono<input type="tel" name="tel" autocomplete="tel" /></label>
+      <label>
+        Proyecto de interés
+        <select name="proyecto">
+          <option>Mirador Malecón</option>
+          <option>Casona del Olivar</option>
+          <option>Terrazas de Barranco</option>
+          <option>Otro / aún no decido</option>
+        </select>
+      </label>
+      <label class="il-conc__msg">Mensaje<textarea name="msg" rows="3"></textarea></label>
+      <button type="submit" class="il-btn il-btn--navy">Agendar visita</button>
+    </form>
+  </div>
+</section>
+
+<style>
+  .il-conc {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: clamp(1.5rem, 4vw, 3.5rem);
+    background: var(--il-subtle);
+    border-radius: var(--il-radio-lg);
+    padding: clamp(1.75rem, 4vw, 3.25rem);
+  }
+
+  .il-conc__lista {
+    list-style: none;
+    display: grid;
+    gap: 0.55rem;
+    font-size: 0.85rem;
+  }
+
+  .il-conc__lista li::before {
+    content: "◆ ";
+    color: var(--il-blue);
+  }
+
+  .il-conc__form {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.9rem;
+  }
+
+  .il-conc__form label {
+    display: grid;
+    gap: 0.35rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--il-text-2);
+  }
+
+  .il-conc__form input,
+  .il-conc__form select,
+  .il-conc__form textarea {
+    border: 1px solid var(--il-border-med);
+    border-radius: 8px;
+    padding: 0.6rem 0.8rem;
+    background: var(--il-surface);
+    font: inherit;
+    resize: vertical;
+  }
+
+  .il-conc__msg,
+  .il-conc__form button {
+    grid-column: 1 / -1;
+  }
+
+  @media (max-width: 900px) {
+    .il-conc {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 520px) {
+    .il-conc__form {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

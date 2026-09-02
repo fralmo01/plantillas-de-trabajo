@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 400" role="img" aria-label="Preview no disponible">
+  <rect width="640" height="400" fill="#1c232d" />
+  <rect x="0.5" y="0.5" width="639" height="399" fill="none" stroke="#2a323d" />
+  <g fill="#5b6773" font-family="system-ui, sans-serif" text-anchor="middle">
+    <text x="320" y="196" font-size="26" font-weight="700">Sin vista previa</text>
+    <text x="320" y="228" font-size="14">Agrega el .webp / .webm en /public/previews/</text>
+  </g>
+</svg>

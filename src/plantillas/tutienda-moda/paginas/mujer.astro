@@ -1,0 +1,18 @@
+---
+import '@fontsource-variable/montserrat/wght.css';
+import MarcoTienda from '../componentes/MarcoTienda.astro';
+import ListadoCategoria from '../componentes/ListadoCategoria.astro';
+import { categorias } from '../datos/categorias.js';
+import { porCategoria } from '../datos/productos.js';
+
+export const titulo = 'Mujer | tu tienda.com';
+export const descripcion = 'Ropa de mujer: blusas, jeans, casacas y más.';
+
+const slug = 'mujer';
+const meta = categorias[slug];
+const lista = porCategoria(slug);
+---
+
+<MarcoTienda activo="Mujer">
+  <ListadoCategoria slug={slug} meta={meta} lista={lista} />
+</MarcoTienda>

@@ -1,0 +1,369 @@
+---
+const productos = [
+  {
+    id: "prod-1",
+    categoria: "zapatillas",
+    nombre: "Zapatillas Adizero EVO SL",
+    precio: "S/ 599",
+    linea: "Performance",
+    img: "https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?q=80&w=600&auto=format&fit=crop"
+  },
+  {
+    id: "prod-2",
+    categoria: "zapatillas",
+    nombre: "Zapatillas De Senderismo Terrex Freehiker SL Climacool",
+    precio: "S/ 399",
+    linea: "TERREX",
+    img: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?q=80&w=600&auto=format&fit=crop"
+  },
+  {
+    id: "prod-3",
+    categoria: "zapatillas",
+    nombre: "Zapatillas Bad Bunny F50 Ghost Sprint",
+    precio: "S/ 599",
+    linea: "Originals",
+    img: "https://images.unsplash.com/photo-1525966222134-fcfa99b8ae77?q=80&w=600&auto=format&fit=crop"
+  },
+  {
+    id: "prod-4",
+    categoria: "zapatillas",
+    nombre: "Zapatillas De Entrenamiento Adizero Dropset Pro",
+    precio: "S/ 529",
+    linea: "Performance",
+    img: "https://images.unsplash.com/photo-1584735935682-2f2b69dff9d2?q=80&w=600&auto=format&fit=crop"
+  },
+  {
+    id: "prod-5",
+    categoria: "chimpunes",
+    nombre: "Botines Predator Accuracy Elite FG",
+    precio: "S/ 649",
+    linea: "Performance",
+    img: "https://images.unsplash.com/photo-1511886929837-354d827aae26?q=80&w=600&auto=format&fit=crop"
+  },
+  {
+    id: "prod-6",
+    categoria: "casacas",
+    nombre: "Casaca Impermeable Terrex Multi Wind",
+    precio: "S/ 329",
+    linea: "TERREX",
+    img: "https://images.unsplash.com/photo-1556905055-8f358a7a47b2?q=80&w=600&auto=format&fit=crop"
+  }
+];
+---
+
+<section class="tt-seccion tt-productos-minimal" id="calzado">
+  <div class="tt-contenedor">
+    
+    <div class="tt-productos-minimal__cabecera">
+      <div class="tt-pildoras-filtro">
+        <button class="tt-btn-pildora tt-btn-pildora--activo" data-cat="zapatillas">Zapatillas</button>
+        <button class="tt-btn-pildora" data-cat="chimpunes">Chimpunes</button>
+        <button class="tt-btn-pildora" data-cat="casacas">Casacas</button>
+        <button class="tt-btn-pildora" data-cat="buzos">Buzos</button>
+        <button class="tt-btn-pildora" data-cat="polos">Polos</button>
+      </div>
+      <a href="#calzado" class="tt-link-ver-mas">Ver más</a>
+    </div>
+
+    
+    <div class="tt-productos-minimal__grid-wrap">
+      <div class="tt-productos-minimal__grid" id="grid-prod-min">
+        {productos.map((prod) => (
+          <article class="tt-min-card" data-categoria={prod.categoria}>
+            <div class="tt-min-card__img-box">
+              
+              <button class="tt-min-card__fav-btn" aria-label="Añadir a favoritos" data-fav-btn>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
+                  <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+                </svg>
+              </button>
+              
+              <img src={prod.img} alt={prod.nombre} loading="lazy" />
+            </div>
+
+            <div class="tt-min-card__info">
+              <span class="tt-min-card__precio">{prod.precio}</span>
+              <h3 class="tt-min-card__nombre">
+                <a href="#producto">{prod.nombre}</a>
+              </h3>
+              <span class="tt-min-card__linea">{prod.linea}</span>
+            </div>
+          </article>
+        ))}
+      </div>
+
+      
+      <button class="tt-btn-slider-next" aria-label="Ver siguientes productos">
+        →
+      </button>
+    </div>
+
+    
+    <div class="tt-scroll-tracker">
+      <button class="tt-scroll-flecha" aria-label="Anterior">◀</button>
+      <div class="tt-scroll-barra">
+        <div class="tt-scroll-barra__indicador"></div>
+      </div>
+      <button class="tt-scroll-flecha" aria-label="Siguiente">▶</button>
+    </div>
+
+    
+    <div class="tt-split-banners">
+      <div class="tt-split-banner-item">
+        <img 
+          src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?q=80&w=800&auto=format&fit=crop" 
+          alt="Colección Urbana" 
+          loading="lazy"
+        />
+      </div>
+      <div class="tt-split-banner-item">
+        <img 
+          src="https://images.unsplash.com/photo-1584735935682-2f2b69dff9d2?q=80&w=800&auto=format&fit=crop" 
+          alt="Colección Trail Running" 
+          loading="lazy"
+        />
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .tt-productos-minimal {
+    background: var(--tt-blanco);
+    border-bottom: 1px solid var(--tt-gris-borde);
+  }
+
+  .tt-productos-minimal__cabecera {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.2rem;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  
+  .tt-pildoras-filtro {
+    display: flex;
+    gap: 0.4rem;
+    flex-wrap: wrap;
+  }
+
+  .tt-btn-pildora {
+    background: var(--tt-blanco);
+    border: 1px solid var(--tt-gris-borde);
+    color: var(--tt-negro);
+    font-family: var(--tt-font-condensed);
+    font-size: 0.78rem;
+    font-weight: 800;
+    padding: 0.45rem 0.85rem;
+    cursor: pointer;
+    transition: all 0.15s ease;
+  }
+
+  .tt-btn-pildora--activo,
+  .tt-btn-pildora:hover {
+    background: var(--tt-negro);
+    color: var(--tt-blanco);
+    border-color: var(--tt-negro);
+  }
+
+  .tt-link-ver-mas {
+    font-family: var(--tt-font-condensed);
+    font-size: 0.82rem;
+    font-weight: 800;
+    color: var(--tt-negro);
+    text-decoration: underline;
+    text-underline-offset: 4px;
+  }
+
+  
+  .tt-productos-minimal__grid-wrap {
+    position: relative;
+  }
+
+  .tt-productos-minimal__grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0.8rem;
+  }
+
+  .tt-min-card {
+    border: 1px solid var(--tt-gris-borde);
+    background: var(--tt-blanco);
+    display: flex;
+    flex-direction: column;
+    padding: 0.8rem;
+    transition: border-color 0.2s ease;
+  }
+
+  .tt-min-card:hover {
+    border-color: var(--tt-negro);
+  }
+
+  .tt-min-card__img-box {
+    position: relative;
+    aspect-ratio: 1 / 1.05;
+    background: var(--tt-gris-tarjeta);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+    margin-bottom: 0.8rem;
+  }
+
+  .tt-min-card__img-box img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    mix-blend-mode: multiply;
+  }
+
+  .tt-min-card__fav-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    color: var(--tt-negro);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 4px;
+    z-index: 2;
+  }
+
+  .tt-min-card__fav-btn.favorito svg {
+    fill: var(--tt-rojo-promo);
+    stroke: var(--tt-rojo-promo);
+  }
+
+  .tt-min-card__info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  .tt-min-card__precio {
+    font-family: var(--tt-font-condensed);
+    font-size: 0.95rem;
+    font-weight: 900;
+    color: var(--tt-negro);
+  }
+
+  .tt-min-card__nombre {
+    font-size: 0.82rem;
+    font-weight: 600;
+    line-height: 1.25;
+    margin-top: 2px;
+  }
+
+  .tt-min-card__nombre a {
+    color: var(--tt-negro);
+    text-decoration: none;
+  }
+
+  .tt-min-card__nombre a:hover {
+    text-decoration: underline;
+  }
+
+  .tt-min-card__linea {
+    font-size: 0.72rem;
+    color: var(--tt-gris-texto);
+    margin-top: 2px;
+  }
+
+  
+  .tt-btn-slider-next {
+    position: absolute;
+    right: -15px;
+    top: 38%;
+    background: var(--tt-blanco);
+    border: 1px solid var(--tt-negro);
+    width: 44px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    font-weight: 800;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+    z-index: 10;
+    transition: all 0.15s ease;
+  }
+
+  .tt-btn-slider-next:hover {
+    background: var(--tt-negro);
+    color: var(--tt-blanco);
+  }
+
+  
+  .tt-split-banners {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin-top: 3rem;
+  }
+
+  .tt-split-banner-item {
+    height: 380px;
+    background: var(--tt-gris-tarjeta);
+    overflow: hidden;
+  }
+
+  .tt-split-banner-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  @media (max-width: 960px) {
+    .tt-productos-minimal__grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    .tt-btn-slider-next {
+      display: none;
+    }
+  }
+
+  @media (max-width: 600px) {
+    .tt-productos-minimal__grid {
+      grid-template-columns: 1fr;
+    }
+    .tt-split-banners {
+      grid-template-columns: 1fr;
+      height: auto;
+    }
+  }
+</style>
+
+<script>
+  
+  document.querySelectorAll('[data-fav-btn]').forEach((el) => {
+    const btn = el as HTMLElement;
+    btn.addEventListener('click', () => {
+      btn.classList.toggle('favorito');
+    });
+  });
+
+  
+  const pildoras = document.querySelectorAll('.tt-btn-pildora');
+  const cards = document.querySelectorAll('.tt-min-card');
+  pildoras.forEach((p) => {
+    p.addEventListener('click', () => {
+      pildoras.forEach((btn) => btn.classList.remove('tt-btn-pildora--activo'));
+      p.classList.add('tt-btn-pildora--activo');
+      const cat = p.getAttribute('data-cat');
+      cards.forEach((c) => {
+        const itemCat = c.getAttribute('data-categoria');
+        if (cat === 'zapatillas' || itemCat === cat) {
+          (c as HTMLElement).style.display = 'flex';
+        } else {
+          (c as HTMLElement).style.display = 'none';
+        }
+      });
+    });
+  });
+</script>

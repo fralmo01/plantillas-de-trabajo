@@ -1,0 +1,216 @@
+---
+import { restaurantes } from '../datos/restaurantes.js';
+const spot = restaurantes[0];
+---
+
+<section class="rg-hero" id="inicio">
+  <div class="rg-hero__fx" aria-hidden="true"></div>
+  <div class="rg-wrap rg-hero__grid">
+    <div class="rg-hero__content">
+      <p class="rg-hero__eyebrow">
+        <svg class="rg-ico rg-ico--sm" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+          <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+        </svg>
+        <span>Capital gastronómica de América</span>
+      </p>
+      <h1 class="rg-hero__title">
+        Reserva en los <em>templos culinarios</em> del Perú
+      </h1>
+      <p class="rg-hero__lead">
+        Acceso exclusivo y confirmación inmediata en los restaurantes más aclamados de Lima,
+        Cusco y Arequipa: menús degustación, barras omakase nikkei y alta cocina de autor.
+      </p>
+      <div class="rg-hero__actions">
+        <a href="#descubrir" class="rg-btn rg-btn--gold rg-btn--lg">
+          Explorar mesas disponibles
+          <svg class="rg-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12" /><polyline points="12 5 19 12 12 19" /></svg>
+        </a>
+        <a href="#rutas" class="rg-btn rg-btn--ghost rg-btn--lg">Ver mapa de distritos</a>
+      </div>
+
+      <div class="rg-hero__stats">
+        <div><b>#1 Mundial</b><span>The World’s 50 Best</span></div>
+        <div><b>100% Perú</b><span>Insumos de origen</span></div>
+        <div><b>En vivo</b><span>Reservas en tiempo real</span></div>
+      </div>
+    </div>
+
+    <article class="rg-spot">
+      <div class="rg-spot__media">
+        <img src={spot.img} alt={spot.nombre} loading="eager" />
+        <span class="rg-spot__badge">⭐ {spot.reconocimiento}</span>
+      </div>
+      <div class="rg-spot__body">
+        <h3>{spot.nombre}</h3>
+        <p class="rg-spot__meta">
+          {spot.distrito}, Lima &middot; {spot.cocina} &middot;
+          <strong>S/ 480</strong>
+        </p>
+        <p class="rg-spot__desc">{spot.descripcion}</p>
+        <div class="rg-spot__footer">
+          <span>Disponibilidad hoy: {spot.horarios[0]} &middot; {spot.horarios[1]}</span>
+          <a href="#descubrir" class="rg-btn rg-btn--gold-outline rg-btn--sm">Reservar mesa</a>
+        </div>
+      </div>
+    </article>
+  </div>
+</section>
+
+<style>
+  .rg-hero {
+    position: relative;
+    overflow: hidden;
+    border-bottom: 1px solid var(--rg-border-subtle);
+  }
+
+  .rg-hero__fx {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(60% 60% at 80% 0%, rgba(234, 179, 8, 0.14), transparent 70%),
+      radial-gradient(50% 50% at 0% 100%, rgba(234, 179, 8, 0.08), transparent 70%);
+    pointer-events: none;
+  }
+
+  .rg-hero__grid {
+    position: relative;
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: clamp(2rem, 5vw, 4rem);
+    align-items: center;
+    padding-block: clamp(3rem, 8vw, 6rem);
+  }
+
+  .rg-hero__eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--rg-gold-300);
+    font-size: 0.78rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 1rem;
+  }
+
+  .rg-hero__title {
+    font-family: var(--rg-font-serif);
+    font-weight: 700;
+    font-size: clamp(2.2rem, 6vw, 3.8rem);
+    line-height: 1.1;
+  }
+
+  .rg-hero__title em {
+    color: var(--rg-gold-400);
+    font-style: italic;
+  }
+
+  .rg-hero__lead {
+    color: var(--rg-text-secondary);
+    font-size: clamp(0.95rem, 1.6vw, 1.1rem);
+    max-width: 52ch;
+    margin: 1.25rem 0 1.75rem;
+  }
+
+  .rg-hero__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  .rg-hero__stats {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+    margin-top: 2.5rem;
+  }
+
+  .rg-hero__stats b {
+    display: block;
+    font-family: var(--rg-font-display);
+    font-size: 1.25rem;
+    color: var(--rg-gold-400);
+  }
+
+  .rg-hero__stats span {
+    font-size: 0.78rem;
+    color: var(--rg-text-muted);
+  }
+
+  .rg-spot {
+    background: var(--rg-bg-card);
+    border: 1px solid var(--rg-border-medium);
+    border-radius: var(--rg-radius-xl);
+    overflow: hidden;
+    box-shadow: var(--rg-shadow-lg);
+  }
+
+  .rg-spot__media {
+    position: relative;
+    aspect-ratio: 16 / 10;
+  }
+
+  .rg-spot__media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .rg-spot__badge {
+    position: absolute;
+    top: 0.85rem;
+    left: 0.85rem;
+    background: rgba(7, 10, 17, 0.8);
+    color: var(--rg-gold-300);
+    font-size: 0.72rem;
+    font-weight: 700;
+    padding: 0.3rem 0.65rem;
+    border-radius: var(--rg-radius-full);
+  }
+
+  .rg-spot__body {
+    padding: 1.5rem;
+  }
+
+  .rg-spot__body h3 {
+    font-family: var(--rg-font-display);
+    font-size: 1.3rem;
+    font-weight: 800;
+  }
+
+  .rg-spot__meta {
+    font-size: 0.82rem;
+    color: var(--rg-text-muted);
+    margin: 0.4rem 0 0.9rem;
+  }
+
+  .rg-spot__meta strong {
+    color: var(--rg-gold-400);
+  }
+
+  .rg-spot__desc {
+    font-size: 0.85rem;
+    color: var(--rg-text-secondary);
+    margin-bottom: 1.25rem;
+  }
+
+  .rg-spot__footer {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+  }
+
+  .rg-spot__footer span {
+    font-size: 0.78rem;
+    color: var(--rg-gold-300);
+    font-weight: 600;
+  }
+
+  @media (max-width: 960px) {
+    .rg-hero__grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

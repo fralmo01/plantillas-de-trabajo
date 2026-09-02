@@ -1,0 +1,192 @@
+---
+const colecciones = [
+  {
+    titulo: "STREETWEAR & ORIGINALS",
+    descripcion: "El legado clásico llevado a la cultura urbana actual.",
+    cta: "VER COLECCIÓN",
+    enlace: "#calzado",
+    img: "https://images.unsplash.com/photo-1515955656352-a1fa3ffcd111?q=80&w=800&auto=format&fit=crop",
+    destacado: true
+  },
+  {
+    titulo: "RUNNING & SPEED BOOST",
+    descripcion: "Máxima respuesta energética en cada zancada.",
+    cta: "VER RUNNING",
+    enlace: "#deportes",
+    img: "https://images.unsplash.com/photo-1461896836934-ffe607ba8211?q=80&w=800&auto=format&fit=crop",
+    destacado: false
+  },
+  {
+    titulo: "ENTRENAMIENTO & GYM",
+    descripcion: "Ropa técnica transpirable para tus entrenamientos intensos.",
+    cta: "VER TRAINING",
+    enlace: "#hombre",
+    img: "https://images.unsplash.com/photo-1517838277536-f5f99be501cd?q=80&w=800&auto=format&fit=crop",
+    destacado: false
+  },
+  {
+    titulo: "FÚTBOL & CANCHAS",
+    descripcion: "Control total, precisión y tracción en pasto natural y sintético.",
+    cta: "VER FÚTBOL",
+    enlace: "#deportes",
+    img: "https://images.unsplash.com/photo-1579952363873-27f3bade9f55?q=80&w=800&auto=format&fit=crop",
+    destacado: false
+  }
+];
+---
+
+<section class="tt-seccion tt-colecciones" id="colecciones">
+  <div class="tt-contenedor">
+    <div class="tt-colecciones__cabecera">
+      <div>
+        <h2 class="tt-colecciones__titulo">COLECCIONES DESTACADAS</h2>
+        <p class="tt-colecciones__subtitulo">DESCUBRE LO MÁS BUSCADO POR ATLETAS Y CREADORES DE ESTILO</p>
+      </div>
+      <a href="#calzado" class="tt-subrayado-hover tt-colecciones__ver-todo">
+        VER TODO EL CATÁLOGO →
+      </a>
+    </div>
+
+    <div class="tt-colecciones__grid">
+      {colecciones.map((col) => (
+        <article class={`tt-col-card ${col.destacado ? 'tt-col-card--grande' : ''}`}>
+          <div class="tt-col-card__img-wrap">
+            <img src={col.img} alt={col.titulo} loading="lazy" />
+            <div class="tt-col-card__overlay"></div>
+          </div>
+          <div class="tt-col-card__info">
+            <h3 class="tt-col-card__titulo">{col.titulo}</h3>
+            <p class="tt-col-card__desc">{col.descripcion}</p>
+            <a href={col.enlace} class="tt-boton tt-boton--blanco tt-col-card__btn">
+              {col.cta} <span>→</span>
+            </a>
+          </div>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .tt-colecciones {
+    background: var(--tt-blanco);
+  }
+
+  .tt-colecciones__cabecera {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 2rem;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+  }
+
+  .tt-colecciones__titulo {
+    font-size: clamp(1.8rem, 3.5vw, 2.6rem);
+    color: var(--tt-negro);
+  }
+
+  .tt-colecciones__subtitulo {
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: var(--tt-gris-medio);
+    letter-spacing: 0.08em;
+    margin-top: 0.3rem;
+  }
+
+  .tt-colecciones__ver-todo {
+    font-family: var(--tt-font-display);
+    font-size: 0.85rem;
+    font-weight: 800;
+    color: var(--tt-negro);
+    letter-spacing: 0.05em;
+  }
+
+  .tt-colecciones__grid {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    gap: 1.5rem;
+  }
+
+  .tt-col-card {
+    position: relative;
+    grid-column: span 6;
+    min-height: 440px;
+    display: flex;
+    align-items: flex-end;
+    overflow: hidden;
+    background: var(--tt-negro);
+  }
+
+  .tt-col-card--grande {
+    grid-column: span 6;
+  }
+
+  .tt-col-card__img-wrap {
+    position: absolute;
+    inset: 0;
+  }
+
+  .tt-col-card__img-wrap img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .tt-col-card:hover .tt-col-card__img-wrap img {
+    transform: scale(1.06);
+  }
+
+  .tt-col-card__overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      180deg,
+      rgba(0, 0, 0, 0.1) 0%,
+      rgba(0, 0, 0, 0.4) 50%,
+      rgba(0, 0, 0, 0.85) 100%
+    );
+  }
+
+  .tt-col-card__info {
+    position: relative;
+    z-index: 2;
+    padding: clamp(1.5rem, 3vw, 2.5rem);
+    color: var(--tt-blanco);
+    max-width: 480px;
+  }
+
+  .tt-col-card__titulo {
+    font-size: clamp(1.4rem, 2.4vw, 2rem);
+    line-height: 1.05;
+    margin-bottom: 0.6rem;
+  }
+
+  .tt-col-card__desc {
+    font-size: 0.88rem;
+    color: rgba(255, 255, 255, 0.88);
+    margin-bottom: 1.2rem;
+    line-height: 1.4;
+  }
+
+  .tt-col-card__btn {
+    font-size: 0.8rem;
+    padding: 0.75rem 1.4rem;
+  }
+
+  .tt-col-card__btn span {
+    transition: transform 0.2s ease;
+  }
+
+  .tt-col-card__btn:hover span {
+    transform: translateX(4px);
+  }
+
+  @media (max-width: 800px) {
+    .tt-col-card {
+      grid-column: span 12;
+      min-height: 360px;
+    }
+  }
+</style>

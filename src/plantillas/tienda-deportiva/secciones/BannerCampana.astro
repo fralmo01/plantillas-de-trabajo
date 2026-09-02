@@ -1,0 +1,174 @@
+<section class="tt-banner-campana">
+  <div class="tt-contenedor tt-banner-campana__inner">
+    
+    <div class="tt-banner-campana__visual">
+      <img 
+        src="https://images.unsplash.com/photo-1579338559194-a162d19bf842?q=80&w=1000&auto=format&fit=crop" 
+        alt="Tecnología de amortiguación Boost tu tienda.com" 
+        loading="lazy"
+      />
+      <div class="tt-banner-campana__tag-tech">
+        <span>TECNOLOGÍA 2026</span>
+        <strong>ULTRA-RESPONSIVE FOAM</strong>
+      </div>
+    </div>
+
+    
+    <div class="tt-banner-campana__contenido">
+      <span class="tt-badge tt-badge--neon">INNOVACIÓN DEPORTIVA</span>
+      <h2 class="tt-banner-campana__titulo">
+        ENERGÍA INFINITA.<br />
+        CADA PASO CUENTA.
+      </h2>
+      <p class="tt-banner-campana__texto">
+        Nuestra nueva amortiguación fusiona microcápsulas de energía para devolverte el 95% del impulso en cada zancada. Diseñada para maratones, entrenamientos de alta intensidad y el asfalto de la ciudad.
+      </p>
+
+      
+      <div class="tt-banner-campana__specs">
+        <div class="tt-spec-item">
+          <span class="tt-spec-valor">-30%</span>
+          <span class="tt-spec-label">PESO MÁS LIVIANO</span>
+        </div>
+        <div class="tt-spec-item">
+          <span class="tt-spec-valor">+95%</span>
+          <span class="tt-spec-label">RETORNO ENERGÉTICO</span>
+        </div>
+        <div class="tt-spec-item">
+          <span class="tt-spec-valor">100%</span>
+          <span class="tt-spec-label">FIBRAS RECICLADAS</span>
+        </div>
+      </div>
+
+      <div class="tt-banner-campana__cta">
+        <a href="#calzado" class="tt-boton tt-boton--blanco">
+          DESCUBRE LA COLECCIÓN <span>→</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .tt-banner-campana {
+    background: var(--tt-negro);
+    color: var(--tt-blanco);
+    overflow: hidden;
+  }
+
+  .tt-banner-campana__inner {
+    display: grid;
+    grid-template-columns: 1.1fr 1fr;
+    align-items: center;
+    gap: clamp(2rem, 5vw, 4.5rem);
+    padding-block: clamp(3rem, 6vw, 5.5rem);
+  }
+
+  .tt-banner-campana__visual {
+    position: relative;
+    border: 1px solid var(--tt-gris-oscuro);
+  }
+
+  .tt-banner-campana__visual img {
+    width: 100%;
+    height: 100%;
+    max-height: 520px;
+    object-fit: cover;
+    display: block;
+    filter: contrast(1.1);
+  }
+
+  .tt-banner-campana__tag-tech {
+    position: absolute;
+    bottom: 1.5rem;
+    left: 1.5rem;
+    background: rgba(0, 0, 0, 0.85);
+    border: 1px solid var(--tt-amarillo-neon);
+    padding: 0.6rem 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .tt-banner-campana__tag-tech span {
+    font-size: 0.65rem;
+    font-weight: 800;
+    color: var(--tt-amarillo-neon);
+    letter-spacing: 0.12em;
+    font-family: var(--tt-font-display);
+  }
+
+  .tt-banner-campana__tag-tech strong {
+    font-size: 0.85rem;
+    font-family: var(--tt-font-display);
+    color: var(--tt-blanco);
+    letter-spacing: 0.05em;
+  }
+
+  .tt-banner-campana__contenido {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .tt-banner-campana__titulo {
+    font-size: clamp(2.2rem, 4vw, 3.4rem);
+    line-height: 0.98;
+    margin-block: 1rem 1.2rem;
+    color: var(--tt-blanco);
+  }
+
+  .tt-banner-campana__texto {
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: rgba(255, 255, 255, 0.82);
+    margin-bottom: 2rem;
+    max-width: 500px;
+  }
+
+  .tt-banner-campana__specs {
+    display: flex;
+    gap: 2rem;
+    margin-bottom: 2.2rem;
+    border-top: 1px solid var(--tt-gris-oscuro);
+    border-bottom: 1px solid var(--tt-gris-oscuro);
+    padding-block: 1.2rem;
+    width: 100%;
+  }
+
+  .tt-spec-item {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .tt-spec-valor {
+    font-family: var(--tt-font-display);
+    font-size: 1.8rem;
+    font-weight: 900;
+    color: var(--tt-amarillo-neon);
+    line-height: 1;
+  }
+
+  .tt-spec-label {
+    font-size: 0.7rem;
+    font-weight: 700;
+    color: var(--tt-gris-medio);
+    letter-spacing: 0.08em;
+    margin-top: 4px;
+  }
+
+  .tt-banner-campana__cta .tt-boton span {
+    transition: transform 0.2s ease;
+  }
+
+  .tt-banner-campana__cta .tt-boton:hover span {
+    transform: translateX(4px);
+  }
+
+  @media (max-width: 860px) {
+    .tt-banner-campana__inner {
+      grid-template-columns: 1fr;
+      padding-block: 3rem;
+    }
+  }
+</style>

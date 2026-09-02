@@ -1,0 +1,23 @@
+---
+const anio = new Date().getFullYear();
+---
+
+<footer class="b-pie">
+  <div class="b-contenedor b-pie__inner">
+    <span>Marca</span>
+    <span>&copy; {anio}</span>
+  </div>
+</footer>
+
+<style>
+  .b-pie {
+    background: var(--b-tinta);
+    color: #fff;
+  }
+  .b-pie__inner {
+    display: flex;
+    justify-content: space-between;
+    padding-block: 1.5rem;
+    font-size: 0.85rem;
+  }
+</style>

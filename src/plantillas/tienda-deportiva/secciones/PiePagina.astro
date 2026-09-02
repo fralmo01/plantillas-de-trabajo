@@ -1,0 +1,226 @@
+<footer class="tt-footer">
+  <div class="tt-contenedor">
+    
+    <div class="tt-footer__grid">
+      
+      <div class="tt-footer__col">
+        <h4 class="tt-footer__titulo">PRODUCTOS</h4>
+        <ul class="tt-footer__lista">
+          <li><a href="#calzado">Calzado Deportivo</a></li>
+          <li><a href="#calzado">Zapatillas Urbanas</a></li>
+          <li><a href="#hombre">Ropa para Hombre</a></li>
+          <li><a href="#mujer">Ropa para Mujer</a></li>
+          <li><a href="#ninos">Colección Niños</a></li>
+          <li><a href="#outlet" class="tt-footer__link-promo">Outlet Hasta 40% OFF</a></li>
+        </ul>
+      </div>
+
+      
+      <div class="tt-footer__col">
+        <h4 class="tt-footer__titulo">DEPORTES</h4>
+        <ul class="tt-footer__lista">
+          <li><a href="#deportes">Fútbol y Botines</a></li>
+          <li><a href="#deportes">Running y Maratón</a></li>
+          <li><a href="#deportes">Gimnasio y Training</a></li>
+          <li><a href="#deportes">Básquetbol</a></li>
+          <li><a href="#deportes">Tenis y Pádel</a></li>
+          <li><a href="#deportes">Outdoor y Trail</a></li>
+        </ul>
+      </div>
+
+      
+      <div class="tt-footer__col">
+        <h4 class="tt-footer__titulo">COLECCIONES</h4>
+        <ul class="tt-footer__lista">
+          <li><a href="#calzado">Samba Classic</a></li>
+          <li><a href="#calzado">Ultraboost Light</a></li>
+          <li><a href="#calzado">Gazelle Vintage</a></li>
+          <li><a href="#calzado">Forum 84 Low</a></li>
+          <li><a href="#calzado">Predator Elite</a></li>
+          <li><a href="#calzado">Adicolor Originals</a></li>
+        </ul>
+      </div>
+
+      
+      <div class="tt-footer__col">
+        <h4 class="tt-footer__titulo">ASISTENCIA</h4>
+        <ul class="tt-footer__lista">
+          <li><a href="#ayuda">Estado de mi Pedido</a></li>
+          <li><a href="#ayuda">Envíos y Entregas</a></li>
+          <li><a href="#ayuda">Cambios y Devoluciones</a></li>
+          <li><a href="#ayuda">Guía de Tallas Oficial</a></li>
+          <li><a href="#ayuda">Preguntas Frecuentes</a></li>
+          <li><a href="#ayuda">Libro de Reclamaciones</a></li>
+        </ul>
+      </div>
+
+      
+      <div class="tt-footer__col">
+        <h4 class="tt-footer__titulo">SOBRE TU TIENDA</h4>
+        <ul class="tt-footer__lista">
+          <li><a href="#nosotros">Nuestra Historia</a></li>
+          <li><a href="#sostenibilidad">Sostenibilidad</a></li>
+          <li><a href="#tiendas">Localizador de Tiendas</a></li>
+          <li><a href="#prensa">Noticias y Prensa</a></li>
+          <li><a href="#empleo">Trabaja con Nosotros</a></li>
+          <li><a href="#club">Beneficios Tu Tienda Club</a></li>
+        </ul>
+      </div>
+    </div>
+
+    
+    <div class="tt-footer__inferior">
+      
+      <div class="tt-footer__marca-copy">
+        <a href="#inicio" class="tt-footer__marca">tu tienda<span>.com</span></a>
+        <p class="tt-footer__copy">
+          © 2026 <strong>tu tienda.com</strong> Sports & Performance. Todos los derechos reservados.
+        </p>
+      </div>
+
+      
+      <div class="tt-footer__pagos">
+        <span class="tt-pago-pill">VISA</span>
+        <span class="tt-pago-pill">MASTERCARD</span>
+        <span class="tt-pago-pill">AMEX</span>
+        <span class="tt-pago-pill">APPLE PAY</span>
+        <span class="tt-pago-pill">PAYPAL</span>
+        <span class="tt-pago-pill">YAPE / PLIN</span>
+      </div>
+
+      
+      <div class="tt-footer__legales">
+        <a href="#privacidad">Privacidad</a>
+        <a href="#terminos">Términos</a>
+        <a href="#cookies">Cookies</a>
+        <a href="#seguridad">Seguridad</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .tt-footer {
+    background: var(--tt-gris-bg);
+    border-top: 2px solid var(--tt-negro);
+    padding-top: clamp(3rem, 6vw, 4.5rem);
+    padding-bottom: 2.5rem;
+    font-size: 0.85rem;
+  }
+
+  .tt-footer__grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 2rem;
+    padding-bottom: 3.5rem;
+    border-bottom: 1px solid var(--tt-gris-borde);
+  }
+
+  .tt-footer__titulo {
+    font-size: 0.9rem;
+    color: var(--tt-negro);
+    margin-bottom: 1.2rem;
+    letter-spacing: 0.05em;
+  }
+
+  .tt-footer__lista {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.65rem;
+  }
+
+  .tt-footer__lista a {
+    color: var(--tt-gris-medio);
+    text-decoration: none;
+    font-size: 0.82rem;
+    transition: color 0.15s ease;
+  }
+
+  .tt-footer__lista a:hover {
+    color: var(--tt-negro);
+    text-decoration: underline;
+  }
+
+  .tt-footer__link-promo {
+    color: var(--tt-rojo-promo) !important;
+    font-weight: 700;
+  }
+
+  .tt-footer__inferior {
+    padding-top: 2.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    align-items: center;
+    text-align: center;
+  }
+
+  .tt-footer__marca {
+    font-family: var(--tt-font-display);
+    font-size: 1.25rem;
+    font-weight: 900;
+    color: var(--tt-negro);
+    text-decoration: none;
+    text-transform: lowercase;
+  }
+
+  .tt-footer__marca span {
+    color: var(--tt-azul-accent);
+  }
+
+  .tt-footer__copy {
+    font-size: 0.75rem;
+    color: var(--tt-gris-medio);
+    margin-top: 0.3rem;
+  }
+
+  .tt-footer__pagos {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.5rem;
+  }
+
+  .tt-pago-pill {
+    background: var(--tt-blanco);
+    border: 1px solid var(--tt-gris-borde);
+    padding: 0.25rem 0.65rem;
+    font-family: var(--tt-font-display);
+    font-size: 0.65rem;
+    font-weight: 800;
+    color: var(--tt-negro);
+    letter-spacing: 0.04em;
+  }
+
+  .tt-footer__legales {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1.2rem;
+  }
+
+  .tt-footer__legales a {
+    color: var(--tt-gris-medio);
+    font-size: 0.72rem;
+    text-decoration: none;
+  }
+
+  .tt-footer__legales a:hover {
+    color: var(--tt-negro);
+    text-decoration: underline;
+  }
+
+  @media (max-width: 960px) {
+    .tt-footer__grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  @media (max-width: 640px) {
+    .tt-footer__grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.5rem;
+    }
+  }
+</style>

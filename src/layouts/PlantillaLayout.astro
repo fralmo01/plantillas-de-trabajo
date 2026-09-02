@@ -1,0 +1,49 @@
+---
+/**
+ * Cascaron minimo para la pagina completa de UNA plantilla.
+ *
+ * Deliberadamente NO importa ningun CSS del portal: cada plantilla
+ * trae su propio estilo (tokens + secciones con <style> scopeado por
+ * Astro), asi nada se filtra entre plantillas ni desde el catalogo.
+ *
+ * El HTML que sale de aca es plano y completo: Astro compone todas
+ * las secciones en build. No hay fetch en el navegador para armar
+ * la pagina, funciona hasta abierta con doble clic.
+ */
+interface Props {
+  titulo: string;
+  descripcion?: string;
+  lang?: string;
+}
+
+const { titulo, descripcion, lang = 'es' } = Astro.props;
+---
+
+<!doctype html>
+<html lang={lang}>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    {descripcion && <meta name="description" content={descripcion} />}
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <title>{titulo}</title>
+  </head>
+  <body>
+    <slot />
+  </body>
+</html>
+
+<style is:global>
+  /* Reset minimo del documento para las paginas de plantilla.
+     Va aqui (no en el CSS de cada plantilla) para que ese CSS pueda
+     quedar 100% namespaced y no filtrarse a ningun otro sitio. */
+  html,
+  body {
+    margin: 0;
+    padding: 0;
+  }
+
+  body {
+    background-color: #ffffff;
+  }
+</style>

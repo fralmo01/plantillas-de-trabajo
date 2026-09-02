@@ -1,0 +1,250 @@
+<header class="rg-hdr" id="top">
+  <div class="rg-hdr__inner rg-wrap">
+    <a class="rg-hdr__brand" href="#inicio" aria-label="Epicura — inicio">
+      <span class="rg-logo-symbol">E</span>
+      <span class="rg-logo-text">
+        <span class="rg-logo-title">EPICURA</span>
+        <span class="rg-logo-sub">Alta cocina · reservas</span>
+      </span>
+    </a>
+
+    <div class="rg-city">
+      <button class="rg-city__btn" id="rg-city-btn" aria-expanded="false" aria-haspopup="true">
+        <svg class="rg-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z" /><circle cx="12" cy="10" r="3" />
+        </svg>
+        <span>Lima, Perú</span>
+        <svg class="rg-ico rg-ico--sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m6 9 6 6 6-6" /></svg>
+      </button>
+      <div class="rg-city__menu" id="rg-city-menu">
+        <button class="rg-city__opt is-selected"><span>Lima (Miraflores · San Isidro · Barranco)</span><small>48 mesas</small></button>
+        <button class="rg-city__opt"><span>Cusco &amp; Valle Sagrado</span><small>16 mesas</small></button>
+        <button class="rg-city__opt"><span>Arequipa &amp; Yanahuara</span><small>12 mesas</small></button>
+      </div>
+    </div>
+
+    <nav class="rg-hdr__nav" id="rg-nav" aria-label="Navegación principal">
+      <a class="rg-nav-link is-active" href="#descubrir">Descubrir</a>
+      <a class="rg-nav-link" href="#rutas">Mapa &amp; zonas</a>
+      <a class="rg-nav-link" href="#descubrir">Carta interactiva</a>
+      <a class="rg-nav-link" href="#guias">Guías culinarias</a>
+    </nav>
+
+    <div class="rg-hdr__actions">
+      <button class="rg-btn rg-btn--gold rg-btn--sm">
+        <svg class="rg-ico rg-ico--sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+        </svg>
+        <span>Demo para restaurantes</span>
+      </button>
+      <button class="rg-hdr__toggle" id="rg-nav-toggle" aria-label="Abrir menú">
+        <svg class="rg-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="4" x2="20" y1="12" y2="12" /><line x1="4" x2="20" y1="6" y2="6" /><line x1="4" x2="20" y1="18" y2="18" /></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<script>
+  const cityBtn = document.getElementById('rg-city-btn');
+  const cityMenu = document.getElementById('rg-city-menu');
+  cityBtn?.addEventListener('click', () => {
+    const open = cityMenu?.classList.toggle('is-open');
+    cityBtn.setAttribute('aria-expanded', String(!!open));
+  });
+  document.addEventListener('click', (e) => {
+    if (!cityBtn?.contains(e.target as Node) && !cityMenu?.contains(e.target as Node)) {
+      cityMenu?.classList.remove('is-open');
+      cityBtn?.setAttribute('aria-expanded', 'false');
+    }
+  });
+  cityMenu?.querySelectorAll('.rg-city__opt').forEach((opt) =>
+    opt.addEventListener('click', () => {
+      cityMenu.querySelectorAll('.rg-city__opt').forEach((o) => o.classList.remove('is-selected'));
+      opt.classList.add('is-selected');
+      const label = cityBtn?.querySelector('span');
+      if (label) label.textContent = opt.querySelector('span')?.textContent ?? label.textContent;
+      cityMenu.classList.remove('is-open');
+    }),
+  );
+
+  const navToggle = document.getElementById('rg-nav-toggle');
+  const nav = document.getElementById('rg-nav');
+  navToggle?.addEventListener('click', () => nav?.classList.toggle('is-open'));
+</script>
+
+<style>
+  .rg-hdr {
+    position: sticky;
+    top: 0;
+    z-index: 60;
+    background: rgba(7, 10, 17, 0.85);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--rg-border-subtle);
+  }
+
+  .rg-hdr__inner {
+    display: flex;
+    align-items: center;
+    gap: clamp(0.75rem, 2vw, 1.75rem);
+    padding-block: 0.85rem;
+  }
+
+  .rg-hdr__brand {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    flex-shrink: 0;
+  }
+
+  .rg-logo-symbol {
+    display: grid;
+    place-items: center;
+    width: 2.4rem;
+    height: 2.4rem;
+    border-radius: 12px;
+    background: linear-gradient(135deg, var(--rg-gold-400), var(--rg-gold-600));
+    color: #070a11;
+    font-family: var(--rg-font-serif);
+    font-weight: 800;
+    font-size: 1.3rem;
+  }
+
+  .rg-logo-text {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.1;
+  }
+
+  .rg-logo-title {
+    font-family: var(--rg-font-display);
+    font-weight: 800;
+    letter-spacing: 0.14em;
+    font-size: 1rem;
+  }
+
+  .rg-logo-sub {
+    font-size: 0.66rem;
+    color: var(--rg-gold-300);
+    letter-spacing: 0.04em;
+  }
+
+  .rg-city {
+    position: relative;
+  }
+
+  .rg-city__btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.82rem;
+    color: var(--rg-text-secondary);
+    padding: 0.45rem 0.75rem;
+    border: 1px solid var(--rg-border-subtle);
+    border-radius: var(--rg-radius-full);
+  }
+
+  .rg-city__menu {
+    position: absolute;
+    top: calc(100% + 0.5rem);
+    left: 0;
+    width: 300px;
+    background: var(--rg-bg-card);
+    border: 1px solid var(--rg-border-medium);
+    border-radius: var(--rg-radius-md);
+    box-shadow: var(--rg-shadow-lg);
+    padding: 0.4rem;
+    display: none;
+  }
+
+  .rg-city__menu.is-open {
+    display: block;
+  }
+
+  .rg-city__opt {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding: 0.6rem 0.7rem;
+    border-radius: 8px;
+    font-size: 0.82rem;
+    text-align: left;
+  }
+
+  .rg-city__opt small {
+    color: var(--rg-text-dim);
+    font-size: 0.72rem;
+  }
+
+  .rg-city__opt:hover {
+    background: rgba(255, 255, 255, 0.05);
+  }
+
+  .rg-city__opt.is-selected {
+    color: var(--rg-gold-300);
+  }
+
+  .rg-hdr__nav {
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+    margin-inline: auto;
+  }
+
+  .rg-nav-link {
+    padding: 0.5rem 0.8rem;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--rg-text-muted);
+    border-radius: var(--rg-radius-full);
+  }
+
+  .rg-nav-link:hover,
+  .rg-nav-link.is-active {
+    color: var(--rg-text-primary);
+    background: rgba(255, 255, 255, 0.05);
+  }
+
+  .rg-hdr__actions {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    flex-shrink: 0;
+  }
+
+  .rg-hdr__toggle {
+    display: none;
+    color: var(--rg-text-secondary);
+  }
+
+  @media (max-width: 1080px) {
+    .rg-hdr__nav {
+      display: none;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      flex-direction: column;
+      align-items: stretch;
+      gap: 0;
+      background: var(--rg-bg-card);
+      border-bottom: 1px solid var(--rg-border-medium);
+      padding: 0.5rem;
+    }
+    .rg-hdr__nav.is-open {
+      display: flex;
+    }
+    .rg-hdr__toggle {
+      display: inline-flex;
+    }
+    .rg-hdr__actions .rg-btn span {
+      display: none;
+    }
+  }
+
+  @media (max-width: 720px) {
+    .rg-city {
+      display: none;
+    }
+  }
+</style>

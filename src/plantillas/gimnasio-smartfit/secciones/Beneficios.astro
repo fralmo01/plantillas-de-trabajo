@@ -1,0 +1,131 @@
+---
+import { features, black } from '../datos/gym.js';
+---
+
+<section class="gs-seccion gs-wrap" id="beneficios">
+  <h2 class="gs-titulo">Todo lo que incluye tu membresía</h2>
+  <p class="gs-sub">Entrena con acompañamiento real: tecnología, clases y equipos pensados para que llegues a tu meta.</p>
+
+  <div class="gs-feat">
+    {
+      features.map((f, i) => (
+        <article class:list={['gs-feat__card', { 'is-alt': i % 2 === 1 }]}>
+          <img src={f.img} alt={f.titulo} loading="lazy" />
+          <div>
+            <h3>{f.titulo}</h3>
+            <p>{f.texto}</p>
+          </div>
+        </article>
+      ))
+    }
+  </div>
+
+  <div class="gs-black">
+    <div>
+      <span class="gs-black__flag">Plan Black</span>
+      <h3>{black.titulo}</h3>
+      <p>{black.texto}</p>
+    </div>
+    <div class="gs-black__marcas">
+      {black.marcas.map((m: string) => <span>{m}</span>)}
+    </div>
+  </div>
+</section>
+
+<style>
+  .gs-feat {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+  }
+
+  .gs-feat__card {
+    display: flex;
+    gap: 1.25rem;
+    align-items: center;
+    background: var(--gs-g50);
+    border: 1px solid var(--gs-g200);
+    border-radius: var(--gs-radio-md);
+    overflow: hidden;
+    padding: 1rem;
+  }
+
+  .gs-feat__card img {
+    width: 130px;
+    height: 130px;
+    object-fit: cover;
+    border-radius: var(--gs-radio-md);
+    flex-shrink: 0;
+  }
+
+  .gs-feat__card h3 {
+    font-size: 1.05rem;
+    text-transform: uppercase;
+  }
+
+  .gs-feat__card p {
+    font-size: 0.83rem;
+    color: var(--gs-g500);
+    margin-top: 0.3rem;
+  }
+
+  .gs-black {
+    margin-top: 2rem;
+    background: var(--gs-negro);
+    color: var(--gs-blanco);
+    border-radius: var(--gs-radio-lg);
+    padding: 2rem;
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: 2rem;
+    align-items: center;
+  }
+
+  .gs-black__flag {
+    display: inline-block;
+    background: var(--gs-amarillo);
+    color: var(--gs-negro);
+    font-size: 0.68rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    padding: 0.2rem 0.6rem;
+    border-radius: var(--gs-radio-full);
+    margin-bottom: 0.6rem;
+  }
+
+  .gs-black h3 {
+    color: var(--gs-blanco);
+    font-size: 1.5rem;
+    text-transform: uppercase;
+  }
+
+  .gs-black p {
+    font-size: 0.88rem;
+    color: rgba(255, 255, 255, 0.85);
+    margin-top: 0.5rem;
+  }
+
+  .gs-black__marcas {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.6rem;
+  }
+
+  .gs-black__marcas span {
+    display: grid;
+    place-items: center;
+    aspect-ratio: 2 / 1;
+    background: var(--gs-card-oscura);
+    border: 1px solid var(--gs-g700);
+    border-radius: var(--gs-radio-sm);
+    font-size: 0.72rem;
+    font-weight: 800;
+  }
+
+  @media (max-width: 900px) {
+    .gs-feat,
+    .gs-black {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

@@ -1,0 +1,24 @@
+---
+import '../estilos.css';
+
+import TickerSuperior from './TickerSuperior.astro';
+import Cabecera from './Cabecera.astro';
+import NavPrincipal from './NavPrincipal.astro';
+import MenuLateral from './MenuLateral.astro';
+import PiePagina from './PiePagina.astro';
+import BurbujaWhatsApp from './BurbujaWhatsApp.astro';
+
+const { activo } = Astro.props;
+---
+
+<div class="tpl-tutienda-moda">
+  <TickerSuperior />
+  <Cabecera />
+  <NavPrincipal activo={activo} />
+  <MenuLateral />
+  <main>
+    <slot />
+  </main>
+  <PiePagina />
+  <BurbujaWhatsApp />
+</div>

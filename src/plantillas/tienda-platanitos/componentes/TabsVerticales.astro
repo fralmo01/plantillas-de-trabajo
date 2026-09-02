@@ -1,0 +1,68 @@
+---
+import { verticales } from '../datos/verticales.js';
+
+const { activo = 'moda' } = Astro.props;
+---
+
+<div class="pl-tabs">
+  <div class="pl-contenedor pl-tabs__inner">
+    <nav class="pl-tabs__nav" aria-label="Verticales">
+      {
+        verticales.map((v) => (
+          <a
+            href={v.href}
+            class:list={['pl-tabs__link', { 'is-activo': v.id === activo }]}
+          >
+            {v.etiqueta}
+          </a>
+        ))
+      }
+    </nav>
+    <button type="button" class="pl-tabs__pais">🇵🇪 Perú ▾</button>
+  </div>
+</div>
+
+<style>
+  .pl-tabs {
+    background: var(--pl-gris-bg);
+    border-bottom: 1px solid var(--pl-gris-borde);
+  }
+
+  .pl-tabs__inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+
+  .pl-tabs__nav {
+    display: flex;
+  }
+
+  .pl-tabs__link {
+    padding: 0.6rem 1rem;
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: var(--pl-gris-texto);
+    border-bottom: 3px solid transparent;
+  }
+
+  .pl-tabs__link:hover {
+    color: var(--pl-tinta);
+  }
+
+  .pl-tabs__link.is-activo {
+    color: var(--pl-verde-osc);
+    background: var(--pl-blanco);
+    border-bottom-color: var(--pl-verde);
+  }
+
+  .pl-tabs__pais {
+    background: none;
+    border: 0;
+    font: inherit;
+    font-size: 0.78rem;
+    font-weight: 600;
+    cursor: pointer;
+  }
+</style>

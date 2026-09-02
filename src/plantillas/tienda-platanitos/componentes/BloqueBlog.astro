@@ -1,0 +1,97 @@
+---
+import { posts } from '../datos/contenido.js';
+---
+
+<section class="pl-seccion">
+  <div class="pl-contenedor">
+    <h2 class="pl-titulo">Conoce nuestro blog</h2>
+    <p class="pl-subtitulo">Lo último en tendencias y guías de compra</p>
+    <div class="pl-blog">
+      {
+        posts.map((p) => (
+          <article class="pl-blog__card">
+            <img src={`https://picsum.photos/seed/${p.seed}/560/320`} alt="" loading="lazy" />
+            <div class="pl-blog__cuerpo">
+              <p class="pl-blog__meta">
+                <span class="pl-badge pl-badge--lima">Novedades</span> {p.fecha}
+              </p>
+              <h3>{p.titulo}</h3>
+              <p class="pl-blog__extracto">{p.extracto}</p>
+              <a href="#" class="pl-blog__leer">Leer más →</a>
+            </div>
+          </article>
+        ))
+      }
+    </div>
+    <div class="pl-blog__mas">
+      <a href="#" class="pl-btn pl-btn--outline">Ver más artículos</a>
+    </div>
+  </div>
+</section>
+
+<style>
+  .pl-blog {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.25rem;
+  }
+
+  .pl-blog__card {
+    border: 1px solid var(--pl-gris-borde);
+    border-radius: 12px;
+    overflow: hidden;
+    background: var(--pl-blanco);
+    display: flex;
+    flex-direction: column;
+  }
+
+  .pl-blog__card img {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+  }
+
+  .pl-blog__cuerpo {
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    flex: 1;
+  }
+
+  .pl-blog__meta {
+    font-size: 0.72rem;
+    color: var(--pl-gris-texto);
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+
+  .pl-blog__card h3 {
+    font-size: 0.95rem;
+  }
+
+  .pl-blog__extracto {
+    font-size: 0.82rem;
+    color: var(--pl-gris-texto);
+  }
+
+  .pl-blog__leer {
+    margin-top: auto;
+    font-weight: 700;
+    color: var(--pl-verde-osc);
+    font-size: 0.85rem;
+  }
+
+  .pl-blog__mas {
+    display: flex;
+    justify-content: center;
+    margin-top: 1.25rem;
+  }
+
+  @media (max-width: 860px) {
+    .pl-blog {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

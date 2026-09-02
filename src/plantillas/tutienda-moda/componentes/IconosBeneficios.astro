@@ -1,0 +1,52 @@
+---
+const items = [
+  { t: 'Retiro en tienda', d: 'M4 9h16v11H4zM9 20v-6h6v6' },
+  { t: 'Atención al cliente', d: 'M4 5h16v10H8l-4 4z' },
+  { t: 'Cambios y devoluciones', d: 'M4 11a8 8 0 0 1 14-5m2 5a8 8 0 0 1-14 5M18 4v4h-4M6 20v-4h4' },
+  { t: 'Servicio al cliente', d: 'M12 3a9 9 0 0 0-9 9v4a2 2 0 0 0 2 2h2v-6H5a7 7 0 0 1 14 0h-2v6h2a2 2 0 0 0 2-2v-4a9 9 0 0 0-9-9z' },
+];
+---
+
+<section class="tm-seccion">
+  <div class="tm-contenedor tm-benef">
+    {
+      items.map((it) => (
+        <div class="tm-benef__item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
+            <path d={it.d} />
+          </svg>
+          <span>{it.t}</span>
+        </div>
+      ))
+    }
+  </div>
+</section>
+
+<style>
+  .tm-benef {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.5rem;
+    text-align: center;
+  }
+
+  .tm-benef__item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.6rem;
+    font-size: 0.8rem;
+    font-weight: 700;
+  }
+
+  .tm-benef__item svg {
+    width: 38px;
+    height: 38px;
+  }
+
+  @media (max-width: 720px) {
+    .tm-benef {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+</style>

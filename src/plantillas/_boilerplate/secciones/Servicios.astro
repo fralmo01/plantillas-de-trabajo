@@ -1,0 +1,45 @@
+---
+const servicios = [
+  { titulo: 'Servicio uno', detalle: 'Describe brevemente el primer servicio.' },
+  { titulo: 'Servicio dos', detalle: 'Describe brevemente el segundo servicio.' },
+  { titulo: 'Servicio tres', detalle: 'Describe brevemente el tercer servicio.' },
+];
+---
+
+<section id="servicios" class="b-seccion">
+  <div class="b-contenedor">
+    <h2>Servicios</h2>
+    <div class="b-servicios__grid">
+      {
+        servicios.map((s) => (
+          <article class="b-servicios__card">
+            <h3>{s.titulo}</h3>
+            <p>{s.detalle}</p>
+          </article>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<style>
+  .b-servicios__grid {
+    display: grid;
+    gap: 1.25rem;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    margin-top: 2rem;
+  }
+  .b-servicios__card {
+    border: 1px solid var(--b-suave);
+    border-radius: 8px;
+    padding: 1.5rem;
+  }
+  .b-servicios__card h3 {
+    margin-bottom: 0.5rem;
+    color: var(--b-acento);
+  }
+  .b-servicios__card p {
+    margin: 0;
+    font-size: 0.95rem;
+  }
+</style>

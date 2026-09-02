@@ -1,0 +1,62 @@
+---
+const items = [
+  { titulo: 'Tarjeta tienda.com', texto: 'Precio preferente en miles de productos y hasta 12 cuotas sin interés.', icono: '💳' },
+  { titulo: 'Puntos tienda.com', texto: 'Acumula con cada compra y canjéalos por descuentos.', icono: '⭐' },
+  { titulo: 'Envío gratis', texto: 'En compras sobre S/ 99 a Lima y provincias seleccionadas.', icono: '🚚' },
+  { titulo: 'Compra protegida', texto: 'Cambios y devoluciones fáciles hasta 30 días.', icono: '🛡️' },
+];
+---
+
+<section class="ef-wrap ef-seccion" id="beneficios">
+  <div class="ef-benef">
+    {
+      items.map((it) => (
+        <article class="ef-benef__card">
+          <span class="ef-benef__ico" aria-hidden="true">{it.icono}</span>
+          <div>
+            <h3>{it.titulo}</h3>
+            <p>{it.texto}</p>
+          </div>
+        </article>
+      ))
+    }
+  </div>
+</section>
+
+<style>
+  .ef-benef {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+  }
+
+  .ef-benef__card {
+    display: flex;
+    gap: 0.75rem;
+    align-items: flex-start;
+    background: #fff;
+    border: 1px solid var(--ef-linea);
+    border-radius: var(--ef-radio);
+    padding: 1.1rem;
+  }
+
+  .ef-benef__ico {
+    font-size: 1.5rem;
+  }
+
+  .ef-benef__card h3 {
+    font-size: 0.92rem;
+  }
+
+  .ef-benef__card p {
+    font-size: 0.78rem;
+    color: var(--ef-gris);
+    margin-top: 0.2rem;
+  }
+
+  @media (max-width: 860px) {
+    .ef-benef {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+</style>

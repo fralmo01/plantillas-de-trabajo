@@ -1,0 +1,51 @@
+---
+/**
+ * Catalogo raiz. Este archivo NO crece al agregar plantillas:
+ * lee la coleccion `plantillas` (autogenerada desde src/plantillas/*)
+ * y pinta todo. Agregar una plantilla no obliga a tocar nada aca.
+ */
+import { getCollection } from 'astro:content';
+import CatalogoLayout from '@layouts/CatalogoLayout.astro';
+import CabeceraSitio from '@components/catalogo/CabeceraSitio.astro';
+import BarraFiltros from '@components/catalogo/BarraFiltros.astro';
+import TarjetaPlantilla from '@components/catalogo/TarjetaPlantilla.astro';
+
+const entradas = (await getCollection('plantillas')).sort(
+  (a, b) => a.data.orden - b.data.orden || a.data.titulo.localeCompare(b.data.titulo),
+);
+
+const categorias = [...new Set(entradas.map((e) => e.data.categoria))].sort();
+---
+
+<CatalogoLayout titulo="Catálogo de Plantillas Web">
+  <CabeceraSitio
+    titulo="Catálogo de plantillas"
+    subtitulo="Maquetas de e-commerce, cada una basada en el estilo de una tienda real y con marca propia (tienda.com). Cada plantilla es un sitio independiente y aislado: pasa el cursor para ver el preview y haz clic para abrir el diseño real."
+    total={entradas.length}
+  />
+
+  <BarraFiltros categorias={categorias} />
+
+  <main class="catalogo-wrap">
+    {
+      entradas.length === 0 ? (
+        <p class="catalogo-vacio">
+          Todavia no hay plantillas. Crea una con <code>npm run nueva-plantilla</code>.
+        </p>
+      ) : (
+        <>
+          <ul class="catalogo-grid">
+            {entradas.map((e) => (
+              <li>
+                <TarjetaPlantilla id={e.id} ficha={e.data} />
+              </li>
+            ))}
+          </ul>
+          <p class="catalogo-vacio" data-catalogo-vacio hidden>
+            No hay plantillas en esta categoria.
+          </p>
+        </>
+      )
+    }
+  </main>
+</CatalogoLayout>

@@ -1,0 +1,163 @@
+---
+import { planes } from '../datos/gym.js';
+const soles = (n: number) => (n === 0 ? 'GRATIS' : 'S/ ' + n.toFixed(2));
+---
+
+<section class="gs-seccion gs-wrap" id="planes">
+  <h2 class="gs-titulo">Elige tu plan</h2>
+  <p class="gs-sub">Todos incluyen acceso a musculación, cardio y la app de entrenamiento. Cancela cuando quieras en el Plan Smart.</p>
+
+  <div class="gs-planes">
+    {
+      planes.map((p) => (
+        <article class:list={['gs-plan', { 'is-destacado': p.destacado }]}>
+          {p.destacado && <span class="gs-plan__flag">Más elegido</span>}
+          <h3 class="gs-plan__nombre">{p.nombre}</h3>
+          <p class="gs-plan__desc">{p.desc}</p>
+          <p class="gs-plan__precio">
+            <b>{soles(p.promo)}</b>
+            <s>Regular {soles(p.regular)}</s>
+          </p>
+          <span class="gs-plan__promo">{p.promoTag}</span>
+          <span class="gs-plan__fid">{p.fidelidad}</span>
+          <a href="#" class="gs-btn gs-btn--amarillo gs-plan__cta">Inscríbete</a>
+          <ul class="gs-plan__lista">
+            {p.beneficios.map((b: { txt: string; ok: boolean }) => (
+              <li class:list={[{ 'is-no': !b.ok }]}>
+                <span aria-hidden="true">{b.ok ? '✓' : '—'}</span> {b.txt}
+              </li>
+            ))}
+          </ul>
+        </article>
+      ))
+    }
+  </div>
+</section>
+
+<style>
+  .gs-planes {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    align-items: start;
+  }
+
+  .gs-plan {
+    background: var(--gs-blanco);
+    border: 1px solid var(--gs-g200);
+    border-radius: var(--gs-radio-lg);
+    padding: 1.75rem 1.5rem;
+    box-shadow: var(--gs-sombra-card);
+    position: relative;
+  }
+
+  .gs-plan.is-destacado {
+    border-color: var(--gs-negro);
+    background: var(--gs-negro);
+    color: var(--gs-blanco);
+  }
+
+  .gs-plan.is-destacado h3 {
+    color: var(--gs-amarillo);
+  }
+
+  .gs-plan__flag {
+    position: absolute;
+    top: -0.75rem;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--gs-amarillo);
+    color: var(--gs-negro);
+    font-size: 0.66rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    padding: 0.25rem 0.75rem;
+    border-radius: var(--gs-radio-full);
+  }
+
+  .gs-plan__nombre {
+    font-size: 1.3rem;
+    text-transform: uppercase;
+  }
+
+  .gs-plan__desc {
+    font-size: 0.82rem;
+    opacity: 0.85;
+    margin: 0.4rem 0 1rem;
+  }
+
+  .gs-plan__precio {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .gs-plan__precio b {
+    font-family: var(--gs-font-head);
+    font-size: 2rem;
+  }
+
+  .gs-plan__precio s {
+    font-size: 0.75rem;
+    opacity: 0.7;
+  }
+
+  .gs-plan__promo {
+    display: inline-block;
+    margin-top: 0.5rem;
+    background: var(--gs-verde-bg);
+    color: var(--gs-verde-tx);
+    font-size: 0.72rem;
+    font-weight: 800;
+    padding: 0.2rem 0.6rem;
+    border-radius: var(--gs-radio-full);
+  }
+
+  .gs-plan__fid {
+    display: block;
+    font-size: 0.72rem;
+    opacity: 0.75;
+    margin-top: 0.4rem;
+  }
+
+  .gs-plan__cta {
+    width: 100%;
+    margin: 1.1rem 0;
+  }
+
+  .gs-plan__lista {
+    list-style: none;
+    display: grid;
+    gap: 0.55rem;
+    border-top: 1px solid rgba(128, 128, 128, 0.3);
+    padding-top: 1rem;
+  }
+
+  .gs-plan__lista li {
+    display: flex;
+    gap: 0.5rem;
+    font-size: 0.8rem;
+  }
+
+  .gs-plan__lista li span {
+    color: var(--gs-verde-tx);
+    font-weight: 800;
+  }
+
+  .gs-plan.is-destacado .gs-plan__lista li span {
+    color: var(--gs-amarillo);
+  }
+
+  .gs-plan__lista li.is-no {
+    opacity: 0.45;
+  }
+
+  .gs-plan__lista li.is-no span {
+    color: inherit;
+  }
+
+  @media (max-width: 900px) {
+    .gs-planes {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

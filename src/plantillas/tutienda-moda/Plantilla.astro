@@ -1,0 +1,46 @@
+---
+import '@fontsource-variable/montserrat/wght.css';
+
+import MarcoTienda from './componentes/MarcoTienda.astro';
+import HeroCollage from './componentes/HeroCollage.astro';
+import TiraBeneficios from './componentes/TiraBeneficios.astro';
+import TilesCategoria from './componentes/TilesCategoria.astro';
+import BannerAccesorios from './componentes/BannerAccesorios.astro';
+import CarruselNovedades from './componentes/CarruselNovedades.astro';
+import BannersDestino from './componentes/BannersDestino.astro';
+import ShopGenero from './componentes/ShopGenero.astro';
+import IconosBeneficios from './componentes/IconosBeneficios.astro';
+import Suscribete from './componentes/Suscribete.astro';
+
+import { productos } from './datos/productos.js';
+
+const ofertasMujer = [
+  { titulo: 'Casaca Kezly verde olivo', sub: 'Antes S/ 189', precio: 'S/ 132.30', cta: 'Comprar »' },
+  { titulo: 'Jeans mujer', sub: 'Exclusivo online', precio: '-50%', cta: 'Comprar »' },
+  { titulo: 'Polos básicos', sub: null, precio: '3 x S/ 139', cta: 'Comprar »' },
+];
+const ofertasHombre = [
+  { titulo: 'Camisa lino', sub: 'Antes S/ 129', precio: 'S/ 89.90', cta: 'Comprar »' },
+  { titulo: 'Jeans hombre', sub: 'Exclusivo online', precio: '-40%', cta: 'Comprar »' },
+  { titulo: 'Polos pima', sub: null, precio: '3 x S/ 139', cta: 'Comprar »' },
+];
+const ofertasKids = [
+  { titulo: 'Jeans kids wide', sub: 'Antes S/ 189', precio: 'S/ 111.20', cta: 'Comprar »' },
+  { titulo: 'Casaca varsity', sub: 'Antes S/ 159', precio: 'S/ 79.50', cta: 'Comprar »' },
+  { titulo: 'Pantalón cargo kids', sub: 'Antes S/ 159', precio: 'S/ 127.20', cta: 'Comprar »' },
+];
+---
+
+<MarcoTienda>
+  <HeroCollage />
+  <TiraBeneficios />
+  <TilesCategoria />
+  <BannerAccesorios />
+  <CarruselNovedades titulo="¡Lo más nuevo!" lista={productos.slice(0, 8)} />
+  <BannersDestino />
+  <ShopGenero genero="Mujer" href="/plantillas/tutienda-moda/mujer/" ofertas={ofertasMujer} />
+  <ShopGenero genero="Hombre" href="/plantillas/tutienda-moda/hombre/" ofertas={ofertasHombre} />
+  <ShopGenero genero="Kids" href="/plantillas/tutienda-moda/kids/" ofertas={ofertasKids} />
+  <IconosBeneficios />
+  <Suscribete />
+</MarcoTienda>

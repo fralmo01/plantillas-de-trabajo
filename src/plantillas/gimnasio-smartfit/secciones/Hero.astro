@@ -1,0 +1,108 @@
+---
+import { marca } from '../datos/gym.js';
+---
+
+<section class="gs-hero">
+  <img class="gs-hero__bg" src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=1600&q=80" alt="" loading="eager" />
+  <div class="gs-wrap gs-hero__inner">
+    <p class="gs-hero__kicker">Promo de temporada</p>
+    <h1 class="gs-hero__title">Primer mes <span>50% OFF</span></h1>
+    <p class="gs-hero__lead">{marca.tagline}</p>
+    <div class="gs-hero__cta">
+      <a href="#planes" class="gs-btn gs-btn--amarillo">Ver planes</a>
+      <a href="#sedes" class="gs-btn gs-btn--outline gs-hero__outline">Encontrar sede</a>
+    </div>
+    <ul class="gs-hero__stats">
+      <li><b>+90</b> sedes en el país</li>
+      <li><b>+2000</b> locales en la región</li>
+      <li><b>24/7</b> app de rutinas</li>
+    </ul>
+  </div>
+</section>
+
+<style>
+  .gs-hero {
+    position: relative;
+    color: var(--gs-blanco);
+    isolation: isolate;
+    min-height: clamp(420px, 55vw, 620px);
+    display: flex;
+    align-items: center;
+  }
+
+  .gs-hero__bg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: -2;
+  }
+
+  .gs-hero::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: linear-gradient(90deg, rgba(17, 17, 17, 0.92) 0%, rgba(17, 17, 17, 0.55) 60%, transparent 100%);
+  }
+
+  .gs-hero__inner {
+    padding-block: 3rem;
+    max-width: 640px;
+  }
+
+  .gs-hero__kicker {
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    font-size: 0.8rem;
+    color: var(--gs-amarillo);
+  }
+
+  .gs-hero__title {
+    font-size: clamp(2.5rem, 7vw, 4.5rem);
+    text-transform: uppercase;
+    color: var(--gs-blanco);
+    margin: 0.4rem 0 0.8rem;
+  }
+
+  .gs-hero__title span {
+    color: var(--gs-amarillo);
+  }
+
+  .gs-hero__lead {
+    font-size: clamp(0.95rem, 1.8vw, 1.15rem);
+    color: rgba(255, 255, 255, 0.9);
+    max-width: 46ch;
+    margin-bottom: 1.75rem;
+  }
+
+  .gs-hero__cta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  .gs-hero__outline {
+    border-color: var(--gs-blanco);
+    color: var(--gs-blanco);
+  }
+
+  .gs-hero__stats {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+    list-style: none;
+    margin-top: 2.5rem;
+    font-size: 0.85rem;
+    color: rgba(255, 255, 255, 0.85);
+  }
+
+  .gs-hero__stats b {
+    display: block;
+    font-family: var(--gs-font-head);
+    font-size: 1.6rem;
+    color: var(--gs-amarillo);
+  }
+</style>

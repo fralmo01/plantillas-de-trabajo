@@ -1,0 +1,141 @@
+@import url("https://fonts.googleapis.com/css2?family=Lato:wght@400;700;900&display=swap");
+.tpl-tienda-motors {
+  --tm-rojo: #dc241f;
+  --tm-rojo-osc: #b71c17;
+  --tm-gris-osc: #4d4d4d;
+  --tm-gris: #6b6b6b;
+  --tm-negro: #2b2b2b;
+  --tm-blanco: #ffffff;
+  --tm-panel: #f4f4f4;
+  --tm-panel-2: #ececec;
+  --tm-linea: #e0e0e0;
+  --tm-footer: #3a3a3a;
+
+  --tm-font: "Lato", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+  --tm-maxw: 1240px;
+  --tm-radio-pill: 999px;
+
+  background: var(--tm-blanco);
+  color: var(--tm-negro);
+  font-family: var(--tm-font);
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+.tpl-tienda-motors *,
+.tpl-tienda-motors *::before,
+.tpl-tienda-motors *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+.tpl-tienda-motors h1,
+.tpl-tienda-motors h2,
+.tpl-tienda-motors h3 {
+  line-height: 1.15;
+  color: var(--tm-gris);
+  font-weight: 900;
+}
+
+.tpl-tienda-motors img {
+  max-width: 100%;
+  display: block;
+}
+
+.tpl-tienda-motors a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.tpl-tienda-motors button {
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+  border: none;
+  background: none;
+}
+
+.tpl-tienda-motors input,
+.tpl-tienda-motors select {
+  font: inherit;
+}
+
+.tpl-tienda-motors .tm-wrap {
+  max-width: var(--tm-maxw);
+  margin-inline: auto;
+  padding-inline: clamp(1rem, 3vw, 2rem);
+}
+
+.tpl-tienda-motors .tm-seccion {
+  padding-block: clamp(2.5rem, 6vw, 4rem);
+}
+
+.tpl-tienda-motors .tm-titulo {
+  text-align: center;
+  font-size: clamp(1.5rem, 3.6vw, 2.2rem);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--tm-gris);
+  margin-bottom: 2rem;
+}
+
+.tpl-tienda-motors .tm-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.6rem;
+  font-weight: 700;
+  font-size: 0.82rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  border-radius: var(--tm-radio-pill);
+  transition: background 0.15s ease, transform 0.15s ease;
+}
+
+.tpl-tienda-motors .tm-btn:hover {
+  transform: translateY(-2px);
+}
+
+.tpl-tienda-motors .tm-btn--rojo {
+  background: var(--tm-rojo);
+  color: #fff;
+}
+
+.tpl-tienda-motors .tm-btn--rojo:hover {
+  background: var(--tm-rojo-osc);
+}
+
+.tpl-tienda-motors .tm-btn--gris {
+  background: var(--tm-gris-osc);
+  color: #fff;
+}
+
+.tpl-tienda-motors .tm-btn--outline {
+  border: 2px solid var(--tm-rojo);
+  color: var(--tm-rojo);
+}
+
+.tpl-tienda-motors .tm-fila {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(260px, 1fr);
+  gap: 1.25rem;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  padding-bottom: 0.5rem;
+}
+
+.tpl-tienda-motors .tm-fila > * {
+  scroll-snap-align: start;
+}
+
+@media (min-width: 1000px) {
+  .tpl-tienda-motors .tm-fila--4 {
+    grid-template-columns: repeat(4, 1fr);
+    grid-auto-flow: row;
+    overflow: visible;
+  }
+}

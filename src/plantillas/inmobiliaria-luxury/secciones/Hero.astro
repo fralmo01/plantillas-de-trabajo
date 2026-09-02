@@ -1,0 +1,173 @@
+---
+import { proyectos, usd } from '../datos/proyectos.js';
+const p = proyectos[0];
+---
+
+<section class="il-hero">
+  <div class="il-wrap il-hero__grid">
+    <div class="il-hero__texto">
+      <p class="il-eyebrow">Desarrollo inmobiliario premium</p>
+      <h1 class="il-hero__title">Vive donde<br />siempre quisiste</h1>
+      <p class="il-hero__lead">
+        Residencias de autor en los mejores distritos de Lima, con recorrido virtual,
+        simulador de crédito y acompañamiento concierge de principio a fin.
+      </p>
+      <div class="il-hero__cta">
+        <a href="#catalogo" class="il-btn il-btn--navy">Ver proyectos</a>
+        <a href="#experiencia" class="il-btn il-btn--outline">Recorrido 3D</a>
+      </div>
+      <ul class="il-hero__stats">
+        <li><b>12</b> proyectos activos</li>
+        <li><b>6</b> distritos</li>
+        <li><b>100%</b> entrega garantizada</li>
+      </ul>
+    </div>
+
+    <figure class="il-hero__card">
+      <img src={p.img} alt={p.nombre} loading="eager" />
+      <figcaption>
+        <span class="il-hero__card-tag">{p.tag}</span>
+        <h3>{p.nombre}</h3>
+        <p>{p.distrito} &middot; {p.dorms} &middot; desde {usd(p.desdeUSD)}</p>
+        <a href="#catalogo" class="il-hero__card-link">Conocer proyecto →</a>
+      </figcaption>
+    </figure>
+  </div>
+</section>
+
+<section class="il-wrap il-etapas-inline" id="experiencia">
+  <div class="il-exp">
+    <div>
+      <p class="il-eyebrow">Experiencia 3D</p>
+      <h2 class="il-titulo">Recorre cada ambiente antes de decidir</h2>
+      <p class="il-sub">Planta interactiva, vistas reales por piso y simulación de luz natural según la hora del día.</p>
+      <a href="#catalogo" class="il-btn il-btn--outline">Explorar recorridos</a>
+    </div>
+    <img src="https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=1200&q=80" alt="Interior residencial" loading="lazy" />
+  </div>
+</section>
+
+<style>
+  .il-hero {
+    padding-block: clamp(2.5rem, 6vw, 5rem);
+  }
+
+  .il-hero__grid {
+    display: grid;
+    grid-template-columns: 1.05fr 0.95fr;
+    gap: clamp(2rem, 5vw, 4rem);
+    align-items: center;
+  }
+
+  .il-hero__title {
+    font-size: clamp(2.4rem, 6vw, 4rem);
+    line-height: 1.05;
+    margin: 0.5rem 0 1rem;
+  }
+
+  .il-hero__lead {
+    color: var(--il-text-2);
+    font-size: clamp(0.95rem, 1.6vw, 1.1rem);
+    max-width: 48ch;
+    margin-bottom: 1.75rem;
+  }
+
+  .il-hero__cta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  .il-hero__stats {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+    list-style: none;
+    margin-top: 2.5rem;
+    font-size: 0.82rem;
+    color: var(--il-muted);
+  }
+
+  .il-hero__stats b {
+    display: block;
+    font-family: var(--il-serif);
+    font-size: 1.6rem;
+    color: var(--il-navy);
+  }
+
+  .il-hero__card {
+    position: relative;
+    border-radius: var(--il-radio-lg);
+    overflow: hidden;
+    box-shadow: var(--il-sombra);
+  }
+
+  .il-hero__card img {
+    width: 100%;
+    aspect-ratio: 4 / 5;
+    object-fit: cover;
+  }
+
+  .il-hero__card figcaption {
+    position: absolute;
+    inset: auto 0 0;
+    padding: 1.5rem;
+    background: linear-gradient(0deg, rgba(30, 37, 64, 0.92), transparent);
+    color: #fff;
+  }
+
+  .il-hero__card figcaption h3 {
+    color: #fff;
+    font-size: 1.4rem;
+  }
+
+  .il-hero__card figcaption p {
+    font-size: 0.82rem;
+    opacity: 0.85;
+    margin-top: 0.25rem;
+  }
+
+  .il-hero__card-tag {
+    display: inline-block;
+    background: var(--il-mint);
+    color: var(--il-navy);
+    font-size: 0.66rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    padding: 0.2rem 0.6rem;
+    border-radius: 999px;
+    margin-bottom: 0.5rem;
+  }
+
+  .il-hero__card-link {
+    display: inline-block;
+    margin-top: 0.75rem;
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: var(--il-mint);
+  }
+
+  .il-exp {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: clamp(1.5rem, 4vw, 3rem);
+    align-items: center;
+    background: var(--il-subtle);
+    border-radius: var(--il-radio-lg);
+    padding: clamp(1.5rem, 4vw, 3rem);
+  }
+
+  .il-exp img {
+    border-radius: var(--il-radio);
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+  }
+
+  @media (max-width: 960px) {
+    .il-hero__grid,
+    .il-exp {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

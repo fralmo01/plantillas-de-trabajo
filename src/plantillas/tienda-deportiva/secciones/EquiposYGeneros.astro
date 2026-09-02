@@ -1,0 +1,244 @@
+---
+const selecciones = [
+  { pais: "Perú", escudo: "/escudos/peru.svg" },
+  { pais: "Argentina", escudo: "/escudos/argentina.svg" },
+  { pais: "España", escudo: "/escudos/espana.svg" },
+  { pais: "Alemania", escudo: "/escudos/alemania.svg" },
+  { pais: "Italia", escudo: "/escudos/italia.svg" },
+  { pais: "Venezuela", escudo: "/escudos/venezuela.svg" }
+];
+
+const generos = [
+  {
+    etiqueta: "MUJER",
+    img: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=350&auto=format&fit=crop",
+    enlace: "#mujer"
+  },
+  {
+    etiqueta: "HOMBRE",
+    img: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=350&auto=format&fit=crop",
+    enlace: "#hombre"
+  },
+  {
+    etiqueta: "NIÑA",
+    img: "https://images.unsplash.com/photo-1517486808906-6ca8b3f04846?q=80&w=350&auto=format&fit=crop",
+    enlace: "#ninos"
+  },
+  {
+    etiqueta: "NIÑO",
+    img: "https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?q=80&w=350&auto=format&fit=crop",
+    enlace: "#ninos"
+  },
+  {
+    etiqueta: "ADOLESCENTES",
+    img: "https://images.unsplash.com/photo-1529156069898-49953e39b3ac?q=80&w=350&auto=format&fit=crop",
+    enlace: "#tendencias"
+  },
+  {
+    etiqueta: "VER TODO",
+    img: "https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?q=80&w=350&auto=format&fit=crop",
+    enlace: "#calzado"
+  }
+];
+---
+
+<section class="tt-seccion tt-equipos-generos">
+  <div class="tt-contenedor">
+    
+    <div class="tt-bloque-equipos">
+      <h2 class="tt-equipos__titulo">ENCUENTRA TU EQUIPO</h2>
+      <div class="tt-equipos__filtros">
+        <button class="tt-btn-caja tt-btn-caja--negro">Selecciones</button>
+        <button class="tt-btn-caja tt-btn-caja--blanco">Clubes</button>
+      </div>
+
+      <div class="tt-equipos__grid">
+        {selecciones.map((sel) => (
+          <a href="#deportes" class="tt-equipo-card">
+            <div class="tt-equipo-card__escudo-wrap">
+              <img src={sel.escudo} alt={`Camiseta ${sel.pais}`} loading="lazy" />
+            </div>
+            <span class="tt-equipo-card__nombre">{sel.pais}</span>
+          </a>
+        ))}
+      </div>
+
+      
+      <div class="tt-scroll-tracker">
+        <button class="tt-scroll-flecha" aria-label="Anterior">◀</button>
+        <div class="tt-scroll-barra">
+          <div class="tt-scroll-barra__indicador"></div>
+        </div>
+        <button class="tt-scroll-flecha" aria-label="Siguiente">▶</button>
+      </div>
+    </div>
+
+    
+    <div class="tt-bloque-generos">
+      <h2 class="tt-generos__titulo">¿PARA QUIÉN ESTÁS COMPRANDO?</h2>
+
+      <div class="tt-generos__grid">
+        {generos.map((gen) => (
+          <a href={gen.enlace} class="tt-genero-item">
+            <div class="tt-genero-item__circulo">
+              <img src={gen.img} alt={`Comprar para ${gen.etiqueta}`} loading="lazy" />
+            </div>
+            <span class="tt-genero-item__nombre">{gen.etiqueta}</span>
+          </a>
+        ))}
+      </div>
+
+      
+      <div class="tt-scroll-tracker">
+        <button class="tt-scroll-flecha" aria-label="Anterior">◀</button>
+        <div class="tt-scroll-barra">
+          <div class="tt-scroll-barra__indicador"></div>
+        </div>
+        <button class="tt-scroll-flecha" aria-label="Siguiente">▶</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .tt-equipos-generos {
+    background: var(--tt-blanco);
+    border-bottom: 1px solid var(--tt-gris-borde);
+  }
+
+  
+  .tt-bloque-equipos {
+    margin-bottom: 3.5rem;
+  }
+
+  .tt-equipos__titulo,
+  .tt-generos__titulo {
+    font-size: 1.8rem;
+    color: var(--tt-negro);
+    letter-spacing: -0.02em;
+    margin-bottom: 1rem;
+  }
+
+  .tt-equipos__filtros {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .tt-equipos__grid {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 0.8rem;
+  }
+
+  .tt-equipo-card {
+    background: var(--tt-gris-tarjeta);
+    border: 1px solid var(--tt-gris-borde);
+    position: relative;
+    aspect-ratio: 1 / 1.15;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 1rem;
+    text-decoration: none;
+    transition: transform 0.2s ease;
+  }
+
+  .tt-equipo-card:hover {
+    transform: translateY(-3px);
+  }
+
+  .tt-equipo-card__escudo-wrap {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .tt-equipo-card__escudo-wrap img {
+    width: 78px;
+    height: 90px;
+    object-fit: contain;
+    filter: drop-shadow(0 2px 5px rgba(0, 0, 0, 0.12));
+  }
+
+  .tt-equipo-card__nombre {
+    background: var(--tt-blanco);
+    border: 1px solid var(--tt-gris-borde);
+    color: var(--tt-negro);
+    font-family: var(--tt-font-condensed);
+    font-size: 0.72rem;
+    font-weight: 800;
+    padding: 0.2rem 0.5rem;
+    align-self: flex-start;
+  }
+
+  
+  .tt-generos__grid {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 1.5rem;
+    margin-top: 1.8rem;
+  }
+
+  .tt-genero-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.8rem;
+    text-decoration: none;
+    text-align: center;
+  }
+
+  .tt-genero-item__circulo {
+    width: 100%;
+    max-width: 150px;
+    aspect-ratio: 1 / 1;
+    border-radius: 50%;
+    overflow: hidden;
+    background: var(--tt-gris-tarjeta);
+    border: 2px solid transparent;
+    transition: border-color 0.2s ease, transform 0.2s ease;
+  }
+
+  .tt-genero-item:hover .tt-genero-item__circulo {
+    border-color: var(--tt-negro);
+    transform: scale(1.05);
+  }
+
+  .tt-genero-item__circulo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .tt-genero-item__nombre {
+    font-family: var(--tt-font-condensed);
+    font-size: 0.82rem;
+    font-weight: 900;
+    color: var(--tt-negro);
+    letter-spacing: 0.04em;
+  }
+
+  @media (max-width: 900px) {
+    .tt-equipos__grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+    .tt-generos__grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  @media (max-width: 550px) {
+    .tt-equipos__grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    .tt-generos__grid {
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0.8rem;
+    }
+    .tt-genero-item__nombre {
+      font-size: 0.72rem;
+    }
+  }
+</style>

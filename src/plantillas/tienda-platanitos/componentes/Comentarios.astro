@@ -1,0 +1,81 @@
+---
+import { opiniones } from '../datos/contenido.js';
+---
+
+<section class="pl-seccion">
+  <div class="pl-contenedor">
+    <h2 class="pl-titulo">Comentarios de nuestros clientes</h2>
+    <p class="pl-subtitulo">Mira lo que opinan y siéntete más seguro</p>
+    <div class="pl-op">
+      {
+        opiniones.map((o) => (
+          <blockquote class="pl-op__card">
+            <div class="pl-op__head">
+              <span class="pl-op__avatar" style={`background:${o.color}`}>{o.inicial}</span>
+              <div>
+                <strong>{o.nombre}</strong>
+                <span class="pl-op__estrellas" aria-label="5 de 5">★★★★★</span>
+              </div>
+            </div>
+            <p>{o.texto}</p>
+          </blockquote>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<style>
+  .pl-op {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.25rem;
+  }
+
+  .pl-op__card {
+    border: 1px solid var(--pl-gris-borde);
+    border-radius: 12px;
+    padding: 1.25rem;
+    background: var(--pl-blanco);
+  }
+
+  .pl-op__head {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .pl-op__avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    color: #fff;
+    font-weight: 800;
+    flex-shrink: 0;
+  }
+
+  .pl-op__head strong {
+    display: block;
+    font-size: 0.9rem;
+  }
+
+  .pl-op__estrellas {
+    color: var(--pl-dorado);
+    font-size: 0.85rem;
+    letter-spacing: 0.05em;
+  }
+
+  .pl-op__card p {
+    font-size: 0.85rem;
+    color: var(--pl-gris-texto);
+  }
+
+  @media (max-width: 860px) {
+    .pl-op {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

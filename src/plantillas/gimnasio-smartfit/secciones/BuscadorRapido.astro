@@ -1,0 +1,56 @@
+---
+import { ciudades } from '../datos/gym.js';
+---
+
+<section class="gs-quick">
+  <div class="gs-wrap gs-quick__inner">
+    <div>
+      <h2>Encuentra tu sede</h2>
+      <p>Más de 90 gimnasios equipados en todo el país.</p>
+    </div>
+    <form class="gs-quick__form" onsubmit="return false">
+      <select aria-label="Ciudad">
+        <option value="">Elige tu ciudad</option>
+        {ciudades.map((c: string) => <option>{c}</option>)}
+      </select>
+      <a href="#sedes" class="gs-btn gs-btn--negro">Ver sedes</a>
+    </form>
+  </div>
+</section>
+
+<style>
+  .gs-quick {
+    background: var(--gs-amarillo);
+  }
+
+  .gs-quick__inner {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.25rem;
+    padding-block: 1.5rem;
+  }
+
+  .gs-quick__inner h2 {
+    font-size: 1.3rem;
+    text-transform: uppercase;
+  }
+
+  .gs-quick__inner p {
+    font-size: 0.88rem;
+  }
+
+  .gs-quick__form {
+    display: flex;
+    gap: 0.6rem;
+  }
+
+  .gs-quick__form select {
+    border: 2px solid var(--gs-negro);
+    border-radius: var(--gs-radio-full);
+    padding: 0.7rem 1.2rem;
+    background: var(--gs-blanco);
+    font-weight: 700;
+  }
+</style>

@@ -1,0 +1,174 @@
+---
+import { marca, navPrincipal } from "../datos/motors.js";
+---
+
+<header class="tm-hdr" id="top">
+  <div class="tm-wrap tm-hdr__inner">
+    <a href="#top" class="tm-logo" aria-label={`${marca.nombre} ${marca.sub}`}>
+      <span class="tm-logo__ico" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="currentColor"
+          ><path d="M12 2 3 20h18L12 2zm0 5 4.5 9h-9L12 7z"></path></svg
+        >
+      </span>
+      <span class="tm-logo__tx">{marca.nombre}<b>{marca.sub}</b></span>
+    </a>
+
+    <nav class="tm-nav" id="tm-nav" aria-label="Navegación principal">
+      {
+        navPrincipal.map((n: { t: string; href: string }) => (
+          <a href={n.href}>{n.t}</a>
+        ))
+      }
+    </nav>
+
+    <div class="tm-hdr__cta">
+      <a href="#tiendas" class="tm-btn tm-btn--gris">Agenda cita en taller</a>
+      <a href="#cotiza" class="tm-btn tm-btn--rojo">Cotiza tu auto</a>
+      <button
+        class="tm-hdr__burger"
+        id="tm-burger"
+        type="button"
+        aria-label="Abrir menú"
+      >
+        <svg
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2.2"
+          ><line x1="3" y1="6" x2="21" y2="6"></line><line
+            x1="3"
+            y1="12"
+            x2="21"
+            y2="12"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg
+        >
+      </button>
+    </div>
+  </div>
+</header>
+
+<script>
+  const b = document.getElementById("tm-burger");
+  const n = document.getElementById("tm-nav");
+  b?.addEventListener("click", () => n?.classList.toggle("is-open"));
+</script>
+
+<style>
+  .tm-hdr {
+    background: #fff;
+    border-bottom: 1px solid var(--tm-linea);
+    position: sticky;
+    top: 0;
+    z-index: 60;
+  }
+
+  .tm-hdr__inner {
+    display: flex;
+    align-items: center;
+    gap: clamp(0.75rem, 2vw, 2rem);
+    padding-block: 0.85rem;
+  }
+
+  .tm-logo {
+    display: flex;
+    align-items: center;
+    gap: 0.55rem;
+    flex-shrink: 0;
+  }
+
+  .tm-logo__ico {
+    display: grid;
+    place-items: center;
+    width: 2.6rem;
+    height: 2.6rem;
+    background: var(--tm-rojo);
+    color: #fff;
+    border-radius: 6px;
+  }
+
+  .tm-logo__ico svg {
+    width: 1.5rem;
+    height: 1.5rem;
+  }
+
+  .tm-logo__tx {
+    font-weight: 900;
+    font-size: 1.15rem;
+    color: var(--tm-negro);
+    letter-spacing: -0.02em;
+  }
+
+  .tm-logo__tx b {
+    display: block;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: var(--tm-rojo);
+  }
+
+  .tm-nav {
+    display: flex;
+    gap: 1.5rem;
+    margin-inline: auto;
+    font-size: 0.85rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+  }
+
+  .tm-nav a:hover {
+    color: var(--tm-rojo);
+  }
+
+  .tm-hdr__cta {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    flex-shrink: 0;
+  }
+
+  .tm-hdr__cta .tm-btn {
+    padding: 0.6rem 1.1rem;
+    font-size: 0.72rem;
+  }
+
+  .tm-hdr__burger {
+    display: none;
+    color: var(--tm-negro);
+  }
+
+  @media (max-width: 1080px) {
+    .tm-nav {
+      display: none;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      flex-direction: column;
+      background: #fff;
+      border-bottom: 1px solid var(--tm-linea);
+      padding: 0.75rem 1.5rem;
+    }
+    .tm-nav.is-open {
+      display: flex;
+    }
+    .tm-hdr__burger {
+      display: inline-flex;
+    }
+    .tm-hdr__cta .tm-btn--gris {
+      display: none;
+    }
+  }
+
+  @media (max-width: 560px) {
+    .tm-logo__tx {
+      font-size: 1rem;
+    }
+    .tm-hdr__cta .tm-btn {
+      padding: 0.5rem 0.8rem;
+      font-size: 0.66rem;
+    }
+  }
+</style>

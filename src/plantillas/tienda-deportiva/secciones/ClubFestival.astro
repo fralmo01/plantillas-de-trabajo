@@ -1,0 +1,260 @@
+---
+const eventos = [
+  {
+    titulo: "EL TIEMPO EN TUS MANOS",
+    tipo: "SORTEO",
+    puntos: "✪ 250",
+    img: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?q=80&w=500&auto=format&fit=crop",
+    enlace: "#club"
+  },
+  {
+    titulo: "¡EL FESTIVAL VIENE CON DOBLE PUNTOS!",
+    tipo: "EVENTO",
+    puntos: "31-AGO - 30-SEPT",
+    esGraficoVerde: true,
+    enlace: "#club"
+  },
+  {
+    titulo: "GANA UN PACK MINECRAFT XBOX",
+    tipo: "SORTEO",
+    puntos: "✪ 100 - 400",
+    img: "https://images.unsplash.com/photo-1606813907291-d86efa9b94db?q=80&w=500&auto=format&fit=crop",
+    enlace: "#club"
+  },
+  {
+    titulo: "CANJEA TUS PRODUCTOS FAVORITOS POR PUNTOS",
+    tipo: "EVENTO",
+    puntos: "01-SEPT - 30-SEPT",
+    img: "https://images.unsplash.com/photo-1544816155-12df9643f363?q=80&w=500&auto=format&fit=crop",
+    enlace: "#club"
+  },
+  {
+    titulo: "SORTEO: GANA UNA DE LAS CINCO PLAYSTATION 5",
+    tipo: "SORTEO",
+    puntos: "✪ 150 - 500",
+    img: "https://images.unsplash.com/photo-1606813907291-d86efa9b94db?q=80&w=500&auto=format&fit=crop",
+    enlace: "#club"
+  },
+  {
+    titulo: "DOS ÍCONOS. UN SOLO LOOK.",
+    tipo: "SORTEO",
+    puntos: "✪ 250",
+    img: "https://images.unsplash.com/photo-1515955656352-a1fa3ffcd111?q=80&w=500&auto=format&fit=crop",
+    enlace: "#club"
+  }
+];
+---
+
+<section class="tt-seccion tt-festival">
+  <div class="tt-contenedor">
+    
+    <div class="tt-festival__cabecera">
+      <div class="tt-festival__titulo-wrap">
+        <span class="tt-festival__icono-club">✳</span>
+        <h2 class="tt-festival__titulo">UN MES PARA TI</h2>
+      </div>
+      <p class="tt-festival__subtitulo">
+        Sorteos, recompensas de marcas aliadas y mucho más te esperan. Usa tus puntos y disfruta Tu Tienda Club Festival.
+      </p>
+    </div>
+
+    
+    <div class="tt-festival__grid">
+      {eventos.map((ev) => (
+        <a href={ev.enlace} class="tt-fest-card">
+          <div class={`tt-fest-card__img-wrap ${ev.esGraficoVerde ? 'tt-fest-card__img-wrap--verde' : ''}`}>
+            {ev.esGraficoVerde ? (
+              <div class="tt-fest-card__grafico-verde">
+                <div class="tt-grafico-circulo">
+                  <span>★</span>
+                  <strong>x2</strong>
+                </div>
+              </div>
+            ) : (
+              <img src={ev.img} alt={ev.titulo} loading="lazy" />
+            )}
+            
+            <div class="tt-fest-card__tag-wrap">
+              <span class="tt-fest-card__tag-tipo">{ev.tipo}</span>
+              <span class="tt-fest-card__tag-puntos">{ev.puntos}</span>
+            </div>
+          </div>
+          <h3 class="tt-fest-card__titulo">{ev.titulo}</h3>
+        </a>
+      ))}
+    </div>
+
+    
+    <div class="tt-scroll-tracker">
+      <button class="tt-scroll-flecha" aria-label="Anterior">◀</button>
+      <div class="tt-scroll-barra">
+        <div class="tt-scroll-barra__indicador"></div>
+      </div>
+      <button class="tt-scroll-flecha" aria-label="Siguiente">▶</button>
+    </div>
+  </div>
+</section>
+
+<style>
+  .tt-festival {
+    background: #ffffff;
+    border-bottom: 1px solid var(--tt-gris-borde);
+    width: 100%;
+  }
+
+  .tt-festival__cabecera {
+    margin-bottom: 1.2rem;
+  }
+
+  .tt-festival__titulo-wrap {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .tt-festival__icono-club {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: #00855a;
+    color: #ffffff;
+    font-size: 0.85rem;
+    font-weight: 900;
+  }
+
+  .tt-festival__titulo {
+    font-size: 1.4rem;
+    color: #000000;
+    letter-spacing: -0.01em;
+  }
+
+  .tt-festival__subtitulo {
+    font-size: 0.78rem;
+    color: #767677;
+    margin-top: 0.25rem;
+  }
+
+  .tt-festival__grid {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 12px;
+    width: 100%;
+  }
+
+  .tt-fest-card {
+    text-decoration: none;
+    color: #000000;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+  }
+
+  .tt-fest-card__img-wrap {
+    position: relative;
+    aspect-ratio: 1 / 1;
+    background: #f5f5f5;
+    overflow: hidden;
+    border: 1px solid var(--tt-gris-borde);
+  }
+
+  .tt-fest-card__img-wrap--verde {
+    background: #3e8d64;
+  }
+
+  .tt-fest-card__grafico-verde {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #3e8d64 0%, #2b6346 100%);
+  }
+
+  .tt-grafico-circulo {
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    border: 4px solid #ffffff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: #ffffff;
+  }
+
+  .tt-grafico-circulo span {
+    font-size: 1.8rem;
+    line-height: 1;
+  }
+
+  .tt-grafico-circulo strong {
+    font-size: 1.2rem;
+    font-family: var(--tt-font-condensed);
+    margin-top: -4px;
+  }
+
+  .tt-fest-card__img-wrap img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+  }
+
+  .tt-fest-card:hover .tt-fest-card__img-wrap img {
+    transform: scale(1.04);
+  }
+
+  .tt-fest-card__tag-wrap {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    background: #ffffff;
+    display: flex;
+    flex-direction: column;
+    padding: 0.35rem 0.6rem;
+    border-top: 1px solid var(--tt-gris-borde);
+    border-right: 1px solid var(--tt-gris-borde);
+  }
+
+  .tt-fest-card__tag-tipo {
+    font-family: var(--tt-font-condensed);
+    font-size: 0.62rem;
+    font-weight: 800;
+    letter-spacing: 0.04em;
+    color: #000000;
+  }
+
+  .tt-fest-card__tag-puntos {
+    font-family: var(--tt-font-condensed);
+    font-size: 0.72rem;
+    font-weight: 900;
+    color: #000000;
+  }
+
+  .tt-fest-card__titulo {
+    font-size: 0.78rem;
+    font-weight: 800;
+    line-height: 1.25;
+    letter-spacing: -0.01em;
+    color: #000000;
+  }
+
+  .tt-fest-card:hover .tt-fest-card__titulo {
+    text-decoration: underline;
+  }
+
+  @media (max-width: 1100px) {
+    .tt-festival__grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  @media (max-width: 600px) {
+    .tt-festival__grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+</style>

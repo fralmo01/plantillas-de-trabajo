@@ -1,0 +1,74 @@
+---
+import { marcasTira } from '../datos/contenido.js';
+---
+
+<section class="mk-seccion">
+  <div class="mk-contenedor">
+    <div class="mk-tira">
+      <div class="mk-tira__oferta">
+        <span>zapatillas desde</span>
+        <strong>$29.990</strong>
+      </div>
+      <img src="https://picsum.photos/seed/mk-tira-shoes/700/220" alt="Zapatillas destacadas" loading="lazy" class="mk-tira__foto" />
+      <ul class="mk-tira__marcas">
+        {marcasTira.map((m) => <li>{m}</li>)}
+      </ul>
+    </div>
+  </div>
+</section>
+
+<style>
+  .mk-tira {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+    gap: 1.5rem;
+    background: var(--mk-gris-tarjeta);
+    border: 1px solid var(--mk-gris-borde);
+    border-radius: var(--mk-radio);
+    padding: 1.25rem 1.5rem;
+  }
+
+  .mk-tira__oferta {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.1;
+  }
+
+  .mk-tira__oferta span {
+    font-size: 0.85rem;
+  }
+
+  .mk-tira__oferta strong {
+    font-size: clamp(1.4rem, 3vw, 2rem);
+    color: var(--mk-amarillo);
+    -webkit-text-stroke: 1px var(--mk-tinta);
+  }
+
+  .mk-tira__foto {
+    width: 100%;
+    height: 90px;
+    object-fit: cover;
+    border-radius: 8px;
+  }
+
+  .mk-tira__marcas {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem 1.25rem;
+    list-style: none;
+    font-weight: 700;
+    font-size: 0.8rem;
+    letter-spacing: 0.04em;
+  }
+
+  @media (max-width: 800px) {
+    .mk-tira {
+      grid-template-columns: 1fr;
+      text-align: center;
+    }
+    .mk-tira__marcas {
+      justify-content: center;
+    }
+  }
+</style>

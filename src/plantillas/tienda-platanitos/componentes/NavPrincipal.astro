@@ -1,0 +1,51 @@
+---
+import { contenidoVertical } from '../datos/verticales.js';
+
+const { vertical = 'moda' } = Astro.props as { vertical?: string };
+const items: { icono: string; texto: string }[] =
+  (contenidoVertical as Record<string, any>)[vertical]?.nav ?? contenidoVertical.moda.nav;
+---
+
+<nav class="pl-nav" aria-label="Navegación">
+  <div class="pl-contenedor pl-nav__inner">
+    {
+      items.map((it: { icono: string; texto: string }) => (
+        <a href="#" class="pl-nav__link">
+          <span aria-hidden="true">{it.icono}</span> {it.texto}
+        </a>
+      ))
+    }
+  </div>
+</nav>
+
+<style>
+  .pl-nav {
+    background: var(--pl-blanco);
+    border-block: 1px solid var(--pl-gris-borde);
+    position: sticky;
+    top: 0;
+    z-index: 50;
+  }
+
+  .pl-nav__inner {
+    display: flex;
+    align-items: center;
+    gap: clamp(0.75rem, 2vw, 1.75rem);
+    overflow-x: auto;
+    padding-block: 0.6rem;
+  }
+
+  .pl-nav__link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    font-size: 0.85rem;
+    font-weight: 700;
+    white-space: nowrap;
+    padding-block: 0.25rem;
+  }
+
+  .pl-nav__link:hover {
+    color: var(--pl-verde-osc);
+  }
+</style>

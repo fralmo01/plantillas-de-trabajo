@@ -1,0 +1,134 @@
+.tpl-gimnasio-smartfit {
+  --gs-amarillo: #ffb800;
+  --gs-amarillo-osc: #e5a600;
+  --gs-amarillo-claro: #fff9e6;
+  --gs-negro: #111111;
+  --gs-oscuro: #1e232a;
+  --gs-card-oscura: #181c22;
+  --gs-g900: #1f2937;
+  --gs-g700: #374151;
+  --gs-g500: #6b7280;
+  --gs-g200: #e5e7eb;
+  --gs-g100: #f3f4f6;
+  --gs-g50: #f9fafb;
+  --gs-blanco: #ffffff;
+  --gs-verde-bg: #e6f7f0;
+  --gs-verde-tx: #047857;
+
+  --gs-font: "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --gs-font-head: "Rubik", "Plus Jakarta Sans", sans-serif;
+
+  --gs-radio-sm: 6px;
+  --gs-radio-md: 12px;
+  --gs-radio-lg: 20px;
+  --gs-radio-full: 9999px;
+  --gs-sombra-md: 0 6px 18px rgba(0, 0, 0, 0.08);
+  --gs-sombra-card: 0 4px 20px rgba(0, 0, 0, 0.06);
+  --gs-maxw: 1200px;
+
+  background: var(--gs-blanco);
+  color: var(--gs-g900);
+  font-family: var(--gs-font);
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+.tpl-gimnasio-smartfit *,
+.tpl-gimnasio-smartfit *::before,
+.tpl-gimnasio-smartfit *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+.tpl-gimnasio-smartfit h1,
+.tpl-gimnasio-smartfit h2,
+.tpl-gimnasio-smartfit h3 {
+  font-family: var(--gs-font-head);
+  line-height: 1.15;
+  color: var(--gs-negro);
+}
+
+.tpl-gimnasio-smartfit img {
+  max-width: 100%;
+  display: block;
+}
+
+.tpl-gimnasio-smartfit a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.tpl-gimnasio-smartfit button {
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+  border: none;
+  background: none;
+}
+
+.tpl-gimnasio-smartfit input,
+.tpl-gimnasio-smartfit select {
+  font: inherit;
+}
+
+.tpl-gimnasio-smartfit .gs-wrap {
+  max-width: var(--gs-maxw);
+  margin-inline: auto;
+  padding-inline: clamp(1rem, 3vw, 2rem);
+}
+
+.tpl-gimnasio-smartfit .gs-seccion {
+  padding-block: clamp(2.5rem, 6vw, 4rem);
+}
+
+.tpl-gimnasio-smartfit .gs-titulo {
+  font-size: clamp(1.5rem, 3.5vw, 2.3rem);
+  font-weight: 800;
+  text-align: center;
+}
+
+.tpl-gimnasio-smartfit .gs-titulo + .gs-sub {
+  text-align: center;
+  color: var(--gs-g500);
+  margin: 0.4rem auto 2rem;
+  max-width: 52ch;
+}
+
+.tpl-gimnasio-smartfit .gs-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.85rem 1.75rem;
+  font-weight: 800;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  border-radius: var(--gs-radio-full);
+  transition: transform 0.15s ease, background 0.15s ease;
+}
+
+.tpl-gimnasio-smartfit .gs-btn:hover {
+  transform: translateY(-2px);
+}
+
+.tpl-gimnasio-smartfit .gs-btn--amarillo {
+  background: var(--gs-amarillo);
+  color: var(--gs-negro);
+}
+
+.tpl-gimnasio-smartfit .gs-btn--amarillo:hover {
+  background: var(--gs-amarillo-osc);
+}
+
+.tpl-gimnasio-smartfit .gs-btn--negro {
+  background: var(--gs-negro);
+  color: var(--gs-blanco);
+}
+
+.tpl-gimnasio-smartfit .gs-btn--outline {
+  border: 2px solid var(--gs-negro);
+  color: var(--gs-negro);
+}

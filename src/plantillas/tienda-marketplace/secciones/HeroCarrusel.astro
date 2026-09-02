@@ -1,0 +1,192 @@
+---
+import { slidesHero } from '../datos/contenido.js';
+---
+
+<section class="mk-hero">
+  <p class="mk-hero__cuotas">
+    <strong>4 cuotas sin interés</strong> · ¡en toda la tienda!
+  </p>
+
+  <div class="mk-hero__viewport">
+    <div class="mk-hero__track" id="mk-hero-track">
+      {
+        slidesHero.map((s, i) => (
+          <article
+            class:list={['mk-hero__slide', `mk-hero__slide--${s.tema}`]}
+            data-slide={i}
+          >
+            <img src={`https://picsum.photos/seed/${s.seed}/1400/460`} alt="" loading={i === 0 ? 'eager' : 'lazy'} />
+            <div class="mk-hero__texto">
+              <span class="mk-hero__fascina">me fascina</span>
+              <h2>{s.titulo}</h2>
+              <p>{s.sub}</p>
+              <a href="#" class="mk-hero__cta">{s.cta} →</a>
+            </div>
+          </article>
+        ))
+      }
+    </div>
+
+    <button class="mk-hero__flecha mk-hero__flecha--prev" id="mk-hero-prev" aria-label="Anterior">‹</button>
+    <button class="mk-hero__flecha mk-hero__flecha--next" id="mk-hero-next" aria-label="Siguiente">›</button>
+
+    <div class="mk-hero__dots" id="mk-hero-dots">
+      {slidesHero.map((_, i) => <button aria-label={`Ir al slide ${i + 1}`} data-dot={i}></button>)}
+    </div>
+  </div>
+</section>
+
+<script>
+  const track = document.getElementById('mk-hero-track');
+  const dots = [...document.querySelectorAll('#mk-hero-dots button')];
+  const total = track ? track.children.length : 0;
+  let idx = 0;
+
+  function ir(n: number) {
+    if (!track || total === 0) return;
+    idx = (n + total) % total;
+    track.style.transform = `translateX(-${idx * 100}%)`;
+    dots.forEach((d, i) => d.classList.toggle('is-activo', i === idx));
+  }
+
+  document.getElementById('mk-hero-prev')?.addEventListener('click', () => ir(idx - 1));
+  document.getElementById('mk-hero-next')?.addEventListener('click', () => ir(idx + 1));
+  dots.forEach((d, i) => d.addEventListener('click', () => ir(i)));
+
+  let timer = setInterval(() => ir(idx + 1), 6000);
+  track?.closest('.mk-hero__viewport')?.addEventListener('mouseenter', () => clearInterval(timer));
+  track?.closest('.mk-hero__viewport')?.addEventListener('mouseleave', () => {
+    timer = setInterval(() => ir(idx + 1), 6000);
+  });
+
+  ir(0);
+</script>
+
+<style>
+  .mk-hero__cuotas {
+    background: var(--mk-negro);
+    color: var(--mk-blanco);
+    text-align: center;
+    font-size: 0.82rem;
+    padding: 0.5rem 1rem;
+  }
+
+  .mk-hero__viewport {
+    position: relative;
+    max-width: var(--mk-maxw);
+    margin-inline: auto;
+    overflow: hidden;
+  }
+
+  .mk-hero__track {
+    display: flex;
+    transition: transform 0.45s ease;
+  }
+
+  .mk-hero__slide {
+    position: relative;
+    flex: 0 0 100%;
+    min-height: clamp(240px, 32vw, 420px);
+  }
+
+  .mk-hero__slide img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .mk-hero__texto {
+    position: relative;
+    z-index: 1;
+    max-width: 42ch;
+    padding: clamp(1.5rem, 5vw, 3.5rem);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+
+  .mk-hero__slide--claro .mk-hero__texto {
+    color: var(--mk-tinta);
+  }
+
+  .mk-hero__slide--oscuro .mk-hero__texto {
+    color: var(--mk-blanco);
+    text-shadow: 0 2px 12px rgba(0, 0, 0, 0.5);
+  }
+
+  .mk-hero__fascina {
+    background: var(--mk-rosa);
+    color: #fff;
+    font-size: 0.7rem;
+    font-weight: 700;
+    padding: 0.15rem 0.5rem;
+    border-radius: 4px;
+    text-transform: lowercase;
+  }
+
+  .mk-hero__texto h2 {
+    font-size: clamp(1.6rem, 4.5vw, 3rem);
+    text-transform: lowercase;
+  }
+
+  .mk-hero__texto p {
+    font-size: clamp(0.9rem, 1.8vw, 1.1rem);
+  }
+
+  .mk-hero__cta {
+    margin-top: 0.6rem;
+    font-weight: 700;
+    text-decoration: underline;
+    text-underline-offset: 4px;
+  }
+
+  .mk-hero__flecha {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 38px;
+    height: 38px;
+    border: 0;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.85);
+    color: var(--mk-tinta);
+    font-size: 1.4rem;
+    line-height: 1;
+    cursor: pointer;
+  }
+
+  .mk-hero__flecha--prev {
+    left: 10px;
+  }
+  .mk-hero__flecha--next {
+    right: 10px;
+  }
+
+  .mk-hero__dots {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 12px;
+    display: flex;
+    justify-content: center;
+    gap: 6px;
+  }
+
+  .mk-hero__dots button {
+    width: 8px;
+    height: 8px;
+    border: 0;
+    border-radius: 50%;
+    background: rgba(0, 0, 0, 0.25);
+    cursor: pointer;
+  }
+
+  .mk-hero__dots button.is-activo {
+    background: var(--mk-morado);
+    width: 22px;
+    border-radius: 999px;
+  }
+</style>

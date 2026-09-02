@@ -1,0 +1,65 @@
+---
+import { disciplinas } from '../datos/firma.js';
+---
+
+<section class="ca-wrap ca-block" id="disciplinas">
+  <p class="ca-eyebrow">Disciplinas</p>
+  <h2 class="ca-h">Seis prácticas, un solo criterio</h2>
+  <p class="ca-lead">
+    No repartimos el caso entre departamentos. Cada asunto lo lleva un socio que responde por el resultado.
+  </p>
+
+  <div class="ca-disc">
+    {
+      disciplinas.map((d) => (
+        <article class="ca-disc__item">
+          <span class="ca-disc__n">{d.n}</span>
+          <div>
+            <h3>{d.t}</h3>
+            <p>{d.d}</p>
+          </div>
+        </article>
+      ))
+    }
+  </div>
+</section>
+
+<style>
+  .ca-disc {
+    margin-top: 2.5rem;
+    border-top: 1px solid var(--ca-line);
+  }
+
+  .ca-disc__item {
+    display: grid;
+    grid-template-columns: 4rem 1fr;
+    gap: 1.5rem;
+    padding-block: 1.75rem;
+    border-bottom: 1px solid var(--ca-line);
+    align-items: baseline;
+  }
+
+  .ca-disc__n {
+    font-family: var(--ca-serif);
+    font-size: 1.1rem;
+    color: var(--ca-bronze);
+  }
+
+  .ca-disc__item h3 {
+    font-size: 1.35rem;
+    margin-bottom: 0.35rem;
+  }
+
+  .ca-disc__item p {
+    color: rgba(26, 26, 26, 0.7);
+    font-size: 0.92rem;
+    max-width: 60ch;
+  }
+
+  @media (max-width: 560px) {
+    .ca-disc__item {
+      grid-template-columns: 1fr;
+      gap: 0.5rem;
+    }
+  }
+</style>

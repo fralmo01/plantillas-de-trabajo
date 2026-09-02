@@ -1,0 +1,177 @@
+---
+import { verticales, contenidoVertical } from '../datos/verticales.js';
+
+const { vertical = 'moda' } = Astro.props as { vertical?: string };
+const cats: string[] = (contenidoVertical as Record<string, any>)[vertical]?.circulos ?? [];
+---
+
+<div class="pl-drawer" id="pl-menu-lateral" hidden>
+  <div class="pl-drawer__overlay" data-cerrar></div>
+
+  <aside class="pl-drawer__panel" role="dialog" aria-modal="true" aria-label="Menú">
+    <div class="pl-drawer__cab">
+      <span class="pl-drawer__marca">🍃 tienda<b>.com</b></span>
+      <button class="pl-drawer__x" type="button" data-cerrar aria-label="Cerrar menú">✕</button>
+    </div>
+
+    <p class="pl-drawer__rotulo">Explora</p>
+    <nav class="pl-drawer__nav" aria-label="Verticales">
+      {verticales.map((v) => (
+        <a href={v.href} class:list={['pl-drawer__link', { 'is-activo': v.id === vertical }]}>
+          {v.etiqueta}
+        </a>
+      ))}
+    </nav>
+
+    <p class="pl-drawer__rotulo">Categorías</p>
+    <nav class="pl-drawer__nav pl-drawer__nav--sec" aria-label="Categorías">
+      {cats.map((c: string) => (
+        <a href="#" class="pl-drawer__link">{c}</a>
+      ))}
+    </nav>
+
+    <div class="pl-drawer__sep"></div>
+    <nav class="pl-drawer__nav pl-drawer__nav--sec" aria-label="Ayuda">
+      <a href="/plantillas/tienda-platanitos/buscar/?q=zapatillas" class="pl-drawer__link">Buscar productos</a>
+      <a href="#" class="pl-drawer__link">Seguimiento de compra</a>
+      <a href="#" class="pl-drawer__link">Centro de ayuda</a>
+    </nav>
+  </aside>
+</div>
+
+<script>
+  const drawer = document.getElementById('pl-menu-lateral');
+  const burger = document.getElementById('pl-burger');
+  if (drawer && burger) {
+    const abrir = () => {
+      drawer.hidden = false;
+      void drawer.offsetWidth;
+      drawer.classList.add('is-abierto');
+      burger.setAttribute('aria-expanded', 'true');
+      document.body.style.overflow = 'hidden';
+    };
+    const cerrar = () => {
+      drawer.classList.remove('is-abierto');
+      burger.setAttribute('aria-expanded', 'false');
+      document.body.style.overflow = '';
+      setTimeout(() => {
+        drawer.hidden = true;
+      }, 250);
+    };
+    burger.addEventListener('click', () =>
+      drawer.classList.contains('is-abierto') ? cerrar() : abrir(),
+    );
+    drawer.querySelectorAll('[data-cerrar]').forEach((el) => el.addEventListener('click', cerrar));
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && drawer.classList.contains('is-abierto')) cerrar();
+    });
+  }
+</script>
+
+<style>
+  .pl-drawer {
+    position: fixed;
+    inset: 0;
+    z-index: 400;
+  }
+
+  .pl-drawer__overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.45);
+    opacity: 0;
+    transition: opacity 0.25s ease;
+  }
+
+  .pl-drawer.is-abierto .pl-drawer__overlay {
+    opacity: 1;
+  }
+
+  .pl-drawer__panel {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: min(320px, 84vw);
+    background: var(--pl-blanco);
+    box-shadow: 0 0 40px rgba(0, 0, 0, 0.3);
+    transform: translateX(-100%);
+    transition: transform 0.25s ease;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    padding-bottom: 1.5rem;
+  }
+
+  .pl-drawer.is-abierto .pl-drawer__panel {
+    transform: none;
+  }
+
+  .pl-drawer__cab {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem 1.1rem;
+    background: var(--pl-verde-osc);
+    color: #fff;
+  }
+
+  .pl-drawer__marca {
+    font-weight: 800;
+  }
+
+  .pl-drawer__marca b {
+    opacity: 0.7;
+  }
+
+  .pl-drawer__x {
+    background: none;
+    border: 0;
+    color: inherit;
+    font-size: 1.1rem;
+    cursor: pointer;
+    line-height: 1;
+  }
+
+  .pl-drawer__rotulo {
+    padding: 0.9rem 1.2rem 0.35rem;
+    font-size: 0.68rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--pl-gris-texto);
+  }
+
+  .pl-drawer__nav {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .pl-drawer__link {
+    padding: 0.75rem 1.2rem;
+    font-size: 0.9rem;
+    font-weight: 700;
+    border-bottom: 1px solid var(--pl-gris-borde);
+  }
+
+  .pl-drawer__link.is-activo {
+    color: var(--pl-verde-osc);
+  }
+
+  .pl-drawer__nav--sec .pl-drawer__link {
+    font-weight: 500;
+    font-size: 0.85rem;
+    color: var(--pl-gris-texto);
+  }
+
+  .pl-drawer__link:hover {
+    background: var(--pl-verde-claro);
+    color: var(--pl-verde-osc);
+  }
+
+  .pl-drawer__sep {
+    height: 8px;
+    background: var(--pl-gris-tarjeta);
+    margin-top: 0.5rem;
+  }
+</style>

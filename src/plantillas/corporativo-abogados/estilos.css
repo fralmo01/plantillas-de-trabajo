@@ -1,0 +1,126 @@
+@import url("https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,600;0,6..96,700;1,6..96,500&family=Hanken+Grotesk:wght@400;500;600;700&display=swap");
+
+.tpl-corporativo-abogados {
+  --ca-parch: #fdfcf9;
+  --ca-ink: #1a1a1a;
+  --ca-bronze: #755a34;
+  --ca-bronze-dk: #5b421f;
+  --ca-panel: #f5f3ef;
+  --ca-panel-2: #eae8e4;
+  --ca-dark: #1b1c1c;
+  --ca-gold: #e5c192;
+  --ca-line: rgba(26, 26, 26, 0.12);
+  --ca-line-soft: rgba(26, 26, 26, 0.06);
+
+  --ca-serif: "Bodoni Moda", "Didot", "Playfair Display", Georgia, "Times New Roman", serif;
+  --ca-sans: "Hanken Grotesk", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --ca-max: 1280px;
+  --ca-pad: clamp(1.25rem, 5vw, 3rem);
+
+  background: var(--ca-parch);
+  color: var(--ca-ink);
+  font-family: var(--ca-sans);
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+.tpl-corporativo-abogados *,
+.tpl-corporativo-abogados *::before,
+.tpl-corporativo-abogados *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+.tpl-corporativo-abogados h1,
+.tpl-corporativo-abogados h2,
+.tpl-corporativo-abogados h3 {
+  font-family: var(--ca-serif);
+  font-weight: 600;
+  line-height: 1.15;
+  color: var(--ca-ink);
+}
+
+.tpl-corporativo-abogados img {
+  max-width: 100%;
+  display: block;
+}
+
+.tpl-corporativo-abogados a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.tpl-corporativo-abogados button {
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+  border: none;
+  background: none;
+}
+
+.tpl-corporativo-abogados input,
+.tpl-corporativo-abogados select,
+.tpl-corporativo-abogados textarea {
+  font: inherit;
+}
+
+.tpl-corporativo-abogados .ca-wrap {
+  max-width: var(--ca-max);
+  margin-inline: auto;
+  padding-inline: var(--ca-pad);
+}
+
+.tpl-corporativo-abogados .ca-block {
+  padding-block: clamp(3rem, 8vw, 6rem);
+}
+
+.tpl-corporativo-abogados .ca-eyebrow {
+  font-family: var(--ca-sans);
+  text-transform: uppercase;
+  letter-spacing: 0.32em;
+  font-size: 0.68rem;
+  font-weight: 700;
+  color: var(--ca-bronze);
+}
+
+.tpl-corporativo-abogados .ca-h {
+  font-size: clamp(1.8rem, 4.5vw, 3rem);
+  margin: 0.75rem 0 1rem;
+}
+
+.tpl-corporativo-abogados .ca-lead {
+  color: rgba(26, 26, 26, 0.72);
+  font-size: clamp(0.95rem, 1.6vw, 1.1rem);
+  max-width: 62ch;
+}
+
+.tpl-corporativo-abogados .ca-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.9rem 1.9rem;
+  font-family: var(--ca-sans);
+  font-size: 0.74rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  border: 1px solid var(--ca-ink);
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.tpl-corporativo-abogados .ca-btn:hover {
+  background: var(--ca-ink);
+  color: var(--ca-parch);
+}
+
+.tpl-corporativo-abogados .ca-btn--dark {
+  background: var(--ca-ink);
+  color: var(--ca-parch);
+}
+
+.tpl-corporativo-abogados .ca-btn--dark:hover {
+  background: transparent;
+  color: var(--ca-ink);
+}

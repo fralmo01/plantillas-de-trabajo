@@ -1,0 +1,156 @@
+---
+const looks = [
+  {
+    titulo: "Look Urbano Running Femenino",
+    articulos: "4 artículos",
+    img: "https://images.unsplash.com/photo-1518611012118-696072aa579a?q=80&w=700&auto=format&fit=crop",
+    enlace: "#mujer"
+  },
+  {
+    titulo: "Look Performance Training Masculino",
+    articulos: "3 artículos",
+    img: "https://images.unsplash.com/photo-1506152983158-b4a74a01c721?q=80&w=700&auto=format&fit=crop",
+    enlace: "#hombre"
+  },
+  {
+    titulo: "Look Runner Streetwear Dos Piezas",
+    articulos: "3 artículos",
+    img: "https://images.unsplash.com/photo-1538805060514-97d9cc17730c?q=80&w=700&auto=format&fit=crop",
+    enlace: "#mujer"
+  }
+];
+---
+
+<section class="tt-seccion tt-looks" id="tendencias">
+  <div class="tt-contenedor">
+    
+    <div class="tt-looks__cabecera">
+      <h2 class="tt-looks__titulo">COMPRA EL LOOK</h2>
+      <a href="#calzado" class="tt-btn-caja tt-btn-caja--blanco tt-looks__btn-ver-todo">
+        Ver todo <span>→</span>
+      </a>
+    </div>
+
+    
+    <div class="tt-looks__grid">
+      {looks.map((look) => (
+        <article class="tt-look-card">
+          <a href={look.enlace} class="tt-look-card__link">
+            <div class="tt-look-card__img-wrap">
+              <img src={look.img} alt={look.titulo} loading="lazy" />
+              
+              <span class="tt-look-card__badge">
+                {look.articulos} <span class="tt-look-card__icono-flecha">↗</span>
+              </span>
+            </div>
+          </a>
+        </article>
+      ))}
+    </div>
+
+    
+    <div class="tt-scroll-tracker">
+      <button class="tt-scroll-flecha" aria-label="Anterior">◀</button>
+      <div class="tt-scroll-barra">
+        <div class="tt-scroll-barra__indicador"></div>
+      </div>
+      <button class="tt-scroll-flecha" aria-label="Siguiente">▶</button>
+    </div>
+  </div>
+</section>
+
+<style>
+  .tt-looks {
+    background: var(--tt-blanco);
+    border-bottom: 1px solid var(--tt-gris-borde);
+  }
+
+  .tt-looks__cabecera {
+    margin-bottom: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.6rem;
+  }
+
+  .tt-looks__titulo {
+    font-size: 1.8rem;
+    color: var(--tt-negro);
+    letter-spacing: -0.02em;
+  }
+
+  .tt-looks__btn-ver-todo {
+    font-size: 0.78rem;
+    padding: 0.45rem 0.9rem;
+  }
+
+  .tt-looks__btn-ver-todo span {
+    transition: transform 0.2s ease;
+  }
+
+  .tt-looks__btn-ver-todo:hover span {
+    transform: translateX(4px);
+  }
+
+  .tt-looks__grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.2rem;
+  }
+
+  .tt-look-card {
+    background: var(--tt-gris-tarjeta);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .tt-look-card__link {
+    text-decoration: none;
+    display: block;
+  }
+
+  .tt-look-card__img-wrap {
+    position: relative;
+    aspect-ratio: 1 / 1.35;
+    overflow: hidden;
+  }
+
+  .tt-look-card__img-wrap img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 20%;
+    transition: transform 0.4s ease;
+  }
+
+  .tt-look-card:hover .tt-look-card__img-wrap img {
+    transform: scale(1.04);
+  }
+
+  .tt-look-card__badge {
+    position: absolute;
+    bottom: 1rem;
+    left: 1rem;
+    background: var(--tt-blanco);
+    border: 1px solid var(--tt-gris-borde);
+    color: var(--tt-negro);
+    font-family: var(--tt-font-condensed);
+    font-size: 0.72rem;
+    font-weight: 800;
+    padding: 0.35rem 0.65rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+  }
+
+  .tt-look-card__icono-flecha {
+    font-size: 0.8rem;
+    font-weight: 900;
+  }
+
+  @media (max-width: 800px) {
+    .tt-looks__grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

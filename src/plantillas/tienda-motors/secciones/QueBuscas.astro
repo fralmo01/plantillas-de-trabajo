@@ -1,0 +1,76 @@
+---
+import { busquedas } from '../datos/motors.js';
+---
+
+<section class="tm-seccion tm-wrap">
+  <h2 class="tm-titulo">¿Qué estás buscando?</h2>
+  <div class="tm-busca">
+    {
+      busquedas.map((b) => (
+        <a href="#modelos" class="tm-busca__card">
+          <div class="tm-busca__media">
+            <img src={b.img} alt={b.t} loading="lazy" />
+          </div>
+          <span class="tm-busca__lbl">{b.t}</span>
+          <span class="tm-busca__d">{b.d}</span>
+        </a>
+      ))
+    }
+  </div>
+</section>
+
+<style>
+  .tm-busca {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+  }
+
+  .tm-busca__card {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid var(--tm-linea);
+    background: #fff;
+    transition: box-shadow 0.15s ease, transform 0.15s ease;
+  }
+
+  .tm-busca__card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 30px -14px rgba(0, 0, 0, 0.35);
+  }
+
+  .tm-busca__media {
+    aspect-ratio: 16 / 10;
+    overflow: hidden;
+  }
+
+  .tm-busca__media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .tm-busca__lbl {
+    background: var(--tm-rojo);
+    color: #fff;
+    text-align: center;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    padding: 0.75rem;
+    font-size: 0.95rem;
+  }
+
+  .tm-busca__d {
+    padding: 0.9rem 1rem 1.1rem;
+    font-size: 0.82rem;
+    color: var(--tm-gris);
+    text-align: center;
+  }
+
+  @media (max-width: 820px) {
+    .tm-busca {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

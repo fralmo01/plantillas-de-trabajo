@@ -1,0 +1,124 @@
+---
+import { pesos } from '../datos/productos.js';
+
+const { producto: p } = Astro.props;
+---
+
+<article class="mk-prod">
+  <a href="#" class="mk-prod__media">
+    <img src={`https://picsum.photos/seed/${p.seed}/360/360`} alt={p.nombre} loading="lazy" />
+    {p.tag && <span class="mk-prod__tag">{p.tag}</span>}
+    {p.dcto && <span class="mk-prod__dcto">-{p.dcto}%</span>}
+  </a>
+  <div class="mk-prod__cuerpo">
+    <span class="mk-prod__marca">{p.marca}</span>
+    <p class="mk-prod__nombre">{p.nombre}</p>
+    <p class="mk-prod__precios">
+      {p.antes && <s>{pesos(p.antes)}</s>}
+      <b>{pesos(p.precio)}</b>
+      {p.tarjeta && <span class="mk-prod__tarjeta">{pesos(p.tarjeta)} con Tarjeta tienda.com</span>}
+    </p>
+    <span class="mk-prod__cuotas">4 cuotas sin interés</span>
+  </div>
+</article>
+
+<style>
+  .mk-prod {
+    display: flex;
+    flex-direction: column;
+    background: var(--mk-blanco);
+    border: 1px solid var(--mk-gris-borde);
+    border-radius: 10px;
+    overflow: hidden;
+  }
+
+  .mk-prod__media {
+    position: relative;
+    aspect-ratio: 1;
+    background: var(--mk-gris-tarjeta);
+    display: block;
+  }
+
+  .mk-prod__media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .mk-prod__tag {
+    position: absolute;
+    top: 0.5rem;
+    left: 0.5rem;
+    background: var(--mk-amarillo);
+    color: var(--mk-negro);
+    font-size: 0.64rem;
+    font-weight: 800;
+    padding: 0.15rem 0.45rem;
+    border-radius: 4px;
+  }
+
+  .mk-prod__dcto {
+    position: absolute;
+    top: 0.5rem;
+    right: 0.5rem;
+    background: var(--mk-rosa);
+    color: #fff;
+    font-size: 0.72rem;
+    font-weight: 800;
+    padding: 0.15rem 0.45rem;
+    border-radius: 4px;
+  }
+
+  .mk-prod__cuerpo {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+    padding: 0.75rem 0.85rem 1rem;
+  }
+
+  .mk-prod__marca {
+    font-size: 0.68rem;
+    font-weight: 800;
+    letter-spacing: 0.04em;
+    color: var(--mk-gris-texto);
+  }
+
+  .mk-prod__nombre {
+    font-size: 0.8rem;
+    line-height: 1.3;
+    min-height: 2.1em;
+  }
+
+  .mk-prod__precios {
+    display: flex;
+    flex-direction: column;
+    margin-top: 0.3rem;
+  }
+
+  .mk-prod__precios s {
+    font-size: 0.72rem;
+    color: var(--mk-gris-texto);
+  }
+
+  .mk-prod__precios b {
+    font-size: 1.05rem;
+    font-weight: 800;
+  }
+
+  .mk-prod__tarjeta {
+    font-size: 0.66rem;
+    color: var(--mk-morado);
+    font-weight: 700;
+  }
+
+  .mk-prod__cuotas {
+    margin-top: 0.4rem;
+    align-self: flex-start;
+    background: var(--mk-rojo);
+    color: #fff;
+    font-size: 0.62rem;
+    font-weight: 700;
+    padding: 0.15rem 0.45rem;
+    border-radius: 4px;
+  }
+</style>

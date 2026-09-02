@@ -1,0 +1,18 @@
+---
+import '@fontsource-variable/montserrat/wght.css';
+import MarcoTienda from '../componentes/MarcoTienda.astro';
+import ListadoCategoria from '../componentes/ListadoCategoria.astro';
+import { categorias } from '../datos/categorias.js';
+import { porCategoria } from '../datos/productos.js';
+
+export const titulo = 'Colecciones | tu tienda.com';
+export const descripcion = 'Todas las colecciones de tu tienda.com en un solo lugar.';
+
+const slug = 'colecciones';
+const meta = categorias[slug];
+const lista = porCategoria(slug);
+---
+
+<MarcoTienda activo="Colecciones">
+  <ListadoCategoria slug={slug} meta={meta} lista={lista} />
+</MarcoTienda>

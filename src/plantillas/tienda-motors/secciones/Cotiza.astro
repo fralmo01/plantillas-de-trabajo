@@ -1,0 +1,207 @@
+---
+import { modelos, tiendas } from "../datos/motors.js";
+---
+
+<section class="tm-cotiza" id="cotiza">
+  <div class="tm-wrap tm-cotiza__inner">
+    <div class="tm-cotiza__texto">
+      <h2>Cotiza tu auto</h2>
+      <p>
+        Déjanos tus datos y un asesor te contactará con la mejor oferta y el
+        plan de financiamiento a tu medida.
+      </p>
+      <ul>
+        <li>Aprobación en 24 horas hábiles</li>
+        <li>Inicial desde 20% · tasa preferente</li>
+        <li>Reserva online sujeta a stock</li>
+      </ul>
+    </div>
+
+    <form class="tm-cotiza__form" onsubmit="return false">
+      <label
+        >Nombre<input
+          type="text"
+          name="nombre"
+          autocomplete="name"
+          required
+        /></label
+      >
+      <label
+        >Correo<input
+          type="email"
+          name="correo"
+          autocomplete="email"
+          required
+        /></label
+      >
+      <label
+        >Teléfono<input
+          type="tel"
+          name="tel"
+          autocomplete="tel"
+          required
+        /></label
+      >
+      <label
+        >Modelo de interés
+        <select name="modelo">
+          {modelos.map((m: { nombre: string }) => <option>{m.nombre}</option>)}
+          <option>Aún no lo decido</option>
+        </select>
+      </label>
+      <button type="submit" class="tm-btn tm-btn--rojo"
+        >Solicitar cotización</button
+      >
+      <p class="tm-cotiza__nota">
+        * Cifras referenciales. No constituyen oferta de crédito.
+      </p>
+    </form>
+  </div>
+</section>
+
+<section class="tm-seccion tm-wrap" id="tiendas">
+  <h2 class="tm-titulo">Tiendas y talleres</h2>
+  <div class="tm-tiendas">
+    {
+      tiendas.map((t) => (
+        <article class="tm-tienda">
+          <span class="tm-tienda__tipo">{t.tipo}</span>
+          <h3>{t.nombre}</h3>
+          <p>{t.dir}</p>
+          <p class="tm-tienda__tel">{t.tel}</p>
+          <a href="#cotiza" class="tm-btn tm-btn--outline">
+            Agendar cita
+          </a>
+        </article>
+      ))
+    }
+  </div>
+</section>
+
+<style>
+  .tm-cotiza {
+    background: var(--tm-negro);
+    color: #fff;
+  }
+
+  .tm-cotiza__inner {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: clamp(1.75rem, 5vw, 4rem);
+    align-items: center;
+    padding-block: clamp(2.5rem, 6vw, 4rem);
+  }
+
+  .tm-cotiza__texto h2 {
+    color: #fff;
+    font-size: clamp(1.6rem, 3.6vw, 2.2rem);
+    text-transform: uppercase;
+  }
+
+  .tm-cotiza__texto p {
+    margin: 0.6rem 0 1rem;
+    color: rgba(255, 255, 255, 0.82);
+    font-size: 0.92rem;
+  }
+
+  .tm-cotiza__texto ul {
+    list-style: none;
+    display: grid;
+    gap: 0.4rem;
+    font-size: 0.85rem;
+  }
+
+  .tm-cotiza__texto li::before {
+    content: "› ";
+    color: var(--tm-rojo);
+    font-weight: 900;
+  }
+
+  .tm-cotiza__form {
+    background: #fff;
+    color: var(--tm-negro);
+    padding: 1.75rem;
+    display: grid;
+    gap: 0.9rem;
+  }
+
+  .tm-cotiza__form label {
+    display: grid;
+    gap: 0.35rem;
+    font-size: 0.74rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--tm-gris);
+  }
+
+  .tm-cotiza__form input,
+  .tm-cotiza__form select {
+    border: 1px solid var(--tm-linea);
+    padding: 0.65rem 0.85rem;
+  }
+
+  .tm-cotiza__nota {
+    font-size: 0.68rem;
+    color: var(--tm-gris);
+  }
+
+  .tm-tiendas {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+  }
+
+  .tm-tienda {
+    border: 1px solid var(--tm-linea);
+    padding: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+  }
+
+  .tm-tienda__tipo {
+    align-self: flex-start;
+    background: var(--tm-panel-2);
+    font-size: 0.64rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    padding: 0.15rem 0.5rem;
+    border-radius: 3px;
+    color: var(--tm-gris);
+  }
+
+  .tm-tienda h3 {
+    font-size: 1rem;
+    color: var(--tm-negro);
+  }
+
+  .tm-tienda p {
+    font-size: 0.8rem;
+    color: var(--tm-gris);
+  }
+
+  .tm-tienda__tel {
+    font-weight: 700;
+    color: var(--tm-negro) !important;
+  }
+
+  .tm-tienda .tm-btn {
+    margin-top: auto;
+    padding: 0.5rem;
+    font-size: 0.7rem;
+  }
+
+  @media (max-width: 980px) {
+    .tm-tiendas {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 760px) {
+    .tm-cotiza__inner {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

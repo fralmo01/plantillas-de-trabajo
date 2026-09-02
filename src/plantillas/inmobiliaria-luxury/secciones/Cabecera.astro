@@ -1,0 +1,157 @@
+---
+import { ticker, navLinks } from '../datos/proyectos.js';
+const anclas: Record<string, string> = {
+  Proyectos: '#catalogo', 'Experiencia 3D': '#experiencia', Ubicaciones: '#mapa',
+  Simulador: '#simulador', Concierge: '#concierge',
+};
+---
+
+<div class="il-ticker" aria-label="Indicadores de mercado inmobiliario">
+  <div class="il-ticker__track">
+    {
+      [...ticker, ...ticker].map((t) => (
+        <span><b>{t.k}:</b> {t.v}</span>
+      ))
+    }
+  </div>
+</div>
+
+<header class="il-hdr" id="top">
+  <div class="il-wrap il-hdr__inner">
+    <a href="#top" class="il-logo">SOLERA<span>Residencias</span></a>
+
+    <nav class="il-hdr__nav" id="il-nav" aria-label="Navegación principal">
+      {navLinks.map((n: string) => <a href={anclas[n] ?? '#'}>{n}</a>)}
+    </nav>
+
+    <div class="il-hdr__acc">
+      <a href="#concierge" class="il-btn il-btn--outline il-hdr__cta">Agenda una visita</a>
+      <button class="il-hdr__burger" id="il-burger" type="button" aria-label="Abrir menú">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6" /><line x1="3" y1="12" x2="21" y2="12" /><line x1="3" y1="18" x2="21" y2="18" /></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<script>
+  const b = document.getElementById('il-burger');
+  const n = document.getElementById('il-nav');
+  b?.addEventListener('click', () => n?.classList.toggle('is-open'));
+</script>
+
+<style>
+  .il-ticker {
+    background: var(--il-navy);
+    color: var(--il-ice);
+    font-size: 0.74rem;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+
+  .il-ticker__track {
+    display: inline-flex;
+    gap: 2.5rem;
+    padding: 0.4rem 1rem;
+    animation: il-marquee 28s linear infinite;
+  }
+
+  .il-ticker__track b {
+    color: var(--il-mint);
+    font-weight: 600;
+  }
+
+  @keyframes il-marquee {
+    to {
+      transform: translateX(-50%);
+    }
+  }
+
+  .il-hdr {
+    position: sticky;
+    top: 0;
+    z-index: 60;
+    background: var(--il-bg);
+    border-bottom: 1px solid var(--il-border);
+  }
+
+  .il-hdr__inner {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    padding-block: 1rem;
+  }
+
+  .il-logo {
+    font-family: var(--il-serif);
+    font-weight: 700;
+    font-size: 1.2rem;
+    letter-spacing: 0.12em;
+    color: var(--il-navy);
+    display: flex;
+    flex-direction: column;
+    line-height: 1;
+    flex-shrink: 0;
+  }
+
+  .il-logo span {
+    font-family: var(--il-sans);
+    font-size: 0.6rem;
+    letter-spacing: 0.3em;
+    color: var(--il-muted);
+    margin-top: 3px;
+  }
+
+  .il-hdr__nav {
+    display: flex;
+    gap: 1.5rem;
+    margin-inline: auto;
+    font-size: 0.82rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+
+  .il-hdr__nav a:hover {
+    color: var(--il-blue);
+  }
+
+  .il-hdr__acc {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    flex-shrink: 0;
+  }
+
+  .il-hdr__cta {
+    padding: 0.6rem 1.1rem;
+    font-size: 0.72rem;
+  }
+
+  .il-hdr__burger {
+    display: none;
+    color: var(--il-navy);
+  }
+
+  @media (max-width: 980px) {
+    .il-hdr__nav {
+      display: none;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      flex-direction: column;
+      background: var(--il-surface);
+      border-bottom: 1px solid var(--il-border);
+      padding: 0.75rem 1.5rem;
+    }
+    .il-hdr__nav.is-open {
+      display: flex;
+    }
+    .il-hdr__burger {
+      display: inline-flex;
+    }
+    .il-hdr__cta {
+      display: none;
+    }
+  }
+</style>

@@ -1,0 +1,75 @@
+---
+import { bandaMorada } from '../datos/contenido.js';
+
+const iconos: Record<string, string> = {
+  box: 'M3 8l9-5 9 5-9 5-9-5zM3 8v8l9 5 9-5V8M12 13v8',
+  thumb: 'M7 10v11H4V10zM7 10l4-7a2 2 0 0 1 2 2v3h6a2 2 0 0 1 2 2l-2 8H7',
+  chat: 'M21 12a8 8 0 0 1-11.6 7.1L3 21l1.9-6.4A8 8 0 1 1 21 12z',
+};
+---
+
+<section class="mk-banda">
+  <div class="mk-contenedor mk-banda__inner">
+    {
+      bandaMorada.map((b) => (
+        <a href="#" class="mk-banda__item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
+            <path d={iconos[b.icono]} />
+          </svg>
+          <span>
+            <strong>{b.titulo}</strong>
+            <small>{b.texto}</small>
+          </span>
+        </a>
+      ))
+    }
+  </div>
+</section>
+
+<style>
+  .mk-banda {
+    background: var(--mk-morado);
+    color: var(--mk-blanco);
+  }
+
+  .mk-banda__inner {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    padding-block: 1.75rem;
+  }
+
+  .mk-banda__item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    text-align: left;
+  }
+
+  .mk-banda__item svg {
+    width: 34px;
+    height: 34px;
+    flex-shrink: 0;
+  }
+
+  .mk-banda__item span {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .mk-banda__item strong {
+    font-size: 0.9rem;
+  }
+
+  .mk-banda__item small {
+    font-size: 0.72rem;
+    opacity: 0.85;
+  }
+
+  @media (max-width: 780px) {
+    .mk-banda__inner {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

@@ -1,0 +1,169 @@
+.tpl-tienda-deportiva {
+  --tt-negro: #000000;
+  --tt-tinta: #000000;
+  --tt-blanco: #ffffff;
+  --tt-gris-bg: #ffffff;
+  --tt-gris-tarjeta: #f5f5f5;
+  --tt-gris-suave: #fafafa;
+  --tt-gris-borde: #e5e5e5;
+  --tt-gris-texto: #767677;
+  --tt-gris-oscuro: #1e1e1e;
+  --tt-rojo-promo: #e32b2b;
+  --tt-verde-club: #00855a;
+  --tt-verde-claro: #3e8d64;
+  --tt-azul-enlace: #0051ba;
+
+  
+  --tt-font-condensed: "Archivo Variable", "Arial Narrow", system-ui, sans-serif;
+  --tt-font-texto: "Inter Variable", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+
+  
+  --tt-maxw: 100%;
+
+  background-color: var(--tt-blanco);
+  color: var(--tt-tinta);
+  font-family: var(--tt-font-texto);
+  line-height: 1.4;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  width: 100%;
+  overflow-x: hidden;
+}
+
+.tpl-tienda-deportiva * {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+.tpl-tienda-deportiva a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.tpl-tienda-deportiva .tt-contenedor {
+  width: 100%;
+  max-width: 100%;
+  padding-inline: clamp(1.2rem, 2.5vw, 3rem);
+}
+
+.tpl-tienda-deportiva h1,
+.tpl-tienda-deportiva h2,
+.tpl-tienda-deportiva h3,
+.tpl-tienda-deportiva h4 {
+  font-family: var(--tt-font-condensed);
+  font-stretch: 78%; 
+  text-transform: uppercase;
+  font-weight: 900;
+  letter-spacing: -0.01em;
+  line-height: 1;
+}
+
+.tpl-tienda-deportiva .tt-seccion {
+  padding-block: clamp(1.5rem, 3.5vw, 3rem);
+}
+
+.tpl-tienda-deportiva .tt-btn-caja {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.65rem 1.4rem;
+  font-family: var(--tt-font-condensed);
+  font-size: 0.8rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  text-decoration: none;
+  cursor: pointer;
+  border: 1px solid transparent;
+  transition: all 0.15s ease;
+}
+
+.tpl-tienda-deportiva .tt-btn-caja--negro {
+  background: var(--tt-negro);
+  color: var(--tt-blanco);
+  border-color: var(--tt-negro);
+}
+
+.tpl-tienda-deportiva .tt-btn-caja--negro:hover {
+  background: var(--tt-blanco);
+  color: var(--tt-negro);
+}
+
+.tpl-tienda-deportiva .tt-btn-caja--blanco {
+  background: var(--tt-blanco);
+  color: var(--tt-negro);
+  border-color: var(--tt-negro);
+}
+
+.tpl-tienda-deportiva .tt-btn-caja--blanco:hover {
+  background: var(--tt-negro);
+  color: var(--tt-blanco);
+}
+
+.tpl-tienda-deportiva .tt-chip-categoria {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.35rem 0.75rem;
+  background: var(--tt-blanco);
+  border: 1px solid var(--tt-gris-borde);
+  font-family: var(--tt-font-condensed);
+  font-size: 0.75rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: var(--tt-negro);
+  transition: all 0.15s ease;
+}
+
+.tpl-tienda-deportiva .tt-chip-categoria:hover {
+  background: var(--tt-negro);
+  color: var(--tt-blanco);
+  border-color: var(--tt-negro);
+}
+
+.tpl-tienda-deportiva .tt-chip-categoria .tt-porcentaje {
+  color: var(--tt-rojo-promo);
+  font-weight: 900;
+}
+
+.tpl-tienda-deportiva .tt-chip-categoria:hover .tt-porcentaje {
+  color: var(--tt-blanco);
+}
+
+.tpl-tienda-deportiva .tt-scroll-tracker {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-top: 1.5rem;
+  width: 100%;
+}
+
+.tpl-tienda-deportiva .tt-scroll-barra {
+  flex: 1;
+  height: 3px;
+  background: var(--tt-gris-borde);
+  position: relative;
+}
+
+.tpl-tienda-deportiva .tt-scroll-barra__indicador {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 30%;
+  background: var(--tt-negro);
+}
+
+.tpl-tienda-deportiva .tt-scroll-flecha {
+  background: none;
+  border: none;
+  font-size: 0.75rem;
+  color: var(--tt-negro);
+  cursor: pointer;
+  padding: 0.2rem;
+  display: flex;
+  align-items: center;
+}

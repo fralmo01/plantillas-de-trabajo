@@ -1,0 +1,92 @@
+---
+/**
+ * Tarjeta del catalogo.
+ *
+ * - Por defecto muestra `thumbnail` (imagen liviana, lazy).
+ * - Al pasar el cursor reproduce `previewVideo` en loop, muteado.
+ * - El video solo carga su `src` en el primer hover: no se descargan
+ *   todos los videos al abrir el catalogo.
+ * - Click = navega a la plantilla completa (pestaña nueva).
+ * - Si falta el thumbnail o el video, cae a un placeholder sin romperse.
+ */
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  id: string;
+  ficha: CollectionEntry<'plantillas'>['data'];
+}
+
+const { id, ficha } = Astro.props;
+const href = `/plantillas/${id}/`;
+const placeholder = '/previews/_placeholder.svg';
+---
+
+<article
+  class="tarjeta"
+  data-categoria={ficha.categoria}
+  data-preview={ficha.previewVideo ?? ''}
+>
+  <a class="tarjeta__link" href={href} target="_blank" rel="noopener">
+    <div class="tarjeta__media">
+      {ficha.nuevo && <span class="tarjeta__badge tarjeta__badge--nuevo">Nuevo</span>}
+      <img
+        src={ficha.thumbnail}
+        alt={`Portada de ${ficha.titulo}`}
+        loading="lazy"
+        decoding="async"
+        onerror={`this.onerror=null;this.src='${placeholder}'`}
+      />
+      <video muted loop playsinline preload="none" poster={ficha.thumbnail}></video>
+    </div>
+
+    <div class="tarjeta__info">
+      <h3>{ficha.titulo}</h3>
+      {
+        ficha.inspiradoEn && (
+          <p class="tarjeta__base">
+            <span aria-hidden="true">◆</span> Basado en el estilo de <b>{ficha.inspiradoEn}</b>
+          </p>
+        )
+      }
+      <p>{ficha.descripcion}</p>
+      {
+        ficha.tags.length > 0 && (
+          <div class="tarjeta__tags">
+            {ficha.tags.map((t) => (
+              <span class="tarjeta__tag">{t}</span>
+            ))}
+          </div>
+        )
+      }
+    </div>
+  </a>
+</article>
+
+<script>
+  // Un solo handler para todas las tarjetas de la pagina.
+  const tarjetas = document.querySelectorAll<HTMLElement>('.tarjeta');
+
+  for (const tarjeta of tarjetas) {
+    const video = tarjeta.querySelector<HTMLVideoElement>('video');
+    const src = tarjeta.dataset.preview;
+    if (!video || !src) continue;
+
+    let cargado = false;
+
+    tarjeta.addEventListener('mouseenter', () => {
+      if (!cargado) {
+        video.src = src;
+        cargado = true;
+      }
+      video.play().then(
+        () => tarjeta.classList.add('is-playing'),
+        () => {},
+      );
+    });
+
+    tarjeta.addEventListener('mouseleave', () => {
+      video.pause();
+      tarjeta.classList.remove('is-playing');
+    });
+  }
+</script>

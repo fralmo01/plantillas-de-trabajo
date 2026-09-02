@@ -1,0 +1,62 @@
+---
+import { marcas } from '../datos/contenido.js';
+---
+
+<section class="pl-seccion">
+  <div class="pl-contenedor">
+    <h2 class="pl-titulo">Principales marcas</h2>
+    <p class="pl-subtitulo">Múltiples marcas que te van a encantar</p>
+    <div class="pl-marcas">
+      {
+        marcas.map((m) => (
+          <a href="#" class="pl-marcas__tile">
+            <span class="pl-marcas__logo">{m}</span>
+          </a>
+        ))
+      }
+    </div>
+    <div class="pl-marcas__mas">
+      <a href="#" class="pl-btn pl-btn--outline">Ver todas las marcas</a>
+    </div>
+  </div>
+</section>
+
+<style>
+  .pl-marcas {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 1rem;
+  }
+
+  .pl-marcas__tile {
+    display: grid;
+    place-items: center;
+    aspect-ratio: 3 / 2;
+    border: 1px solid var(--pl-gris-borde);
+    border-radius: 12px;
+    background: var(--pl-blanco);
+    transition: border-color 0.15s ease;
+  }
+
+  .pl-marcas__tile:hover {
+    border-color: var(--pl-verde);
+  }
+
+  .pl-marcas__logo {
+    font-weight: 800;
+    font-size: 0.9rem;
+    color: var(--pl-tinta);
+  }
+
+  .pl-marcas__mas {
+    display: flex;
+    justify-content: center;
+    margin-top: 1.25rem;
+  }
+
+  @media (max-width: 860px) {
+    .pl-marcas {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+</style>

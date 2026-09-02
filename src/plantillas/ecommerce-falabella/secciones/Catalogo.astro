@@ -1,0 +1,240 @@
+---
+import TarjetaProducto from '../componentes/TarjetaProducto.astro';
+import {
+  productos,
+  categorias,
+  ordenar,
+  filtrosPrecio,
+  filtrosVendedor,
+  filtrosEnvio,
+} from '../datos/catalogo.js';
+---
+
+<section class="ef-wrap ef-seccion" id="catalogo">
+  <h2 class="ef-titulo">Catálogo</h2>
+
+  <button class="ef-btn ef-btn--ghost ef-plp__toggle" id="ef-plp-toggle" type="button">Filtrar y ordenar</button>
+
+  <div class="ef-plp">
+    <aside class="ef-plp__side" id="ef-filtros" aria-label="Filtros">
+      <div class="ef-plp__side-head">
+        <span>Filtrar y ordenar</span>
+        <button class="ef-plp__x" id="ef-filtros-x" type="button" aria-label="Cerrar">✕</button>
+      </div>
+
+      <section class="ef-fgrupo">
+        <h4>Categoría</h4>
+        <ul>
+          <li><label><input type="radio" name="cat" value="todas" checked /> Todas</label></li>
+          {categorias.map((c) => (
+            <li><label><input type="radio" name="cat" value={c.id} /> {c.nombre}</label></li>
+          ))}
+        </ul>
+      </section>
+
+      <section class="ef-fgrupo">
+        <h4>Precio</h4>
+        <ul>
+          {filtrosPrecio.map((f: string) => (
+            <li><label><input type="checkbox" name="precio" /> {f}</label></li>
+          ))}
+        </ul>
+      </section>
+
+      <section class="ef-fgrupo">
+        <h4>Vendedor</h4>
+        <ul>
+          {filtrosVendedor.map((f: string) => (
+            <li><label><input type="checkbox" name="vendedor" /> {f}</label></li>
+          ))}
+        </ul>
+      </section>
+
+      <section class="ef-fgrupo">
+        <h4>Envío</h4>
+        <ul>
+          {filtrosEnvio.map((f: string) => (
+            <li><label><input type="checkbox" name="envio" /> {f}</label></li>
+          ))}
+        </ul>
+      </section>
+
+      <button type="button" class="ef-btn ef-plp__aplicar" data-cerrar>Ver resultados</button>
+    </aside>
+
+    <div class="ef-plp__main">
+      <div class="ef-plp__bar">
+        <span id="ef-count">{productos.length} productos</span>
+        <label class="ef-orden">
+          Ordenar por
+          <select>
+            {ordenar.map((o: string) => <option>{o}</option>)}
+          </select>
+        </label>
+      </div>
+
+      <div class="ef-grid" id="ef-grid">
+        {
+          productos.map((p) => (
+            <div data-cat={p.categoria}>
+              <TarjetaProducto producto={p} />
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  const grid = document.getElementById('ef-grid');
+  const count = document.getElementById('ef-count');
+  const items = [...(grid?.querySelectorAll<HTMLElement>('[data-cat]') ?? [])];
+
+  document.querySelectorAll<HTMLInputElement>('input[name="cat"]').forEach((r) =>
+    r.addEventListener('change', () => {
+      const val = r.value;
+      let n = 0;
+      for (const it of items) {
+        const ok = val === 'todas' || it.dataset.cat === val;
+        it.hidden = !ok;
+        if (ok) n++;
+      }
+      if (count) count.textContent = `${n} producto${n === 1 ? '' : 's'}`;
+    }),
+  );
+
+  const panel = document.getElementById('ef-filtros');
+  document.getElementById('ef-plp-toggle')?.addEventListener('click', () => panel?.classList.toggle('is-open'));
+  panel?.querySelectorAll('#ef-filtros-x, [data-cerrar]').forEach((b) =>
+    b.addEventListener('click', () => panel?.classList.remove('is-open')),
+  );
+</script>
+
+<style>
+  .ef-plp {
+    display: grid;
+    grid-template-columns: 240px 1fr;
+    gap: 1.5rem;
+    align-items: start;
+  }
+
+  .ef-plp__toggle {
+    display: none;
+    margin-bottom: 1rem;
+  }
+
+  .ef-plp__side {
+    background: #fff;
+    border: 1px solid var(--ef-linea);
+    border-radius: var(--ef-radio);
+    padding: 1rem;
+  }
+
+  .ef-plp__side-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: 800;
+    font-size: 0.9rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .ef-plp__x {
+    display: none;
+    font-size: 1rem;
+  }
+
+  .ef-fgrupo {
+    border-top: 1px solid var(--ef-linea);
+    padding-block: 0.75rem;
+  }
+
+  .ef-fgrupo h4 {
+    font-size: 0.82rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .ef-fgrupo ul {
+    list-style: none;
+    display: grid;
+    gap: 0.45rem;
+  }
+
+  .ef-fgrupo label {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.8rem;
+    cursor: pointer;
+  }
+
+  .ef-fgrupo input {
+    accent-color: var(--ef-verde);
+  }
+
+  .ef-plp__aplicar {
+    width: 100%;
+    margin-top: 0.75rem;
+  }
+
+  .ef-plp__bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid var(--ef-linea);
+    margin-bottom: 1rem;
+    font-size: 0.82rem;
+  }
+
+  .ef-orden select {
+    border: 1px solid var(--ef-linea);
+    border-radius: 6px;
+    padding: 0.35rem 0.6rem;
+    margin-left: 0.4rem;
+  }
+
+  .ef-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+  }
+
+  @media (max-width: 1100px) {
+    .ef-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  @media (max-width: 860px) {
+    .ef-plp {
+      grid-template-columns: 1fr;
+    }
+    .ef-plp__toggle {
+      display: inline-flex;
+    }
+    .ef-plp__side {
+      position: fixed;
+      inset: 0 25% 0 0;
+      z-index: 60;
+      overflow-y: auto;
+      transform: translateX(-105%);
+      transition: transform 0.25s ease;
+      border-radius: 0;
+    }
+    .ef-plp__side.is-open {
+      transform: none;
+    }
+    .ef-plp__x {
+      display: inline-flex;
+    }
+  }
+
+  @media (max-width: 620px) {
+    .ef-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+</style>

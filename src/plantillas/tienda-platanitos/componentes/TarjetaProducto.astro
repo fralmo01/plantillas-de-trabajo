@@ -1,0 +1,122 @@
+---
+import { soles } from '../datos/productos.js';
+
+const { producto: p } = Astro.props;
+---
+
+<article class="pl-prod">
+  <a href="#" class="pl-prod__media">
+    <img src={`https://picsum.photos/seed/${p.seed}/360/380`} alt={p.nombre} loading="lazy" />
+    {p.nuevo && <span class="pl-prod__nuevo"><i aria-hidden="true">/</i> NUEVO</span>}
+    {p.antes && <span class="pl-prod__off">-{Math.round((1 - p.precio / p.antes) * 100)}%</span>}
+  </a>
+  <div class="pl-prod__cuerpo">
+    <p class="pl-prod__nombre"><b>{p.marca}</b> {p.nombre}</p>
+    <p class="pl-prod__precio">
+      {soles(p.precio)}
+      {p.antes && <s>{soles(p.antes)}</s>}
+    </p>
+    <button type="button" class="pl-btn pl-btn--verde pl-prod__add">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <circle cx="9" cy="20" r="1.5" /><circle cx="18" cy="20" r="1.5" />
+        <path d="M2 3h3l2.4 12.4a2 2 0 0 0 2 1.6h8.7a2 2 0 0 0 2-1.6L23 7H6" />
+      </svg>
+      Agregar
+    </button>
+  </div>
+</article>
+
+<style>
+  .pl-prod {
+    display: flex;
+    flex-direction: column;
+    background: var(--pl-blanco);
+    border: 1px solid var(--pl-gris-borde);
+    border-radius: 12px;
+    overflow: hidden;
+  }
+
+  .pl-prod__media {
+    position: relative;
+    aspect-ratio: 1;
+    background: var(--pl-gris-tarjeta);
+    display: block;
+  }
+
+  .pl-prod__media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .pl-prod__nuevo {
+    position: absolute;
+    top: 0.55rem;
+    right: 0.55rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    background: var(--pl-blanco);
+    border: 1px solid var(--pl-verde);
+    color: var(--pl-verde-osc);
+    font-size: 0.62rem;
+    font-weight: 800;
+    padding: 0.15rem 0.45rem;
+    border-radius: 5px;
+  }
+
+  .pl-prod__nuevo i {
+    color: var(--pl-verde);
+    font-style: normal;
+    font-weight: 900;
+  }
+
+  .pl-prod__off {
+    position: absolute;
+    top: 0.55rem;
+    left: 0.55rem;
+    background: var(--pl-rosa);
+    color: #fff;
+    font-size: 0.68rem;
+    font-weight: 800;
+    padding: 0.12rem 0.4rem;
+    border-radius: 5px;
+  }
+
+  .pl-prod__cuerpo {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    padding: 0.75rem 0.8rem 0.9rem;
+    flex: 1;
+  }
+
+  .pl-prod__nombre {
+    font-size: 0.8rem;
+    line-height: 1.3;
+    min-height: 2.6em;
+  }
+
+  .pl-prod__nombre b {
+    font-weight: 800;
+  }
+
+  .pl-prod__precio {
+    font-size: 1rem;
+    font-weight: 800;
+    margin-top: auto;
+  }
+
+  .pl-prod__precio s {
+    margin-left: 0.35rem;
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: var(--pl-gris-texto);
+  }
+
+  .pl-prod__add {
+    width: 100%;
+    padding: 0.55rem 0.75rem;
+    font-size: 0.78rem;
+  }
+</style>

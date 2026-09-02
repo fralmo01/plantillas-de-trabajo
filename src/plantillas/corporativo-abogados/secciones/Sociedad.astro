@@ -1,0 +1,70 @@
+---
+import { socios } from '../datos/firma.js';
+---
+
+<section class="ca-wrap ca-block" id="sociedad">
+  <p class="ca-eyebrow">La sociedad</p>
+  <h2 class="ca-h">Los que firman también litigan</h2>
+  <p class="ca-lead">Una banca compacta de socios con dedicación directa. Sin escalones intermedios entre tú y la decisión.</p>
+
+  <div class="ca-socios">
+    {
+      socios.map((s) => (
+        <article class="ca-socio">
+          <span class="ca-socio__av" aria-hidden="true">{s.iniciales}</span>
+          <h3>{s.nombre}</h3>
+          <p>{s.cargo}</p>
+        </article>
+      ))
+    }
+  </div>
+</section>
+
+<style>
+  .ca-socios {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+    margin-top: 2.5rem;
+  }
+
+  .ca-socio {
+    border-top: 1px solid var(--ca-line);
+    padding-top: 1.5rem;
+  }
+
+  .ca-socio__av {
+    display: grid;
+    place-items: center;
+    width: 3.5rem;
+    height: 3.5rem;
+    border: 1px solid var(--ca-ink);
+    font-family: var(--ca-serif);
+    font-size: 1.05rem;
+    margin-bottom: 1rem;
+  }
+
+  .ca-socio h3 {
+    font-size: 1.2rem;
+  }
+
+  .ca-socio p {
+    font-size: 0.82rem;
+    color: var(--ca-bronze);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-top: 0.25rem;
+  }
+
+  @media (max-width: 780px) {
+    .ca-socios {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 480px) {
+    .ca-socios {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

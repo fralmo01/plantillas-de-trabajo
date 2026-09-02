@@ -1,0 +1,27 @@
+---
+import HeroVertical from './HeroVertical.astro';
+import CirculosTop from './CirculosTop.astro';
+import BannersPromo from './BannersPromo.astro';
+import CarruselProductos from './CarruselProductos.astro';
+import PrincipalesMarcas from './PrincipalesMarcas.astro';
+import BloqueBlog from './BloqueBlog.astro';
+import Comentarios from './Comentarios.astro';
+import InfoTienda from './InfoTienda.astro';
+
+import { contenidoVertical } from '../datos/verticales.js';
+
+const { vertical = 'moda' } = Astro.props as { vertical?: string };
+const carruseles: { titulo: string; sub: string; cat: string }[] =
+  (contenidoVertical as Record<string, any>)[vertical]?.carruseles ?? [];
+---
+
+<HeroVertical vertical={vertical} />
+<CirculosTop vertical={vertical} />
+<BannersPromo vertical={vertical} />
+{carruseles.map((c: { titulo: string; sub: string; cat: string }) => (
+  <CarruselProductos titulo={c.titulo} sub={c.sub} cat={c.cat} vertical={vertical} />
+))}
+<PrincipalesMarcas />
+<BloqueBlog />
+<Comentarios />
+<InfoTienda />

@@ -1,0 +1,126 @@
+---
+import { marca, nav } from '../datos/gym.js';
+const anclas: Record<string, string> = {
+  Planes: '#planes', Sedes: '#sedes', Beneficios: '#beneficios', App: '#beneficios', Preguntas: '#faq',
+};
+---
+
+<header class="gs-hdr" id="top">
+  <div class="gs-wrap gs-hdr__inner">
+    <a href="#top" class="gs-logo">{marca.nombre.split(' ')[0]}<b>{marca.nombre.split(' ')[1] ?? ''}</b></a>
+
+    <nav class="gs-nav" id="gs-nav" aria-label="Navegación principal">
+      {nav.map((n: string) => <a href={anclas[n] ?? '#'} class="gs-nav__link">{n}</a>)}
+    </nav>
+
+    <div class="gs-hdr__acc">
+      <a href="#" class="gs-hdr__login" title="Demo sin login">Ya soy socio</a>
+      <a href="#planes" class="gs-btn gs-btn--amarillo gs-btn--sm">Inscríbete</a>
+      <button class="gs-hdr__burger" id="gs-burger" type="button" aria-label="Abrir menú">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="3" y1="6" x2="21" y2="6" /><line x1="3" y1="12" x2="21" y2="12" /><line x1="3" y1="18" x2="21" y2="18" /></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<script>
+  const burger = document.getElementById('gs-burger');
+  const nav = document.getElementById('gs-nav');
+  burger?.addEventListener('click', () => nav?.classList.toggle('is-open'));
+  nav?.querySelectorAll('a').forEach((a) => a.addEventListener('click', () => nav.classList.remove('is-open')));
+</script>
+
+<style>
+  .gs-hdr {
+    position: sticky;
+    top: 0;
+    z-index: 60;
+    background: var(--gs-negro);
+    color: var(--gs-blanco);
+  }
+
+  .gs-hdr__inner {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    padding-block: 0.9rem;
+  }
+
+  .gs-logo {
+    font-family: var(--gs-font-head);
+    font-weight: 800;
+    font-size: 1.35rem;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+    color: var(--gs-blanco);
+    flex-shrink: 0;
+  }
+
+  .gs-logo b {
+    color: var(--gs-amarillo);
+  }
+
+  .gs-nav {
+    display: flex;
+    gap: 0.35rem;
+    margin-inline: auto;
+  }
+
+  .gs-nav__link {
+    padding: 0.5rem 0.85rem;
+    font-size: 0.85rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.8);
+    border-radius: var(--gs-radio-full);
+  }
+
+  .gs-nav__link:hover {
+    color: var(--gs-amarillo);
+  }
+
+  .gs-hdr__acc {
+    display: flex;
+    align-items: center;
+    gap: 0.9rem;
+    flex-shrink: 0;
+  }
+
+  .gs-hdr__login {
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+  }
+
+  .gs-btn--sm {
+    padding: 0.55rem 1.1rem;
+    font-size: 0.78rem;
+  }
+
+  .gs-hdr__burger {
+    display: none;
+    color: var(--gs-blanco);
+  }
+
+  @media (max-width: 940px) {
+    .gs-nav {
+      display: none;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      flex-direction: column;
+      background: var(--gs-oscuro);
+      padding: 0.5rem;
+    }
+    .gs-nav.is-open {
+      display: flex;
+    }
+    .gs-hdr__burger {
+      display: inline-flex;
+    }
+    .gs-hdr__login {
+      display: none;
+    }
+  }
+</style>

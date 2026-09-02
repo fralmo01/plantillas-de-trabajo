@@ -1,0 +1,110 @@
+---
+import { guias } from '../datos/restaurantes.js';
+---
+
+<section class="rg-seccion rg-wrap" id="guias">
+  <div class="rg-seccion-head">
+    <div>
+      <h2 class="rg-seccion-head__title">Crónicas &amp; guías culinarias del Perú</h2>
+      <p class="rg-seccion-head__sub">Artículos editoriales, análisis de crítica gastronómica y rutas de autor.</p>
+    </div>
+  </div>
+
+  <div class="rg-guias">
+    {
+      guias.map((g) => (
+        <article class="rg-guia">
+          <div class="rg-guia__media">
+            <img src={g.portada} alt={g.titulo} loading="lazy" />
+            <span class="rg-guia__tag">{g.tag}</span>
+          </div>
+          <div class="rg-guia__body">
+            <p class="rg-guia__meta">{g.fecha} &middot; {g.lectura} de lectura</p>
+            <h3>{g.titulo}</h3>
+            <p class="rg-guia__sub">{g.subtitulo}</p>
+            <a href="#" class="rg-guia__leer">Leer crónica →</a>
+          </div>
+        </article>
+      ))
+    }
+  </div>
+</section>
+
+<style>
+  .rg-guias {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 2rem;
+  }
+
+  .rg-guia {
+    background: var(--rg-bg-card);
+    border: 1px solid var(--rg-border-subtle);
+    border-radius: var(--rg-radius-lg);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    transition: var(--rg-transition);
+  }
+
+  .rg-guia:hover {
+    border-color: var(--rg-border-medium);
+    transform: translateY(-3px);
+  }
+
+  .rg-guia__media {
+    position: relative;
+    aspect-ratio: 16 / 9;
+  }
+
+  .rg-guia__media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .rg-guia__tag {
+    position: absolute;
+    top: 0.8rem;
+    left: 0.8rem;
+    background: rgba(7, 10, 17, 0.82);
+    color: var(--rg-gold-300);
+    font-size: 0.68rem;
+    font-weight: 700;
+    padding: 0.25rem 0.6rem;
+    border-radius: var(--rg-radius-full);
+  }
+
+  .rg-guia__body {
+    padding: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    flex: 1;
+  }
+
+  .rg-guia__meta {
+    font-size: 0.72rem;
+    color: var(--rg-text-dim);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+
+  .rg-guia__body h3 {
+    font-family: var(--rg-font-serif);
+    font-size: 1.2rem;
+    font-weight: 700;
+  }
+
+  .rg-guia__sub {
+    font-size: 0.85rem;
+    color: var(--rg-text-secondary);
+  }
+
+  .rg-guia__leer {
+    margin-top: auto;
+    color: var(--rg-gold-300);
+    font-weight: 700;
+    font-size: 0.85rem;
+  }
+</style>

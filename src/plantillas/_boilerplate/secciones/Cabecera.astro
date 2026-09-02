@@ -1,0 +1,36 @@
+<header class="b-cab">
+  <div class="b-contenedor b-cab__inner">
+    <a href="#inicio" class="b-cab__marca">Marca</a>
+    <nav class="b-cab__nav" aria-label="Principal">
+      <a href="#servicios">Servicios</a>
+      <a href="#contacto">Contacto</a>
+    </nav>
+  </div>
+</header>
+
+<style>
+  .b-cab {
+    background: var(--b-bg);
+    border-bottom: 1px solid var(--b-suave);
+  }
+  .b-cab__inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-block: 1rem;
+  }
+  .b-cab__marca {
+    font-weight: 800;
+    text-decoration: none;
+    color: var(--b-tinta);
+  }
+  .b-cab__nav {
+    display: flex;
+    gap: 1.25rem;
+  }
+  .b-cab__nav a {
+    text-decoration: none;
+    color: var(--b-tinta);
+    font-size: 0.95rem;
+  }
+</style>

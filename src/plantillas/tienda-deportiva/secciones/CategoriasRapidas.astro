@@ -1,0 +1,159 @@
+---
+const categorias = [
+  {
+    nombre: "ZAPATILLAS RETRO & SAMBA",
+    etiqueta: "Tendencia",
+    img: "https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?q=80&w=400&auto=format&fit=crop",
+    enlace: "#calzado"
+  },
+  {
+    nombre: "RUNNING & ULTRABOOST",
+    etiqueta: "Performance",
+    img: "https://images.unsplash.com/photo-1584735935682-2f2b69dff9d2?q=80&w=400&auto=format&fit=crop",
+    enlace: "#deportes"
+  },
+  {
+    nombre: "HOODIES & POLERAS",
+    etiqueta: "Streetwear",
+    img: "https://images.unsplash.com/photo-1556905055-8f358a7a47b2?q=80&w=400&auto=format&fit=crop",
+    enlace: "#hombre"
+  },
+  {
+    nombre: "FÚTBOL & BOTINES PRO",
+    etiqueta: "Canchas",
+    img: "https://images.unsplash.com/photo-1511886929837-354d827aae26?q=80&w=400&auto=format&fit=crop",
+    enlace: "#deportes"
+  },
+  {
+    nombre: "MOCHILAS & GORRAS",
+    etiqueta: "Accesorios",
+    img: "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?q=80&w=400&auto=format&fit=crop",
+    enlace: "#accesorios"
+  },
+  {
+    nombre: "OUTLET HASTA -40%",
+    etiqueta: "Ofertas",
+    img: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?q=80&w=400&auto=format&fit=crop",
+    enlace: "#outlet"
+  }
+];
+---
+
+<section class="tt-cat-rapidas">
+  <div class="tt-contenedor">
+    <div class="tt-cat-rapidas__cabecera">
+      <h2 class="tt-cat-rapidas__titulo">¿QUÉ ESTÁS BUSCANDO HOY?</h2>
+      <span class="tt-cat-rapidas__sub">EXPLORA NUESTRAS SILUETAS MÁS POPULARES</span>
+    </div>
+
+    <div class="tt-cat-rapidas__carrusel">
+      {categorias.map((cat) => (
+        <a href={cat.enlace} class="tt-cat-card">
+          <div class="tt-cat-card__img-wrap">
+            <img src={cat.img} alt={cat.nombre} loading="lazy" />
+            <span class="tt-cat-card__tag">{cat.etiqueta}</span>
+          </div>
+          <span class="tt-cat-card__nombre">{cat.nombre}</span>
+        </a>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .tt-cat-rapidas {
+    padding-block: 2.5rem;
+    background: var(--tt-gris-bg);
+    border-bottom: 1px solid var(--tt-gris-borde);
+  }
+
+  .tt-cat-rapidas__cabecera {
+    margin-bottom: 1.5rem;
+  }
+
+  .tt-cat-rapidas__titulo {
+    font-size: 1.4rem;
+    color: var(--tt-negro);
+    letter-spacing: -0.01em;
+  }
+
+  .tt-cat-rapidas__sub {
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--tt-gris-medio);
+    letter-spacing: 0.08em;
+  }
+
+  .tt-cat-rapidas__carrusel {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+    gap: 1.2rem;
+  }
+
+  .tt-cat-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    text-decoration: none;
+    gap: 0.75rem;
+    transition: transform 0.2s ease;
+  }
+
+  .tt-cat-card:hover {
+    transform: translateY(-4px);
+  }
+
+  .tt-cat-card__img-wrap {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    overflow: hidden;
+    background: var(--tt-blanco);
+    border: 1px solid var(--tt-gris-borde);
+  }
+
+  .tt-cat-card__img-wrap img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.4s ease;
+  }
+
+  .tt-cat-card:hover .tt-cat-card__img-wrap img {
+    transform: scale(1.08);
+  }
+
+  .tt-cat-card__tag {
+    position: absolute;
+    top: 8px;
+    left: 8px;
+    background: var(--tt-negro);
+    color: var(--tt-blanco);
+    font-size: 0.65rem;
+    font-family: var(--tt-font-display);
+    font-weight: 800;
+    padding: 2px 6px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+
+  .tt-cat-card__nombre {
+    font-family: var(--tt-font-display);
+    font-size: 0.8rem;
+    font-weight: 800;
+    color: var(--tt-negro);
+    line-height: 1.2;
+    text-transform: uppercase;
+  }
+
+  @media (max-width: 640px) {
+    .tt-cat-rapidas__carrusel {
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0.6rem;
+    }
+    .tt-cat-card__nombre {
+      font-size: 0.68rem;
+    }
+  }
+</style>

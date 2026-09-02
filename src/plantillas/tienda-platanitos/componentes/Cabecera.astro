@@ -1,0 +1,155 @@
+---
+const base = '/plantillas/tienda-platanitos';
+---
+
+<header class="pl-cab">
+  <div class="pl-contenedor pl-cab__inner">
+    <button
+      class="pl-cab__menu"
+      id="pl-burger"
+      type="button"
+      aria-label="Abrir menú"
+      aria-expanded="false"
+      aria-controls="pl-menu-lateral"
+    >
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+        <line x1="3" y1="6" x2="21" y2="6" /><line x1="3" y1="12" x2="21" y2="12" /><line x1="3" y1="18" x2="21" y2="18" />
+      </svg>
+    </button>
+
+    <a href={`${base}/`} class="pl-logo" aria-label="tienda.com — inicio">
+      <span class="pl-logo__hoja" aria-hidden="true">🍃</span>
+      tienda<b>.com</b>
+    </a>
+
+    <form class="pl-buscador" role="search" action={`${base}/buscar/`} method="get">
+      <input type="search" name="q" placeholder="Busca lo que necesitas" aria-label="Buscar productos" autocomplete="off" />
+      <button type="submit" aria-label="Buscar">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+          <circle cx="11" cy="11" r="7" /><line x1="21" y1="21" x2="16.7" y2="16.7" />
+        </svg>
+      </button>
+    </form>
+
+    <div class="pl-cab__acc">
+      <a href="#" class="pl-cab__item"><span aria-hidden="true">♡</span> Favoritos</a>
+      <a href="#" class="pl-cab__item"><span aria-hidden="true">◎</span> Puntos</a>
+      <a href="#" class="pl-cab__item"><span aria-hidden="true">🛒</span> Carrito</a>
+      <a href="#" class="pl-cab__item" title="Demo sin login"><span aria-hidden="true">👤</span> Cuenta</a>
+    </div>
+  </div>
+</header>
+
+<style>
+  .pl-cab {
+    background: var(--pl-blanco);
+  }
+
+  .pl-cab__inner {
+    display: flex;
+    align-items: center;
+    gap: clamp(0.75rem, 2vw, 1.75rem);
+    padding-block: 1rem;
+  }
+
+  .pl-cab__menu {
+    background: none;
+    border: 0;
+    color: var(--pl-tinta);
+    cursor: pointer;
+    display: inline-flex;
+  }
+
+  .pl-logo {
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+    font-size: clamp(1.15rem, 2.6vw, 1.5rem);
+    font-weight: 800;
+    color: var(--pl-verde-osc);
+    flex-shrink: 0;
+  }
+
+  .pl-logo b {
+    color: var(--pl-tinta);
+    font-weight: 800;
+  }
+
+  .pl-buscador {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    background: var(--pl-gris-tarjeta);
+    border: 1px solid var(--pl-gris-borde);
+    border-radius: var(--pl-radio-pill);
+    padding: 0.35rem 0.4rem 0.35rem 1.2rem;
+    max-width: 720px;
+  }
+
+  .pl-buscador input {
+    flex: 1;
+    border: 0;
+    outline: none;
+    background: transparent;
+    font: inherit;
+    font-size: 0.9rem;
+  }
+
+  .pl-buscador button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 36px;
+    border: 0;
+    border-radius: var(--pl-radio-pill);
+    background: var(--pl-blanco);
+    color: var(--pl-gris-texto);
+    cursor: pointer;
+    flex-shrink: 0;
+  }
+
+  .pl-cab__acc {
+    display: flex;
+    align-items: center;
+    gap: clamp(0.7rem, 1.6vw, 1.5rem);
+    flex-shrink: 0;
+  }
+
+  .pl-cab__item {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.15rem;
+    font-size: 0.68rem;
+    font-weight: 600;
+    color: var(--pl-tinta);
+  }
+
+  .pl-cab__item span {
+    font-size: 1.05rem;
+  }
+
+  @media (max-width: 980px) {
+    .pl-cab__acc .pl-cab__item span {
+      font-size: 1.15rem;
+    }
+    .pl-cab__item {
+      font-size: 0;
+    }
+    .pl-cab__item span {
+      font-size: 1.2rem;
+    }
+  }
+
+  @media (max-width: 620px) {
+    .pl-cab__inner {
+      flex-wrap: wrap;
+    }
+    .pl-buscador {
+      order: 5;
+      flex-basis: 100%;
+      max-width: none;
+    }
+  }
+</style>

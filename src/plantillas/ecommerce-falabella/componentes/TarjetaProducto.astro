@@ -1,0 +1,167 @@
+---
+import { soles } from '../datos/catalogo.js';
+const { producto: p } = Astro.props;
+const dcto = p.antes ? Math.round((1 - p.precio / p.antes) * 100) : 0;
+---
+
+<article class="ef-prod">
+  <a href="#" class="ef-prod__media">
+    <img src={`https://picsum.photos/seed/${p.seed}/400/400`} alt={p.nombre} loading="lazy" />
+    {p.tag && <span class="ef-prod__tag">{p.tag}</span>}
+    {dcto > 0 && <span class="ef-prod__dcto">-{dcto}%</span>}
+  </a>
+  <div class="ef-prod__body">
+    <span class="ef-prod__marca">{p.marca}</span>
+    <p class="ef-prod__nombre">{p.nombre}</p>
+    {
+      p.rating && (
+        <p class="ef-prod__rating" aria-label={`${p.rating} de 5`}>
+          <span>★</span> {p.rating.toFixed(1)}
+        </p>
+      )
+    }
+    <p class="ef-prod__precios">
+      {p.antes && <s>{soles(p.antes)}</s>}
+      <b>{soles(p.precio)}</b>
+      {p.tarjeta && <span class="ef-prod__tarjeta">{soles(p.tarjeta)} con Tarjeta tienda.com</span>}
+    </p>
+    <p class="ef-prod__flags">
+      {p.envioGratis && <span>Envío gratis</span>}
+      {p.llegaManana && <span>Llega mañana</span>}
+    </p>
+    <span class="ef-prod__vendedor">{p.vendedor}</span>
+    <button type="button" class="ef-btn ef-prod__add">Agregar</button>
+  </div>
+</article>
+
+<style>
+  .ef-prod {
+    display: flex;
+    flex-direction: column;
+    background: #fff;
+    border: 1px solid var(--ef-linea);
+    border-radius: var(--ef-radio);
+    overflow: hidden;
+  }
+
+  .ef-prod__media {
+    position: relative;
+    aspect-ratio: 1;
+    background: var(--ef-panel-2);
+    display: block;
+  }
+
+  .ef-prod__media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .ef-prod__tag {
+    position: absolute;
+    top: 0.5rem;
+    left: 0.5rem;
+    background: var(--ef-verde);
+    color: #fff;
+    font-size: 0.62rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    padding: 0.15rem 0.45rem;
+    border-radius: 4px;
+  }
+
+  .ef-prod__dcto {
+    position: absolute;
+    top: 0.5rem;
+    right: 0.5rem;
+    background: var(--ef-rojo);
+    color: #fff;
+    font-size: 0.72rem;
+    font-weight: 800;
+    padding: 0.15rem 0.45rem;
+    border-radius: 4px;
+  }
+
+  .ef-prod__body {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+    padding: 0.8rem 0.85rem 1rem;
+    flex: 1;
+  }
+
+  .ef-prod__marca {
+    font-size: 0.68rem;
+    font-weight: 800;
+    letter-spacing: 0.03em;
+    color: var(--ef-gris);
+  }
+
+  .ef-prod__nombre {
+    font-size: 0.82rem;
+    line-height: 1.3;
+    min-height: 2.6em;
+  }
+
+  .ef-prod__rating {
+    font-size: 0.75rem;
+    color: var(--ef-gris);
+  }
+
+  .ef-prod__rating span {
+    color: var(--ef-amarillo);
+  }
+
+  .ef-prod__precios {
+    display: flex;
+    flex-direction: column;
+    margin-top: 0.3rem;
+  }
+
+  .ef-prod__precios s {
+    font-size: 0.72rem;
+    color: var(--ef-gris);
+  }
+
+  .ef-prod__precios b {
+    font-size: 1.05rem;
+    font-weight: 800;
+    color: var(--ef-tinta);
+  }
+
+  .ef-prod__tarjeta {
+    font-size: 0.66rem;
+    color: var(--ef-verde-benef);
+    font-weight: 700;
+  }
+
+  .ef-prod__flags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.3rem;
+    margin-top: 0.35rem;
+    min-height: 1.2em;
+  }
+
+  .ef-prod__flags span {
+    font-size: 0.62rem;
+    font-weight: 700;
+    color: var(--ef-verde-benef);
+    background: rgba(27, 122, 61, 0.1);
+    padding: 0.1rem 0.4rem;
+    border-radius: 4px;
+  }
+
+  .ef-prod__vendedor {
+    font-size: 0.66rem;
+    color: var(--ef-gris);
+    margin-top: 0.25rem;
+  }
+
+  .ef-prod__add {
+    margin-top: 0.65rem;
+    width: 100%;
+    padding: 0.5rem;
+    font-size: 0.78rem;
+  }
+</style>

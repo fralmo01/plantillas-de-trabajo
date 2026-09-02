@@ -1,0 +1,19 @@
+---
+const { texto = '¡Encuentra las mejores ofertas en tu tienda.com!' } = Astro.props;
+---
+
+<div class="tm-ticker">
+  <span>{texto}</span>
+</div>
+
+<style>
+  .tm-ticker {
+    background: var(--tm-negro);
+    color: var(--tm-blanco);
+    text-align: center;
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    padding: 0.5rem 1rem;
+  }
+</style>

@@ -1,0 +1,15 @@
+---
+import { productos } from '../datos/productos.js';
+import TarjetaProductoMk from '../componentes/TarjetaProductoMk.astro';
+
+const { titulo = 'productos seleccionados para ti' } = Astro.props;
+---
+
+<section class="mk-seccion">
+  <div class="mk-contenedor">
+    <h2 class="mk-titulo">{titulo}</h2>
+    <div class="mk-fila">
+      {productos.map((p) => <TarjetaProductoMk producto={p} />)}
+    </div>
+  </div>
+</section>

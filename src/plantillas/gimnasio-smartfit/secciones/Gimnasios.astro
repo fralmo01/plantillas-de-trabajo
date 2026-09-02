@@ -1,0 +1,184 @@
+---
+import { sedes, ciudades } from '../datos/gym.js';
+---
+
+<section class="gs-seccion gs-wrap" id="sedes">
+  <h2 class="gs-titulo">Nuestras sedes</h2>
+  <p class="gs-sub">Elige la más cercana a tu casa o tu trabajo. Todas con el mismo estándar de equipamiento.</p>
+
+  <div class="gs-sedes__filtros" role="group" aria-label="Filtrar por ciudad">
+    <button class="gs-city is-on" data-city="todas" type="button">Todas</button>
+    {ciudades.map((c: string) => <button class="gs-city" data-city={c} type="button">{c}</button>)}
+  </div>
+
+  <div class="gs-sedes" id="gs-sedes">
+    {
+      sedes.map((s) => (
+        <article class="gs-sede" data-city={s.ciudad}>
+          <div class="gs-sede__media">
+            <img src={s.img} alt={s.nombre} loading="lazy" />
+            <span class="gs-sede__ciudad">{s.ciudad}</span>
+          </div>
+          <div class="gs-sede__body">
+            <h3>{s.nombre}</h3>
+            <p class="gs-sede__dir">{s.direccion}</p>
+            <p class="gs-sede__ref">{s.referencia}</p>
+            <p class="gs-sede__hor">{s.horario}</p>
+            <p class="gs-sede__afl">Afluencia ahora: <b>{s.afluencia}</b></p>
+            <div class="gs-sede__serv">
+              {s.servicios.map((v: string) => <span>{v}</span>)}
+            </div>
+            <a href="#planes" class="gs-btn gs-btn--negro gs-sede__cta">Inscríbete en esta sede</a>
+          </div>
+        </article>
+      ))
+    }
+  </div>
+  <p class="gs-sedes__vacio" id="gs-sedes-vacio" hidden>Aún no tenemos sedes en esa ciudad.</p>
+</section>
+
+<script>
+  const cards = [...document.querySelectorAll<HTMLElement>('#gs-sedes [data-city]')];
+  const btns = [...document.querySelectorAll<HTMLButtonElement>('.gs-city')];
+  const vacio = document.getElementById('gs-sedes-vacio');
+  btns.forEach((b) =>
+    b.addEventListener('click', () => {
+      btns.forEach((x) => x.classList.toggle('is-on', x === b));
+      const city = b.dataset.city;
+      let n = 0;
+      for (const c of cards) {
+        const ok = city === 'todas' || c.dataset.city === city;
+        c.hidden = !ok;
+        if (ok) n++;
+      }
+      if (vacio) vacio.hidden = n > 0;
+    }),
+  );
+</script>
+
+<style>
+  .gs-sedes__filtros {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    justify-content: center;
+    margin-bottom: 1.75rem;
+  }
+
+  .gs-city {
+    border: 2px solid var(--gs-g200);
+    border-radius: var(--gs-radio-full);
+    padding: 0.4rem 1rem;
+    font-size: 0.8rem;
+    font-weight: 700;
+  }
+
+  .gs-city.is-on {
+    background: var(--gs-negro);
+    color: var(--gs-blanco);
+    border-color: var(--gs-negro);
+  }
+
+  .gs-sedes {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+  }
+
+  .gs-sede {
+    display: flex;
+    flex-direction: column;
+    background: var(--gs-blanco);
+    border: 1px solid var(--gs-g200);
+    border-radius: var(--gs-radio-lg);
+    overflow: hidden;
+    box-shadow: var(--gs-sombra-card);
+  }
+
+  .gs-sede__media {
+    position: relative;
+    aspect-ratio: 16 / 9;
+  }
+
+  .gs-sede__media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .gs-sede__ciudad {
+    position: absolute;
+    top: 0.75rem;
+    left: 0.75rem;
+    background: var(--gs-amarillo);
+    color: var(--gs-negro);
+    font-size: 0.68rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    padding: 0.2rem 0.6rem;
+    border-radius: var(--gs-radio-full);
+  }
+
+  .gs-sede__body {
+    padding: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    flex: 1;
+  }
+
+  .gs-sede__body h3 {
+    font-size: 1.15rem;
+    text-transform: uppercase;
+  }
+
+  .gs-sede__dir {
+    font-size: 0.82rem;
+    font-weight: 600;
+  }
+
+  .gs-sede__ref,
+  .gs-sede__hor {
+    font-size: 0.76rem;
+    color: var(--gs-g500);
+  }
+
+  .gs-sede__afl {
+    font-size: 0.78rem;
+  }
+
+  .gs-sede__afl b {
+    color: var(--gs-verde-tx);
+  }
+
+  .gs-sede__serv {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+    margin: 0.5rem 0 0.75rem;
+  }
+
+  .gs-sede__serv span {
+    font-size: 0.68rem;
+    font-weight: 700;
+    background: var(--gs-g100);
+    padding: 0.15rem 0.5rem;
+    border-radius: var(--gs-radio-full);
+  }
+
+  .gs-sede__cta {
+    margin-top: auto;
+  }
+
+  .gs-sedes__vacio {
+    text-align: center;
+    color: var(--gs-g500);
+    padding: 2rem;
+  }
+
+  @media (max-width: 820px) {
+    .gs-sedes {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

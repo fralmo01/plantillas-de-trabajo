@@ -1,0 +1,191 @@
+.tpl-tutienda-moda {
+  
+  --tm-amarillo: #ffd200;
+  --tm-amarillo-osc: #f2c200;
+  --tm-negro: #111111;
+  --tm-tinta: #212529;
+  --tm-blanco: #ffffff;
+  --tm-rojo: #e30613;
+  --tm-rojo-osc: #c1050f;
+  --tm-verde-wa: #25d366;
+  --tm-lima: #d7f24b;
+  --tm-crema: #f7f1e6;
+  --tm-gris-bg: #f4f4f4;
+  --tm-gris-tarjeta: #f2f2f2;
+  --tm-gris-borde: #e4e4e4;
+  --tm-gris-texto: #6b7076;
+
+  --tm-font: "Montserrat Variable", -apple-system, BlinkMacSystemFont,
+    "Segoe UI", Roboto, sans-serif;
+
+  --tm-maxw: 1280px;
+  --tm-radio: 10px;
+  --tm-radio-pill: 999px;
+
+  background: var(--tm-blanco);
+  color: var(--tm-tinta);
+  font-family: var(--tm-font);
+  font-size: 15px;
+  line-height: 1.45;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+.tpl-tutienda-moda *,
+.tpl-tutienda-moda *::before,
+.tpl-tutienda-moda *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+.tpl-tutienda-moda a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.tpl-tutienda-moda img {
+  display: block;
+  max-width: 100%;
+}
+
+.tpl-tutienda-moda h1,
+.tpl-tutienda-moda h2,
+.tpl-tutienda-moda h3,
+.tpl-tutienda-moda h4 {
+  font-weight: 800;
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+}
+
+.tpl-tutienda-moda .tm-contenedor {
+  width: 100%;
+  max-width: var(--tm-maxw);
+  margin-inline: auto;
+  padding-inline: clamp(1rem, 3vw, 2rem);
+}
+
+.tpl-tutienda-moda .tm-seccion {
+  padding-block: clamp(2rem, 5vw, 3.5rem);
+}
+
+.tpl-tutienda-moda .tm-titulo-seccion {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: clamp(1.15rem, 2.6vw, 1.6rem);
+  font-weight: 800;
+  text-transform: uppercase;
+  margin-bottom: 1.4rem;
+}
+
+.tpl-tutienda-moda .tm-titulo-seccion::before {
+  content: "";
+  width: 1.15em;
+  height: 1.15em;
+  flex-shrink: 0;
+  background: var(--tm-amarillo);
+  border-radius: 50%;
+  box-shadow: inset 0 0 0 0.14em var(--tm-negro);
+}
+
+.tpl-tutienda-moda .tm-titulo-seccion--centro {
+  justify-content: center;
+  text-align: center;
+}
+
+.tpl-tutienda-moda .tm-titulo-seccion--centro::before {
+  display: none;
+}
+
+.tpl-tutienda-moda .tm-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.7rem 1.5rem;
+  font: inherit;
+  font-weight: 700;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  cursor: pointer;
+  border: 2px solid var(--tm-negro);
+  border-radius: var(--tm-radio-pill);
+  transition: transform 0.15s ease, background 0.15s ease, color 0.15s ease;
+}
+
+.tpl-tutienda-moda .tm-btn:hover {
+  transform: translateY(-2px);
+}
+
+.tpl-tutienda-moda .tm-btn--negro {
+  background: var(--tm-negro);
+  color: var(--tm-blanco);
+}
+
+.tpl-tutienda-moda .tm-btn--negro:hover {
+  background: var(--tm-blanco);
+  color: var(--tm-negro);
+}
+
+.tpl-tutienda-moda .tm-btn--amarillo {
+  background: var(--tm-amarillo);
+  color: var(--tm-negro);
+  border-color: var(--tm-negro);
+}
+
+.tpl-tutienda-moda .tm-btn--blanco {
+  background: var(--tm-blanco);
+  color: var(--tm-negro);
+}
+
+.tpl-tutienda-moda .tm-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.28rem 0.8rem;
+  border-radius: var(--tm-radio-pill);
+  font-size: 0.78rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.tpl-tutienda-moda .tm-pill--rojo {
+  background: var(--tm-rojo);
+  color: var(--tm-blanco);
+}
+
+.tpl-tutienda-moda .tm-pill--amarillo {
+  background: var(--tm-amarillo);
+  color: var(--tm-negro);
+}
+
+.tpl-tutienda-moda .tm-fila-scroll {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(240px, 1fr);
+  gap: 1rem;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  padding-bottom: 0.75rem;
+  scrollbar-width: thin;
+}
+
+.tpl-tutienda-moda .tm-fila-scroll > * {
+  scroll-snap-align: start;
+}
+
+.tpl-tutienda-moda .tm-fila-scroll--4 {
+  grid-auto-columns: minmax(260px, 1fr);
+}
+
+@media (min-width: 900px) {
+  .tpl-tutienda-moda .tm-fila-scroll--4 {
+    grid-template-columns: repeat(4, 1fr);
+    grid-auto-flow: row;
+    overflow: visible;
+  }
+}

@@ -1,0 +1,101 @@
+---
+const { vertical = 'moda' } = Astro.props;
+
+const paneles = {
+  moda: [
+    { copa: 'Pumps y estiletos', tono: 'lima', seed: 'pl-bn-1' },
+    { copa: 'Tú eliges tu estilo', tono: 'oscuro', seed: 'pl-bn-2' },
+    { copa: 'Carteras y accesorios', tono: 'rosa', seed: 'pl-bn-3' },
+  ],
+  comida: [
+    { copa: 'Promos 2x1 hoy', tono: 'lima', seed: 'pl-bn-4' },
+    { copa: 'Nuevos locales', tono: 'oscuro', seed: 'pl-bn-5' },
+    { copa: 'Antojos dulces', tono: 'rosa', seed: 'pl-bn-6' },
+  ],
+  hogar: [
+    { copa: 'Liquidación muebles', tono: 'lima', seed: 'pl-bn-7' },
+    { copa: 'Renueva tu cocina', tono: 'oscuro', seed: 'pl-bn-8' },
+    { copa: 'Deco que inspira', tono: 'rosa', seed: 'pl-bn-9' },
+  ],
+  deporte: [
+    { copa: 'Running en oferta', tono: 'lima', seed: 'pl-bn-10' },
+    { copa: 'Equipa tu gym', tono: 'oscuro', seed: 'pl-bn-11' },
+    { copa: 'Fútbol y outdoor', tono: 'rosa', seed: 'pl-bn-12' },
+  ],
+};
+const lista: { copa: string; tono: string; seed: string }[] =
+  (paneles as Record<string, any>)[vertical] ?? paneles.moda;
+---
+
+<section class="pl-seccion">
+  <div class="pl-contenedor">
+    <div class="pl-bnp">
+      {
+        lista.map((p: { copa: string; tono: string; seed: string }) => (
+          <a href="#" class:list={['pl-bnp__panel', `pl-bnp__panel--${p.tono}`]}>
+            <img src={`https://picsum.photos/seed/${p.seed}/560/380`} alt={p.copa} loading="lazy" />
+            <span class="pl-bnp__pill">
+              {p.copa}
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z" /></svg>
+            </span>
+          </a>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<style>
+  .pl-bnp {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+  }
+
+  .pl-bnp__panel {
+    position: relative;
+    aspect-ratio: 3 / 2;
+    border-radius: var(--pl-radio);
+    overflow: hidden;
+    display: flex;
+    align-items: flex-end;
+    padding: 1rem;
+    isolation: isolate;
+  }
+
+  .pl-bnp__panel img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: -1;
+    filter: brightness(0.92);
+  }
+
+  .pl-bnp__pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    background: var(--pl-verde);
+    color: #fff;
+    border-radius: var(--pl-radio-pill);
+    padding: 0.4rem 0.9rem;
+    font-size: 0.82rem;
+    font-weight: 800;
+  }
+
+  .pl-bnp__panel--oscuro .pl-bnp__pill {
+    background: var(--pl-negro);
+  }
+
+  .pl-bnp__panel--rosa .pl-bnp__pill {
+    background: var(--pl-rosa);
+  }
+
+  @media (max-width: 780px) {
+    .pl-bnp {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

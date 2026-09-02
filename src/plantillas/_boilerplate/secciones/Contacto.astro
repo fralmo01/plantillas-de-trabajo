@@ -1,0 +1,42 @@
+<section id="contacto" class="b-seccion">
+  <div class="b-contenedor">
+    <h2>Contacto</h2>
+    <form class="b-form" onsubmit="return false">
+      <label>
+        Nombre
+        <input type="text" name="nombre" required />
+      </label>
+      <label>
+        Correo
+        <input type="email" name="correo" required />
+      </label>
+      <label>
+        Mensaje
+        <textarea name="mensaje" rows="4" required></textarea>
+      </label>
+      <button type="submit" class="b-boton">Enviar</button>
+    </form>
+  </div>
+</section>
+
+<style>
+  .b-form {
+    display: grid;
+    gap: 1rem;
+    max-width: 480px;
+    margin-top: 2rem;
+  }
+  .b-form label {
+    display: grid;
+    gap: 0.35rem;
+    font-size: 0.85rem;
+  }
+  .b-form input,
+  .b-form textarea {
+    padding: 0.7rem 0.85rem;
+    border: 1px solid var(--b-suave);
+    border-radius: 6px;
+    font: inherit;
+    resize: vertical;
+  }
+</style>

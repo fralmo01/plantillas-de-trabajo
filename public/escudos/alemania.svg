@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" role="img" aria-label="Selección Alemania">
+  <defs><clipPath id="s"><path d="M120 8 222 40v96c0 58-44 82-102 96C62 218 18 194 18 136V40Z"/></clipPath></defs>
+  <g clip-path="url(#s)">
+    <rect x="0" y="0" width="240" height="80" fill="#000000"/>
+    <rect x="0" y="80" width="240" height="80" fill="#DD0000"/>
+    <rect x="0" y="160" width="240" height="80" fill="#FFCE00"/>
+  </g>
+  <path d="M120 8 222 40v96c0 58-44 82-102 96C62 218 18 194 18 136V40Z" fill="none" stroke="#000" stroke-width="6"/>
+  <text x="120" y="120" text-anchor="middle" dominant-baseline="central"
+    font-family="Archivo Variable, Arial Narrow, sans-serif" font-size="70" font-weight="900"
+    font-stretch="78%" fill="#000" stroke="#fff" stroke-width="2" paint-order="stroke">GER</text>
+</svg>

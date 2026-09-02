@@ -1,0 +1,42 @@
+---
+import { servicios } from '../datos/contenido.js';
+---
+
+<nav class="mk-serv" aria-label="Servicios">
+  <div class="mk-contenedor mk-serv__inner">
+    {servicios.map((s) => <a href="#" class="mk-serv__link">{s}</a>)}
+  </div>
+</nav>
+
+<style>
+  .mk-serv {
+    background: var(--mk-gris-bg);
+    border-bottom: 1px solid var(--mk-gris-borde);
+  }
+
+  .mk-serv__inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding-block: 0.55rem;
+    overflow-x: auto;
+  }
+
+  .mk-serv__link {
+    font-size: 0.76rem;
+    font-weight: 600;
+    color: var(--mk-gris-texto);
+    white-space: nowrap;
+  }
+
+  .mk-serv__link:hover {
+    color: var(--mk-tinta);
+  }
+
+  @media (max-width: 820px) {
+    .mk-serv__inner {
+      justify-content: flex-start;
+    }
+  }
+</style>

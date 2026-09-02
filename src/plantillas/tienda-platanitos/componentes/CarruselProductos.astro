@@ -1,0 +1,24 @@
+---
+import TarjetaProducto from './TarjetaProducto.astro';
+import { productos, porCat, porVertical } from '../datos/productos.js';
+
+const { titulo, sub, cat, vertical } = Astro.props as {
+  titulo: string;
+  sub?: string;
+  cat?: string;
+  vertical?: string;
+};
+let lista = cat ? porCat(cat) : vertical ? porVertical(vertical) : productos;
+if (lista.length < 4) lista = [...lista, ...productos].slice(0, 6);
+lista = lista.slice(0, 6);
+---
+
+<section class="pl-seccion">
+  <div class="pl-contenedor">
+    <h2 class="pl-titulo">{titulo}</h2>
+    {sub && <p class="pl-subtitulo">{sub}</p>}
+    <div class="pl-fila pl-fila--6">
+      {lista.map((p) => <TarjetaProducto producto={p} />)}
+    </div>
+  </div>
+</section>

@@ -1,0 +1,82 @@
+---
+const base = '/plantillas/tutienda-moda';
+const destinos = [
+  { titulo: 'Caballero', seed: 'tm-dest-1', href: `${base}/hombre/` },
+  { titulo: 'Dama', seed: 'tm-dest-2', href: `${base}/mujer/` },
+  { titulo: 'Kids', seed: 'tm-dest-3', href: `${base}/kids/` },
+  { titulo: 'Licencias', seed: 'tm-dest-4', href: `${base}/comics/` },
+];
+---
+
+<section class="tm-seccion">
+  <div class="tm-contenedor">
+    <div class="tm-dest">
+      {
+        destinos.map((d) => (
+          <a href={d.href} class="tm-dest__card">
+            <img src={`https://picsum.photos/seed/${d.seed}/500/640`} alt={d.titulo} loading="lazy" />
+            <span class="tm-dest__capa" aria-hidden="true" />
+            <span class="tm-dest__titulo">{d.titulo}</span>
+            <span class="tm-btn tm-btn--blanco tm-dest__btn">Comprar</span>
+          </a>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<style>
+  .tm-dest {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+  }
+
+  .tm-dest__card {
+    position: relative;
+    aspect-ratio: 4 / 5;
+    border-radius: var(--tm-radio);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+    padding-bottom: 1.25rem;
+    color: #fff;
+    isolation: isolate;
+  }
+
+  .tm-dest__card img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .tm-dest__capa {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(transparent 35%, rgba(0, 0, 0, 0.6));
+  }
+
+  .tm-dest__titulo,
+  .tm-dest__btn {
+    position: relative;
+    z-index: 1;
+  }
+
+  .tm-dest__titulo {
+    font-size: clamp(1.3rem, 3vw, 2rem);
+    font-weight: 900;
+    text-transform: uppercase;
+    text-shadow: 0 2px 12px rgba(0, 0, 0, 0.5);
+    margin-bottom: 0.75rem;
+  }
+
+  @media (max-width: 860px) {
+    .tm-dest {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+</style>

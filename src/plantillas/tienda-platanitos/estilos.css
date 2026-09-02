@@ -1,0 +1,179 @@
+.tpl-tienda-platanitos {
+  --pl-verde: #55b849;
+  --pl-verde-osc: #0b5e02;
+  --pl-verde-claro: #eaf6e8;
+  --pl-rosa: #ef3e56;
+  --pl-negro: #1c1c1c;
+  --pl-tinta: #2a2a2a;
+  --pl-blanco: #ffffff;
+  --pl-crema: #f4efe6;
+  --pl-gris-bg: #f5f5f5;
+  --pl-gris-tarjeta: #f7f7f7;
+  --pl-gris-borde: #e6e6e6;
+  --pl-gris-texto: #7a7a7a;
+  --pl-dorado: #f6b100;
+
+  --pl-font: "Montserrat Variable", -apple-system, BlinkMacSystemFont,
+    "Segoe UI", Roboto, sans-serif;
+
+  --pl-maxw: 1280px;
+  --pl-radio: 16px;
+  --pl-radio-pill: 999px;
+
+  background: var(--pl-blanco);
+  color: var(--pl-tinta);
+  font-family: var(--pl-font);
+  font-size: 15px;
+  line-height: 1.45;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+.tpl-tienda-platanitos *,
+.tpl-tienda-platanitos *::before,
+.tpl-tienda-platanitos *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+.tpl-tienda-platanitos a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.tpl-tienda-platanitos img {
+  display: block;
+  max-width: 100%;
+}
+
+.tpl-tienda-platanitos h1,
+.tpl-tienda-platanitos h2,
+.tpl-tienda-platanitos h3,
+.tpl-tienda-platanitos h4 {
+  font-weight: 800;
+  line-height: 1.15;
+}
+
+.tpl-tienda-platanitos .visually {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.tpl-tienda-platanitos .pl-contenedor {
+  width: 100%;
+  max-width: var(--pl-maxw);
+  margin-inline: auto;
+  padding-inline: clamp(0.9rem, 2.5vw, 1.75rem);
+}
+
+.tpl-tienda-platanitos .pl-seccion {
+  padding-block: clamp(1.75rem, 4vw, 3rem);
+}
+
+.tpl-tienda-platanitos .pl-titulo {
+  font-size: clamp(1.15rem, 2.6vw, 1.7rem);
+  font-weight: 800;
+}
+
+.tpl-tienda-platanitos .pl-titulo + .pl-subtitulo {
+  margin-top: 0.15rem;
+}
+
+.tpl-tienda-platanitos .pl-subtitulo {
+  color: var(--pl-gris-texto);
+  font-size: 0.9rem;
+  margin-bottom: 1.25rem;
+}
+
+.tpl-tienda-platanitos .pl-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45rem;
+  padding: 0.65rem 1.4rem;
+  font: inherit;
+  font-weight: 700;
+  font-size: 0.85rem;
+  cursor: pointer;
+  border: 2px solid transparent;
+  border-radius: var(--pl-radio-pill);
+  transition: transform 0.15s ease, background 0.15s ease, color 0.15s ease;
+}
+
+.tpl-tienda-platanitos .pl-btn:hover {
+  transform: translateY(-2px);
+}
+
+.tpl-tienda-platanitos .pl-btn--verde {
+  background: var(--pl-verde-osc);
+  color: var(--pl-blanco);
+  border-color: var(--pl-verde-osc);
+}
+
+.tpl-tienda-platanitos .pl-btn--lima {
+  background: var(--pl-verde);
+  color: var(--pl-blanco);
+  border-color: var(--pl-verde);
+}
+
+.tpl-tienda-platanitos .pl-btn--outline {
+  background: transparent;
+  color: var(--pl-verde-osc);
+  border-color: var(--pl-verde-osc);
+}
+
+.tpl-tienda-platanitos .pl-btn--outline:hover {
+  background: var(--pl-verde-osc);
+  color: var(--pl-blanco);
+}
+
+.tpl-tienda-platanitos .pl-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.25rem 0.7rem;
+  border-radius: var(--pl-radio-pill);
+  font-size: 0.72rem;
+  font-weight: 800;
+  text-transform: none;
+}
+
+.tpl-tienda-platanitos .pl-badge--rosa {
+  background: var(--pl-rosa);
+  color: #fff;
+}
+
+.tpl-tienda-platanitos .pl-badge--lima {
+  background: var(--pl-verde);
+  color: #fff;
+}
+
+.tpl-tienda-platanitos .pl-fila {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(180px, 1fr);
+  gap: 1rem;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  padding-bottom: 0.5rem;
+}
+
+.tpl-tienda-platanitos .pl-fila > * {
+  scroll-snap-align: start;
+}
+
+@media (min-width: 1000px) {
+  .tpl-tienda-platanitos .pl-fila--6 {
+    grid-template-columns: repeat(6, 1fr);
+    grid-auto-flow: row;
+    overflow: visible;
+  }
+}

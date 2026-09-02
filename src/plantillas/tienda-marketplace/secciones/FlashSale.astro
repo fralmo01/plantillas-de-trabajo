@@ -1,0 +1,165 @@
+---
+const tiles = [
+  { copa: '10% dcto. adicional en muebles', nota: 'productos seleccionados', seed: 'mk-flash-1' },
+  { copa: 'hasta 45% cosmética coreana', nota: 'skincare importado', seed: 'mk-flash-2' },
+  { copa: 'horno industrial · 27%', nota: '$239.990', seed: 'mk-flash-3' },
+  { copa: 'poleras y polerones desde $5.990', nota: 'niños y adultos', seed: 'mk-flash-4' },
+];
+---
+
+<section class="mk-seccion">
+  <div class="mk-contenedor">
+    <div class="mk-flash">
+      <div class="mk-flash__head">
+        <h2>¡solo x <span>pocas horas!</span></h2>
+        <div class="mk-flash__reloj" id="mk-reloj" aria-live="off">
+          <span><b data-u="h">06</b><small>horas</small></span>
+          <span><b data-u="m">00</b><small>min</small></span>
+          <span><b data-u="s">00</b><small>seg</small></span>
+        </div>
+        <p class="mk-flash__grito">¡no te lo pierdas!</p>
+      </div>
+
+      <div class="mk-flash__grid">
+        {
+          tiles.map((t) => (
+            <a href="#" class="mk-flash__tile">
+              <img src={`https://picsum.photos/seed/${t.seed}/400/260`} alt={t.copa} loading="lazy" />
+              <div>
+                <p class="mk-flash__copa">{t.copa}</p>
+                <p class="mk-flash__nota">{t.nota}</p>
+              </div>
+            </a>
+          ))
+        }
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  
+  const reloj = document.getElementById('mk-reloj');
+  if (reloj) {
+    let restante = 6 * 3600;
+    const set = (u: string, v: number) => {
+      const el = reloj.querySelector(`[data-u="${u}"]`);
+      if (el) el.textContent = String(v).padStart(2, '0');
+    };
+    const tick = () => {
+      if (restante <= 0) restante = 6 * 3600;
+      const h = Math.floor(restante / 3600);
+      const m = Math.floor((restante % 3600) / 60);
+      const s = restante % 60;
+      set('h', h);
+      set('m', m);
+      set('s', s);
+      restante -= 1;
+    };
+    tick();
+    setInterval(tick, 1000);
+  }
+</script>
+
+<style>
+  .mk-flash {
+    background: var(--mk-gris-tarjeta);
+    border: 1px solid var(--mk-gris-borde);
+    border-radius: var(--mk-radio);
+    padding: 1.5rem;
+  }
+
+  .mk-flash__head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 1rem 1.5rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .mk-flash__head h2 {
+    font-size: clamp(1.2rem, 3vw, 1.8rem);
+    text-transform: lowercase;
+  }
+
+  .mk-flash__head h2 span {
+    background: var(--mk-amarillo);
+    padding: 0 0.35rem;
+    border-radius: 4px;
+  }
+
+  .mk-flash__reloj {
+    display: flex;
+    gap: 0.4rem;
+  }
+
+  .mk-flash__reloj span {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: var(--mk-negro);
+    color: var(--mk-amarillo);
+    border-radius: 6px;
+    padding: 0.3rem 0.5rem;
+    min-width: 44px;
+  }
+
+  .mk-flash__reloj b {
+    font-size: 1.1rem;
+    font-weight: 800;
+  }
+
+  .mk-flash__reloj small {
+    font-size: 0.55rem;
+    color: var(--mk-blanco);
+    text-transform: uppercase;
+  }
+
+  .mk-flash__grito {
+    font-weight: 700;
+    color: var(--mk-rosa);
+    margin-left: auto;
+  }
+
+  .mk-flash__grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+  }
+
+  .mk-flash__tile {
+    background: var(--mk-blanco);
+    border: 1px solid var(--mk-gris-borde);
+    border-radius: 8px;
+    overflow: hidden;
+  }
+
+  .mk-flash__tile img {
+    width: 100%;
+    aspect-ratio: 16 / 10;
+    object-fit: cover;
+  }
+
+  .mk-flash__tile > div {
+    padding: 0.75rem;
+  }
+
+  .mk-flash__copa {
+    font-size: 0.82rem;
+    font-weight: 700;
+  }
+
+  .mk-flash__nota {
+    font-size: 0.7rem;
+    color: var(--mk-gris-texto);
+  }
+
+  @media (max-width: 860px) {
+    .mk-flash__grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    .mk-flash__grito {
+      margin-left: 0;
+    }
+  }
+</style>

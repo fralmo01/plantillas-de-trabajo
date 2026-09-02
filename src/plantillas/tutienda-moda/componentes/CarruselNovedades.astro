@@ -1,0 +1,21 @@
+---
+import TarjetaProducto from './TarjetaProducto.astro';
+import { productos } from '../datos/productos.js';
+import type { Producto } from '../datos/tipos.ts';
+
+interface Props {
+  titulo?: string;
+  lista?: Producto[];
+}
+
+const { titulo = '¡Lo más nuevo!', lista = productos.slice(0, 8) } = Astro.props as Props;
+---
+
+<section class="tm-seccion">
+  <div class="tm-contenedor">
+    <h2 class="tm-titulo-seccion tm-titulo-seccion--centro">{titulo}</h2>
+    <div class="tm-fila-scroll">
+      {lista.map((p: Producto) => <TarjetaProducto producto={p} />)}
+    </div>
+  </div>
+</section>

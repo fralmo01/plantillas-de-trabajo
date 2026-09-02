@@ -1,0 +1,50 @@
+---
+/**
+ * Sub-paginas de una plantilla multipagina.
+ *
+ * Cada plantilla con una carpeta `paginas/` de archivos `.astro` genera,
+ * ademas de su home (../[id].astro), una ruta por archivo:
+ *   src/plantillas/tutienda-moda/paginas/mujer.astro
+ *     -> /plantillas/tutienda-moda/mujer/
+ *
+ * getStaticPaths solo emite rutas con `ruta` no vacia, asi que nunca
+ * colisiona con ../[id].astro (que sirve la home).
+ *
+ * Nota: el compilador de Astro eleva `getStaticPaths` por encima del
+ * resto del frontmatter, asi que NO puede referenciar consts ni helpers
+ * definidos fuera de ella. Por eso todo va inline (imports si valen).
+ */
+import type { GetStaticPaths } from 'astro';
+import PlantillaLayout from '@layouts/PlantillaLayout.astro';
+
+export const getStaticPaths = (() => {
+  const modulos = import.meta.glob('../../../plantillas/*/paginas/*.astro');
+  const rutas = [];
+  for (const archivo in modulos) {
+    const m = archivo.match(/plantillas\/([^/]+)\/paginas\/([^/]+)\.astro$/);
+    if (!m) continue;
+    rutas.push({ params: { id: m[1], ruta: m[2] }, props: { archivo } });
+  }
+  return rutas;
+}) satisfies GetStaticPaths;
+
+const modulos = import.meta.glob('../../../plantillas/*/paginas/*.astro');
+const { archivo } = Astro.props as { archivo: string };
+const cargar = modulos[archivo];
+
+if (!cargar) {
+  throw new Error(`No se encontro el modulo de sub-pagina: ${archivo}`);
+}
+
+const mod = (await cargar()) as {
+  default: (props: Record<string, unknown>) => unknown;
+  titulo?: string;
+  descripcion?: string;
+};
+
+const Pagina = mod.default;
+---
+
+<PlantillaLayout titulo={mod.titulo ?? 'tu tienda.com'} descripcion={mod.descripcion}>
+  <Pagina />
+</PlantillaLayout>

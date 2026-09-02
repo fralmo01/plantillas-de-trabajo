@@ -1,0 +1,250 @@
+---
+import {
+  filtrosVertical,
+  filtrosMarca,
+  filtrosPrecio,
+  filtrosDescuento,
+  filtrosEnvio,
+} from '../datos/productos.js';
+---
+
+<aside class="pl-filtros" id="pl-filtros">
+  <div class="pl-filtros__cab">
+    <h2>Filtrar</h2>
+    <button class="pl-filtros__x" type="button" aria-label="Cerrar filtros">✕</button>
+  </div>
+
+  <form class="pl-filtros__form" onsubmit="return false">
+    <section class="pl-filtros__cat">
+      <h3>Vertical</h3>
+      <ul>
+        {
+          filtrosVertical.map((c) => (
+            <li>
+              <a href="#">
+                <span>{c.nombre}</span>
+                <b>{c.n.toLocaleString('es-PE')}</b>
+                <i aria-hidden="true">›</i>
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </section>
+
+    <details class="pl-grupo" open>
+      <summary>Marca</summary>
+      <div class="pl-grupo__cuerpo">
+        <input type="search" class="pl-grupo__buscar" placeholder="Buscar marca" aria-label="Buscar marca" />
+        <ul class="pl-grupo__lista pl-grupo__lista--scroll">
+          {
+            filtrosMarca.map((m) => (
+              <li>
+                <label>
+                  <input type="checkbox" name="marca" value={m} />
+                  <span>{m}</span>
+                </label>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+    </details>
+
+    <details class="pl-grupo">
+      <summary>Precio</summary>
+      <div class="pl-grupo__cuerpo">
+        <ul class="pl-grupo__lista">
+          {
+            filtrosPrecio.map((p) => (
+              <li>
+                <label>
+                  <input type="radio" name="precio" value={p} />
+                  <span>{p}</span>
+                </label>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+    </details>
+
+    <details class="pl-grupo">
+      <summary>Descuento</summary>
+      <div class="pl-grupo__cuerpo">
+        <ul class="pl-grupo__lista">
+          {
+            filtrosDescuento.map((d) => (
+              <li>
+                <label>
+                  <input type="checkbox" name="dscto" value={d} />
+                  <span>{d}</span>
+                </label>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+    </details>
+
+    <details class="pl-grupo">
+      <summary>Envío</summary>
+      <div class="pl-grupo__cuerpo">
+        <ul class="pl-grupo__lista">
+          {
+            filtrosEnvio.map((e) => (
+              <li>
+                <label>
+                  <input type="checkbox" name="envio" value={e} />
+                  <span>{e}</span>
+                </label>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+    </details>
+
+    <button type="button" class="pl-btn pl-btn--verde pl-filtros__aplicar" data-cerrar-filtros>
+      Aplicar filtros
+    </button>
+  </form>
+</aside>
+
+<style>
+  .pl-filtros {
+    align-self: start;
+  }
+
+  .pl-filtros__cab {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-left: 4px solid var(--pl-verde);
+    padding: 0.4rem 0 0.4rem 0.7rem;
+    margin-bottom: 1rem;
+  }
+
+  .pl-filtros__cab h2 {
+    font-size: 1rem;
+    text-transform: uppercase;
+  }
+
+  .pl-filtros__x {
+    display: none;
+    background: none;
+    border: 0;
+    font-size: 1rem;
+    cursor: pointer;
+  }
+
+  .pl-filtros__cat h3 {
+    font-size: 0.92rem;
+    margin-bottom: 0.6rem;
+  }
+
+  .pl-filtros__cat ul {
+    list-style: none;
+    display: grid;
+    gap: 0.15rem;
+    border-bottom: 1px solid var(--pl-gris-borde);
+    padding-bottom: 0.75rem;
+  }
+
+  .pl-filtros__cat a {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.35rem 0;
+    font-size: 0.82rem;
+  }
+
+  .pl-filtros__cat a b {
+    margin-left: auto;
+    color: var(--pl-gris-texto);
+    font-weight: 600;
+    font-size: 0.72rem;
+  }
+
+  .pl-filtros__cat a i {
+    color: var(--pl-gris-texto);
+  }
+
+  .pl-filtros__cat a:hover {
+    color: var(--pl-verde-osc);
+  }
+
+  .pl-grupo {
+    border-bottom: 1px solid var(--pl-gris-borde);
+    padding-block: 0.6rem;
+  }
+
+  .pl-grupo summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 0.86rem;
+    font-weight: 700;
+    cursor: pointer;
+    list-style: none;
+    padding-block: 0.3rem;
+  }
+
+  .pl-grupo summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .pl-grupo summary::after {
+    content: "+";
+    font-size: 1rem;
+    color: var(--pl-gris-texto);
+  }
+
+  .pl-grupo[open] summary::after {
+    content: "–";
+  }
+
+  .pl-grupo__cuerpo {
+    padding-top: 0.6rem;
+    display: grid;
+    gap: 0.55rem;
+  }
+
+  .pl-grupo__buscar {
+    width: 100%;
+    padding: 0.5rem 0.7rem;
+    border: 1px solid var(--pl-gris-borde);
+    border-radius: 8px;
+    font: inherit;
+    font-size: 0.82rem;
+  }
+
+  .pl-grupo__lista {
+    list-style: none;
+    display: grid;
+    gap: 0.5rem;
+  }
+
+  .pl-grupo__lista--scroll {
+    max-height: 180px;
+    overflow-y: auto;
+    padding-right: 0.25rem;
+  }
+
+  .pl-grupo__lista label {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.82rem;
+    cursor: pointer;
+  }
+
+  .pl-grupo__lista input {
+    accent-color: var(--pl-verde-osc);
+  }
+
+  .pl-filtros__aplicar {
+    width: 100%;
+    margin-top: 1rem;
+  }
+</style>

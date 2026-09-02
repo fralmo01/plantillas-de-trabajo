@@ -1,0 +1,176 @@
+---
+const base = '/plantillas/tienda-marketplace';
+
+const principales = [
+  'Ofertas',
+  'Tecno',
+  'Electrohogar',
+  'Moda mujer',
+  'Moda hombre',
+  'Moda infantil',
+  'Calzado',
+  'Belleza',
+  'Hogar',
+  'Deportes',
+];
+const secundarias = ['Seguimiento de compra', 'Cambios y devoluciones', '¿Necesitas ayuda?'];
+---
+
+<div class="mk-drawer" id="mk-menu-lateral" hidden>
+  <div class="mk-drawer__overlay" data-cerrar></div>
+
+  <aside class="mk-drawer__panel" role="dialog" aria-modal="true" aria-label="Menú">
+    <div class="mk-drawer__cab">
+      <span class="mk-drawer__marca">tienda<b>.com</b></span>
+      <button class="mk-drawer__x" type="button" data-cerrar aria-label="Cerrar menú">✕</button>
+    </div>
+
+    <nav class="mk-drawer__nav" aria-label="Secciones">
+      <a href={`${base}/`} class="mk-drawer__link mk-drawer__link--top">Inicio</a>
+      {principales.map((s) => (
+        <a href={`${base}/buscar/?q=${encodeURIComponent(s.toLowerCase())}`} class="mk-drawer__link">
+          {s}
+        </a>
+      ))}
+    </nav>
+
+    <div class="mk-drawer__sep"></div>
+
+    <nav class="mk-drawer__nav mk-drawer__nav--sec" aria-label="Ayuda">
+      {secundarias.map((s) => (
+        <a href="#" class="mk-drawer__link">{s}</a>
+      ))}
+    </nav>
+  </aside>
+</div>
+
+<script>
+  const drawer = document.getElementById('mk-menu-lateral');
+  const burger = document.getElementById('mk-burger');
+  if (drawer && burger) {
+    const abrir = () => {
+      drawer.hidden = false;
+      void drawer.offsetWidth; 
+      drawer.classList.add('is-abierto');
+      burger.setAttribute('aria-expanded', 'true');
+      document.body.style.overflow = 'hidden';
+    };
+    const cerrar = () => {
+      drawer.classList.remove('is-abierto');
+      burger.setAttribute('aria-expanded', 'false');
+      document.body.style.overflow = '';
+      setTimeout(() => {
+        drawer.hidden = true;
+      }, 250);
+    };
+    burger.addEventListener('click', () =>
+      drawer.classList.contains('is-abierto') ? cerrar() : abrir(),
+    );
+    drawer.querySelectorAll('[data-cerrar]').forEach((el) => el.addEventListener('click', cerrar));
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && drawer.classList.contains('is-abierto')) cerrar();
+    });
+  }
+</script>
+
+<style>
+  .mk-drawer {
+    position: fixed;
+    inset: 0;
+    z-index: 400;
+  }
+
+  .mk-drawer__overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.45);
+    opacity: 0;
+    transition: opacity 0.25s ease;
+  }
+
+  .mk-drawer.is-abierto .mk-drawer__overlay {
+    opacity: 1;
+  }
+
+  .mk-drawer__panel {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: min(320px, 84vw);
+    background: var(--mk-blanco);
+    box-shadow: 0 0 40px rgba(0, 0, 0, 0.3);
+    transform: translateX(-100%);
+    transition: transform 0.25s ease;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+  }
+
+  .mk-drawer.is-abierto .mk-drawer__panel {
+    transform: none;
+  }
+
+  .mk-drawer__cab {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem 1.1rem;
+    background: var(--mk-negro);
+    color: var(--mk-blanco);
+  }
+
+  .mk-drawer__marca {
+    font-weight: 700;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    font-size: 0.95rem;
+  }
+
+  .mk-drawer__marca b {
+    letter-spacing: 0.04em;
+    opacity: 0.6;
+  }
+
+  .mk-drawer__x {
+    background: none;
+    border: 0;
+    color: inherit;
+    font-size: 1.1rem;
+    cursor: pointer;
+    line-height: 1;
+  }
+
+  .mk-drawer__nav {
+    display: flex;
+    flex-direction: column;
+    padding: 0.5rem 0;
+  }
+
+  .mk-drawer__link {
+    padding: 0.85rem 1.2rem;
+    font-size: 0.92rem;
+    font-weight: 600;
+    border-bottom: 1px solid var(--mk-gris-borde);
+  }
+
+  .mk-drawer__link--top {
+    font-weight: 800;
+  }
+
+  .mk-drawer__nav--sec .mk-drawer__link {
+    font-weight: 500;
+    font-size: 0.85rem;
+    color: var(--mk-gris-texto);
+  }
+
+  .mk-drawer__link:hover {
+    background: var(--mk-gris-tarjeta);
+    color: var(--mk-morado);
+  }
+
+  .mk-drawer__sep {
+    height: 8px;
+    background: var(--mk-gris-tarjeta);
+  }
+</style>

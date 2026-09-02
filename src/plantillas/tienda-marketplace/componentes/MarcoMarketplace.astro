@@ -1,0 +1,21 @@
+---
+import '@fontsource-variable/montserrat/wght.css';
+import '../estilos.css';
+
+import BarraSuperior from '../secciones/BarraSuperior.astro';
+import CintaServicios from '../secciones/CintaServicios.astro';
+import BandaMorada from '../secciones/BandaMorada.astro';
+import PiePagina from '../secciones/PiePagina.astro';
+import MenuLateralMk from './MenuLateralMk.astro';
+---
+
+<div class="tpl-tienda-marketplace">
+  <BarraSuperior />
+  <CintaServicios />
+  <MenuLateralMk />
+  <main>
+    <slot />
+  </main>
+  <BandaMorada />
+  <PiePagina />
+</div>

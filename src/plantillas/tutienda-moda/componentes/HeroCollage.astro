@@ -1,0 +1,165 @@
+---
+const fotos = [
+  { seed: 'tm-hero-a', rot: -6, top: '18%', left: '3%', w: '24%' },
+  { seed: 'tm-hero-b', rot: 3, top: '6%', left: '24%', w: '22%' },
+  { seed: 'tm-hero-c', rot: -3, top: '30%', left: '44%', w: '22%' },
+];
+---
+
+<section class="tm-hero">
+  <div class="tm-hero__collage" aria-hidden="true">
+    {
+      fotos.map((f) => (
+        <img
+          src={`https://picsum.photos/seed/${f.seed}/420/560`}
+          alt=""
+          style={`--rot:${f.rot}deg; top:${f.top}; left:${f.left}; width:${f.w};`}
+          loading="eager"
+        />
+      ))
+    }
+  </div>
+
+  <div class="tm-hero__texto">
+    <p class="tm-hero__kicker">Un estilo para cada momento de tu día.</p>
+    <h1 class="tm-hero__titulo">
+      <span class="tm-hero__script">Tan versátil</span>
+      <mark>como tú</mark>
+    </h1>
+    <a href="/plantillas/tutienda-moda/colecciones/" class="tm-hero__cta">
+      <span class="tm-hero__cta-circ" aria-hidden="true">→</span>
+      Ver más aquí
+    </a>
+  </div>
+
+  <span class="tm-hero__marca" aria-hidden="true">tu tienda<b>!</b></span>
+</section>
+
+<style>
+  .tm-hero {
+    position: relative;
+    min-height: clamp(420px, 48vw, 600px);
+    background:
+      radial-gradient(circle at 78% 30%, rgba(255, 210, 0, 0.25), transparent 45%),
+      linear-gradient(120deg, #ece7dd 0%, #d9d2c4 100%);
+    overflow: hidden;
+  }
+
+  .tm-hero__collage {
+    position: absolute;
+    inset: 0;
+  }
+
+  .tm-hero__collage img {
+    position: absolute;
+    transform: rotate(var(--rot));
+    border: 7px solid #fff;
+    border-radius: 3px;
+    box-shadow: 0 16px 34px rgba(0, 0, 0, 0.22);
+    background: #fff;
+  }
+
+  .tm-hero__texto {
+    position: absolute;
+    z-index: 2;
+    right: clamp(1.5rem, 6vw, 6rem);
+    bottom: clamp(1.5rem, 5vw, 3.5rem);
+    max-width: 40ch;
+    text-align: right;
+  }
+
+  .tm-hero__kicker {
+    font-family: Georgia, "Times New Roman", serif;
+    font-style: italic;
+    font-size: clamp(0.9rem, 1.6vw, 1.15rem);
+    color: var(--tm-tinta);
+    margin-bottom: 0.6rem;
+  }
+
+  .tm-hero__titulo {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 0.25rem;
+    font-size: clamp(2rem, 6vw, 4rem);
+    line-height: 0.95;
+    text-transform: uppercase;
+  }
+
+  .tm-hero__script {
+    font-family: Georgia, "Times New Roman", serif;
+    font-style: italic;
+    font-weight: 700;
+    text-transform: none;
+  }
+
+  .tm-hero__titulo mark {
+    background: var(--tm-lima);
+    color: var(--tm-negro);
+    padding: 0 0.25em;
+    transform: rotate(-1.5deg);
+  }
+
+  .tm-hero__cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    margin-top: 1.2rem;
+    font-weight: 800;
+    font-size: clamp(1rem, 2vw, 1.4rem);
+    text-transform: uppercase;
+  }
+
+  .tm-hero__cta-circ {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2em;
+    height: 2em;
+    border: 2px solid var(--tm-negro);
+    border-radius: 50%;
+    font-size: 0.7em;
+  }
+
+  .tm-hero__marca {
+    position: absolute;
+    top: 7%;
+    right: 4%;
+    z-index: 2;
+    width: clamp(80px, 10vw, 128px);
+    aspect-ratio: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    background: var(--tm-amarillo);
+    border-radius: 50%;
+    font-weight: 900;
+    font-size: clamp(0.7rem, 1.4vw, 1rem);
+    text-transform: lowercase;
+    line-height: 1;
+  }
+
+  .tm-hero__marca b {
+    margin-left: 2px;
+    color: var(--tm-amarillo);
+    background: var(--tm-negro);
+    border-radius: 50%;
+    width: 1.3em;
+    height: 1.3em;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  @media (max-width: 720px) {
+    .tm-hero__texto {
+      right: 1rem;
+      left: 1rem;
+      max-width: none;
+    }
+    .tm-hero__collage img:nth-child(3) {
+      display: none;
+    }
+  }
+</style>

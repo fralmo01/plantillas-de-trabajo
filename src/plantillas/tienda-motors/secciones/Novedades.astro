@@ -1,0 +1,91 @@
+---
+import { novedades } from '../datos/motors.js';
+---
+
+<section class="tm-seccion tm-novedades">
+  <div class="tm-wrap">
+    <h2 class="tm-titulo">Novedades</h2>
+    <div class="tm-fila">
+      {
+        novedades.map((n) => (
+          <article class="tm-nov">
+            <div class="tm-nov__media">
+              <img src={n.img} alt={n.titulo} loading="lazy" />
+            </div>
+            <div class="tm-nov__body">
+              <p class="tm-nov__fecha">{n.fecha}</p>
+              <h3>{n.titulo}</h3>
+              <p class="tm-nov__ex">{n.extracto}</p>
+              <a href="#" class="tm-nov__leer">Ver más →</a>
+            </div>
+          </article>
+        ))
+      }
+    </div>
+    <div class="tm-nov__ver">
+      <a href="#" class="tm-btn tm-btn--rojo">Ver todas las novedades</a>
+    </div>
+  </div>
+</section>
+
+<style>
+  .tm-novedades {
+    background: var(--tm-panel);
+  }
+
+  .tm-nov {
+    background: #fff;
+    border: 1px solid var(--tm-linea);
+    display: flex;
+    flex-direction: column;
+  }
+
+  .tm-nov__media {
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+  }
+
+  .tm-nov__media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .tm-nov__body {
+    padding: 1.1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    flex: 1;
+  }
+
+  .tm-nov__fecha {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--tm-gris);
+  }
+
+  .tm-nov__body h3 {
+    font-size: 1.05rem;
+    color: var(--tm-negro);
+  }
+
+  .tm-nov__ex {
+    font-size: 0.82rem;
+    color: var(--tm-gris);
+  }
+
+  .tm-nov__leer {
+    margin-top: auto;
+    color: var(--tm-rojo);
+    font-weight: 700;
+    font-size: 0.82rem;
+  }
+
+  .tm-nov__ver {
+    display: flex;
+    justify-content: center;
+    margin-top: 2rem;
+  }
+</style>

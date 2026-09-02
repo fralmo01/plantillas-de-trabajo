@@ -1,0 +1,126 @@
+---
+const anio = new Date().getFullYear();
+const cols = [
+  { titulo: 'Servicio al cliente', enlaces: ['Centro de ayuda', 'Cómo comprar', 'Seguimiento de pedido', 'Cambios y devoluciones', 'Libro de reclamaciones'] },
+  { titulo: 'Sobre tienda.com', enlaces: ['Quiénes somos', 'Trabaja con nosotros', 'Tiendas', 'Vende con nosotros'] },
+  { titulo: 'Mi cuenta', enlaces: ['Ingresar', 'Mis pedidos', 'Mis favoritos', 'Mis direcciones'] },
+];
+---
+
+<footer class="ef-ftr">
+  <div class="ef-wrap ef-ftr__grid">
+    {
+      cols.map((c) => (
+        <div>
+          <h4>{c.titulo}</h4>
+          <ul>
+            {c.enlaces.map((e) => (
+              <li>
+                <a href="#">{e}</a>
+              </li>
+            ))}
+          </ul>
+        </div>
+      ))
+    }
+    <div>
+      <h4>Medios de pago</h4>
+      <div class="ef-ftr__pagos">
+        <span>Visa</span><span>Mastercard</span><span>Amex</span><span>Tarjeta tienda.com</span><span>Yape</span>
+      </div>
+    </div>
+  </div>
+  <p class="ef-ftr__legal">Maqueta de referencia (demo). Sin funciones reales de cuenta ni pago. © {anio} tienda.com</p>
+</footer>
+
+<nav class="ef-bottomnav" aria-label="Navegación móvil">
+  <a href="#top">🏠<span>Inicio</span></a>
+  <a href="#catalogo">🗂️<span>Categorías</span></a>
+  <a href="#ofertas">🏷️<span>Ofertas</span></a>
+  <a href="#">🛒<span>Carrito</span></a>
+  <a href="#" title="Demo sin login">👤<span>Cuenta</span></a>
+</nav>
+
+<style>
+  .ef-ftr {
+    background: #fff;
+    border-top: 1px solid var(--ef-linea);
+    padding-block: 2.5rem 1.25rem;
+    margin-top: 2rem;
+  }
+
+  .ef-ftr__grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2rem;
+  }
+
+  .ef-ftr h4 {
+    font-size: 0.85rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .ef-ftr ul {
+    list-style: none;
+    display: grid;
+    gap: 0.4rem;
+  }
+
+  .ef-ftr a {
+    font-size: 0.8rem;
+    color: var(--ef-gris);
+  }
+
+  .ef-ftr a:hover {
+    color: var(--ef-verde-osc);
+  }
+
+  .ef-ftr__pagos {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+  }
+
+  .ef-ftr__pagos span {
+    font-size: 0.62rem;
+    font-weight: 700;
+    border: 1px solid var(--ef-linea);
+    border-radius: 4px;
+    padding: 0.2rem 0.45rem;
+  }
+
+  .ef-ftr__legal {
+    text-align: center;
+    font-size: 0.72rem;
+    color: var(--ef-gris);
+    margin-top: 2rem;
+  }
+
+  .ef-bottomnav {
+    display: none;
+    position: sticky;
+    bottom: 0;
+    z-index: 40;
+    background: #fff;
+    border-top: 1px solid var(--ef-linea);
+    grid-template-columns: repeat(5, 1fr);
+  }
+
+  .ef-bottomnav a {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.15rem;
+    padding: 0.5rem;
+    font-size: 0.62rem;
+  }
+
+  @media (max-width: 860px) {
+    .ef-ftr__grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    .ef-bottomnav {
+      display: grid;
+    }
+  }
+</style>

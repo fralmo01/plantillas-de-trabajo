@@ -1,0 +1,56 @@
+/*
+ * Tokens de diseño del PORTAL (catalogo).
+ * Ojo: esto solo aplica a las paginas del showroom.
+ * Cada plantilla trae sus propios tokens, aislados bajo su wrapper.
+ */
+:root {
+  color-scheme: light dark;
+
+  --portal-bg: #0e1116;
+  --portal-surface: #161b22;
+  --portal-surface-2: #1c232d;
+  --portal-border: #2a323d;
+  --portal-text: #e8edf3;
+  --portal-text-dim: #9aa7b4;
+  --portal-accent: #6ea8fe;
+  --portal-accent-contrast: #08111f;
+
+  --portal-radius: 14px;
+  --portal-radius-sm: 9px;
+  --portal-gap: clamp(1rem, 2.5vw, 1.75rem);
+  --portal-maxw: 1200px;
+
+  --portal-font: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial,
+    sans-serif;
+  --portal-shadow: 0 1px 2px rgba(0, 0, 0, 0.4), 0 12px 32px rgba(0, 0, 0, 0.28);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  min-height: 100dvh;
+  background: var(--portal-bg);
+  color: var(--portal-text);
+  font-family: var(--portal-font);
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+}
+
+a {
+  color: inherit;
+}
+
+img,
+video {
+  max-width: 100%;
+  display: block;
+}

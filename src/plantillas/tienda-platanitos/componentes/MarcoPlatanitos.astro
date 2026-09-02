@@ -1,0 +1,23 @@
+---
+import '@fontsource-variable/montserrat/wght.css';
+import '../estilos.css';
+
+import TabsVerticales from './TabsVerticales.astro';
+import Cabecera from './Cabecera.astro';
+import NavPrincipal from './NavPrincipal.astro';
+import MenuLateral from './MenuLateral.astro';
+import PiePagina from './PiePagina.astro';
+
+const { vertical = 'moda' } = Astro.props;
+---
+
+<div class="tpl-tienda-platanitos">
+  <TabsVerticales activo={vertical} />
+  <Cabecera />
+  <NavPrincipal vertical={vertical} />
+  <MenuLateral vertical={vertical} />
+  <main>
+    <slot />
+  </main>
+  <PiePagina />
+</div>

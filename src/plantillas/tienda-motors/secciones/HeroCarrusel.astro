@@ -1,0 +1,159 @@
+---
+const slides = [
+  { kicker: 'Campaña de mes', titulo: 'Estrena tu SUV con cuota desde US$ 279', sub: 'Bono de mantenimiento gratis por 3 años en modelos seleccionados.', cta: 'Ver modelos', img: 'https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=1600&q=80' },
+  { kicker: 'Financiamiento', titulo: 'Aprobación en 24 horas', sub: 'Inicial desde 20% y tasa preferente con bancos aliados.', cta: 'Simular cuota', img: 'https://images.unsplash.com/photo-1580273916550-e323be2ae537?auto=format&fit=crop&w=1600&q=80' },
+  { kicker: 'Post venta', titulo: 'Servicio express en 45 minutos', sub: 'Agenda tu cita en línea en cualquiera de nuestros talleres.', cta: 'Agendar cita', img: 'https://images.unsplash.com/photo-1625047509168-a7026f36de04?auto=format&fit=crop&w=1600&q=80' },
+];
+---
+
+<section class="tm-hero" aria-roledescription="carrusel">
+  <div class="tm-hero__track" id="tm-hero-track">
+    {
+      slides.map((s, i) => (
+        <article class="tm-hero__slide">
+          <img src={s.img} alt={s.titulo} loading={i === 0 ? 'eager' : 'lazy'} />
+          <div class="tm-wrap tm-hero__texto">
+            <span class="tm-hero__kicker">{s.kicker}</span>
+            <h2>{s.titulo}</h2>
+            <p>{s.sub}</p>
+            <a href="#cotiza" class="tm-btn tm-btn--rojo">{s.cta}</a>
+          </div>
+        </article>
+      ))
+    }
+  </div>
+  <button class="tm-hero__nav tm-hero__nav--prev" id="tm-hero-prev" aria-label="Anterior">‹</button>
+  <button class="tm-hero__nav tm-hero__nav--next" id="tm-hero-next" aria-label="Siguiente">›</button>
+  <div class="tm-hero__dots" id="tm-hero-dots">
+    {slides.map((_, i) => <button aria-label={`Slide ${i + 1}`} data-dot={i}></button>)}
+  </div>
+</section>
+
+<script>
+  const track = document.getElementById('tm-hero-track');
+  const dots = [...document.querySelectorAll<HTMLButtonElement>('#tm-hero-dots button')];
+  const total = track ? track.children.length : 0;
+  let idx = 0;
+  function ir(n: number) {
+    if (!track) return;
+    idx = (n + total) % total;
+    track.style.transform = `translateX(-${idx * 100}%)`;
+    dots.forEach((d, i) => d.classList.toggle('is-on', i === idx));
+  }
+  document.getElementById('tm-hero-prev')?.addEventListener('click', () => ir(idx - 1));
+  document.getElementById('tm-hero-next')?.addEventListener('click', () => ir(idx + 1));
+  dots.forEach((d, i) => d.addEventListener('click', () => ir(i)));
+  let t = setInterval(() => ir(idx + 1), 6000);
+  const vp = track?.parentElement;
+  vp?.addEventListener('mouseenter', () => clearInterval(t));
+  vp?.addEventListener('mouseleave', () => (t = setInterval(() => ir(idx + 1), 6000)));
+  ir(0);
+</script>
+
+<style>
+  .tm-hero {
+    position: relative;
+    overflow: hidden;
+    background: var(--tm-panel);
+  }
+
+  .tm-hero__track {
+    display: flex;
+    transition: transform 0.45s ease;
+  }
+
+  .tm-hero__slide {
+    position: relative;
+    flex: 0 0 100%;
+    min-height: clamp(280px, 34vw, 480px);
+    display: flex;
+    align-items: center;
+  }
+
+  .tm-hero__slide img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .tm-hero__texto {
+    position: relative;
+    z-index: 1;
+    color: #fff;
+    max-width: 46ch;
+  }
+
+  .tm-hero__texto::before {
+    content: "";
+    position: absolute;
+    inset: -2rem -3rem;
+    background: linear-gradient(90deg, rgba(43, 43, 43, 0.82), transparent);
+    z-index: -1;
+  }
+
+  .tm-hero__kicker {
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: #fff;
+    background: var(--tm-rojo);
+    padding: 0.2rem 0.6rem;
+    border-radius: 3px;
+  }
+
+  .tm-hero__texto h2 {
+    color: #fff;
+    font-size: clamp(1.5rem, 3.6vw, 2.6rem);
+    margin: 0.6rem 0 0.5rem;
+  }
+
+  .tm-hero__texto p {
+    font-size: clamp(0.85rem, 1.6vw, 1.05rem);
+    margin-bottom: 1.25rem;
+  }
+
+  .tm-hero__nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.85);
+    color: var(--tm-negro);
+    font-size: 1.4rem;
+    line-height: 1;
+  }
+
+  .tm-hero__nav--prev {
+    left: 1rem;
+  }
+  .tm-hero__nav--next {
+    right: 1rem;
+  }
+
+  .tm-hero__dots {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 14px;
+    display: flex;
+    justify-content: center;
+    gap: 6px;
+  }
+
+  .tm-hero__dots button {
+    width: 9px;
+    height: 9px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.55);
+  }
+
+  .tm-hero__dots button.is-on {
+    background: var(--tm-rojo);
+    width: 24px;
+  }
+</style>

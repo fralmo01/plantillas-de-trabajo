@@ -1,0 +1,45 @@
+.tpl-base {
+  --b-bg: #ffffff;
+  --b-tinta: #14181f;
+  --b-acento: #3a6ff7;
+  --b-suave: #eef1f6;
+
+  --b-font: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --b-maxw: 1080px;
+
+  background: var(--b-bg);
+  color: var(--b-tinta);
+  font-family: var(--b-font);
+  line-height: 1.6;
+}
+
+.tpl-base * {
+  box-sizing: border-box;
+}
+
+.tpl-base .b-contenedor {
+  max-width: var(--b-maxw);
+  margin-inline: auto;
+  padding-inline: 1.5rem;
+}
+
+.tpl-base .b-seccion {
+  padding-block: clamp(3rem, 8vw, 6rem);
+}
+
+.tpl-base h1,
+.tpl-base h2,
+.tpl-base h3 {
+  margin: 0;
+  line-height: 1.2;
+}
+
+.tpl-base .b-boton {
+  display: inline-block;
+  padding: 0.8rem 1.5rem;
+  border-radius: 8px;
+  background: var(--b-acento);
+  color: #fff;
+  text-decoration: none;
+  font-weight: 600;
+}

@@ -1,0 +1,176 @@
+@import url("https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap");
+
+.tpl-restaurante-gourmet {
+  --rg-font-sans: "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --rg-font-display: "Outfit", "Plus Jakarta Sans", sans-serif;
+  --rg-font-serif: "Playfair Display", Georgia, serif;
+
+  --rg-bg-main: #070a11;
+  --rg-bg-subtle: #0d121f;
+  --rg-bg-card: #121929;
+  --rg-bg-card-hover: #172136;
+
+  --rg-gold-300: #fde047;
+  --rg-gold-400: #facc15;
+  --rg-gold-500: #eab308;
+  --rg-gold-600: #ca8a04;
+
+  --rg-border-subtle: rgba(255, 255, 255, 0.08);
+  --rg-border-medium: rgba(255, 255, 255, 0.14);
+
+  --rg-text-primary: #f8fafc;
+  --rg-text-secondary: #cbd5e1;
+  --rg-text-muted: #94a3b8;
+  --rg-text-dim: #64748b;
+
+  --rg-radius-md: 12px;
+  --rg-radius-lg: 18px;
+  --rg-radius-xl: 24px;
+  --rg-radius-full: 9999px;
+
+  --rg-shadow-md: 0 8px 24px rgba(0, 0, 0, 0.45);
+  --rg-shadow-lg: 0 16px 40px rgba(0, 0, 0, 0.6);
+  --rg-transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  --rg-maxw: 1400px;
+
+  background-color: var(--rg-bg-main);
+  color: var(--rg-text-primary);
+  font-family: var(--rg-font-sans);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+.tpl-restaurante-gourmet *,
+.tpl-restaurante-gourmet *::before,
+.tpl-restaurante-gourmet *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+.tpl-restaurante-gourmet a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.tpl-restaurante-gourmet img {
+  max-width: 100%;
+  display: block;
+}
+
+.tpl-restaurante-gourmet button {
+  cursor: pointer;
+  border: none;
+  background: none;
+  color: inherit;
+  font: inherit;
+}
+
+.tpl-restaurante-gourmet input,
+.tpl-restaurante-gourmet select {
+  font: inherit;
+  color: inherit;
+}
+
+.tpl-restaurante-gourmet .rg-wrap {
+  width: 100%;
+  max-width: var(--rg-maxw);
+  margin-inline: auto;
+  padding-inline: clamp(1rem, 3vw, 1.5rem);
+}
+
+.tpl-restaurante-gourmet .rg-ico {
+  width: 1.15rem;
+  height: 1.15rem;
+  flex-shrink: 0;
+  vertical-align: middle;
+}
+
+.tpl-restaurante-gourmet .rg-ico--sm {
+  width: 0.95rem;
+  height: 0.95rem;
+}
+
+.tpl-restaurante-gourmet .rg-seccion {
+  padding-block: clamp(2.5rem, 6vw, 4.5rem);
+}
+
+.tpl-restaurante-gourmet .rg-seccion-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.tpl-restaurante-gourmet .rg-seccion-head__title {
+  font-family: var(--rg-font-display);
+  font-size: clamp(1.5rem, 3.5vw, 2.1rem);
+  font-weight: 800;
+}
+
+.tpl-restaurante-gourmet .rg-seccion-head__sub {
+  color: var(--rg-text-muted);
+  font-size: 0.92rem;
+  max-width: 56ch;
+  margin-top: 0.35rem;
+}
+
+.tpl-restaurante-gourmet .rg-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.55rem;
+  padding: 0.7rem 1.4rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  border-radius: var(--rg-radius-full);
+  transition: var(--rg-transition);
+  white-space: nowrap;
+}
+
+.tpl-restaurante-gourmet .rg-btn--sm {
+  padding: 0.5rem 1rem;
+  font-size: 0.82rem;
+}
+
+.tpl-restaurante-gourmet .rg-btn--lg {
+  padding: 0.9rem 1.8rem;
+  font-size: 0.98rem;
+}
+
+.tpl-restaurante-gourmet .rg-btn--full {
+  width: 100%;
+}
+
+.tpl-restaurante-gourmet .rg-btn--gold {
+  background: linear-gradient(135deg, var(--rg-gold-400), var(--rg-gold-600));
+  color: #070a11;
+  font-weight: 700;
+}
+
+.tpl-restaurante-gourmet .rg-btn--gold:hover {
+  background: linear-gradient(135deg, var(--rg-gold-300), var(--rg-gold-500));
+  transform: translateY(-1px);
+}
+
+.tpl-restaurante-gourmet .rg-btn--gold-outline {
+  border: 1px solid var(--rg-gold-500);
+  color: var(--rg-gold-300);
+}
+
+.tpl-restaurante-gourmet .rg-btn--gold-outline:hover {
+  background: rgba(234, 179, 8, 0.12);
+}
+
+.tpl-restaurante-gourmet .rg-btn--ghost {
+  border: 1px solid var(--rg-border-medium);
+  color: var(--rg-text-secondary);
+}
+
+.tpl-restaurante-gourmet .rg-btn--ghost:hover {
+  background: rgba(255, 255, 255, 0.05);
+}

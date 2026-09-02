@@ -1,0 +1,181 @@
+---
+const calzados = [
+  {
+    genero: "MUJER",
+    img: "https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?q=80&w=700&auto=format&fit=crop",
+    enlace: "#mujer"
+  },
+  {
+    genero: "HOMBRE",
+    img: "https://images.unsplash.com/photo-1608231387042-66d1773070a5?q=80&w=700&auto=format&fit=crop",
+    enlace: "#hombre"
+  },
+  {
+    genero: "NIÑOS",
+    img: "https://images.unsplash.com/photo-1525966222134-fcfa99b8ae77?q=80&w=700&auto=format&fit=crop",
+    enlace: "#ninos"
+  }
+];
+---
+
+<section class="tt-hero-promo" id="festival">
+  <div class="tt-contenedor">
+    <div class="tt-hero-promo__grid">
+      
+      <article class="tt-promo-card tt-promo-card--negro">
+        <div class="tt-promo-card__contenido">
+          <h1 class="tt-promo-card__titulo">
+            30% OFF + ENVÍO GRATIS 🤑
+          </h1>
+          <p class="tt-promo-card__texto">
+            adiClub Festival trae hasta 30% OFF con precio exclusivo en productos seleccionados y envío gratis por ser parte de adiClub hasta el 13/09.
+          </p>
+          <a href="#calzado" class="tt-btn-caja tt-btn-caja--blanco tt-promo-card__btn">
+            VER TODO
+          </a>
+        </div>
+      </article>
+
+      
+      {calzados.map((item) => (
+        <article class="tt-promo-card tt-promo-card--calzado">
+          <a href={item.enlace} class="tt-promo-card__link">
+            <div class="tt-promo-card__img-box">
+              <img 
+                src={item.img} 
+                alt={`Calzado ${item.genero}`} 
+                loading="eager"
+              />
+            </div>
+            <div class="tt-promo-card__tag-wrap">
+              <span class="tt-chip-categoria">
+                <span class="tt-porcentaje">%</span> {item.genero}
+              </span>
+            </div>
+          </a>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .tt-hero-promo {
+    padding-block: 1.5rem 2.5rem;
+    background: #ffffff;
+    width: 100%;
+  }
+
+  .tt-hero-promo__grid {
+    display: grid;
+    grid-template-columns: 1.15fr 1fr 1fr 1fr;
+    gap: 12px;
+    width: 100%;
+  }
+
+  .tt-promo-card {
+    position: relative;
+    background: #f5f5f5;
+    min-height: 340px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid var(--tt-gris-borde);
+    overflow: hidden;
+  }
+
+  
+  .tt-promo-card--negro {
+    background: #000000;
+    color: #ffffff;
+    border-color: #000000;
+    padding: 2.2rem 1.8rem;
+  }
+
+  .tt-promo-card__contenido {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+    align-items: flex-start;
+  }
+
+  .tt-promo-card__titulo {
+    font-size: 1.85rem;
+    line-height: 1.05;
+    margin-bottom: 0.8rem;
+    letter-spacing: -0.02em;
+    font-family: var(--tt-font-condensed);
+    font-weight: 900;
+  }
+
+  .tt-promo-card__texto {
+    font-size: 0.84rem;
+    line-height: 1.45;
+    color: rgba(255, 255, 255, 0.92);
+    margin-bottom: 2rem;
+  }
+
+  .tt-promo-card__btn {
+    font-size: 0.8rem;
+    padding: 0.7rem 1.4rem;
+    background: #ffffff;
+    color: #000000;
+  }
+
+  
+  .tt-promo-card--calzado {
+    background: #f5f5f5;
+    transition: transform 0.2s ease;
+  }
+
+  .tt-promo-card__link {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+    text-decoration: none;
+    padding: 1.2rem;
+    position: relative;
+  }
+
+  .tt-promo-card__img-box {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.5rem;
+  }
+
+  .tt-promo-card__img-box img {
+    width: 100%;
+    max-height: 200px;
+    object-fit: contain;
+    mix-blend-mode: multiply;
+    transition: transform 0.3s ease;
+  }
+
+  .tt-promo-card--calzado:hover .tt-promo-card__img-box img {
+    transform: scale(1.06);
+  }
+
+  .tt-promo-card__tag-wrap {
+    margin-top: auto;
+    align-self: flex-start;
+  }
+
+  @media (max-width: 1100px) {
+    .tt-hero-promo__grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 600px) {
+    .tt-hero-promo__grid {
+      grid-template-columns: 1fr;
+    }
+    .tt-promo-card {
+      min-height: 280px;
+    }
+  }
+</style>

@@ -1,0 +1,105 @@
+---
+import { marcas, postVenta } from '../datos/motors.js';
+---
+
+<section class="tm-seccion tm-wrap" id="marcas">
+  <h2 class="tm-titulo">Marcas</h2>
+  <div class="tm-marcas">
+    {
+      marcas.map((m: string) => (
+        <a href="#" class="tm-marca">
+          <span class="tm-marca__logo">{m}</span>
+          <span class="tm-marca__ir">Ir a la web →</span>
+        </a>
+      ))
+    }
+  </div>
+</section>
+
+<section class="tm-seccion tm-wrap" id="postventa">
+  <h2 class="tm-titulo">Post venta</h2>
+  <div class="tm-pv">
+    {
+      postVenta.map((p) => (
+        <article class="tm-pv__card">
+          <h3>{p.t}</h3>
+          <p>{p.d}</p>
+          <a href="#tiendas" class="tm-pv__link">Agendar →</a>
+        </article>
+      ))
+    }
+  </div>
+</section>
+
+<style>
+  .tm-marcas {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+  }
+
+  .tm-marca {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 1.5rem 1rem;
+    border: 1px solid var(--tm-linea);
+    background: #fff;
+    transition: border-color 0.15s ease;
+  }
+
+  .tm-marca:hover {
+    border-color: var(--tm-rojo);
+  }
+
+  .tm-marca__logo {
+    font-weight: 900;
+    font-size: 1.05rem;
+    color: var(--tm-negro);
+    letter-spacing: 0.02em;
+  }
+
+  .tm-marca__ir {
+    font-size: 0.68rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--tm-gris);
+  }
+
+  .tm-pv {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+  }
+
+  .tm-pv__card {
+    border: 1px solid var(--tm-linea);
+    background: var(--tm-panel);
+    padding: 1.25rem;
+  }
+
+  .tm-pv__card h3 {
+    font-size: 0.98rem;
+    color: var(--tm-negro);
+  }
+
+  .tm-pv__card p {
+    font-size: 0.8rem;
+    color: var(--tm-gris);
+    margin: 0.35rem 0 0.75rem;
+  }
+
+  .tm-pv__link {
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: var(--tm-rojo);
+  }
+
+  @media (max-width: 900px) {
+    .tm-marcas,
+    .tm-pv {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+</style>

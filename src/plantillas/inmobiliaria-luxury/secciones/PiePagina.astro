@@ -1,0 +1,128 @@
+---
+const anio = new Date().getFullYear();
+const cols = [
+  { titulo: 'Proyectos', enlaces: ['En construcción', 'Preventa', 'Entrega inmediata', 'Casas'] },
+  { titulo: 'Comprar', enlaces: ['Simulador de crédito', 'Bono del buen pagador', 'Preguntas frecuentes', 'Guía del comprador'] },
+  { titulo: 'Solera', enlaces: ['Sobre nosotros', 'Entregas realizadas', 'Trabaja con nosotros', 'Libro de reclamaciones'] },
+];
+---
+
+<footer class="il-ftr">
+  <div class="il-wrap il-ftr__grid">
+    <div>
+      <span class="il-logo il-ftr__logo">SOLERA<span>Residencias</span></span>
+      <p class="il-ftr__lead">Desarrollo inmobiliario premium en Lima. Recorridos 3D, simulador de crédito y concierge dedicado.</p>
+    </div>
+    {
+      cols.map((c) => (
+        <div>
+          <h4>{c.titulo}</h4>
+          <ul>
+            {c.enlaces.map((e) => (
+              <li>
+                <a href="#">{e}</a>
+              </li>
+            ))}
+          </ul>
+        </div>
+      ))
+    }
+  </div>
+  <p class="il-ftr__legal">Maqueta de referencia (demo). Precios y cálculos referenciales, sin valor de oferta. © {anio} Solera Residencias</p>
+</footer>
+
+<nav class="il-bottomnav" aria-label="Navegación móvil">
+  <a href="#top">🏠<span>Inicio</span></a>
+  <a href="#catalogo">🏙️<span>Proyectos</span></a>
+  <a href="#simulador">🧮<span>Simulador</span></a>
+  <a href="#concierge">📅<span>Visita</span></a>
+</nav>
+
+<style>
+  .il-ftr {
+    background: var(--il-navy);
+    color: rgba(255, 255, 255, 0.75);
+    padding-block: 3rem 1.5rem;
+    margin-top: 2rem;
+  }
+
+  .il-ftr__grid {
+    display: grid;
+    grid-template-columns: 1.6fr repeat(3, 1fr);
+    gap: 2rem;
+  }
+
+  .il-ftr__logo {
+    color: #fff;
+  }
+
+  .il-ftr__logo span {
+    color: var(--il-mint);
+  }
+
+  .il-ftr__lead {
+    font-size: 0.84rem;
+    max-width: 340px;
+    margin-top: 0.75rem;
+  }
+
+  .il-ftr h4 {
+    color: #fff;
+    font-family: var(--il-sans);
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-bottom: 0.75rem;
+  }
+
+  .il-ftr ul {
+    list-style: none;
+    display: grid;
+    gap: 0.4rem;
+  }
+
+  .il-ftr a {
+    font-size: 0.82rem;
+  }
+
+  .il-ftr a:hover {
+    color: var(--il-mint);
+  }
+
+  .il-ftr__legal {
+    text-align: center;
+    font-size: 0.72rem;
+    color: rgba(255, 255, 255, 0.5);
+    margin-top: 2.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.12);
+  }
+
+  .il-bottomnav {
+    display: none;
+    position: sticky;
+    bottom: 0;
+    z-index: 40;
+    background: var(--il-surface);
+    border-top: 1px solid var(--il-border);
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  .il-bottomnav a {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.15rem;
+    padding: 0.5rem;
+    font-size: 0.62rem;
+  }
+
+  @media (max-width: 820px) {
+    .il-ftr__grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    .il-bottomnav {
+      display: grid;
+    }
+  }
+</style>

@@ -1,0 +1,464 @@
+---
+import {
+  filtrosCategoria,
+  filtrosMarca,
+  filtrosEntrega,
+  filtrosDescuento,
+  filtrosTalla,
+  filtrosColor,
+} from '../datos/productos.js';
+---
+
+<aside class="mk-filtros" id="mk-filtros">
+  <div class="mk-filtros__cab">
+    <h2>Búsqueda</h2>
+    <button class="mk-filtros__x" type="button" aria-label="Cerrar filtros">✕</button>
+  </div>
+
+  <form class="mk-filtros__form" onsubmit="return false">
+    
+    <section class="mk-filtros__cat">
+      <h3>Categoría</h3>
+      <ul>
+        {
+          filtrosCategoria.map((c) => (
+            <li>
+              <a href="#">
+                <span>{c.nombre}</span>
+                <b>{c.n.toLocaleString('es-CL')}</b>
+                <i aria-hidden="true">›</i>
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </section>
+
+    <p class="mk-filtros__titulo">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <line x1="4" y1="6" x2="20" y2="6" /><line x1="7" y1="12" x2="17" y2="12" /><line x1="10" y1="18" x2="14" y2="18" />
+      </svg>
+      Filtros
+    </p>
+
+    
+    <details class="mk-grupo" open>
+      <summary>Entrega <span class="mk-grupo__nuevo">Nuevo</span></summary>
+      <div class="mk-grupo__cuerpo">
+        {
+          filtrosEntrega.map((e) => (
+            <label class="mk-switch">
+              <span>{e}</span>
+              <input type="checkbox" name="entrega" value={e} />
+              <i aria-hidden="true" />
+            </label>
+          ))
+        }
+      </div>
+    </details>
+
+    
+    <details class="mk-grupo">
+      <summary>Marca</summary>
+      <div class="mk-grupo__cuerpo">
+        <input type="search" class="mk-grupo__buscar" placeholder="Buscar" aria-label="Buscar marca" />
+        <ul class="mk-grupo__lista mk-grupo__lista--scroll">
+          {
+            filtrosMarca.map((m) => (
+              <li>
+                <label>
+                  <input type="checkbox" name="marca" value={m.nombre} />
+                  <span>{m.nombre}</span>
+                  <b>{m.n}</b>
+                </label>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+    </details>
+
+    
+    <details class="mk-grupo">
+      <summary>Precio</summary>
+      <div class="mk-grupo__cuerpo">
+        <div class="mk-rango">
+          <input type="range" min="0" max="200000" value="0" aria-label="Precio mínimo" class="mk-rango__min" />
+          <input type="range" min="0" max="200000" value="200000" aria-label="Precio máximo" class="mk-rango__max" />
+        </div>
+        <div class="mk-rango__val"><span>$0</span><span>$200.000</span></div>
+      </div>
+    </details>
+
+    
+    <details class="mk-grupo">
+      <summary>Descuento</summary>
+      <div class="mk-grupo__cuerpo">
+        <ul class="mk-grupo__lista">
+          {
+            filtrosDescuento.map((d) => (
+              <li>
+                <label>
+                  <input type="checkbox" name="dscto" value={d} />
+                  <span>{d}</span>
+                </label>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+    </details>
+
+    
+    <details class="mk-grupo">
+      <summary>Talla</summary>
+      <div class="mk-grupo__cuerpo">
+        <div class="mk-chips">
+          {filtrosTalla.map((t) => <button type="button" class="mk-chip">{t}</button>)}
+        </div>
+      </div>
+    </details>
+
+    
+    <details class="mk-grupo">
+      <summary>Color</summary>
+      <div class="mk-grupo__cuerpo">
+        <div class="mk-colores">
+          {
+            filtrosColor.map((c) => (
+              <button type="button" class="mk-color" title={c.nombre} aria-label={c.nombre}>
+                <span style={`background:${c.hex}`} />
+              </button>
+            ))
+          }
+        </div>
+      </div>
+    </details>
+
+    <button type="button" class="mk-btn mk-btn--morado mk-filtros__aplicar" data-cerrar-filtros>
+      Aplicar filtros
+    </button>
+  </form>
+</aside>
+
+<style>
+  .mk-filtros {
+    align-self: start;
+  }
+
+  .mk-filtros__cab {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-left: 4px solid var(--mk-morado);
+    padding: 0.4rem 0 0.4rem 0.7rem;
+    margin-bottom: 1rem;
+  }
+
+  .mk-filtros__cab h2 {
+    font-size: 1rem;
+    text-transform: uppercase;
+  }
+
+  .mk-filtros__x {
+    display: none;
+    background: none;
+    border: 0;
+    font-size: 1rem;
+    cursor: pointer;
+  }
+
+  .mk-filtros__cat h3 {
+    font-size: 0.95rem;
+    margin-bottom: 0.6rem;
+  }
+
+  .mk-filtros__cat ul {
+    list-style: none;
+    display: grid;
+    gap: 0.15rem;
+    border-bottom: 1px solid var(--mk-gris-borde);
+    padding-bottom: 0.75rem;
+  }
+
+  .mk-filtros__cat a {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.35rem 0;
+    font-size: 0.82rem;
+  }
+
+  .mk-filtros__cat a b {
+    margin-left: auto;
+    color: var(--mk-gris-texto);
+    font-weight: 600;
+    font-size: 0.74rem;
+  }
+
+  .mk-filtros__cat a i {
+    color: var(--mk-gris-texto);
+  }
+
+  .mk-filtros__cat a:hover {
+    color: var(--mk-morado);
+  }
+
+  .mk-filtros__titulo {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    font-size: 0.9rem;
+    margin: 1rem 0 0.25rem;
+  }
+
+  .mk-grupo {
+    border-bottom: 1px solid var(--mk-gris-borde);
+    padding-block: 0.6rem;
+  }
+
+  .mk-grupo summary {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    justify-content: space-between;
+    font-size: 0.86rem;
+    font-weight: 700;
+    cursor: pointer;
+    list-style: none;
+    padding-block: 0.3rem;
+  }
+
+  .mk-grupo summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .mk-grupo summary::after {
+    content: "›";
+    transform: rotate(90deg);
+    transition: transform 0.15s ease;
+    color: var(--mk-gris-texto);
+  }
+
+  .mk-grupo[open] summary::after {
+    transform: rotate(-90deg);
+  }
+
+  .mk-grupo__nuevo {
+    background: var(--mk-rosa);
+    color: #fff;
+    font-size: 0.6rem;
+    font-weight: 700;
+    padding: 0.1rem 0.4rem;
+    border-radius: 999px;
+    margin-right: auto;
+  }
+
+  .mk-grupo__cuerpo {
+    padding-top: 0.6rem;
+    display: grid;
+    gap: 0.55rem;
+  }
+
+  .mk-grupo__buscar {
+    width: 100%;
+    padding: 0.5rem 0.7rem;
+    border: 1px solid var(--mk-gris-borde);
+    border-radius: 6px;
+    font: inherit;
+    font-size: 0.82rem;
+  }
+
+  .mk-grupo__lista {
+    list-style: none;
+    display: grid;
+    gap: 0.5rem;
+  }
+
+  .mk-grupo__lista--scroll {
+    max-height: 190px;
+    overflow-y: auto;
+    padding-right: 0.25rem;
+  }
+
+  .mk-grupo__lista label {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.82rem;
+    cursor: pointer;
+  }
+
+  .mk-grupo__lista label b {
+    margin-left: auto;
+    color: var(--mk-gris-texto);
+    font-weight: 600;
+    font-size: 0.72rem;
+  }
+
+  .mk-grupo__lista input,
+  .mk-switch input {
+    accent-color: var(--mk-morado);
+  }
+
+  
+  .mk-switch {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.82rem;
+    cursor: pointer;
+    border: 1px solid var(--mk-gris-borde);
+    border-radius: 8px;
+    padding: 0.55rem 0.7rem;
+  }
+
+  .mk-switch input {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .mk-switch i {
+    margin-left: auto;
+    width: 34px;
+    height: 18px;
+    border-radius: 999px;
+    background: var(--mk-gris-borde);
+    position: relative;
+    flex-shrink: 0;
+    transition: background 0.15s ease;
+  }
+
+  .mk-switch i::after {
+    content: "";
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: #fff;
+    transition: transform 0.15s ease;
+  }
+
+  .mk-switch input:checked + i {
+    background: var(--mk-morado);
+  }
+
+  .mk-switch input:checked + i::after {
+    transform: translateX(16px);
+  }
+
+  
+  .mk-rango {
+    position: relative;
+    height: 24px;
+  }
+
+  .mk-rango::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 50%;
+    height: 3px;
+    transform: translateY(-50%);
+    background: var(--mk-gris-borde);
+  }
+
+  .mk-rango input {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    margin: 0;
+    -webkit-appearance: none;
+    appearance: none;
+    background: none;
+    pointer-events: none;
+  }
+
+  .mk-rango input::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    background: var(--mk-morado);
+    border: 2px solid #fff;
+    pointer-events: auto;
+    cursor: pointer;
+  }
+
+  .mk-rango input::-moz-range-thumb {
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    background: var(--mk-morado);
+    border: 2px solid #fff;
+    pointer-events: auto;
+    cursor: pointer;
+  }
+
+  .mk-rango__val {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.74rem;
+    color: var(--mk-gris-texto);
+  }
+
+  .mk-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+  }
+
+  .mk-chip {
+    font: inherit;
+    font-size: 0.78rem;
+    padding: 0.3rem 0.65rem;
+    border: 1px solid var(--mk-gris-borde);
+    border-radius: 6px;
+    background: var(--mk-blanco);
+    cursor: pointer;
+  }
+
+  .mk-chip:hover {
+    border-color: var(--mk-morado);
+  }
+
+  .mk-colores {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .mk-color {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    border: 1px solid var(--mk-gris-borde);
+    background: none;
+    padding: 3px;
+    cursor: pointer;
+  }
+
+  .mk-color span {
+    display: block;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+  }
+
+  .mk-color:hover {
+    border-color: var(--mk-morado);
+  }
+
+  .mk-filtros__aplicar {
+    width: 100%;
+    margin-top: 1rem;
+  }
+</style>

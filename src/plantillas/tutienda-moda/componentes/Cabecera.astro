@@ -1,0 +1,244 @@
+---
+const base = '/plantillas/tutienda-moda';
+---
+
+<header class="tm-cab">
+  <div class="tm-contenedor tm-cab__inner">
+    <button class="tm-cab__burger" id="tm-burger" type="button" aria-label="Abrir menú" aria-expanded="false" aria-controls="tm-menu-lateral">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+        <line x1="3" y1="6" x2="21" y2="6" />
+        <line x1="3" y1="12" x2="21" y2="12" />
+        <line x1="3" y1="18" x2="21" y2="18" />
+      </svg>
+    </button>
+
+    <a href={`${base}/`} class="tm-logo" aria-label="tu tienda.com — inicio">
+      <span class="tm-logo__texto">tu tienda</span>
+      <span class="tm-logo__dot">.com</span>
+      <span class="tm-logo__bang" aria-hidden="true">!</span>
+    </a>
+
+    <form class="tm-buscador" role="search" id="tm-form-buscar" action={`${base}/buscar/`} method="get">
+      <input
+        type="search"
+        name="q"
+        class="tm-buscador__input"
+        placeholder="¿Qué producto estás buscando?"
+        aria-label="Buscar productos"
+        autocomplete="off"
+      />
+      <button class="tm-buscador__btn" type="submit" aria-label="Buscar">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4">
+          <circle cx="11" cy="11" r="7" />
+          <line x1="21" y1="21" x2="16.7" y2="16.7" />
+        </svg>
+      </button>
+    </form>
+
+    <div class="tm-acciones">
+      <button class="tm-accion tm-accion--ubic" type="button">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M12 21s-7-6.2-7-11a7 7 0 0 1 14 0c0 4.8-7 11-7 11z" />
+          <circle cx="12" cy="10" r="2.6" />
+        </svg>
+        <span class="tm-accion__col">
+          <small>Mi Ubicación</small>
+          <strong>Lima, Lima ▾</strong>
+        </span>
+      </button>
+
+      <a href={`${base}/`} class="tm-accion tm-accion--icono" aria-label="Favoritos">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1-1.1a5.5 5.5 0 0 0-7.8 7.8l1 1L12 21l7.8-7.6 1-1a5.5 5.5 0 0 0 0-7.8z" />
+        </svg>
+        <span class="tm-accion__badge">0</span>
+      </a>
+
+      <a href={`${base}/`} class="tm-accion tm-accion--icono" aria-label="Mi cuenta">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+          <circle cx="12" cy="7" r="4" />
+        </svg>
+      </a>
+
+      <a href={`${base}/`} class="tm-accion tm-accion--icono" aria-label="Bolsa de compras">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z" />
+          <line x1="3" y1="6" x2="21" y2="6" />
+          <path d="M16 10a4 4 0 0 1-8 0" />
+        </svg>
+        <span class="tm-accion__badge">0</span>
+      </a>
+    </div>
+  </div>
+</header>
+
+<style>
+  .tm-cab {
+    background: var(--tm-amarillo);
+  }
+
+  .tm-cab__inner {
+    display: flex;
+    align-items: center;
+    gap: clamp(0.75rem, 2vw, 2rem);
+    padding-block: 0.85rem;
+  }
+
+  .tm-cab__burger {
+    display: inline-flex;
+    align-items: center;
+    background: none;
+    border: 0;
+    color: var(--tm-negro);
+    cursor: pointer;
+    padding: 0.15rem;
+  }
+
+  
+  .tm-logo {
+    display: flex;
+    align-items: baseline;
+    gap: 1px;
+    flex-shrink: 0;
+    color: var(--tm-negro);
+    font-weight: 800;
+    font-size: clamp(1.15rem, 2.4vw, 1.5rem);
+    letter-spacing: -0.03em;
+    text-transform: lowercase;
+  }
+
+  .tm-logo__dot {
+    color: var(--tm-negro);
+    opacity: 0.55;
+  }
+
+  .tm-logo__bang {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.15em;
+    height: 1.15em;
+    margin-left: 0.25em;
+    border-radius: 50%;
+    background: var(--tm-negro);
+    color: var(--tm-amarillo);
+    font-size: 0.7em;
+    font-weight: 900;
+    align-self: center;
+  }
+
+  
+  .tm-buscador {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    background: var(--tm-blanco);
+    border-radius: var(--tm-radio-pill);
+    padding: 0.3rem 0.35rem 0.3rem 1.1rem;
+    max-width: 620px;
+  }
+
+  .tm-buscador__input {
+    flex: 1;
+    border: 0;
+    outline: none;
+    background: transparent;
+    font: inherit;
+    font-size: 0.9rem;
+    color: var(--tm-tinta);
+  }
+
+  .tm-buscador__btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 38px;
+    border: 0;
+    border-radius: var(--tm-radio-pill);
+    background: var(--tm-negro);
+    color: var(--tm-blanco);
+    cursor: pointer;
+    flex-shrink: 0;
+  }
+
+  
+  .tm-acciones {
+    display: flex;
+    align-items: center;
+    gap: clamp(0.6rem, 1.5vw, 1.4rem);
+    flex-shrink: 0;
+    color: var(--tm-negro);
+  }
+
+  .tm-accion {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    background: none;
+    border: 0;
+    color: inherit;
+    cursor: pointer;
+    position: relative;
+  }
+
+  .tm-accion__col {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.1;
+  }
+
+  .tm-accion__col small {
+    font-size: 0.62rem;
+    opacity: 0.7;
+  }
+
+  .tm-accion__col strong {
+    font-size: 0.78rem;
+    font-weight: 800;
+  }
+
+  .tm-accion__badge {
+    position: absolute;
+    top: -6px;
+    right: -8px;
+    min-width: 16px;
+    height: 16px;
+    padding: 0 3px;
+    border-radius: var(--tm-radio-pill);
+    background: var(--tm-negro);
+    color: var(--tm-amarillo);
+    font-size: 0.62rem;
+    font-weight: 800;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  @media (max-width: 1024px) {
+    .tm-accion--ubic .tm-accion__col {
+      display: none;
+    }
+  }
+
+  @media (max-width: 860px) {
+    .tm-cab__burger {
+      display: inline-flex;
+    }
+    .tm-accion--ubic {
+      display: none;
+    }
+  }
+
+  @media (max-width: 560px) {
+    .tm-buscador {
+      order: 5;
+      flex-basis: 100%;
+      max-width: none;
+    }
+    .tm-cab__inner {
+      flex-wrap: wrap;
+    }
+  }
+</style>

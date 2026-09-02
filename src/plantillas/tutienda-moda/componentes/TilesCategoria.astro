@@ -1,0 +1,88 @@
+---
+const base = '/plantillas/tutienda-moda';
+const tiles = [
+  { etiqueta: 'Blusas y camisas', seed: 'tm-tile-1', href: `${base}/mujer/` },
+  { etiqueta: 'Polos y tops', seed: 'tm-tile-2', href: `${base}/hombre/` },
+  { etiqueta: 'Casacas y chompas', seed: 'tm-tile-3', href: `${base}/colecciones/` },
+  { etiqueta: 'Jeans y pantalones', seed: 'tm-tile-4', href: `${base}/colecciones/` },
+];
+---
+
+<section class="tm-seccion">
+  <div class="tm-contenedor">
+    <div class="tm-tiles">
+      {
+        tiles.map((t) => (
+          <a href={t.href} class="tm-tile">
+            <img src={`https://picsum.photos/seed/${t.seed}/600/720`} alt={t.etiqueta} loading="lazy" />
+            <span class="tm-tile__pill">
+              {t.etiqueta}
+              <b aria-hidden="true">→</b>
+            </span>
+          </a>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<style>
+  .tm-tiles {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+  }
+
+  .tm-tile {
+    position: relative;
+    aspect-ratio: 5 / 6;
+    border-radius: var(--tm-radio);
+    overflow: hidden;
+  }
+
+  .tm-tile img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+  }
+
+  .tm-tile:hover img {
+    transform: scale(1.05);
+  }
+
+  .tm-tile__pill {
+    position: absolute;
+    left: 50%;
+    bottom: 1rem;
+    transform: translateX(-50%);
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    white-space: nowrap;
+    background: var(--tm-negro);
+    color: var(--tm-blanco);
+    font-size: 0.8rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    padding: 0.5rem 1rem;
+    border-radius: var(--tm-radio-pill);
+  }
+
+  .tm-tile__pill b {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.4em;
+    height: 1.4em;
+    background: var(--tm-blanco);
+    color: var(--tm-negro);
+    border-radius: 50%;
+  }
+
+  @media (max-width: 860px) {
+    .tm-tiles {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+</style>

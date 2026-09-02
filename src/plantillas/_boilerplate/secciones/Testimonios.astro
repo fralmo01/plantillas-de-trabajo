@@ -1,0 +1,45 @@
+---
+const opiniones = [
+  { texto: 'Testimonio breve del cliente.', autor: 'Cliente A' },
+  { texto: 'Otro testimonio breve del cliente.', autor: 'Cliente B' },
+];
+---
+
+<section class="b-seccion" style="background: var(--b-suave)">
+  <div class="b-contenedor">
+    <h2>Testimonios</h2>
+    <div class="b-test__grid">
+      {
+        opiniones.map((o) => (
+          <blockquote class="b-test__card">
+            <p>&ldquo;{o.texto}&rdquo;</p>
+            <cite>{o.autor}</cite>
+          </blockquote>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<style>
+  .b-test__grid {
+    display: grid;
+    gap: 1.25rem;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    margin-top: 2rem;
+  }
+  .b-test__card {
+    margin: 0;
+    background: var(--b-bg);
+    border-radius: 8px;
+    padding: 1.5rem;
+  }
+  .b-test__card p {
+    margin: 0 0 0.75rem;
+    font-style: italic;
+  }
+  .b-test__card cite {
+    font-weight: 600;
+    font-style: normal;
+  }
+</style>

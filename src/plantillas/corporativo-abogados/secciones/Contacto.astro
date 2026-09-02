@@ -1,0 +1,115 @@
+---
+import { oficinas } from '../datos/firma.js';
+---
+
+<section class="ca-wrap ca-block" id="contacto">
+  <div class="ca-contacto">
+    <div>
+      <p class="ca-eyebrow">Contacto</p>
+      <h2 class="ca-h">Planteemos el asunto</h2>
+      <p class="ca-lead">
+        Escríbenos con una descripción breve de la situación. Un socio revisará el caso y te
+        responderá dentro de 24 horas hábiles.
+      </p>
+
+      <div class="ca-oficinas">
+        {
+          oficinas.map((o) => (
+            <div class="ca-oficina">
+              <h3>{o.ciudad}</h3>
+              <p>{o.direccion}</p>
+              <p>{o.tel}</p>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+
+    <form class="ca-form" onsubmit="return false">
+      <label>Nombre y empresa<input type="text" name="nombre" autocomplete="organization" required /></label>
+      <label>Correo<input type="email" name="correo" autocomplete="email" required /></label>
+      <label>Disciplina
+        <select name="disciplina">
+          <option>Corporativo y M&amp;A</option>
+          <option>Financiamiento</option>
+          <option>Competencia y regulación</option>
+          <option>Tributario</option>
+          <option>Laboral</option>
+          <option>Resolución de conflictos</option>
+        </select>
+      </label>
+      <label>Describe el asunto<textarea name="msg" rows="4" required></textarea></label>
+      <button type="submit" class="ca-btn ca-btn--dark">Enviar consulta</button>
+    </form>
+  </div>
+</section>
+
+<style>
+  .ca-contacto {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: clamp(2rem, 5vw, 4rem);
+    align-items: start;
+  }
+
+  .ca-oficinas {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+    margin-top: 2rem;
+  }
+
+  .ca-oficina {
+    border-top: 1px solid var(--ca-line);
+    padding-top: 1rem;
+  }
+
+  .ca-oficina h3 {
+    font-size: 1.1rem;
+  }
+
+  .ca-oficina p {
+    font-size: 0.82rem;
+    color: rgba(26, 26, 26, 0.7);
+  }
+
+  .ca-form {
+    display: grid;
+    gap: 1rem;
+    border: 1px solid var(--ca-line);
+    padding: 1.75rem;
+    background: var(--ca-panel-2);
+  }
+
+  .ca-form label {
+    display: grid;
+    gap: 0.35rem;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    font-weight: 700;
+    color: var(--ca-bronze);
+  }
+
+  .ca-form input,
+  .ca-form select,
+  .ca-form textarea {
+    border: 1px solid var(--ca-line);
+    background: var(--ca-parch);
+    padding: 0.7rem 0.85rem;
+    font-family: var(--ca-sans);
+    resize: vertical;
+  }
+
+  @media (max-width: 860px) {
+    .ca-contacto {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .ca-oficinas {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

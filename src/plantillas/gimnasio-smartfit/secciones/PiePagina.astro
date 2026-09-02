@@ -1,0 +1,107 @@
+---
+import { marca } from '../datos/gym.js';
+const anio = new Date().getFullYear();
+const cols = [
+  { titulo: 'Planes', enlaces: ['Plan Smart', 'Plan Black', 'Plan Fit', 'Corporativo'] },
+  { titulo: 'Ayuda', enlaces: ['Centro de ayuda', 'Cómo inscribirme', 'Congelar membresía', 'Cancelar membresía'] },
+  { titulo: 'Empresa', enlaces: ['Sobre nosotros', 'Trabaja con nosotros', 'Prensa', 'Libro de reclamaciones'] },
+];
+---
+
+<footer class="gs-ftr">
+  <div class="gs-wrap gs-ftr__grid">
+    <div>
+      <span class="gs-logo gs-ftr__logo">{marca.nombre.split(' ')[0]}<b>{marca.nombre.split(' ')[1] ?? ''}</b></span>
+      <p class="gs-ftr__lead">{marca.tagline}</p>
+      <a href={`https://wa.me/${marca.whatsapp}`} target="_blank" rel="noopener" class="gs-btn gs-btn--amarillo gs-ftr__wa">
+        Escríbenos por WhatsApp
+      </a>
+    </div>
+    {
+      cols.map((c) => (
+        <div>
+          <h4>{c.titulo}</h4>
+          <ul>
+            {c.enlaces.map((e) => (
+              <li>
+                <a href="#">{e}</a>
+              </li>
+            ))}
+          </ul>
+        </div>
+      ))
+    }
+  </div>
+  <p class="gs-ftr__legal">Maqueta de referencia (demo). Sin inscripción ni pago reales. © {anio} {marca.nombre}</p>
+</footer>
+
+<style>
+  .gs-ftr {
+    background: var(--gs-negro);
+    color: rgba(255, 255, 255, 0.75);
+    padding-block: 3rem 1.5rem;
+  }
+
+  .gs-ftr__grid {
+    display: grid;
+    grid-template-columns: 1.6fr repeat(3, 1fr);
+    gap: 2rem;
+  }
+
+  .gs-ftr__logo {
+    font-size: 1.4rem;
+  }
+
+  .gs-ftr__lead {
+    font-size: 0.85rem;
+    max-width: 340px;
+    margin: 0.75rem 0 1.25rem;
+  }
+
+  .gs-ftr__wa {
+    font-size: 0.78rem;
+    padding: 0.7rem 1.3rem;
+  }
+
+  .gs-ftr h4 {
+    color: var(--gs-blanco);
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    margin-bottom: 0.75rem;
+  }
+
+  .gs-ftr ul {
+    list-style: none;
+    display: grid;
+    gap: 0.4rem;
+  }
+
+  .gs-ftr a {
+    font-size: 0.82rem;
+  }
+
+  .gs-ftr a:hover {
+    color: var(--gs-amarillo);
+  }
+
+  .gs-ftr__legal {
+    text-align: center;
+    font-size: 0.72rem;
+    color: var(--gs-g500);
+    margin-top: 2.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--gs-g700);
+  }
+
+  @media (max-width: 820px) {
+    .gs-ftr__grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 480px) {
+    .gs-ftr__grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

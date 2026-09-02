@@ -1,0 +1,87 @@
+---
+import { contenidoVertical } from '../datos/verticales.js';
+
+const { vertical = 'moda' } = Astro.props as { vertical?: string };
+const cats: string[] = (contenidoVertical as Record<string, any>)[vertical]?.circulos ?? [];
+---
+
+<section class="pl-seccion">
+  <div class="pl-contenedor">
+    <h2 class="pl-titulo">Lo más Top 😎</h2>
+    <p class="pl-subtitulo">¡Aprovecha lo más buscado!</p>
+    <div class="pl-fila pl-fila--8">
+      {
+        cats.map((c: string, i: number) => (
+          <a href="#" class="pl-circ">
+            <span class="pl-circ__img">
+              <img src={`https://picsum.photos/seed/pl-circ-${vertical}-${i}/220/220`} alt={c} loading="lazy" />
+              <b class="pl-circ__top">TOP</b>
+            </span>
+            <span class="pl-circ__nombre">{c}</span>
+          </a>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<style>
+  .pl-fila--8 {
+    grid-auto-columns: minmax(96px, 1fr);
+  }
+
+  @media (min-width: 1000px) {
+    .pl-fila--8 {
+      grid-template-columns: repeat(8, 1fr);
+      grid-auto-flow: row;
+      overflow: visible;
+    }
+  }
+
+  .pl-circ {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    text-align: center;
+  }
+
+  .pl-circ__img {
+    position: relative;
+    width: 100%;
+    max-width: 110px;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 2px solid transparent;
+    transition: border-color 0.2s ease, transform 0.2s ease;
+  }
+
+  .pl-circ:hover .pl-circ__img {
+    border-color: var(--pl-verde);
+    transform: scale(1.04);
+  }
+
+  .pl-circ__img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .pl-circ__top {
+    position: absolute;
+    top: 6px;
+    right: 6px;
+    background: var(--pl-verde);
+    color: #fff;
+    font-size: 0.55rem;
+    font-weight: 800;
+    padding: 0.05rem 0.35rem;
+    border-radius: 4px;
+  }
+
+  .pl-circ__nombre {
+    font-size: 0.8rem;
+    font-weight: 700;
+  }
+</style>

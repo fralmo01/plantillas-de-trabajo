@@ -1,0 +1,272 @@
+---
+import FiltrosMk from './FiltrosMk.astro';
+import TarjetaProductoMk from './TarjetaProductoMk.astro';
+import { productos, sugerencias, ordenarPor } from '../datos/productos.js';
+
+const base = '/plantillas/tienda-marketplace';
+
+const norm = (s: unknown) =>
+  (s ?? '').toString().toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '');
+const conHeno = productos.map((p) => ({
+  p,
+  heno: norm([p.nombre, p.marca, p.cat, ...(p.tags ?? [])].join(' ')),
+}));
+---
+
+<section class="mk-res">
+  <div class="mk-contenedor">
+    <div class="mk-res__top">
+      <p class="mk-res__para">
+        Mostrando resultados para <b id="mk-q">…</b>
+      </p>
+      <div class="mk-res__entrega">
+        <button type="button" class="mk-res__chip">🚚 Envío en 24 horas</button>
+        <button type="button" class="mk-res__chip">📦 Despacho a domicilio</button>
+        <button type="button" class="mk-res__chip">🏬 Punto de retiro</button>
+      </div>
+      <label class="mk-res__orden">
+        <span class="visually">Ordenar por</span>
+        <select>
+          {ordenarPor.map((o: string) => <option>{o}</option>)}
+        </select>
+      </label>
+    </div>
+
+    <div class="mk-res__layout">
+      <button class="mk-res__toggle" type="button" id="mk-toggle-filtros">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="4" y1="6" x2="20" y2="6" /><line x1="7" y1="12" x2="17" y2="12" /><line x1="10" y1="18" x2="14" y2="18" />
+        </svg>
+        Filtros
+      </button>
+
+      <FiltrosMk />
+
+      <div class="mk-res__grid-wrap">
+        <p class="mk-res__conteo"><span id="mk-n">0</span> productos</p>
+
+        <div class="mk-res__vacio" id="mk-vacio" hidden>
+          <p>No hay resultados para <b id="mk-q2"></b>.</p>
+          <p class="mk-res__prueba">Prueba con:</p>
+          <div class="mk-res__sugs">
+            {
+              sugerencias.map((s) => (
+                <a href={`${base}/buscar/?q=${encodeURIComponent(s)}`} class="mk-chip">
+                  {s}
+                </a>
+              ))
+            }
+          </div>
+        </div>
+
+        <div class="mk-res__grid" id="mk-grid">
+          {
+            conHeno.map(({ p, heno }) => (
+              <div data-buscable data-heno={heno}>
+                <TarjetaProductoMk producto={p} />
+              </div>
+            ))
+          }
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  const norm = (s: string) =>
+    (s ?? '').toString().toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '');
+
+  const termino = (new URLSearchParams(location.search).get('q') ?? '').trim();
+  const palabras = norm(termino).split(/\s+/).filter(Boolean);
+
+  const items = [...document.querySelectorAll<HTMLElement>('[data-buscable]')];
+  const $ = (id: string) => document.getElementById(id);
+  if ($('mk-q')) $('mk-q')!.textContent = termino ? `“${termino}”` : '(vacío)';
+  if ($('mk-q2')) $('mk-q2')!.textContent = `“${termino}”`;
+
+  let visibles = 0;
+  for (const it of items) {
+    const ok = palabras.length > 0 && palabras.every((w) => (it.dataset.heno ?? '').includes(w));
+    it.hidden = !ok;
+    if (ok) visibles++;
+  }
+  if ($('mk-n')) $('mk-n')!.textContent = String(visibles);
+  if ($('mk-vacio')) ($('mk-vacio') as HTMLElement).hidden = visibles > 0;
+  if ($('mk-grid')) ($('mk-grid') as HTMLElement).hidden = visibles === 0;
+
+  const inputCab = document.querySelector<HTMLInputElement>('.mk-buscador input');
+  if (inputCab && termino) inputCab.value = termino;
+
+  
+  const panel = document.getElementById('mk-filtros');
+  const abrir = document.getElementById('mk-toggle-filtros');
+  const cerrarBtns = panel?.querySelectorAll('.mk-filtros__x, [data-cerrar-filtros]');
+  abrir?.addEventListener('click', () => panel?.classList.toggle('is-abierto'));
+  cerrarBtns?.forEach((b) => b.addEventListener('click', () => panel?.classList.remove('is-abierto')));
+</script>
+
+<style>
+  .mk-res {
+    padding-block: clamp(1rem, 3vw, 1.75rem) clamp(2.5rem, 6vw, 4rem);
+  }
+
+  .mk-res__top {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.75rem 1rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--mk-gris-borde);
+    margin-bottom: 1.25rem;
+  }
+
+  .mk-res__para {
+    font-size: 0.9rem;
+  }
+
+  .mk-res__entrega {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .mk-res__chip {
+    font: inherit;
+    font-size: 0.76rem;
+    font-weight: 600;
+    padding: 0.4rem 0.75rem;
+    border: 1px solid var(--mk-gris-borde);
+    border-radius: 999px;
+    background: var(--mk-blanco);
+    cursor: pointer;
+  }
+
+  .mk-res__chip:hover {
+    border-color: var(--mk-morado);
+    color: var(--mk-morado);
+  }
+
+  .mk-res__orden {
+    margin-left: auto;
+  }
+
+  .mk-res__orden .visually {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+  }
+
+  .mk-res__orden select {
+    font: inherit;
+    font-size: 0.82rem;
+    padding: 0.45rem 2rem 0.45rem 0.9rem;
+    border: 1px solid var(--mk-gris-borde);
+    border-radius: 8px;
+    background: var(--mk-blanco);
+    cursor: pointer;
+  }
+
+  .mk-res__layout {
+    display: grid;
+    grid-template-columns: 260px 1fr;
+    gap: clamp(1.25rem, 3vw, 2.25rem);
+    align-items: start;
+  }
+
+  .mk-res__toggle {
+    display: none;
+    align-items: center;
+    gap: 0.4rem;
+    background: none;
+    border: 1px solid var(--mk-gris-borde);
+    border-radius: 999px;
+    padding: 0.4rem 0.9rem;
+    font: inherit;
+    font-size: 0.8rem;
+    font-weight: 700;
+    cursor: pointer;
+    margin-bottom: 1rem;
+  }
+
+  .mk-res__conteo {
+    font-size: 0.8rem;
+    color: var(--mk-gris-texto);
+    margin-bottom: 1rem;
+  }
+
+  .mk-res__grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.1rem;
+  }
+
+  .mk-res__vacio {
+    border: 1px dashed var(--mk-gris-borde);
+    border-radius: var(--mk-radio);
+    padding: 2rem 1.25rem;
+    text-align: center;
+  }
+
+  .mk-res__prueba {
+    margin-top: 0.75rem;
+    font-weight: 700;
+  }
+
+  .mk-res__sugs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    justify-content: center;
+    margin-top: 0.75rem;
+  }
+
+  .mk-chip {
+    font-size: 0.8rem;
+    font-weight: 700;
+    padding: 0.3rem 0.85rem;
+    border: 1px solid var(--mk-gris-borde);
+    border-radius: 999px;
+    background: var(--mk-blanco);
+  }
+
+  @media (max-width: 1100px) {
+    .mk-res__grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  @media (max-width: 900px) {
+    .mk-res__layout {
+      grid-template-columns: 1fr;
+    }
+    .mk-res__toggle {
+      display: inline-flex;
+    }
+    :global(.mk-filtros) {
+      position: fixed;
+      inset: 0 25% 0 0;
+      z-index: 350;
+      background: var(--mk-blanco);
+      padding: 1.25rem;
+      overflow-y: auto;
+      transform: translateX(-105%);
+      transition: transform 0.25s ease;
+      box-shadow: 0 0 40px rgba(0, 0, 0, 0.25);
+    }
+    :global(.mk-filtros.is-abierto) {
+      transform: none;
+    }
+    :global(.mk-filtros__x) {
+      display: block !important;
+    }
+  }
+
+  @media (max-width: 680px) {
+    .mk-res__grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+</style>

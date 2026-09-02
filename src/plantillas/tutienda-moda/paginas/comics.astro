@@ -1,0 +1,18 @@
+---
+import '@fontsource-variable/montserrat/wght.css';
+import MarcoTienda from '../componentes/MarcoTienda.astro';
+import ListadoCategoria from '../componentes/ListadoCategoria.astro';
+import { categorias } from '../datos/categorias.js';
+import { porCategoria } from '../datos/productos.js';
+
+export const titulo = 'Comics | tu tienda.com';
+export const descripcion = 'Colección de licencias y personajes en polos, buzos y accesorios.';
+
+const slug = 'comics';
+const meta = categorias[slug];
+const lista = porCategoria(slug);
+---
+
+<MarcoTienda activo="Comics">
+  <ListadoCategoria slug={slug} meta={meta} lista={lista} />
+</MarcoTienda>

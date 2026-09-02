@@ -1,0 +1,183 @@
+---
+import { navTop, categorias } from '../datos/catalogo.js';
+---
+
+<div class="ef-topbar">
+  <div class="ef-wrap ef-topbar__inner">
+    <span>Envíos a todo el Perú</span>
+    <nav class="ef-topbar__nav" aria-label="Accesos rápidos">
+      {navTop.map((n: string) => <a href="#">{n}</a>)}
+    </nav>
+  </div>
+</div>
+
+<header class="ef-hdr" id="top">
+  <div class="ef-wrap ef-hdr__inner">
+    <button class="ef-hdr__menu" id="ef-burger" type="button" aria-label="Abrir menú">
+      <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6" /><line x1="3" y1="12" x2="21" y2="12" /><line x1="3" y1="18" x2="21" y2="18" /></svg>
+    </button>
+
+    <a href="#top" class="ef-logo" aria-label="tienda.com">tienda<b>.com</b></a>
+
+    <form class="ef-buscador" role="search" onsubmit="return false">
+      <input type="search" placeholder="Buscar productos, marcas y más…" aria-label="Buscar" />
+      <button type="submit" aria-label="Buscar">
+        <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7" /><line x1="21" y1="21" x2="16.7" y2="16.7" /></svg>
+      </button>
+    </form>
+
+    <div class="ef-hdr__acc">
+      <a href="#" title="Demo sin login">Mi cuenta</a>
+      <a href="#">Favoritos</a>
+      <a href="#" class="ef-hdr__cart">🛒 <span>0</span></a>
+    </div>
+  </div>
+
+  <nav class="ef-mega" aria-label="Categorías">
+    <div class="ef-wrap ef-mega__inner" id="ef-mega">
+      {categorias.map((c) => <a href="#catalogo">{c.nombre}</a>)}
+      <a href="#ofertas" class="ef-mega__promo">Ofertas</a>
+    </div>
+  </nav>
+</header>
+
+<script>
+  const burger = document.getElementById('ef-burger');
+  const mega = document.getElementById('ef-mega');
+  burger?.addEventListener('click', () => mega?.classList.toggle('is-open'));
+</script>
+
+<style>
+  .ef-topbar {
+    background: var(--ef-verde-osc);
+    color: #fff;
+    font-size: 0.74rem;
+  }
+
+  .ef-topbar__inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding-block: 0.35rem;
+    overflow-x: auto;
+  }
+
+  .ef-topbar__nav {
+    display: flex;
+    gap: 1rem;
+    white-space: nowrap;
+  }
+
+  .ef-hdr {
+    background: #fff;
+    border-bottom: 1px solid var(--ef-linea);
+    position: sticky;
+    top: 0;
+    z-index: 50;
+  }
+
+  .ef-hdr__inner {
+    display: flex;
+    align-items: center;
+    gap: clamp(0.75rem, 2vw, 1.5rem);
+    padding-block: 0.75rem;
+  }
+
+  .ef-hdr__menu {
+    display: none;
+    color: var(--ef-tinta);
+  }
+
+  .ef-logo {
+    font-size: 1.35rem;
+    font-weight: 800;
+    color: var(--ef-verde-osc);
+    flex-shrink: 0;
+  }
+
+  .ef-logo b {
+    color: var(--ef-tinta);
+  }
+
+  .ef-buscador {
+    flex: 1;
+    display: flex;
+    border: 2px solid var(--ef-verde);
+    border-radius: 6px;
+    overflow: hidden;
+    max-width: 640px;
+  }
+
+  .ef-buscador input {
+    flex: 1;
+    border: 0;
+    outline: none;
+    padding: 0.55rem 0.9rem;
+    font-size: 0.88rem;
+  }
+
+  .ef-buscador button {
+    background: var(--ef-verde);
+    color: #fff;
+    width: 46px;
+    display: grid;
+    place-items: center;
+  }
+
+  .ef-hdr__acc {
+    display: flex;
+    align-items: center;
+    gap: 1.1rem;
+    font-size: 0.8rem;
+    font-weight: 600;
+    flex-shrink: 0;
+  }
+
+  .ef-hdr__cart span {
+    background: var(--ef-verde);
+    color: #fff;
+    border-radius: 999px;
+    padding: 0 0.35rem;
+    font-size: 0.68rem;
+  }
+
+  .ef-mega {
+    border-top: 1px solid var(--ef-linea);
+    background: var(--ef-panel-2);
+  }
+
+  .ef-mega__inner {
+    display: flex;
+    gap: 1.25rem;
+    padding-block: 0.55rem;
+    overflow-x: auto;
+    font-size: 0.82rem;
+    font-weight: 600;
+  }
+
+  .ef-mega__inner a:hover {
+    color: var(--ef-verde-osc);
+  }
+
+  .ef-mega__promo {
+    color: var(--ef-rojo);
+    font-weight: 800;
+  }
+
+  @media (max-width: 860px) {
+    .ef-hdr__menu {
+      display: inline-flex;
+    }
+    .ef-hdr__acc a:not(.ef-hdr__cart) {
+      display: none;
+    }
+    .ef-mega__inner {
+      display: none;
+    }
+    .ef-mega__inner.is-open {
+      display: flex;
+      flex-direction: column;
+    }
+  }
+</style>

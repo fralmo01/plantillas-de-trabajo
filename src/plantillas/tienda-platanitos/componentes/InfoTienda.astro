@@ -1,0 +1,83 @@
+---
+import { infoCards } from '../datos/contenido.js';
+
+const iconos: Record<string, string> = {
+  pin: 'M12 21s-7-6.2-7-11a7 7 0 0 1 14 0c0 4.8-7 11-7 11zM12 8a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5z',
+  ayuda: 'M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18zM12 17h.01M9.5 9a2.5 2.5 0 1 1 3.5 2.3c-.9.4-1 .9-1 1.7',
+  regalo: 'M4 9h16v11H4zM2 5h20v4H2zM12 5v15M12 5S9 2 7.5 3.5 9 5 12 5zM12 5s3-3 4.5-1.5S15 5 12 5z',
+};
+---
+
+<section class="pl-seccion">
+  <div class="pl-contenedor">
+    <h2 class="pl-titulo">Entérate más sobre tienda.com</h2>
+    <p class="pl-subtitulo">Conoce nuestra información más a detalle</p>
+    <div class="pl-info">
+      {
+        infoCards.map((c) => (
+          <article class="pl-info__card">
+            <span class="pl-info__ico">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
+                <path d={iconos[c.icono]} />
+              </svg>
+            </span>
+            <div>
+              <h3>{c.titulo}</h3>
+              <p>{c.texto}</p>
+            </div>
+          </article>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<style>
+  .pl-info {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.25rem;
+  }
+
+  .pl-info__card {
+    display: flex;
+    gap: 0.9rem;
+    align-items: flex-start;
+    border: 1px solid var(--pl-gris-borde);
+    border-radius: 12px;
+    padding: 1.25rem;
+    background: var(--pl-verde-claro);
+  }
+
+  .pl-info__ico {
+    flex-shrink: 0;
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    background: var(--pl-blanco);
+    display: grid;
+    place-items: center;
+    color: var(--pl-verde-osc);
+  }
+
+  .pl-info__ico svg {
+    width: 22px;
+    height: 22px;
+  }
+
+  .pl-info__card h3 {
+    font-size: 0.95rem;
+    margin-bottom: 0.25rem;
+  }
+
+  .pl-info__card p {
+    font-size: 0.82rem;
+    color: var(--pl-gris-texto);
+  }
+
+  @media (max-width: 860px) {
+    .pl-info {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

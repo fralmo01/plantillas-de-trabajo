@@ -1,0 +1,122 @@
+---
+import { footerCols } from '../datos/contenido.js';
+const anio = new Date().getFullYear();
+---
+
+<footer class="mk-pie">
+  <div class="mk-contenedor mk-pie__grid">
+    {
+      footerCols.map((c) => (
+        <div class="mk-pie__col">
+          <h4>{c.titulo}</h4>
+          <ul>
+            {c.enlaces.map((e) => (
+              <li>
+                <a href="#">{e}</a>
+              </li>
+            ))}
+          </ul>
+        </div>
+      ))
+    }
+
+    <div class="mk-pie__col">
+      <h4>Medios de pago</h4>
+      <div class="mk-pie__pagos">
+        <span>Tarjeta tienda.com</span><span>Visa</span><span>Mastercard</span><span>Amex</span><span>Webpay</span>
+      </div>
+      <h4 style="margin-top:1.25rem">Síguenos</h4>
+      <div class="mk-pie__redes">
+        <a href="#" aria-label="Facebook">f</a>
+        <a href="#" aria-label="Instagram">◎</a>
+        <a href="#" aria-label="YouTube">▶</a>
+      </div>
+    </div>
+  </div>
+
+  <p class="mk-pie__legal">
+    Maqueta de referencia (demo). Sin funciones reales de cuenta ni pago. © {anio} tienda.com
+  </p>
+</footer>
+
+<style>
+  .mk-pie {
+    background: #2b2b31;
+    color: #cfcfd6;
+    padding-block: 2.5rem 1.5rem;
+  }
+
+  .mk-pie__grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2rem;
+  }
+
+  .mk-pie__col h4 {
+    color: var(--mk-blanco);
+    font-size: 0.85rem;
+    margin-bottom: 0.8rem;
+  }
+
+  .mk-pie__col ul {
+    list-style: none;
+    display: grid;
+    gap: 0.45rem;
+  }
+
+  .mk-pie__col a {
+    font-size: 0.8rem;
+  }
+
+  .mk-pie__col a:hover {
+    color: var(--mk-blanco);
+  }
+
+  .mk-pie__pagos {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+  }
+
+  .mk-pie__pagos span {
+    font-size: 0.62rem;
+    font-weight: 700;
+    padding: 0.2rem 0.45rem;
+    border: 1px solid #4a4a52;
+    border-radius: 4px;
+  }
+
+  .mk-pie__redes {
+    display: flex;
+    gap: 0.5rem;
+  }
+
+  .mk-pie__redes a {
+    width: 30px;
+    height: 30px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #4a4a52;
+    border-radius: 50%;
+  }
+
+  .mk-pie__legal {
+    text-align: center;
+    font-size: 0.72rem;
+    color: #8a8a94;
+    margin-top: 2rem;
+  }
+
+  @media (max-width: 820px) {
+    .mk-pie__grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 460px) {
+    .mk-pie__grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

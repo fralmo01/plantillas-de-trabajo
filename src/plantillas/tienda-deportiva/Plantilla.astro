@@ -1,0 +1,29 @@
+---
+import '@fontsource-variable/archivo/wdth.css';
+import '@fontsource-variable/inter/wght.css';
+import './estilos.css';
+
+import BarraPromo from './secciones/BarraPromo.astro';
+import Cabecera from './secciones/Cabecera.astro';
+import HeroCinematic from './secciones/HeroCinematic.astro';
+import HeroPromoGrid from './secciones/HeroPromoGrid.astro';
+import ClubFestival from './secciones/ClubFestival.astro';
+import CompraElLook from './secciones/CompraElLook.astro';
+import EquiposYGeneros from './secciones/EquiposYGeneros.astro';
+import ProductosDestacados from './secciones/ProductosDestacados.astro';
+import PiePagina from './secciones/PiePagina.astro';
+---
+
+<div class="tpl-tienda-deportiva">
+  <BarraPromo />
+  <Cabecera />
+  <main>
+    <HeroCinematic />
+    <HeroPromoGrid />
+    <ClubFestival />
+    <CompraElLook />
+    <EquiposYGeneros />
+    <ProductosDestacados />
+  </main>
+  <PiePagina />
+</div>

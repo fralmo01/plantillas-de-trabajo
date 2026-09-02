@@ -1,0 +1,171 @@
+---
+import { bancos } from '../datos/proyectos.js';
+---
+
+<section class="il-seccion" id="simulador">
+  <div class="il-wrap il-sim">
+    <div class="il-sim__intro">
+      <p class="il-eyebrow">Simulador</p>
+      <h2 class="il-titulo">Calcula tu cuota mensual</h2>
+      <p class="il-sub">
+        Estimación referencial con cuota constante. Consulta condiciones finales con el banco;
+        aplica el bono del buen pagador si corresponde.
+      </p>
+      <ul class="il-sim__bancos">
+        {bancos.map((b: string) => <li>{b}</li>)}
+      </ul>
+    </div>
+
+    <form class="il-sim__form" id="il-sim-form" onsubmit="return false">
+      <label>
+        Precio de la vivienda (US$)
+        <input type="number" id="il-precio" value="189000" min="30000" step="1000" />
+      </label>
+      <label>
+        Cuota inicial (%)
+        <input type="range" id="il-inicial" min="10" max="40" value="20" />
+        <output id="il-inicial-val">20%</output>
+      </label>
+      <label>
+        Plazo (años)
+        <select id="il-plazo">
+          <option>10</option><option>15</option><option selected>20</option><option>25</option>
+        </select>
+      </label>
+      <label>
+        Tasa anual (TEA %)
+        <input type="number" id="il-tasa" value="8.9" step="0.1" min="4" />
+      </label>
+
+      <div class="il-sim__resultado">
+        <span>Cuota mensual estimada</span>
+        <strong id="il-cuota">—</strong>
+        <small id="il-detalle"></small>
+      </div>
+    </form>
+  </div>
+</section>
+
+<script>
+  const $ = (id: string) => document.getElementById(id) as HTMLInputElement | null;
+  const precio = $('il-precio');
+  const inicial = $('il-inicial');
+  const inicialVal = document.getElementById('il-inicial-val');
+  const plazo = $('il-plazo');
+  const tasa = $('il-tasa');
+  const cuotaEl = document.getElementById('il-cuota');
+  const detalleEl = document.getElementById('il-detalle');
+  const TC = 3.75;
+
+  function calc() {
+    const P = Number(precio?.value || 0);
+    const pctIni = Number(inicial?.value || 20);
+    const anios = Number(plazo?.value || 20);
+    const tea = Number(tasa?.value || 8.9) / 100;
+    if (inicialVal) inicialVal.textContent = pctIni + '%';
+
+    const montoUSD = P * (1 - pctIni / 100);
+    const i = Math.pow(1 + tea, 1 / 12) - 1; 
+    const n = anios * 12;
+    const cuotaUSD = i === 0 ? montoUSD / n : (montoUSD * i) / (1 - Math.pow(1 + i, -n));
+    const cuotaPEN = cuotaUSD * TC;
+
+    if (cuotaEl) cuotaEl.textContent = 'S/ ' + Math.round(cuotaPEN).toLocaleString('es-PE');
+    if (detalleEl)
+      detalleEl.textContent =
+        `Financias US$ ${Math.round(montoUSD).toLocaleString('en-US')} a ${anios} años · inicial ${pctIni}%`;
+  }
+
+  [precio, inicial, plazo, tasa].forEach((el) => {
+    el?.addEventListener('input', calc);
+    el?.addEventListener('change', calc);
+  });
+  calc();
+</script>
+
+<style>
+  .il-sim {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: clamp(1.5rem, 4vw, 3.5rem);
+    align-items: start;
+  }
+
+  .il-sim__bancos {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    list-style: none;
+  }
+
+  .il-sim__bancos li {
+    font-size: 0.72rem;
+    font-weight: 600;
+    border: 1px solid var(--il-border-med);
+    border-radius: 999px;
+    padding: 0.25rem 0.7rem;
+  }
+
+  .il-sim__form {
+    background: var(--il-surface);
+    border: 1px solid var(--il-border);
+    border-radius: var(--il-radio-lg);
+    padding: 1.75rem;
+    display: grid;
+    gap: 1.1rem;
+  }
+
+  .il-sim__form label {
+    display: grid;
+    gap: 0.4rem;
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--il-text-2);
+  }
+
+  .il-sim__form input[type="number"],
+  .il-sim__form select {
+    border: 1px solid var(--il-border-med);
+    border-radius: 8px;
+    padding: 0.6rem 0.8rem;
+  }
+
+  .il-sim__form output {
+    font-weight: 700;
+    color: var(--il-navy);
+  }
+
+  .il-sim__resultado {
+    margin-top: 0.5rem;
+    background: var(--il-navy);
+    color: #fff;
+    border-radius: var(--il-radio);
+    padding: 1.25rem;
+    text-align: center;
+  }
+
+  .il-sim__resultado span {
+    font-size: 0.75rem;
+    opacity: 0.8;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+
+  .il-sim__resultado strong {
+    display: block;
+    font-family: var(--il-serif);
+    font-size: 2rem;
+    margin: 0.25rem 0;
+  }
+
+  .il-sim__resultado small {
+    font-size: 0.74rem;
+    opacity: 0.75;
+  }
+
+  @media (max-width: 900px) {
+    .il-sim {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

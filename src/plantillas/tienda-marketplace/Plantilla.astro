@@ -1,0 +1,30 @@
+---
+import MarcoMarketplace from './componentes/MarcoMarketplace.astro';
+
+import HeroCarrusel from './secciones/HeroCarrusel.astro';
+import TiraMarcas from './secciones/TiraMarcas.astro';
+import BannersDuo from './secciones/BannersDuo.astro';
+import FlashSale from './secciones/FlashSale.astro';
+import BannerMarca from './secciones/BannerMarca.astro';
+import GrillaPromos from './secciones/GrillaPromos.astro';
+import CarruselProductos from './secciones/CarruselProductos.astro';
+import CategoriasCirculares from './secciones/CategoriasCirculares.astro';
+import BancoYSeguros from './secciones/BancoYSeguros.astro';
+import DescubreMas from './secciones/DescubreMas.astro';
+
+import { bannersMarca } from './datos/contenido.js';
+---
+
+<MarcoMarketplace>
+  <HeroCarrusel />
+  <TiraMarcas />
+  <BannersDuo />
+  <FlashSale />
+  <BannerMarca {...bannersMarca[0]} />
+  <GrillaPromos />
+  <BannerMarca {...bannersMarca[1]} />
+  <CarruselProductos titulo="productos seleccionados para ti" />
+  <CategoriasCirculares />
+  <BancoYSeguros />
+  <DescubreMas />
+</MarcoMarketplace>

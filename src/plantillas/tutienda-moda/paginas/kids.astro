@@ -1,0 +1,18 @@
+---
+import '@fontsource-variable/montserrat/wght.css';
+import MarcoTienda from '../componentes/MarcoTienda.astro';
+import ListadoCategoria from '../componentes/ListadoCategoria.astro';
+import { categorias } from '../datos/categorias.js';
+import { porCategoria } from '../datos/productos.js';
+
+export const titulo = 'Kids | tu tienda.com';
+export const descripcion = 'Ropa para niñas y niños: cómoda y resistente.';
+
+const slug = 'kids';
+const meta = categorias[slug];
+const lista = porCategoria(slug);
+---
+
+<MarcoTienda activo="Kids">
+  <ListadoCategoria slug={slug} meta={meta} lista={lista} />
+</MarcoTienda>

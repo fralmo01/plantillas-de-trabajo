@@ -1,0 +1,96 @@
+<section class="tm-susc">
+  <div class="tm-contenedor tm-susc__inner">
+    <div class="tm-susc__texto">
+      <h2>Suscríbete</h2>
+      <p>Accede a <b>cupones</b>, <b>ofertas</b> y <b>novedades</b> exclusivas.</p>
+      <p>¡Y un <b>descuento especial</b> por tu cumpleaños!</p>
+    </div>
+
+    <form class="tm-susc__form" onsubmit="return false">
+      <input type="text" name="nombre" placeholder="Nombres y apellidos" autocomplete="name" required />
+      <input type="tel" name="celular" placeholder="Celular" autocomplete="tel" required />
+      <input type="date" name="cumple" aria-label="Fecha de cumpleaños" />
+      <div class="tm-susc__fila">
+        <input type="email" name="correo" placeholder="Correo electrónico" autocomplete="email" required />
+        <button type="submit" class="tm-btn tm-btn--negro">Suscribirme</button>
+      </div>
+      <label class="tm-susc__check">
+        <input type="checkbox" required /> Acepto las políticas de protección de datos.
+      </label>
+    </form>
+  </div>
+</section>
+
+<style>
+  .tm-susc {
+    background-color: var(--tm-amarillo);
+    background-image:
+      linear-gradient(135deg, rgba(255, 255, 255, 0.25) 25%, transparent 25%),
+      linear-gradient(225deg, rgba(0, 0, 0, 0.05) 25%, transparent 25%);
+    background-size: 46px 46px;
+  }
+
+  .tm-susc__inner {
+    display: grid;
+    grid-template-columns: 0.8fr 1.2fr;
+    gap: 2rem;
+    align-items: center;
+    padding-block: clamp(2rem, 5vw, 3.5rem);
+  }
+
+  .tm-susc__texto h2 {
+    font-size: clamp(1.8rem, 5vw, 2.8rem);
+    text-transform: uppercase;
+    margin-bottom: 0.6rem;
+  }
+
+  .tm-susc__texto p {
+    font-size: 0.92rem;
+  }
+
+  .tm-susc__form {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.75rem;
+  }
+
+  .tm-susc__form > input {
+    padding: 0.75rem 1rem;
+    border: 0;
+    border-radius: var(--tm-radio-pill);
+    font: inherit;
+    font-size: 0.85rem;
+  }
+
+  .tm-susc__fila {
+    grid-column: 1 / -1;
+    display: flex;
+    gap: 0.75rem;
+  }
+
+  .tm-susc__fila input {
+    flex: 1;
+    padding: 0.75rem 1rem;
+    border: 0;
+    border-radius: var(--tm-radio-pill);
+    font: inherit;
+    font-size: 0.85rem;
+  }
+
+  .tm-susc__check {
+    grid-column: 1 / -1;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.78rem;
+  }
+
+  @media (max-width: 760px) {
+    .tm-susc__inner {
+      grid-template-columns: 1fr;
+    }
+    .tm-susc__form {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

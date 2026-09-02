@@ -1,0 +1,117 @@
+---
+import { bloquesFinancieros } from '../datos/contenido.js';
+
+const iconos: Record<string, string> = {
+  card: 'M2 7h20v10H2zM2 11h20',
+  cash: 'M2 6h20v12H2zM12 9a3 3 0 1 0 0 6 3 3 0 0 0 0-6z',
+  star: 'M12 3l2.9 5.9 6.5.9-4.7 4.6 1.1 6.5L12 18l-5.8 3 1.1-6.5L2.6 9.8l6.5-.9z',
+};
+
+const accesos = [
+  { t: 'Seguimiento de compra', d: 'revisa el estado de tus productos' },
+  { t: 'Postula a marketplace', d: '¡haz crecer tu negocio!' },
+  { t: 'Giftcard', d: 'regala la opción de elegir' },
+  { t: '¿Necesitas ayuda?', d: 'escríbenos tus dudas' },
+];
+---
+
+<section class="mk-seccion mk-descubre">
+  <div class="mk-contenedor">
+    <h2 class="mk-titulo">descubre <span class="mk-rosa">más para ti</span></h2>
+
+    <div class="mk-descubre__fin">
+      {
+        bloquesFinancieros.map((b) => (
+          <a href="#" class="mk-descubre__bloque">
+            <svg viewBox="0 0 24 24" fill="none" stroke="var(--mk-morado)" stroke-width="1.6">
+              <path d={iconos[b.icono]} />
+            </svg>
+            <strong>{b.titulo}</strong>
+            <span>{b.texto}</span>
+          </a>
+        ))
+      }
+    </div>
+
+    <div class="mk-descubre__accesos">
+      {
+        accesos.map((a) => (
+          <a href="#" class="mk-descubre__acceso">
+            <strong>{a.t}</strong>
+            <span>{a.d}</span>
+          </a>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<style>
+  .mk-descubre {
+    background: var(--mk-gris-bg);
+  }
+
+  .mk-descubre__fin {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .mk-descubre__bloque {
+    background: var(--mk-blanco);
+    border: 1px solid var(--mk-gris-borde);
+    border-radius: 10px;
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 0.4rem;
+  }
+
+  .mk-descubre__bloque svg {
+    width: 40px;
+    height: 40px;
+  }
+
+  .mk-descubre__bloque strong {
+    color: var(--mk-morado);
+    font-size: 0.95rem;
+  }
+
+  .mk-descubre__bloque span {
+    font-size: 0.76rem;
+    color: var(--mk-gris-texto);
+  }
+
+  .mk-descubre__accesos {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+    text-align: center;
+  }
+
+  .mk-descubre__acceso {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+  }
+
+  .mk-descubre__acceso strong {
+    color: var(--mk-rosa);
+    font-size: 0.85rem;
+  }
+
+  .mk-descubre__acceso span {
+    font-size: 0.72rem;
+    color: var(--mk-gris-texto);
+  }
+
+  @media (max-width: 860px) {
+    .mk-descubre__fin,
+    .mk-descubre__accesos {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+</style>

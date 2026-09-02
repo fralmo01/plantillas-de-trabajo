@@ -1,0 +1,131 @@
+.tpl-ecommerce-falabella {
+  --ef-verde: #6ab000;
+  --ef-verde-osc: #518700;
+  --ef-verde-benef: #1b7a3d;
+  --ef-morado: #7b1fa2;
+  --ef-tinta: #1c1c1c;
+  --ef-texto: #333333;
+  --ef-gris: #767676;
+  --ef-linea: #e6e6e6;
+  --ef-panel: #f2f2f2;
+  --ef-panel-2: #fafafa;
+  --ef-fondo: #f4f4f4;
+  --ef-amarillo: #f59e0b;
+  --ef-rojo: #e11900;
+
+  --ef-font: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+  --ef-sombra: 0 8px 28px -12px rgba(0, 0, 0, 0.28);
+  --ef-radio: 10px;
+  --ef-max: 1280px;
+
+  background: var(--ef-fondo);
+  color: var(--ef-texto);
+  font-family: var(--ef-font);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+.tpl-ecommerce-falabella *,
+.tpl-ecommerce-falabella *::before,
+.tpl-ecommerce-falabella *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+.tpl-ecommerce-falabella h1,
+.tpl-ecommerce-falabella h2,
+.tpl-ecommerce-falabella h3 {
+  line-height: 1.2;
+  color: var(--ef-tinta);
+}
+
+.tpl-ecommerce-falabella img {
+  max-width: 100%;
+  display: block;
+}
+
+.tpl-ecommerce-falabella a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.tpl-ecommerce-falabella button {
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+  border: none;
+  background: none;
+}
+
+.tpl-ecommerce-falabella input,
+.tpl-ecommerce-falabella select {
+  font: inherit;
+}
+
+.tpl-ecommerce-falabella .ef-wrap {
+  max-width: var(--ef-max);
+  margin-inline: auto;
+  padding-inline: clamp(0.75rem, 3vw, 2rem);
+}
+
+.tpl-ecommerce-falabella .ef-seccion {
+  padding-block: clamp(1.5rem, 4vw, 2.75rem);
+}
+
+.tpl-ecommerce-falabella .ef-titulo {
+  font-size: clamp(1.1rem, 2.4vw, 1.5rem);
+  font-weight: 800;
+  margin-bottom: 1.1rem;
+}
+
+.tpl-ecommerce-falabella .ef-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  border-radius: 6px;
+  background: var(--ef-verde);
+  color: #fff;
+  font-weight: 700;
+  padding: 0.7rem 1.4rem;
+  transition: background 0.15s ease, transform 0.15s ease;
+}
+
+.tpl-ecommerce-falabella .ef-btn:hover {
+  background: var(--ef-verde-osc);
+  transform: translateY(-1px);
+}
+
+.tpl-ecommerce-falabella .ef-btn--ghost {
+  background: transparent;
+  color: var(--ef-verde-osc);
+  border: 1px solid var(--ef-verde);
+}
+
+.tpl-ecommerce-falabella .ef-btn--ghost:hover {
+  background: rgba(106, 176, 0, 0.08);
+}
+
+.tpl-ecommerce-falabella .ef-fila {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(190px, 1fr);
+  gap: 1rem;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  padding-bottom: 0.5rem;
+}
+
+.tpl-ecommerce-falabella .ef-fila > * {
+  scroll-snap-align: start;
+}
+
+@media (min-width: 1000px) {
+  .tpl-ecommerce-falabella .ef-fila--5 {
+    grid-template-columns: repeat(5, 1fr);
+    grid-auto-flow: row;
+    overflow: visible;
+  }
+}

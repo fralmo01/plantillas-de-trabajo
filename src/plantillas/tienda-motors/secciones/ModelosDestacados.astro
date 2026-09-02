@@ -1,0 +1,124 @@
+---
+import { modelos, usd } from '../datos/motors.js';
+---
+
+<section class="tm-seccion" id="modelos">
+  <div class="tm-wrap">
+    <h2 class="tm-titulo">Modelos destacados</h2>
+    <div class="tm-fila tm-fila--4">
+      {
+        modelos.map((m) => (
+          <article class="tm-mod">
+            <div class="tm-mod__media">
+              <img src={m.img} alt={m.nombre} loading="lazy" />
+              {m.tag && <span class="tm-mod__tag">{m.tag}</span>}
+            </div>
+            <div class="tm-mod__body">
+              <h3>{m.nombre}</h3>
+              <p class="tm-mod__tipo">{m.tipo}</p>
+              <p class="tm-mod__precio">
+                Desde <b>{usd(m.desdeUSD)}</b>
+              </p>
+              <p class="tm-mod__cuota">Cuota mensual desde US$ {m.cuota}*</p>
+              <div class="tm-mod__cta">
+                <a href="#cotiza" class="tm-btn tm-btn--rojo">Cotizar</a>
+                <a href="#" class="tm-btn tm-btn--outline">Ficha</a>
+              </div>
+            </div>
+          </article>
+        ))
+      }
+    </div>
+    <div class="tm-mod__ver">
+      <a href="#" class="tm-btn tm-btn--rojo">Ver el catálogo</a>
+    </div>
+  </div>
+</section>
+
+<style>
+  .tm-mod {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid var(--tm-linea);
+    background: #fff;
+  }
+
+  .tm-mod__media {
+    position: relative;
+    aspect-ratio: 16 / 10;
+    background: var(--tm-panel);
+  }
+
+  .tm-mod__media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .tm-mod__tag {
+    position: absolute;
+    top: 0.6rem;
+    left: 0.6rem;
+    background: var(--tm-rojo);
+    color: #fff;
+    font-size: 0.64rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    padding: 0.15rem 0.5rem;
+    border-radius: 3px;
+  }
+
+  .tm-mod__body {
+    padding: 1rem 1.1rem 1.2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+    flex: 1;
+  }
+
+  .tm-mod__body h3 {
+    font-size: 1.1rem;
+    color: var(--tm-negro);
+  }
+
+  .tm-mod__tipo {
+    font-size: 0.78rem;
+    color: var(--tm-gris);
+  }
+
+  .tm-mod__precio {
+    margin-top: 0.5rem;
+    font-size: 0.85rem;
+    color: var(--tm-gris);
+  }
+
+  .tm-mod__precio b {
+    color: var(--tm-negro);
+    font-size: 1.15rem;
+  }
+
+  .tm-mod__cuota {
+    font-size: 0.74rem;
+    color: var(--tm-rojo);
+    font-weight: 700;
+    margin-bottom: 0.85rem;
+  }
+
+  .tm-mod__cta {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: auto;
+  }
+
+  .tm-mod__cta .tm-btn {
+    flex: 1;
+    padding: 0.5rem;
+    font-size: 0.7rem;
+  }
+
+  .tm-mod__ver {
+    display: flex;
+    justify-content: center;
+    margin-top: 2rem;
+  }
+</style>

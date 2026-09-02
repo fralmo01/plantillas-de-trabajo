@@ -1,0 +1,138 @@
+@import url("https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap");
+
+.tpl-inmobiliaria-luxury {
+  --il-ice: #e3f6f5;
+  --il-mint: #a7e0db;
+  --il-cyan: #5fb0c9;
+  --il-blue: #3e6d9c;
+  --il-navy: #2a2f63;
+
+  --il-bg: #f4faf9;
+  --il-surface: #ffffff;
+  --il-card-hover: #f0f8f7;
+  --il-subtle: #e3f6f5;
+
+  --il-text: #1e2540;
+  --il-text-2: #3b4668;
+  --il-muted: #647294;
+
+  --il-border: rgba(42, 47, 99, 0.09);
+  --il-border-med: rgba(62, 109, 156, 0.22);
+
+  --il-serif: "Cinzel", Georgia, serif;
+  --il-sans: "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+
+  --il-radio: 14px;
+  --il-radio-lg: 22px;
+  --il-sombra: 0 18px 45px -20px rgba(42, 47, 99, 0.3);
+  --il-maxw: 1280px;
+
+  background: var(--il-bg);
+  color: var(--il-text-2);
+  font-family: var(--il-sans);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+.tpl-inmobiliaria-luxury *,
+.tpl-inmobiliaria-luxury *::before,
+.tpl-inmobiliaria-luxury *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+.tpl-inmobiliaria-luxury h1,
+.tpl-inmobiliaria-luxury h2,
+.tpl-inmobiliaria-luxury h3 {
+  font-family: var(--il-serif);
+  color: var(--il-text);
+  line-height: 1.2;
+  font-weight: 600;
+}
+
+.tpl-inmobiliaria-luxury img {
+  max-width: 100%;
+  display: block;
+}
+
+.tpl-inmobiliaria-luxury a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.tpl-inmobiliaria-luxury button {
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+  border: none;
+  background: none;
+}
+
+.tpl-inmobiliaria-luxury input,
+.tpl-inmobiliaria-luxury select {
+  font: inherit;
+}
+
+.tpl-inmobiliaria-luxury .il-wrap {
+  max-width: var(--il-maxw);
+  margin-inline: auto;
+  padding-inline: clamp(1rem, 3vw, 2rem);
+}
+
+.tpl-inmobiliaria-luxury .il-seccion {
+  padding-block: clamp(2.5rem, 6vw, 4.5rem);
+}
+
+.tpl-inmobiliaria-luxury .il-eyebrow {
+  font-family: var(--il-serif);
+  text-transform: uppercase;
+  letter-spacing: 0.22em;
+  font-size: 0.72rem;
+  color: var(--il-blue);
+}
+
+.tpl-inmobiliaria-luxury .il-titulo {
+  font-size: clamp(1.6rem, 3.6vw, 2.4rem);
+  margin: 0.4rem 0 0.6rem;
+}
+
+.tpl-inmobiliaria-luxury .il-sub {
+  color: var(--il-muted);
+  font-size: 0.95rem;
+  max-width: 58ch;
+  margin-bottom: 2rem;
+}
+
+.tpl-inmobiliaria-luxury .il-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.85rem 1.7rem;
+  font-weight: 700;
+  font-size: 0.86rem;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  border-radius: 999px;
+  transition: transform 0.15s ease, background 0.15s ease, color 0.15s ease;
+}
+
+.tpl-inmobiliaria-luxury .il-btn:hover {
+  transform: translateY(-2px);
+}
+
+.tpl-inmobiliaria-luxury .il-btn--navy {
+  background: var(--il-navy);
+  color: #fff;
+}
+
+.tpl-inmobiliaria-luxury .il-btn--outline {
+  border: 1px solid var(--il-border-med);
+  color: var(--il-navy);
+}
+
+.tpl-inmobiliaria-luxury .il-btn--outline:hover {
+  background: var(--il-subtle);
+}

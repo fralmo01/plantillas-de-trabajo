@@ -1,0 +1,98 @@
+<div class="tt-top-ticker">
+  <div class="tt-top-ticker__inner">
+    <span class="tt-top-ticker__texto">
+      <strong>30% OFF + ENVÍO GRATIS 🤑</strong>
+      <svg class="tt-top-ticker__chevron" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+        <path d="M6 9l6 6 6-6"></path>
+      </svg>
+    </span>
+  </div>
+</div>
+
+<div class="tt-utilidades-bar">
+  <div class="tt-contenedor tt-utilidades-bar__inner">
+    <a href="#tiendas" class="tt-util-link">buscador de tiendas</a>
+    <a href="#blog" class="tt-util-link">blog</a>
+    <a href="#ayuda" class="tt-util-link">ayuda</a>
+    <a href="#pedidos" class="tt-util-link">pedidos y devoluciones</a>
+    <a href="#giftcards" class="tt-util-link">gift cards</a>
+    <a href="#club" class="tt-util-link tt-enlace-club">únete al club</a>
+  </div>
+</div>
+
+<style>
+  
+  .tt-top-ticker {
+    width: 100%;
+    background: #000000;
+    color: #ffffff;
+    text-align: center;
+    padding-block: 6px;
+    font-size: 11px;
+    font-family: var(--tt-font-condensed);
+    letter-spacing: 0.05em;
+  }
+
+  .tt-top-ticker__inner {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .tt-top-ticker__texto {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    cursor: pointer;
+    color: #ffffff;
+  }
+
+  .tt-top-ticker__chevron {
+    transition: transform 0.2s ease;
+  }
+
+  .tt-top-ticker__texto:hover .tt-top-ticker__chevron {
+    transform: translateY(2px);
+  }
+
+  
+  .tt-utilidades-bar {
+    width: 100%;
+    background: #ffffff;
+    border-bottom: 1px solid var(--tt-gris-borde);
+    padding-block: 6px;
+  }
+
+  .tt-utilidades-bar__inner {
+    display: flex !important;
+    flex-direction: row !important;
+    justify-content: flex-end !important;
+    align-items: center !important;
+    gap: 18px !important;
+  }
+
+  .tt-util-link {
+    color: #767677 !important;
+    text-decoration: none !important;
+    font-family: var(--tt-font-texto) !important;
+    font-size: 11px !important;
+    font-weight: 400 !important;
+    display: inline-block !important;
+    white-space: nowrap !important;
+    transition: color 0.15s ease;
+  }
+
+  .tt-util-link:hover {
+    color: #000000 !important;
+  }
+
+  .tt-enlace-club {
+    font-weight: 600 !important;
+  }
+
+  @media (max-width: 768px) {
+    .tt-utilidades-bar {
+      display: none;
+    }
+  }
+</style>

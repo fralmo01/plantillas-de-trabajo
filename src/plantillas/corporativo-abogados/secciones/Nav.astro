@@ -1,0 +1,104 @@
+---
+import { firma, nav } from '../datos/firma.js';
+const anclas: Record<string, string> = {
+  Disciplinas: '#disciplinas', Filosofía: '#filosofia', 'La sociedad': '#sociedad',
+  Perspectivas: '#perspectivas', Contacto: '#contacto',
+};
+---
+
+<header class="ca-nav" id="nav">
+  <div class="ca-wrap ca-nav__inner">
+    <a href="#top" class="ca-nav__brand">{firma.nombre}</a>
+    <nav class="ca-nav__links" id="ca-links" aria-label="Navegación">
+      {nav.map((n: string) => <a href={anclas[n] ?? '#'}>{n}</a>)}
+    </nav>
+    <a href="#contacto" class="ca-btn ca-nav__cta">Consulta</a>
+    <button class="ca-nav__burger" id="ca-burger" type="button" aria-label="Abrir menú">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><line x1="3" y1="7" x2="21" y2="7" /><line x1="3" y1="12" x2="21" y2="12" /><line x1="3" y1="17" x2="21" y2="17" /></svg>
+    </button>
+  </div>
+</header>
+<span id="top"></span>
+
+<script>
+  const b = document.getElementById('ca-burger');
+  const l = document.getElementById('ca-links');
+  b?.addEventListener('click', () => l?.classList.toggle('is-open'));
+</script>
+
+<style>
+  .ca-nav {
+    position: sticky;
+    top: 0;
+    z-index: 60;
+    background: rgba(253, 252, 249, 0.9);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--ca-line-soft);
+  }
+
+  .ca-nav__inner {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    padding-block: 1.1rem;
+  }
+
+  .ca-nav__brand {
+    font-family: var(--ca-serif);
+    font-size: 1.25rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    flex-shrink: 0;
+  }
+
+  .ca-nav__links {
+    display: flex;
+    gap: 2rem;
+    margin-inline: auto;
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    font-weight: 600;
+  }
+
+  .ca-nav__links a:hover {
+    color: var(--ca-bronze);
+  }
+
+  .ca-nav__cta {
+    padding: 0.6rem 1.3rem;
+    font-size: 0.66rem;
+    flex-shrink: 0;
+  }
+
+  .ca-nav__burger {
+    display: none;
+  }
+
+  @media (max-width: 960px) {
+    .ca-nav__links {
+      display: none;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      flex-direction: column;
+      gap: 0;
+      background: var(--ca-parch);
+      border-bottom: 1px solid var(--ca-line);
+      padding: 1rem var(--ca-pad);
+    }
+    .ca-nav__links.is-open {
+      display: flex;
+    }
+    .ca-nav__links a {
+      padding-block: 0.6rem;
+    }
+    .ca-nav__cta {
+      display: none;
+    }
+    .ca-nav__burger {
+      display: inline-flex;
+    }
+  }
+</style>

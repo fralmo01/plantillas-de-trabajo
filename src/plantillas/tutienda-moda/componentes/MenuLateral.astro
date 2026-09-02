@@ -1,0 +1,155 @@
+---
+import { navItems, whatsapp } from '../datos/nav.js';
+
+const base = '/plantillas/tutienda-moda';
+const waHref = `https://wa.me/${whatsapp.numero}?text=${encodeURIComponent(whatsapp.mensaje)}`;
+---
+
+<div class="tm-drawer" id="tm-menu-lateral" hidden>
+  <div class="tm-drawer__overlay" data-cerrar></div>
+
+  <aside class="tm-drawer__panel" role="dialog" aria-modal="true" aria-label="Menú">
+    <div class="tm-drawer__cab">
+      <span class="tm-drawer__marca">tu tienda<b>.com</b></span>
+      <button class="tm-drawer__x" type="button" data-cerrar aria-label="Cerrar menú">✕</button>
+    </div>
+
+    <nav class="tm-drawer__nav" aria-label="Categorías">
+      <a href={`${base}/`} class="tm-drawer__link">Inicio</a>
+      {navItems.map((it) => (
+        <a href={it.href} class="tm-drawer__link">{it.etiqueta}</a>
+      ))}
+    </nav>
+
+    <div class="tm-drawer__sep"></div>
+
+    <nav class="tm-drawer__nav tm-drawer__nav--sec" aria-label="Ayuda">
+      <a href={waHref} target="_blank" rel="noopener" class="tm-drawer__link">Atención al cliente</a>
+      <a href={`${base}/buscar/?q=zapatos`} class="tm-drawer__link">Buscar productos</a>
+      <a href={`${base}/`} class="tm-drawer__link">Mis favoritos</a>
+    </nav>
+  </aside>
+</div>
+
+<script>
+  const drawer = document.getElementById('tm-menu-lateral');
+  const burger = document.getElementById('tm-burger');
+  if (drawer && burger) {
+    const abrir = () => {
+      drawer.hidden = false;
+      void drawer.offsetWidth; 
+      drawer.classList.add('is-abierto');
+      burger.setAttribute('aria-expanded', 'true');
+      document.body.style.overflow = 'hidden';
+    };
+    const cerrar = () => {
+      drawer.classList.remove('is-abierto');
+      burger.setAttribute('aria-expanded', 'false');
+      document.body.style.overflow = '';
+      setTimeout(() => {
+        drawer.hidden = true;
+      }, 250);
+    };
+    burger.addEventListener('click', () =>
+      drawer.classList.contains('is-abierto') ? cerrar() : abrir(),
+    );
+    drawer.querySelectorAll('[data-cerrar]').forEach((el) => el.addEventListener('click', cerrar));
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && drawer.classList.contains('is-abierto')) cerrar();
+    });
+  }
+</script>
+
+<style>
+  .tm-drawer {
+    position: fixed;
+    inset: 0;
+    z-index: 300;
+  }
+
+  .tm-drawer__overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.45);
+    opacity: 0;
+    transition: opacity 0.25s ease;
+  }
+
+  .tm-drawer.is-abierto .tm-drawer__overlay {
+    opacity: 1;
+  }
+
+  .tm-drawer__panel {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: min(320px, 84vw);
+    background: var(--tm-blanco);
+    box-shadow: 0 0 40px rgba(0, 0, 0, 0.28);
+    transform: translateX(-100%);
+    transition: transform 0.25s ease;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+  }
+
+  .tm-drawer.is-abierto .tm-drawer__panel {
+    transform: none;
+  }
+
+  .tm-drawer__cab {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem 1.1rem;
+    background: var(--tm-amarillo);
+  }
+
+  .tm-drawer__marca {
+    font-weight: 800;
+    text-transform: lowercase;
+    letter-spacing: -0.02em;
+  }
+
+  .tm-drawer__marca b {
+    opacity: 0.55;
+    font-weight: 800;
+  }
+
+  .tm-drawer__x {
+    background: none;
+    border: 0;
+    font-size: 1.1rem;
+    cursor: pointer;
+    line-height: 1;
+  }
+
+  .tm-drawer__nav {
+    display: flex;
+    flex-direction: column;
+    padding: 0.5rem 0;
+  }
+
+  .tm-drawer__link {
+    padding: 0.85rem 1.2rem;
+    font-size: 0.95rem;
+    font-weight: 700;
+    border-bottom: 1px solid var(--tm-gris-borde);
+  }
+
+  .tm-drawer__nav--sec .tm-drawer__link {
+    font-weight: 500;
+    font-size: 0.88rem;
+    color: var(--tm-gris-texto);
+  }
+
+  .tm-drawer__link:hover {
+    background: var(--tm-gris-tarjeta);
+  }
+
+  .tm-drawer__sep {
+    height: 8px;
+    background: var(--tm-gris-tarjeta);
+  }
+</style>

@@ -1,0 +1,62 @@
+---
+interface Props {
+  titulo: string;
+  subtitulo?: string;
+  total: number;
+}
+
+const { titulo, subtitulo, total } = Astro.props;
+---
+
+<header class="cab">
+  <div class="cab__inner">
+    <div>
+      <h1 class="cab__titulo">{titulo}</h1>
+      {subtitulo && <p class="cab__sub">{subtitulo}</p>}
+    </div>
+    <span class="cab__contador">{total} {total === 1 ? 'plantilla' : 'plantillas'}</span>
+  </div>
+</header>
+
+<style>
+  .cab {
+    border-bottom: 1px solid var(--portal-border);
+    background: linear-gradient(
+      180deg,
+      var(--portal-surface) 0%,
+      var(--portal-bg) 100%
+    );
+  }
+
+  .cab__inner {
+    max-width: var(--portal-maxw);
+    margin-inline: auto;
+    padding: clamp(1.5rem, 4vw, 3rem) var(--portal-gap);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    align-items: flex-end;
+    justify-content: space-between;
+  }
+
+  .cab__titulo {
+    margin: 0;
+    font-size: clamp(1.6rem, 4vw, 2.6rem);
+    line-height: 1.1;
+  }
+
+  .cab__sub {
+    margin: 0.5rem 0 0;
+    color: var(--portal-text-dim);
+    max-width: 52ch;
+  }
+
+  .cab__contador {
+    font-size: 0.8rem;
+    color: var(--portal-text-dim);
+    border: 1px solid var(--portal-border);
+    border-radius: 999px;
+    padding: 0.3rem 0.75rem;
+    white-space: nowrap;
+  }
+</style>

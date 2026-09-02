@@ -1,0 +1,58 @@
+---
+/**
+ * Filtros por categoria. Las categorias se calculan solas a partir
+ * de las fichas: nunca hay que mantener una lista aparte.
+ *
+ * El filtrado es un <script> chico que solo togglea `hidden` en las
+ * tarjetas segun `data-categoria`. HTML plano + un pelin de JS.
+ */
+interface Props {
+  categorias: string[];
+}
+
+const { categorias } = Astro.props;
+const opciones = ['todas', ...categorias];
+---
+
+<nav class="filtros" aria-label="Filtrar plantillas por categoria">
+  <span class="filtros__label">Categoria</span>
+  {
+    opciones.map((cat) => (
+      <button
+        type="button"
+        class="filtro-btn"
+        data-filtro={cat}
+        aria-pressed={cat === 'todas' ? 'true' : 'false'}
+      >
+        {cat === 'todas' ? 'Todas' : cat}
+      </button>
+    ))
+  }
+</nav>
+
+<script>
+  const botones = document.querySelectorAll<HTMLButtonElement>('.filtro-btn');
+  const tarjetas = document.querySelectorAll<HTMLElement>('[data-categoria]');
+
+  function aplicar(filtro: string) {
+    for (const tarjeta of tarjetas) {
+      const cat = tarjeta.dataset.categoria ?? '';
+      tarjeta.hidden = filtro !== 'todas' && cat !== filtro;
+    }
+    for (const btn of botones) {
+      btn.setAttribute(
+        'aria-pressed',
+        String(btn.dataset.filtro === filtro),
+      );
+    }
+    const vacio = document.querySelector<HTMLElement>('[data-catalogo-vacio]');
+    if (vacio) {
+      const visibles = [...tarjetas].some((t) => !t.hidden);
+      vacio.hidden = visibles;
+    }
+  }
+
+  for (const btn of botones) {
+    btn.addEventListener('click', () => aplicar(btn.dataset.filtro ?? 'todas'));
+  }
+</script>

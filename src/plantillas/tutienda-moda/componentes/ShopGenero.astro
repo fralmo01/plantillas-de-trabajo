@@ -1,0 +1,115 @@
+---
+import type { OfertaShop } from '../datos/tipos.ts';
+
+interface Props {
+  genero: string;
+  href?: string;
+  ofertas?: OfertaShop[];
+}
+
+const {
+  genero,
+  href = '/plantillas/tutienda-moda/colecciones/',
+  ofertas = [],
+} = Astro.props as Props;
+---
+
+<section class="tm-seccion">
+  <div class="tm-contenedor">
+    <h2 class="tm-titulo-seccion">Shop {genero}</h2>
+    <div class="tm-shop">
+      {
+        ofertas.map((o: OfertaShop, i: number) => (
+          <a href={href} class="tm-shop__card">
+            <img src={`https://picsum.photos/seed/tm-shop-${genero}-${i}/520/440`} alt={o.titulo} loading="lazy" />
+            <span class="tm-shop__ribbon">¡Liquidación!</span>
+            <div class="tm-shop__info">
+              <p class="tm-shop__titulo">{o.titulo}</p>
+              {o.sub && <p class="tm-shop__sub">{o.sub}</p>}
+              <p class="tm-shop__precio">{o.precio}</p>
+              <span class="tm-btn tm-btn--negro">{o.cta ?? 'Comprar »'}</span>
+            </div>
+          </a>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<style>
+  .tm-shop {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+  }
+
+  .tm-shop__card {
+    position: relative;
+    display: flex;
+    align-items: center;
+    min-height: 230px;
+    padding: 1.25rem;
+    border-radius: var(--tm-radio);
+    overflow: hidden;
+    background: linear-gradient(90deg, #f7e7bd, #fdf7e8);
+  }
+
+  .tm-shop__card img {
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 46%;
+    object-fit: cover;
+    object-position: center;
+  }
+
+  .tm-shop__ribbon {
+    position: absolute;
+    top: 14px;
+    right: -34px;
+    transform: rotate(35deg);
+    background: var(--tm-rojo);
+    color: #fff;
+    font-size: 0.66rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    padding: 0.25rem 2.4rem;
+  }
+
+  .tm-shop__info {
+    margin-left: 46%;
+    padding-left: 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.25rem;
+  }
+
+  .tm-shop__titulo {
+    font-weight: 800;
+    text-transform: uppercase;
+    font-size: 0.9rem;
+    font-style: italic;
+  }
+
+  .tm-shop__sub {
+    font-size: 0.72rem;
+    color: var(--tm-gris-texto);
+    text-decoration: line-through;
+  }
+
+  .tm-shop__precio {
+    font-size: clamp(1.8rem, 4vw, 2.8rem);
+    font-weight: 900;
+    color: var(--tm-rojo);
+    line-height: 1;
+    margin: 0.2rem 0 0.5rem;
+  }
+
+  @media (max-width: 900px) {
+    .tm-shop {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

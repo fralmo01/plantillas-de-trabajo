@@ -1,0 +1,47 @@
+---
+/**
+ * Una ruta dinamica genera la pagina completa de CADA plantilla en build:
+ *   /plantillas/tienda-deportiva/index.html
+ *   /plantillas/tutienda-moda/index.html
+ *   ...
+ *
+ * `getStaticPaths` recorre la coleccion `plantillas` (autogenerada), asi
+ * que agregar una carpeta con su ficha.json crea su pagina sola. No hay
+ * que escribir un .astro por plantilla ni tocar este archivo.
+ *
+ * El componente de entrada de cada plantilla se resuelve con
+ * `import.meta.glob`: cada `src/plantillas/<id>/Plantilla.astro`.
+ */
+import type { GetStaticPaths } from 'astro';
+import { getCollection } from 'astro:content';
+import PlantillaLayout from '@layouts/PlantillaLayout.astro';
+
+const entradasPlantilla = import.meta.glob('../../plantillas/*/Plantilla.astro');
+
+export const getStaticPaths = (async () => {
+  const plantillas = await getCollection('plantillas');
+  return plantillas.map((p) => ({
+    params: { id: p.id },
+    props: { id: p.id, ficha: p.data },
+  }));
+}) satisfies GetStaticPaths;
+
+const { id, ficha } = Astro.props;
+
+const clave = `../../plantillas/${id}/Plantilla.astro`;
+const cargar = entradasPlantilla[clave];
+
+if (!cargar) {
+  throw new Error(
+    `La plantilla "${id}" tiene ficha.json pero le falta src/plantillas/${id}/Plantilla.astro`,
+  );
+}
+
+const { default: Plantilla } = (await cargar()) as {
+  default: (props: Record<string, unknown>) => unknown;
+};
+---
+
+<PlantillaLayout titulo={ficha.titulo} descripcion={ficha.descripcion}>
+  <Plantilla />
+</PlantillaLayout>
