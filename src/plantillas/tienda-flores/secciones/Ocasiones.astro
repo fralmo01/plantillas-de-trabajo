@@ -1,0 +1,64 @@
+---
+import { ocasiones } from '../datos/flores.js';
+---
+
+<section class="tf-seccion tf-wrap" id="ocasiones">
+  <h2 class="tf-titulo">Tenemos arreglos para todas las ocasiones</h2>
+  <ul class="tf-ocas">
+    {ocasiones.map((o: { t: string; img: string }) => (
+      <li>
+        <a href="#destacados" class="tf-ocas__item">
+          <span class="tf-ocas__foto"><img src={o.img} alt={o.t} loading="lazy" /></span>
+          <span class="tf-ocas__lbl">{o.t}</span>
+        </a>
+      </li>
+    ))}
+  </ul>
+</section>
+
+<style>
+  .tf-ocas {
+    list-style: none;
+    display: flex;
+    gap: 1.25rem;
+    overflow-x: auto;
+    padding-bottom: 0.5rem;
+    scrollbar-width: thin;
+  }
+
+  .tf-ocas__item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.6rem;
+    width: 120px;
+  }
+
+  .tf-ocas__foto {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    overflow: hidden;
+    background: var(--tf-rosa);
+    display: block;
+  }
+
+  .tf-ocas__foto img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.2s ease;
+  }
+
+  .tf-ocas__item:hover .tf-ocas__foto img {
+    transform: scale(1.08);
+  }
+
+  .tf-ocas__lbl {
+    font-family: var(--tf-serif);
+    font-style: italic;
+    color: var(--tf-rojo);
+    font-size: 1rem;
+    text-align: center;
+  }
+</style>

@@ -1,0 +1,87 @@
+---
+import { marca } from '../datos/flores.js';
+---
+
+<section class="tf-seccion tf-wrap">
+  <div class="tf-news">
+    <div class="tf-news__tx">
+      <h2>Suscribete a {marca.nombre}</h2>
+      <p>Recibe lanzamientos, descuentos y recordatorios para las fechas mas importantes del ano.</p>
+    </div>
+    <form class="tf-news__form" id="tf-news-form">
+      <input type="email" required placeholder="Ingresar email" aria-label="Correo electronico" />
+      <button type="submit" class="tf-btn tf-btn--claro">Suscribirse</button>
+    </form>
+    <p class="tf-news__ok" id="tf-news-ok" hidden>Listo, te avisaremos de cada novedad.</p>
+  </div>
+</section>
+
+<script>
+  const f = document.getElementById('tf-news-form');
+  const ok = document.getElementById('tf-news-ok');
+  f?.addEventListener('submit', (e) => {
+    e.preventDefault();
+    (f as HTMLFormElement).reset();
+    if (ok) ok.hidden = false;
+  });
+</script>
+
+<style>
+  .tf-news {
+    background: var(--tf-coral);
+    color: #fff;
+    border-radius: 18px;
+    padding: clamp(1.5rem, 4vw, 2.5rem);
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 1.25rem 2rem;
+  }
+
+  .tf-news__tx {
+    flex: 1;
+    min-width: 240px;
+  }
+
+  .tf-news__tx h2 {
+    color: #fff;
+    font-family: var(--tf-serif);
+    font-size: 1.6rem;
+  }
+
+  .tf-news__tx p {
+    font-size: 0.85rem;
+    opacity: 0.95;
+    margin-top: 0.35rem;
+  }
+
+  .tf-news__form {
+    display: flex;
+    gap: 0.6rem;
+    flex: 1;
+    min-width: 260px;
+  }
+
+  .tf-news__form input {
+    flex: 1;
+    border: none;
+    border-radius: var(--tf-pill);
+    padding: 0.75rem 1.1rem;
+    font-size: 0.85rem;
+  }
+
+  .tf-news__ok {
+    flex-basis: 100%;
+    font-size: 0.82rem;
+    font-weight: 600;
+  }
+
+  @media (max-width: 620px) {
+    .tf-news__form {
+      flex-wrap: wrap;
+    }
+    .tf-news__form .tf-btn {
+      width: 100%;
+    }
+  }
+</style>

@@ -1,0 +1,245 @@
+@import url("https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;1,500;1,600&family=Poppins:wght@400;500;600;700;800&display=swap");
+
+.tpl-tienda-flores {
+  --tf-rojo: #e50f2b;
+  --tf-rojo-osc: #c00b22;
+  --tf-coral: #f0544c;
+  --tf-rosa: #f7bcd0;
+  --tf-rosa-med: #fbdbe6;
+  --tf-rosa-claro: #fdeef2;
+  --tf-rosa-palido: #fff6f8;
+  --tf-verde: #6f8f5f;
+  --tf-tinta: #2b2b2b;
+  --tf-gris: #6f6f6f;
+  --tf-linea: #f0dde3;
+
+  --tf-font: "Poppins", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+  --tf-serif: "Playfair Display", Georgia, "Times New Roman", serif;
+  --tf-maxw: 1240px;
+  --tf-pill: 999px;
+
+  background: #fff;
+  color: var(--tf-tinta);
+  font-family: var(--tf-font);
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+.tpl-tienda-flores *,
+.tpl-tienda-flores *::before,
+.tpl-tienda-flores *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+.tpl-tienda-flores h1,
+.tpl-tienda-flores h2,
+.tpl-tienda-flores h3,
+.tpl-tienda-flores h4 {
+  line-height: 1.2;
+  color: var(--tf-tinta);
+  font-weight: 700;
+}
+
+.tpl-tienda-flores img {
+  max-width: 100%;
+  display: block;
+}
+
+.tpl-tienda-flores a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.tpl-tienda-flores button {
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+  border: none;
+  background: none;
+}
+
+.tpl-tienda-flores input {
+  font: inherit;
+}
+
+.tpl-tienda-flores .tf-wrap {
+  max-width: var(--tf-maxw);
+  margin-inline: auto;
+  padding-inline: clamp(1rem, 3vw, 2rem);
+}
+
+.tpl-tienda-flores .tf-seccion {
+  padding-block: clamp(2.25rem, 5vw, 3.5rem);
+}
+
+.tpl-tienda-flores .tf-titulo {
+  text-align: center;
+  font-size: clamp(1.35rem, 3.4vw, 2rem);
+  font-weight: 700;
+  color: var(--tf-tinta);
+  margin-bottom: 1.75rem;
+}
+
+.tpl-tienda-flores .tf-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.7rem 1.5rem;
+  font-weight: 600;
+  font-size: 0.82rem;
+  border-radius: var(--tf-pill);
+  transition: background 0.15s ease, color 0.15s ease, transform 0.15s ease;
+}
+
+.tpl-tienda-flores .tf-btn:hover {
+  transform: translateY(-2px);
+}
+
+.tpl-tienda-flores .tf-btn--rojo {
+  background: var(--tf-rojo);
+  color: #fff;
+}
+
+.tpl-tienda-flores .tf-btn--rojo:hover {
+  background: var(--tf-rojo-osc);
+}
+
+.tpl-tienda-flores .tf-btn--outline {
+  border: 1.5px solid var(--tf-rojo);
+  color: var(--tf-rojo);
+  background: #fff;
+}
+
+.tpl-tienda-flores .tf-btn--outline:hover {
+  background: var(--tf-rojo);
+  color: #fff;
+}
+
+.tpl-tienda-flores .tf-btn--claro {
+  background: #fff;
+  color: var(--tf-tinta);
+}
+
+.tpl-tienda-flores .tf-fila {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(240px, 1fr);
+  gap: 1.15rem;
+  overflow-x: auto;
+  scroll-snap-type: x proximity;
+  padding-bottom: 0.5rem;
+  scrollbar-width: thin;
+}
+
+.tpl-tienda-flores .tf-fila > * {
+  scroll-snap-align: start;
+}
+
+@media (min-width: 1000px) {
+  .tpl-tienda-flores .tf-fila--4 {
+    grid-template-columns: repeat(4, 1fr);
+    grid-auto-flow: row;
+    overflow: visible;
+  }
+}
+
+.tpl-tienda-flores .tf-flecha {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  color: var(--tf-rojo);
+  font-size: 1.5rem;
+  line-height: 1;
+  background: #fff;
+  box-shadow: 0 6px 18px -8px rgba(0, 0, 0, 0.3);
+  flex-shrink: 0;
+}
+
+.tpl-tienda-flores .tf-flecha:hover {
+  background: var(--tf-rojo);
+  color: #fff;
+}
+
+.tpl-tienda-flores .tf-chat__msg {
+  max-width: 82%;
+  padding: 0.6rem 0.85rem;
+  border-radius: 12px;
+  font-size: 0.82rem;
+  line-height: 1.45;
+}
+
+.tpl-tienda-flores .tf-chat__msg--bot {
+  background: var(--tf-rosa-med);
+  color: var(--tf-tinta);
+  align-self: flex-start;
+  border-bottom-left-radius: 3px;
+}
+
+.tpl-tienda-flores .tf-chat__msg--yo {
+  background: var(--tf-rojo);
+  color: #fff;
+  align-self: flex-end;
+  border-bottom-right-radius: 3px;
+}
+
+.tpl-tienda-flores .tf-carr {
+  display: grid;
+  grid-template-columns: 260px 1fr;
+  gap: 1.25rem;
+  align-items: stretch;
+}
+
+.tpl-tienda-flores .tf-carr__banner {
+  border-radius: 18px;
+  padding: 1.75rem;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 0.5rem;
+  color: #fff;
+}
+
+.tpl-tienda-flores .tf-carr__banner span {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+}
+
+.tpl-tienda-flores .tf-carr__banner h2 {
+  color: #fff;
+  font-family: var(--tf-serif);
+  font-size: 2.3rem;
+  margin-bottom: 0.5rem;
+}
+
+.tpl-tienda-flores .tf-carr__area {
+  position: relative;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.tpl-tienda-flores .tf-carr__row {
+  grid-auto-columns: minmax(220px, 1fr);
+}
+
+@media (max-width: 820px) {
+  .tpl-tienda-flores .tf-carr {
+    grid-template-columns: 1fr;
+  }
+  .tpl-tienda-flores .tf-carr__banner {
+    padding: 1.25rem 1.5rem;
+  }
+  .tpl-tienda-flores .tf-carr__banner h2 {
+    font-size: 1.8rem;
+    margin-bottom: 0.25rem;
+  }
+}

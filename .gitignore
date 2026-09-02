@@ -1,6 +1,7 @@
 # build
 dist/
 .output/
+.claude/
 
 # deps
 node_modules/

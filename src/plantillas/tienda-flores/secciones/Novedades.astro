@@ -1,0 +1,42 @@
+---
+import { novedades } from '../datos/flores.js';
+import TarjetaProducto from '../componentes/TarjetaProducto.astro';
+---
+
+<section class="tf-seccion tf-wrap" id="novedades">
+  <div class="tf-carr">
+    <aside class="tf-carr__banner tf-carr__banner--nov">
+      <span>Recien llegado</span>
+      <h2>Novedades</h2>
+      <a href="#destacados" class="tf-btn tf-btn--claro">Ver todo</a>
+    </aside>
+
+    <div class="tf-carr__area">
+      <button type="button" class="tf-flecha tf-carr__prev" data-dir="-1" aria-label="Anterior">&lsaquo;</button>
+      <div class="tf-fila tf-carr__row" id="tf-nov-row">
+        {novedades.map((p: { nombre: string; precio: number; antes?: number; tag?: string; img: string }) => (
+          <TarjetaProducto producto={p} />
+        ))}
+      </div>
+      <button type="button" class="tf-flecha tf-carr__next" data-dir="1" aria-label="Siguiente">&rsaquo;</button>
+    </div>
+  </div>
+</section>
+
+<script>
+  document.querySelectorAll<HTMLElement>('.tf-carr__area').forEach((area) => {
+    const row = area.querySelector<HTMLElement>('.tf-carr__row');
+    area.querySelectorAll<HTMLButtonElement>('[data-dir]').forEach((b) => {
+      b.addEventListener('click', () => {
+        const dir = Number(b.dataset.dir || '1');
+        row?.scrollBy({ left: dir * 320, behavior: 'smooth' });
+      });
+    });
+  });
+</script>
+
+<style>
+  .tf-carr__banner--nov {
+    background: linear-gradient(160deg, var(--tf-rosa) 0%, var(--tf-coral) 100%);
+  }
+</style>

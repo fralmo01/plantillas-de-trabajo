@@ -1,0 +1,201 @@
+---
+import { marca } from '../datos/flores.js';
+---
+
+<div class="tf-chat" id="tf-chat">
+  <button type="button" class="tf-chat__toggle" id="tf-chat-toggle" aria-label="Abrir chat de ayuda" aria-expanded="false">
+    <svg class="tf-chat__i-open" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <path d="M21 15a4 4 0 0 1-4 4H8l-5 3V6a4 4 0 0 1 4-4h10a4 4 0 0 1 4 4z"></path>
+    </svg>
+    <span class="tf-chat__i-close" aria-hidden="true">&times;</span>
+  </button>
+
+  <section class="tf-chat__panel" id="tf-chat-panel" hidden aria-label="Chat de ayuda">
+    <header class="tf-chat__head">
+      <span class="tf-chat__ava" aria-hidden="true">&#127804;</span>
+      <div>
+        <b>Asistente {marca.nombre}</b>
+        <small>En linea</small>
+      </div>
+    </header>
+
+    <div class="tf-chat__body" id="tf-chat-body">
+      <p class="tf-chat__msg tf-chat__msg--bot">Hola. Quieres mas informacion sobre algun arreglo o regalo?</p>
+      <p class="tf-chat__msg tf-chat__msg--bot">Cuentame para quien es y para que ocasion, y te ayudo a elegir.</p>
+    </div>
+
+    <form class="tf-chat__form" id="tf-chat-form">
+      <input type="text" id="tf-chat-input" placeholder="Escribe aqui..." aria-label="Mensaje" autocomplete="off" />
+      <button type="submit" aria-label="Enviar">&#10148;</button>
+    </form>
+    <p class="tf-chat__pow">Demo &mdash; respuestas automaticas</p>
+  </section>
+</div>
+
+<script>
+  import { chatCanned } from '../datos/flores.js';
+
+  const toggle = document.getElementById('tf-chat-toggle');
+  const panel = document.getElementById('tf-chat-panel');
+  const body = document.getElementById('tf-chat-body');
+  const form = document.getElementById('tf-chat-form');
+  const input = document.getElementById('tf-chat-input') as HTMLInputElement | null;
+  let paso = 0;
+
+  function abrir(v: boolean) {
+    if (!panel || !toggle) return;
+    panel.hidden = !v;
+    toggle.classList.toggle('is-open', v);
+    toggle.setAttribute('aria-expanded', String(v));
+    if (v) input?.focus();
+  }
+
+  toggle?.addEventListener('click', () => abrir(panel?.hidden ?? true));
+
+  function push(texto: string, quien: 'bot' | 'yo') {
+    if (!body) return;
+    const p = document.createElement('p');
+    p.className = `tf-chat__msg tf-chat__msg--${quien}`;
+    p.textContent = texto;
+    body.appendChild(p);
+    body.scrollTop = body.scrollHeight;
+  }
+
+  form?.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const txt = (input?.value || '').trim();
+    if (!txt) return;
+    push(txt, 'yo');
+    if (input) input.value = '';
+    const reply = chatCanned[Math.min(paso, chatCanned.length - 1)];
+    paso++;
+    window.setTimeout(() => push(reply, 'bot'), 650);
+  });
+</script>
+
+<style>
+  .tf-chat {
+    position: fixed;
+    right: clamp(1rem, 3vw, 2rem);
+    bottom: clamp(1rem, 3vw, 2rem);
+    z-index: 120;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 0.75rem;
+  }
+
+  .tf-chat__toggle {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background: var(--tf-rojo);
+    color: #fff;
+    display: grid;
+    place-items: center;
+    box-shadow: 0 12px 30px -10px rgba(229, 15, 43, 0.6);
+    order: 2;
+  }
+
+  .tf-chat__i-close {
+    display: none;
+    font-size: 1.7rem;
+    line-height: 1;
+  }
+
+  .tf-chat__toggle.is-open .tf-chat__i-open { display: none; }
+  .tf-chat__toggle.is-open .tf-chat__i-close { display: block; }
+
+  .tf-chat__panel[hidden] {
+    display: none;
+  }
+
+  .tf-chat__panel {
+    width: min(340px, 88vw);
+    background: #fff;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 24px 60px -16px rgba(0, 0, 0, 0.35);
+    display: flex;
+    flex-direction: column;
+    order: 1;
+  }
+
+  .tf-chat__head {
+    background: var(--tf-rojo);
+    color: #fff;
+    padding: 0.9rem 1.1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+  }
+
+  .tf-chat__ava {
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.2);
+    display: grid;
+    place-items: center;
+    font-size: 1.1rem;
+  }
+
+  .tf-chat__head b {
+    color: #fff;
+    font-size: 0.9rem;
+    display: block;
+  }
+
+  .tf-chat__head small {
+    font-size: 0.7rem;
+    opacity: 0.85;
+  }
+
+  .tf-chat__body {
+    background: var(--tf-rosa-palido);
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    max-height: 320px;
+    min-height: 180px;
+    overflow-y: auto;
+  }
+
+  .tf-chat__form {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.6rem;
+    border-top: 1px solid var(--tf-linea);
+  }
+
+  .tf-chat__form input {
+    flex: 1;
+    border: 1px solid var(--tf-linea);
+    border-radius: var(--tf-pill);
+    padding: 0.55rem 0.9rem;
+    font-size: 0.82rem;
+    outline: none;
+  }
+
+  .tf-chat__form input:focus {
+    border-color: var(--tf-rojo);
+  }
+
+  .tf-chat__form button {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: var(--tf-rojo);
+    color: #fff;
+    flex-shrink: 0;
+  }
+
+  .tf-chat__pow {
+    text-align: center;
+    font-size: 0.62rem;
+    color: var(--tf-gris);
+    padding: 0 0 0.6rem;
+  }
+</style>

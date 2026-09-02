@@ -1,0 +1,98 @@
+---
+import { topLinks } from '../datos/flores.js';
+---
+
+<div class="tf-top">
+  <div class="tf-wrap tf-top__inner">
+    <div class="tf-top__redes" aria-label="Redes sociales">
+      <a href="#" aria-label="Facebook">f</a>
+      <a href="#" aria-label="Instagram">&#9678;</a>
+      <a href="#" aria-label="TikTok">&#9835;</a>
+    </div>
+
+    <nav class="tf-top__links" aria-label="Accesos rapidos">
+      {topLinks.map((l: string) => <a href="#">{l}</a>)}
+    </nav>
+
+    <div class="tf-top__pref">
+      <button type="button" class="tf-top__chip">
+        <span aria-hidden="true">&#128205;</span> Enviar a: <b>Lima</b>
+      </button>
+      <span class="tf-top__moneda">S/ PEN</span>
+    </div>
+  </div>
+</div>
+
+<style>
+  .tf-top {
+    background: var(--tf-rosa-claro);
+    color: var(--tf-tinta);
+    font-size: 0.74rem;
+    border-bottom: 1px solid var(--tf-linea);
+  }
+
+  .tf-top__inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding-block: 0.4rem;
+  }
+
+  .tf-top__redes {
+    display: flex;
+    gap: 0.4rem;
+  }
+
+  .tf-top__redes a {
+    width: 22px;
+    height: 22px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    color: var(--tf-rojo);
+    font-weight: 700;
+  }
+
+  .tf-top__redes a:hover {
+    background: var(--tf-rojo);
+    color: #fff;
+  }
+
+  .tf-top__links {
+    display: flex;
+    gap: 1.5rem;
+  }
+
+  .tf-top__links a:hover {
+    color: var(--tf-rojo);
+  }
+
+  .tf-top__pref {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .tf-top__chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    font-size: 0.74rem;
+  }
+
+  .tf-top__chip b {
+    color: var(--tf-rojo);
+  }
+
+  .tf-top__moneda {
+    font-weight: 600;
+  }
+
+  @media (max-width: 860px) {
+    .tf-top__links {
+      display: none;
+    }
+  }
+</style>

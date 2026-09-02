@@ -1,0 +1,51 @@
+---
+import { destacados } from '../datos/flores.js';
+import TarjetaProducto from '../componentes/TarjetaProducto.astro';
+---
+
+<section class="tf-seccion tf-wrap" id="destacados">
+  <h2 class="tf-titulo">Productos destacados</h2>
+  <p class="tf-dest__nota" id="tf-destacados-nota" hidden></p>
+  <div class="tf-dest__grid" id="tf-destacados-grid">
+    {destacados.map((p: { nombre: string; precio: number; antes?: number; tag?: string; img: string }) => (
+      <TarjetaProducto producto={p} />
+    ))}
+  </div>
+  <div class="tf-dest__ver">
+    <a href="#categorias" class="tf-btn tf-btn--rojo">Ver el catalogo completo</a>
+  </div>
+</section>
+
+<style>
+  .tf-dest__nota {
+    text-align: center;
+    color: var(--tf-rojo);
+    font-weight: 600;
+    font-size: 0.85rem;
+    margin-bottom: 1rem;
+  }
+
+  .tf-dest__grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.25rem;
+  }
+
+  .tf-dest__ver {
+    display: flex;
+    justify-content: center;
+    margin-top: 2rem;
+  }
+
+  @media (max-width: 960px) {
+    .tf-dest__grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 480px) {
+    .tf-dest__grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

@@ -1,0 +1,473 @@
+---
+import { marca, navPrincipal, megaMenu } from '../datos/flores.js';
+---
+
+<header class="tf-hdr" id="top">
+  <div class="tf-wrap tf-hdr__row">
+    <a href="#top" class="tf-logo" aria-label={`${marca.nombre} ${marca.sub}`}>
+      <span class="tf-logo__ico" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="currentColor">
+          <path d="M12 2c1.7 1.6 2 3.4 1.2 5.2C15 6.4 16.8 6.7 18.4 8.4c-1.6 1.7-3.4 2-5.2 1.2 2 1.5 2.3 3.3.6 5-1.6-1.6-2-3.4-1.2-5.2C11 11 9.2 10.7 7.6 9c1.6-1.7 3.4-2 5.2-1.2C10.7 6.3 10.4 4.5 12 2Z"></path>
+          <path d="M11.2 12.5h1.6V22h-1.6z"></path>
+        </svg>
+      </span>
+      <span class="tf-logo__tx">{marca.nombre}<b>{marca.sub}</b></span>
+    </a>
+
+    <form class="tf-buscar" id="tf-buscar" role="search">
+      <input type="search" id="tf-buscar-input" placeholder="Buscar flores, cajas, peluches..." aria-label="Buscar productos" />
+      <button type="submit" aria-label="Buscar">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+          <circle cx="11" cy="11" r="7"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+        </svg>
+      </button>
+    </form>
+
+    <div class="tf-hdr__acc">
+      <a href="#garantias" class="tf-hdr__ico" aria-label="Rastrea tu pedido">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M3 7h13v10H3zM16 10h4l1 3v4h-5"></path><circle cx="7" cy="18" r="1.6"></circle><circle cx="17.5" cy="18" r="1.6"></circle>
+        </svg>
+      </a>
+      <button type="button" class="tf-hdr__ico tf-hdr__cart" id="tf-cart" aria-label="Ver carrito">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M6 6h15l-1.5 9h-12z"></path><path d="M6 6 5 3H2"></path><circle cx="9" cy="20" r="1.6"></circle><circle cx="18" cy="20" r="1.6"></circle>
+        </svg>
+        <span class="tf-hdr__badge" id="tf-cart-count" hidden>0</span>
+      </button>
+    </div>
+  </div>
+
+  <nav class="tf-nav" aria-label="Navegacion principal">
+    <div class="tf-wrap tf-nav__row">
+      <button type="button" class="tf-nav__menu" id="tf-menu-btn" aria-expanded="false" aria-controls="tf-mega">
+        <span class="tf-nav__burger" aria-hidden="true"><i></i><i></i><i></i></span> Menu
+      </button>
+
+      <ul class="tf-nav__links">
+        {navPrincipal.map((n: { t: string; href: string }) => (
+          <li><a href={n.href}>{n.t}</a></li>
+        ))}
+      </ul>
+
+      <a href="#novedades" class="tf-nav__promo">Promociones</a>
+    </div>
+
+    <div class="tf-mega" id="tf-mega" hidden>
+      <div class="tf-wrap tf-mega__grid">
+        <ul class="tf-mega__cats">
+          {megaMenu.map((m: { cat: string; sub: string[] }, i: number) => (
+            <li>
+              <button type="button" class={`tf-mega__cat${i === 0 ? ' is-on' : ''}`} data-cat={m.cat}>
+                {m.cat} <span aria-hidden="true">&rsaquo;</span>
+              </button>
+            </li>
+          ))}
+        </ul>
+        <div class="tf-mega__panel">
+          {megaMenu.map((m: { cat: string; sub: string[] }, i: number) => (
+            <ul class="tf-mega__sub" data-for={m.cat} hidden={i !== 0}>
+              {m.sub.map((s: string) => <li><a href="#novedades">{s}</a></li>)}
+            </ul>
+          ))}
+        </div>
+      </div>
+    </div>
+  </nav>
+</header>
+
+<script>
+  const btn = document.getElementById('tf-menu-btn');
+  const mega = document.getElementById('tf-mega');
+  const cats = Array.from(document.querySelectorAll<HTMLButtonElement>('.tf-mega__cat'));
+  const subs = Array.from(document.querySelectorAll<HTMLElement>('.tf-mega__sub'));
+
+  function abrir(v: boolean) {
+    if (!mega || !btn) return;
+    mega.hidden = !v;
+    btn.classList.toggle('is-active', v);
+    btn.setAttribute('aria-expanded', String(v));
+  }
+
+  btn?.addEventListener('click', (e) => {
+    e.stopPropagation();
+    abrir(mega?.hidden ?? true);
+  });
+
+  cats.forEach((c) => {
+    const activar = () => {
+      cats.forEach((x) => x.classList.toggle('is-on', x === c));
+      subs.forEach((s) => (s.hidden = s.dataset.for !== c.dataset.cat));
+    };
+    c.addEventListener('mouseenter', activar);
+    c.addEventListener('click', activar);
+  });
+
+  document.addEventListener('click', (e) => {
+    const t = e.target as Node;
+    if (mega && btn && !mega.contains(t) && !btn.contains(t)) abrir(false);
+  });
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') abrir(false);
+  });
+  mega?.querySelectorAll('a').forEach((a) => a.addEventListener('click', () => abrir(false)));
+
+  const form = document.getElementById('tf-buscar');
+  const input = document.getElementById('tf-buscar-input') as HTMLInputElement | null;
+  form?.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const q = (input?.value || '').trim().toLowerCase();
+    const grid = document.getElementById('tf-destacados-grid');
+    const nota = document.getElementById('tf-destacados-nota');
+    if (!grid) return;
+    let visibles = 0;
+    grid.querySelectorAll<HTMLElement>('.tf-prod').forEach((card) => {
+      const hit = !q || (card.dataset.nombre || '').includes(q);
+      card.hidden = !hit;
+      if (hit) visibles++;
+    });
+    if (nota) {
+      nota.hidden = !q;
+      nota.textContent = q ? `${visibles} resultado(s) para "${q}"` : '';
+    }
+    document.getElementById('destacados')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+
+  const badge = document.getElementById('tf-cart-count');
+  let total = 0;
+
+  document.addEventListener('click', (e) => {
+    const el = e.target as HTMLElement;
+
+    const step = el.closest<HTMLButtonElement>('.tf-qty__b');
+    if (step) {
+      const cont = step.closest('.tf-prod__qty');
+      const n = cont?.querySelector<HTMLElement>('.tf-qty__n');
+      if (n) {
+        const val = Math.max(1, (parseInt(n.textContent || '1', 10) || 1) + Number(step.dataset.step));
+        n.textContent = String(val);
+      }
+      return;
+    }
+
+    const add = el.closest<HTMLButtonElement>('.tf-prod__add');
+    if (add) {
+      const card = add.closest('.tf-prod');
+      const n = card?.querySelector<HTMLElement>('.tf-qty__n');
+      total += parseInt(n?.textContent || '1', 10) || 1;
+      if (badge) {
+        badge.textContent = String(total);
+        badge.hidden = false;
+      }
+      const prev = add.textContent;
+      add.textContent = 'Agregado!';
+      add.classList.add('is-ok');
+      window.setTimeout(() => {
+        add.textContent = prev;
+        add.classList.remove('is-ok');
+      }, 1100);
+    }
+  });
+</script>
+
+<style>
+  .tf-hdr {
+    background: #fff;
+    position: sticky;
+    top: 0;
+    z-index: 80;
+    box-shadow: 0 2px 12px -8px rgba(0, 0, 0, 0.25);
+  }
+
+  .tf-hdr__row {
+    display: flex;
+    align-items: center;
+    gap: clamp(0.75rem, 3vw, 2.5rem);
+    padding-block: 0.9rem;
+  }
+
+  .tf-logo {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    flex-shrink: 0;
+  }
+
+  .tf-logo__ico {
+    width: 2.4rem;
+    height: 2.4rem;
+    display: grid;
+    place-items: center;
+    color: var(--tf-rojo);
+  }
+
+  .tf-logo__ico svg {
+    width: 100%;
+    height: 100%;
+  }
+
+  .tf-logo__tx {
+    font-family: var(--tf-serif);
+    font-style: italic;
+    font-weight: 600;
+    font-size: 1.5rem;
+    color: var(--tf-rojo);
+    line-height: 1;
+  }
+
+  .tf-logo__tx b {
+    display: block;
+    font-family: var(--tf-font);
+    font-style: normal;
+    font-size: 0.6rem;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--tf-tinta);
+    margin-top: 0.15rem;
+  }
+
+  .tf-buscar {
+    flex: 1;
+    max-width: 520px;
+    display: flex;
+    align-items: center;
+    border: 1.5px solid var(--tf-linea);
+    border-radius: var(--tf-pill);
+    padding: 0.15rem 0.3rem 0.15rem 1rem;
+  }
+
+  .tf-buscar:focus-within {
+    border-color: var(--tf-rojo);
+  }
+
+  .tf-buscar input {
+    flex: 1;
+    border: none;
+    outline: none;
+    background: none;
+    padding: 0.5rem 0;
+    font-size: 0.85rem;
+  }
+
+  .tf-buscar button {
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    background: var(--tf-rojo);
+    color: #fff;
+    display: grid;
+    place-items: center;
+    flex-shrink: 0;
+  }
+
+  .tf-hdr__acc {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    flex-shrink: 0;
+  }
+
+  .tf-hdr__ico {
+    position: relative;
+    width: 40px;
+    height: 40px;
+    display: grid;
+    place-items: center;
+    border-radius: 50%;
+    color: var(--tf-tinta);
+  }
+
+  .tf-hdr__ico:hover {
+    background: var(--tf-rosa-claro);
+    color: var(--tf-rojo);
+  }
+
+  .tf-hdr__badge[hidden] {
+    display: none;
+  }
+
+  .tf-hdr__badge {
+    position: absolute;
+    top: 2px;
+    right: 2px;
+    min-width: 17px;
+    height: 17px;
+    padding: 0 4px;
+    border-radius: var(--tf-pill);
+    background: var(--tf-rojo);
+    color: #fff;
+    font-size: 0.62rem;
+    font-weight: 700;
+    display: grid;
+    place-items: center;
+  }
+
+  .tf-nav {
+    border-top: 1px solid var(--tf-linea);
+    border-bottom: 1px solid var(--tf-linea);
+    background: #fff;
+    position: relative;
+  }
+
+  .tf-nav__row {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    padding-block: 0.55rem;
+  }
+
+  .tf-nav__menu {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.55rem;
+    border: 1.5px solid var(--tf-rojo);
+    color: var(--tf-rojo);
+    font-weight: 600;
+    font-size: 0.82rem;
+    padding: 0.4rem 1.1rem;
+    border-radius: var(--tf-pill);
+  }
+
+  .tf-nav__menu.is-active,
+  .tf-nav__menu:hover {
+    background: var(--tf-rojo);
+    color: #fff;
+  }
+
+  .tf-nav__burger {
+    display: inline-flex;
+    flex-direction: column;
+    gap: 3px;
+  }
+
+  .tf-nav__burger i {
+    width: 16px;
+    height: 2px;
+    background: currentColor;
+    border-radius: 2px;
+  }
+
+  .tf-nav__links {
+    display: flex;
+    gap: 1.6rem;
+    list-style: none;
+    font-size: 0.85rem;
+    font-weight: 500;
+  }
+
+  .tf-nav__links a:hover {
+    color: var(--tf-rojo);
+  }
+
+  .tf-nav__promo {
+    margin-left: auto;
+    border: 1.5px solid var(--tf-rojo);
+    color: var(--tf-rojo);
+    font-weight: 600;
+    font-size: 0.8rem;
+    padding: 0.35rem 1rem;
+    border-radius: var(--tf-pill);
+  }
+
+  .tf-nav__promo:hover {
+    background: var(--tf-rojo);
+    color: #fff;
+  }
+
+  .tf-mega {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 100%;
+    background: var(--tf-rosa-palido);
+    border-bottom: 1px solid var(--tf-linea);
+    box-shadow: 0 24px 40px -24px rgba(0, 0, 0, 0.3);
+    z-index: 90;
+  }
+
+  .tf-mega__grid {
+    display: grid;
+    grid-template-columns: 240px 1fr;
+    gap: 1.5rem;
+    padding-block: 1.5rem;
+  }
+
+  .tf-mega__cats {
+    list-style: none;
+    border-right: 1px solid var(--tf-linea);
+    padding-right: 0.5rem;
+  }
+
+  .tf-mega__cat {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.55rem 0.75rem;
+    border-radius: 8px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: var(--tf-tinta);
+  }
+
+  .tf-mega__cat:hover,
+  .tf-mega__cat.is-on {
+    background: #fff;
+    color: var(--tf-rojo);
+  }
+
+  .tf-mega__sub {
+    list-style: none;
+    columns: 2;
+    column-gap: 2rem;
+  }
+
+  .tf-mega__sub li {
+    margin-bottom: 0.7rem;
+    break-inside: avoid;
+  }
+
+  .tf-mega__sub a {
+    font-size: 0.83rem;
+    color: var(--tf-gris);
+  }
+
+  .tf-mega__sub a:hover {
+    color: var(--tf-rojo);
+  }
+
+  @media (max-width: 960px) {
+    .tf-buscar {
+      order: 3;
+      flex-basis: 100%;
+      max-width: none;
+    }
+    .tf-hdr__row {
+      flex-wrap: wrap;
+    }
+  }
+
+  @media (max-width: 820px) {
+    .tf-nav__links {
+      display: none;
+    }
+    .tf-mega__grid {
+      grid-template-columns: 1fr;
+    }
+    .tf-mega__cats {
+      border-right: none;
+      border-bottom: 1px solid var(--tf-linea);
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.25rem;
+      padding: 0 0 0.75rem;
+    }
+    .tf-mega__cat {
+      width: auto;
+    }
+    .tf-mega__sub {
+      columns: 1;
+    }
+  }
+</style>

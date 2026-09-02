@@ -1,0 +1,98 @@
+---
+import { garantias, disclaimers } from '../datos/flores.js';
+
+const iconos = ['🚚', '📍', '💌', '🔒'];
+---
+
+<section class="tf-seccion tf-wrap" id="garantias">
+  <ul class="tf-gar">
+    {garantias.map((g: { t: string; d: string }, i: number) => (
+      <li>
+        <span class="tf-gar__ico" aria-hidden="true">{iconos[i]}</span>
+        <div>
+          <b>{g.t}</b>
+          <p>{g.d}</p>
+        </div>
+      </li>
+    ))}
+  </ul>
+
+  <div class="tf-disc">
+    <span class="tf-disc__ico" aria-hidden="true">📷</span>
+    <ul>
+      {disclaimers.map((d: string) => <li>{d}</li>)}
+    </ul>
+  </div>
+</section>
+
+<style>
+  .tf-gar {
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.25rem;
+  }
+
+  .tf-gar li {
+    display: flex;
+    gap: 0.75rem;
+    align-items: flex-start;
+    background: var(--tf-rosa-palido);
+    border: 1px solid var(--tf-linea);
+    border-radius: 14px;
+    padding: 1rem 1.1rem;
+  }
+
+  .tf-gar__ico {
+    font-size: 1.4rem;
+    line-height: 1;
+  }
+
+  .tf-gar b {
+    font-size: 0.88rem;
+  }
+
+  .tf-gar p {
+    font-size: 0.78rem;
+    color: var(--tf-gris);
+    margin-top: 0.15rem;
+  }
+
+  .tf-disc {
+    margin-top: 1.5rem;
+    display: flex;
+    gap: 0.9rem;
+    align-items: flex-start;
+    background: var(--tf-rosa-claro);
+    border-radius: 14px;
+    padding: 1.1rem 1.3rem;
+  }
+
+  .tf-disc__ico {
+    font-size: 1.2rem;
+  }
+
+  .tf-disc ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+  }
+
+  .tf-disc li {
+    font-size: 0.76rem;
+    color: var(--tf-gris);
+  }
+
+  @media (max-width: 820px) {
+    .tf-gar {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 480px) {
+    .tf-gar {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

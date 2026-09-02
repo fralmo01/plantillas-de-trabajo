@@ -1,0 +1,190 @@
+---
+import { marca, footerCols, pagoMetodos } from '../datos/flores.js';
+---
+
+<footer class="tf-foot">
+  <div class="tf-wrap tf-foot__grid">
+    <div class="tf-foot__marca">
+      <span class="tf-foot__logo">{marca.nombre}<b>{marca.sub}</b></span>
+      <p>
+        Mas de 30 anos entregando amor a traves de flores y regalos. Cada
+        entrega combina flores frescas, diseno propio y una atencion cuidada.
+      </p>
+      <div class="tf-foot__redes" aria-label="Redes sociales">
+        <a href="#" aria-label="Facebook">f</a>
+        <a href="#" aria-label="Instagram">&#9678;</a>
+        <a href="#" aria-label="TikTok">&#9835;</a>
+      </div>
+    </div>
+
+    {footerCols.map((col: { t: string; links: string[] }) => (
+      <nav class="tf-foot__col" aria-label={col.t}>
+        <h3>{col.t}</h3>
+        <ul>
+          {col.links.map((l: string) => <li><a href="#">{l}</a></li>)}
+        </ul>
+      </nav>
+    ))}
+
+    <div class="tf-foot__col">
+      <h3>Formas de pago</h3>
+      <ul class="tf-foot__pagos">
+        {pagoMetodos.map((p: string) => <li>{p}</li>)}
+      </ul>
+      <h3 class="tf-foot__cont-t">Contacto</h3>
+      <p class="tf-foot__cont">{marca.tel}<br />{marca.correo}<br />{marca.ciudad}</p>
+    </div>
+  </div>
+
+  <div class="tf-wrap tf-foot__base">
+    <a href="#" class="tf-foot__lr">
+      <span aria-hidden="true">&#128278;</span> Libro de reclamaciones
+    </a>
+    <span>{marca.nombre} — Todos los derechos reservados 2026</span>
+  </div>
+</footer>
+
+<style>
+  .tf-foot {
+    background: var(--tf-rosa-claro);
+    margin-top: 2rem;
+  }
+
+  .tf-foot__grid {
+    display: grid;
+    grid-template-columns: 1.6fr 1fr 1fr 1.2fr;
+    gap: 2rem;
+    padding-block: 2.5rem 1.75rem;
+  }
+
+  .tf-foot__logo {
+    font-family: var(--tf-serif);
+    font-style: italic;
+    font-weight: 600;
+    font-size: 1.4rem;
+    color: var(--tf-rojo);
+  }
+
+  .tf-foot__logo b {
+    display: block;
+    font-family: var(--tf-font);
+    font-style: normal;
+    font-size: 0.58rem;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--tf-tinta);
+  }
+
+  .tf-foot__marca p {
+    font-size: 0.8rem;
+    color: var(--tf-gris);
+    margin: 0.75rem 0;
+    max-width: 34ch;
+  }
+
+  .tf-foot__redes {
+    display: flex;
+    gap: 0.4rem;
+  }
+
+  .tf-foot__redes a {
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: #fff;
+    color: var(--tf-rojo);
+    font-weight: 700;
+    font-size: 0.75rem;
+  }
+
+  .tf-foot__col h3 {
+    font-size: 0.82rem;
+    color: var(--tf-rojo);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-bottom: 0.75rem;
+  }
+
+  .tf-foot__col ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .tf-foot__col a {
+    font-size: 0.8rem;
+    color: var(--tf-gris);
+  }
+
+  .tf-foot__col a:hover {
+    color: var(--tf-rojo);
+  }
+
+  .tf-foot__pagos {
+    flex-direction: row !important;
+    flex-wrap: wrap;
+    gap: 0.35rem !important;
+  }
+
+  .tf-foot__pagos li {
+    background: #fff;
+    border: 1px solid var(--tf-linea);
+    border-radius: 5px;
+    padding: 0.2rem 0.5rem;
+    font-size: 0.68rem;
+    font-weight: 600;
+    color: var(--tf-gris);
+  }
+
+  .tf-foot__cont-t {
+    margin-top: 1.25rem;
+  }
+
+  .tf-foot__cont {
+    font-size: 0.8rem;
+    color: var(--tf-gris);
+    line-height: 1.7;
+  }
+
+  .tf-foot__base {
+    border-top: 1px solid var(--tf-linea);
+    padding-block: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    font-size: 0.74rem;
+    color: var(--tf-gris);
+  }
+
+  .tf-foot__lr {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    border: 1px solid var(--tf-linea);
+    background: #fff;
+    padding: 0.4rem 0.8rem;
+    border-radius: 6px;
+  }
+
+  @media (max-width: 900px) {
+    .tf-foot__grid {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  @media (max-width: 520px) {
+    .tf-foot__grid {
+      grid-template-columns: 1fr;
+    }
+    .tf-foot__base {
+      flex-direction: column;
+      text-align: center;
+    }
+  }
+</style>

@@ -1,0 +1,40 @@
+---
+import { masVendidos } from '../datos/flores.js';
+import TarjetaProducto from '../componentes/TarjetaProducto.astro';
+---
+
+<section class="tf-seccion tf-wrap" id="mas-vendidos">
+  <div class="tf-carr">
+    <aside class="tf-carr__banner tf-carr__banner--top">
+      <span>Favoritos</span>
+      <h2>Los mas vendidos</h2>
+      <a href="#destacados" class="tf-btn tf-btn--rojo">Ver todo</a>
+    </aside>
+
+    <div class="tf-carr__area">
+      <button type="button" class="tf-flecha tf-carr__prev" data-dir="-1" aria-label="Anterior">&lsaquo;</button>
+      <div class="tf-fila tf-carr__row">
+        {masVendidos.map((p: { nombre: string; precio: number; antes?: number; tag?: string; img: string }) => (
+          <TarjetaProducto producto={p} />
+        ))}
+      </div>
+      <button type="button" class="tf-flecha tf-carr__next" data-dir="1" aria-label="Siguiente">&rsaquo;</button>
+    </div>
+  </div>
+</section>
+
+<style>
+  .tf-carr__banner--top {
+    background: linear-gradient(160deg, #fff 0%, var(--tf-rosa-med) 100%);
+    color: var(--tf-tinta);
+    border: 1px solid var(--tf-linea);
+  }
+
+  .tf-carr__banner--top span {
+    color: var(--tf-rojo);
+  }
+
+  .tf-carr__banner--top h2 {
+    color: var(--tf-tinta);
+  }
+</style>

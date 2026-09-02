@@ -1,0 +1,226 @@
+---
+import { heroSlides, heroLateral } from '../datos/flores.js';
+---
+
+<section class="tf-hero tf-wrap" aria-roledescription="carrusel">
+  <div class="tf-hero__main">
+    <div class="tf-hero__track" id="tf-hero-track">
+      {heroSlides.map((s: { kicker: string; titulo: string; sub: string; cta: string; img: string }, i: number) => (
+        <article class="tf-hero__slide">
+          <img src={s.img} alt={s.titulo} loading={i === 0 ? 'eager' : 'lazy'} />
+          <div class="tf-hero__texto">
+            <span class="tf-hero__kicker">{s.kicker}</span>
+            <h2>{s.titulo}</h2>
+            <p>{s.sub}</p>
+            <a href="#novedades" class="tf-btn tf-btn--claro">{s.cta}</a>
+          </div>
+        </article>
+      ))}
+    </div>
+    <button class="tf-hero__nav tf-hero__nav--prev" id="tf-hero-prev" aria-label="Anterior">&lsaquo;</button>
+    <button class="tf-hero__nav tf-hero__nav--next" id="tf-hero-next" aria-label="Siguiente">&rsaquo;</button>
+    <div class="tf-hero__dots" id="tf-hero-dots">
+      {heroSlides.map((_: unknown, i: number) => <button aria-label={`Ir al slide ${i + 1}`} data-dot={i}></button>)}
+    </div>
+  </div>
+
+  <aside class="tf-hero__lat">
+    <img src={heroLateral.img} alt={heroLateral.titulo} loading="lazy" />
+    <div class="tf-hero__lat-tx">
+      <span>{heroLateral.sub}</span>
+      <h3>{heroLateral.titulo}</h3>
+      <a href="#categorias" class="tf-btn tf-btn--rojo">{heroLateral.cta}</a>
+    </div>
+  </aside>
+</section>
+
+<script>
+  const track = document.getElementById('tf-hero-track');
+  const dots = Array.from(document.querySelectorAll<HTMLButtonElement>('#tf-hero-dots button'));
+  const total = track ? track.children.length : 0;
+  let idx = 0;
+
+  function ir(n: number) {
+    if (!track) return;
+    idx = (n + total) % total;
+    track.style.transform = `translateX(-${idx * 100}%)`;
+    dots.forEach((d, i) => d.classList.toggle('is-on', i === idx));
+  }
+
+  document.getElementById('tf-hero-prev')?.addEventListener('click', () => ir(idx - 1));
+  document.getElementById('tf-hero-next')?.addEventListener('click', () => ir(idx + 1));
+  dots.forEach((d, i) => d.addEventListener('click', () => ir(i)));
+
+  let timer = window.setInterval(() => ir(idx + 1), 6000);
+  const box = track?.parentElement;
+  box?.addEventListener('mouseenter', () => window.clearInterval(timer));
+  box?.addEventListener('mouseleave', () => (timer = window.setInterval(() => ir(idx + 1), 6000)));
+  ir(0);
+</script>
+
+<style>
+  .tf-hero {
+    display: grid;
+    grid-template-columns: 1fr 300px;
+    gap: 1.25rem;
+    padding-top: 1.5rem;
+  }
+
+  .tf-hero__main {
+    position: relative;
+    overflow: hidden;
+    border-radius: 18px;
+    background: var(--tf-rosa-claro);
+  }
+
+  .tf-hero__track {
+    display: flex;
+    transition: transform 0.5s ease;
+    height: 100%;
+  }
+
+  .tf-hero__slide {
+    position: relative;
+    flex: 0 0 100%;
+    min-height: clamp(300px, 34vw, 440px);
+    display: flex;
+    align-items: center;
+  }
+
+  .tf-hero__slide img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .tf-hero__texto {
+    position: relative;
+    z-index: 1;
+    color: #fff;
+    max-width: 24rem;
+    padding: 2rem;
+  }
+
+  .tf-hero__texto::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg, rgba(43, 43, 43, 0.7), rgba(43, 43, 43, 0.15) 70%, transparent);
+    z-index: -1;
+  }
+
+  .tf-hero__kicker {
+    font-size: 0.68rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    background: var(--tf-rojo);
+    padding: 0.2rem 0.6rem;
+    border-radius: var(--tf-pill);
+  }
+
+  .tf-hero__texto h2 {
+    color: #fff;
+    font-family: var(--tf-serif);
+    font-weight: 600;
+    font-size: clamp(1.6rem, 4vw, 2.7rem);
+    margin: 0.7rem 0 0.5rem;
+  }
+
+  .tf-hero__texto p {
+    font-size: clamp(0.85rem, 1.6vw, 1rem);
+    margin-bottom: 1.2rem;
+  }
+
+  .tf-hero__nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.9);
+    color: var(--tf-rojo);
+    font-size: 1.4rem;
+    line-height: 1;
+  }
+
+  .tf-hero__nav--prev { left: 0.8rem; }
+  .tf-hero__nav--next { right: 0.8rem; }
+
+  .tf-hero__dots {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 14px;
+    display: flex;
+    justify-content: center;
+    gap: 6px;
+  }
+
+  .tf-hero__dots button {
+    width: 9px;
+    height: 9px;
+    border-radius: var(--tf-pill);
+    background: rgba(255, 255, 255, 0.55);
+  }
+
+  .tf-hero__dots button.is-on {
+    background: #fff;
+    width: 22px;
+  }
+
+  .tf-hero__lat {
+    position: relative;
+    border-radius: 18px;
+    overflow: hidden;
+    background: var(--tf-rosa);
+    min-height: 260px;
+  }
+
+  .tf-hero__lat img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .tf-hero__lat-tx {
+    position: relative;
+    z-index: 1;
+    padding: 1.5rem;
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.4rem;
+    height: 100%;
+    justify-content: flex-end;
+    background: linear-gradient(0deg, rgba(43, 43, 43, 0.7), transparent 60%);
+  }
+
+  .tf-hero__lat-tx span {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+  }
+
+  .tf-hero__lat-tx h3 {
+    color: #fff;
+    font-family: var(--tf-serif);
+    font-style: italic;
+    font-size: 1.6rem;
+  }
+
+  @media (max-width: 900px) {
+    .tf-hero {
+      grid-template-columns: 1fr;
+    }
+    .tf-hero__lat {
+      min-height: 200px;
+    }
+  }
+</style>

@@ -3,8 +3,9 @@
  * Filtros por categoria. Las categorias se calculan solas a partir
  * de las fichas: nunca hay que mantener una lista aparte.
  *
- * El filtrado es un <script> chico que solo togglea `hidden` en las
- * tarjetas segun `data-categoria`. HTML plano + un pelin de JS.
+ * El filtrado es un <script> chico que togglea `hidden` en el <li>
+ * contenedor (el item de la grilla) segun `data-categoria`. Ocultar el
+ * <li> y no el <article> hace que CSS Grid reacomode solo, sin huecos.
  */
 interface Props {
   categorias: string[];
@@ -32,24 +33,28 @@ const opciones = ['todas', ...categorias];
 
 <script>
   const botones = document.querySelectorAll<HTMLButtonElement>('.filtro-btn');
-  const tarjetas = document.querySelectorAll<HTMLElement>('[data-categoria]');
+
+  // Items de la grilla: el <li> que envuelve cada tarjeta. Se resuelve la
+  // categoria desde el [data-categoria] interno una sola vez.
+  const items = [...document.querySelectorAll<HTMLElement>('.catalogo-grid > li')].map(
+    (li) => ({
+      li,
+      cat: li.querySelector<HTMLElement>('[data-categoria]')?.dataset.categoria ?? '',
+    }),
+  );
 
   function aplicar(filtro: string) {
-    for (const tarjeta of tarjetas) {
-      const cat = tarjeta.dataset.categoria ?? '';
-      tarjeta.hidden = filtro !== 'todas' && cat !== filtro;
+    let visibles = 0;
+    for (const { li, cat } of items) {
+      const oculto = filtro !== 'todas' && cat !== filtro;
+      li.hidden = oculto;
+      if (!oculto) visibles++;
     }
     for (const btn of botones) {
-      btn.setAttribute(
-        'aria-pressed',
-        String(btn.dataset.filtro === filtro),
-      );
+      btn.setAttribute('aria-pressed', String(btn.dataset.filtro === filtro));
     }
     const vacio = document.querySelector<HTMLElement>('[data-catalogo-vacio]');
-    if (vacio) {
-      const visibles = [...tarjetas].some((t) => !t.hidden);
-      vacio.hidden = visibles;
-    }
+    if (vacio) vacio.hidden = visibles > 0;
   }
 
   for (const btn of botones) {

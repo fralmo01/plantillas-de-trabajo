@@ -1,0 +1,150 @@
+---
+import { soles } from '../datos/flores.js';
+
+interface Producto {
+  nombre: string;
+  precio: number;
+  antes?: number;
+  tag?: string;
+  img: string;
+}
+const { producto } = Astro.props as { producto: Producto };
+---
+
+<article class="tf-prod" data-nombre={producto.nombre.toLowerCase()} data-precio={producto.precio}>
+  <div class="tf-prod__media">
+    {producto.tag && <span class="tf-prod__tag">{producto.tag}</span>}
+    <img src={producto.img} alt={producto.nombre} loading="lazy" decoding="async" />
+  </div>
+  <div class="tf-prod__body">
+    <h3 class="tf-prod__nombre">{producto.nombre}</h3>
+    <p class="tf-prod__precio">
+      {producto.antes && <s>{soles(producto.antes)}</s>}
+      <b>{soles(producto.precio)}</b>
+    </p>
+    <div class="tf-prod__qty" role="group" aria-label="Cantidad">
+      <button type="button" class="tf-qty__b" data-step="-1" aria-label="Quitar uno">-</button>
+      <span class="tf-qty__n">1</span>
+      <button type="button" class="tf-qty__b" data-step="1" aria-label="Agregar uno">+</button>
+    </div>
+    <button type="button" class="tf-btn tf-btn--outline tf-prod__add">Anadir al carrito</button>
+  </div>
+</article>
+
+<style>
+  .tf-prod[hidden] {
+    display: none;
+  }
+
+  .tf-prod {
+    display: flex;
+    flex-direction: column;
+    background: #fff;
+    border: 1px solid var(--tf-linea);
+    border-radius: 14px;
+    overflow: hidden;
+    transition: box-shadow 0.15s ease, transform 0.15s ease;
+  }
+
+  .tf-prod:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 18px 40px -20px rgba(229, 15, 43, 0.35);
+  }
+
+  .tf-prod__media {
+    position: relative;
+    aspect-ratio: 1 / 1;
+    background: var(--tf-rosa-claro);
+  }
+
+  .tf-prod__media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .tf-prod__tag {
+    position: absolute;
+    top: 0.7rem;
+    left: 0.7rem;
+    background: var(--tf-rojo);
+    color: #fff;
+    font-size: 0.7rem;
+    font-weight: 700;
+    padding: 0.2rem 0.6rem;
+    border-radius: var(--tf-pill);
+  }
+
+  .tf-prod__body {
+    padding: 0.9rem 1rem 1.1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.55rem;
+    flex: 1;
+  }
+
+  .tf-prod__nombre {
+    font-size: 0.9rem;
+    font-weight: 600;
+    text-align: center;
+    min-height: 2.4em;
+  }
+
+  .tf-prod__precio {
+    text-align: center;
+    display: flex;
+    gap: 0.5rem;
+    justify-content: center;
+    align-items: baseline;
+  }
+
+  .tf-prod__precio s {
+    color: var(--tf-gris);
+    font-size: 0.8rem;
+  }
+
+  .tf-prod__precio b {
+    color: var(--tf-rojo);
+    font-size: 1.05rem;
+    font-weight: 700;
+  }
+
+  .tf-prod__qty {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.9rem;
+  }
+
+  .tf-qty__b {
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    background: var(--tf-rosa-claro);
+    color: var(--tf-tinta);
+    font-weight: 700;
+    line-height: 1;
+    display: grid;
+    place-items: center;
+  }
+
+  .tf-qty__b:hover {
+    background: var(--tf-rosa);
+  }
+
+  .tf-qty__n {
+    min-width: 1.4ch;
+    text-align: center;
+    font-weight: 600;
+  }
+
+  .tf-prod__add {
+    margin-top: auto;
+    width: 100%;
+  }
+
+  .tf-prod__add.is-ok {
+    background: var(--tf-rojo);
+    color: #fff;
+  }
+</style>
