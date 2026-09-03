@@ -1,0 +1,163 @@
+---
+import { catalogo, filtrosGenero, filtrosCategoria } from '../datos/sydney.js';
+
+const contar = (campo: 'genero' | 'categoria', valor: string) =>
+  catalogo.filter((p: Record<string, unknown>) => p[campo] === valor).length;
+---
+
+<aside class="sy-filtros" id="sy-filtros">
+  <div class="sy-filtros__cab">
+    <h2>Filtrar</h2>
+    <button class="sy-filtros__x" type="button" aria-label="Cerrar filtros">&times;</button>
+  </div>
+
+  <form class="sy-filtros__form" onsubmit="return false">
+    <details class="sy-grupo" open>
+      <summary>Genero</summary>
+      <div class="sy-grupo__cuerpo">
+        <ul class="sy-grupo__lista" data-filtro="genero">
+          {filtrosGenero.map((g: string) => (
+            <li>
+              <label>
+                <input type="checkbox" name="genero" value={g} />
+                <span>{g}</span>
+                <b>({contar('genero', g)})</b>
+              </label>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </details>
+
+    <details class="sy-grupo" open>
+      <summary>Categoria</summary>
+      <div class="sy-grupo__cuerpo">
+        <ul class="sy-grupo__lista" data-filtro="categoria">
+          {filtrosCategoria.map((c: string) => (
+            <li>
+              <label>
+                <input type="checkbox" name="categoria" value={c} />
+                <span>{c}</span>
+                <b>({contar('categoria', c)})</b>
+              </label>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </details>
+
+    <button type="button" class="sy-btn sy-btn--claro sy-filtros__limpiar" id="sy-filtros-limpiar">Limpiar filtros</button>
+  </form>
+</aside>
+
+<style>
+  .sy-filtros {
+    align-self: start;
+  }
+
+  .sy-filtros__cab {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-bottom: 0.75rem;
+    border-bottom: 2px solid var(--sy-tinta);
+    margin-bottom: 1rem;
+  }
+
+  .sy-filtros__cab h2 {
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .sy-filtros__x {
+    display: none;
+    font-size: 1.1rem;
+  }
+
+  .sy-grupo {
+    border-bottom: 1px solid var(--sy-linea);
+    padding-block: 0.7rem;
+  }
+
+  .sy-grupo summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 0.82rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    cursor: pointer;
+    list-style: none;
+  }
+
+  .sy-grupo summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .sy-grupo summary::after {
+    content: "\002B";
+    color: var(--sy-gris);
+  }
+
+  .sy-grupo[open] summary::after {
+    content: "\2212";
+  }
+
+  .sy-grupo__cuerpo {
+    padding-top: 0.7rem;
+    display: grid;
+    gap: 0.55rem;
+  }
+
+  .sy-grupo__lista {
+    list-style: none;
+    display: grid;
+    gap: 0.5rem;
+  }
+
+  .sy-grupo__lista label {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.82rem;
+    cursor: pointer;
+  }
+
+  .sy-grupo__lista label b {
+    margin-left: auto;
+    color: var(--sy-gris);
+    font-weight: 600;
+    font-size: 0.7rem;
+  }
+
+  .sy-grupo__lista input {
+    accent-color: var(--sy-tinta);
+  }
+
+  .sy-filtros__limpiar {
+    width: 100%;
+    margin-top: 0.5rem;
+  }
+
+  @media (max-width: 900px) {
+    .sy-filtros {
+      position: fixed;
+      inset: 0 25% 0 0;
+      z-index: 350;
+      background: #fff;
+      padding: 1.25rem;
+      overflow-y: auto;
+      transform: translateX(-105%);
+      transition: transform 0.25s ease;
+      box-shadow: 0 0 40px rgba(0, 0, 0, 0.25);
+    }
+    .sy-filtros.is-abierto {
+      transform: none;
+    }
+    .sy-filtros__x {
+      display: block;
+    }
+  }
+</style>

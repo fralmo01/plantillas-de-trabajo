@@ -1,13 +1,13 @@
 ---
-import { marcas } from '../datos/metro.js';
+import { marcas, getMetroImg } from '../datos/metro.js';
 ---
 
 <section class="tm-seccion tm-wrap">
   <h2 class="tm-titulo">Nuestras marcas destacadas</h2>
   <div class="tm-marcas">
-    {marcas.map((m: { t: string; sub: string; seed: string }) => (
+    {marcas.map((m: { t: string; sub: string; seed: string; img?: string }) => (
       <a href="#tabs" class="tm-marcas__card">
-        <img src={`https://picsum.photos/seed/${m.seed}/420/240`} alt={m.t} loading="lazy" />
+        <img src={m.img ?? getMetroImg(m.seed, 500, 300)} alt={m.t} loading="lazy" />
         <div class="tm-marcas__tx">
           <strong>{m.t}</strong>
           <span>{m.sub}</span>

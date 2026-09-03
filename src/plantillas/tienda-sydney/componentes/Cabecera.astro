@@ -1,0 +1,386 @@
+---
+import { marca, navPrincipal, getSydneyImg } from '../datos/sydney.js';
+
+const base = '/plantillas/tienda-sydney';
+
+interface Item {
+  t: string;
+  menu: string;
+  columnas: { t: string; links: string[] }[];
+  banners: { t: string; seed: string; img?: string }[];
+}
+---
+
+<header class="sy-hdr" id="top">
+  <div class="sy-wrap sy-hdr__row">
+    <a href={`${base}/`} class="sy-logo">
+      <span class="sy-logo__tx">{marca.nombre}</span>
+      <span class="sy-logo__sub">{marca.sub}</span>
+    </a>
+
+    <nav class="sy-nav" aria-label="Navegacion principal">
+      <ul class="sy-nav__list">
+        {(navPrincipal as Item[]).map((n) => (
+          <li class="sy-nav__has-mega" data-menu={n.menu}>
+            <button type="button" class="sy-nav__link" data-abrir={n.menu}>
+              {n.t}
+              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"></path></svg>
+            </button>
+          </li>
+        ))}
+      </ul>
+    </nav>
+
+    <div class="sy-hdr__acc">
+      <button type="button" class="sy-hdr__ico" id="sy-buscar-btn" aria-label="Buscar">
+        <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+      </button>
+      <a href={`${base}/#top`} class="sy-hdr__ico" aria-label="Mi cuenta">
+        <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"></circle><path d="M4 21c0-4 4-6 8-6s8 2 8 6"></path></svg>
+      </a>
+      <a href={`${base}/#top`} class="sy-hdr__ico" aria-label="Favoritos">
+        <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s-7-4.35-9.5-8.5C.8 9 2 5 6 5c2 0 3.5 1.2 4 2.5C10.5 6.2 12 5 14 5c4 0 5.2 4 3.5 7.5C19 16.65 12 21 12 21z"></path></svg>
+      </a>
+      <button type="button" class="sy-hdr__ico sy-hdr__cart" id="sy-cart" aria-label="Ver carrito">
+        <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"></path><path d="M3 6h18"></path><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
+        <span class="sy-hdr__badge" id="sy-cart-count" hidden>0</span>
+      </button>
+    </div>
+  </div>
+
+  <form class="sy-buscar" id="sy-buscar" role="search" action={`${base}/buscar/`} method="get" hidden>
+    <div class="sy-wrap sy-buscar__inner">
+      <input type="search" name="q" id="sy-buscar-input" placeholder="Buscar productos..." aria-label="Buscar productos" autocomplete="off" />
+      <button type="submit" aria-label="Buscar">Buscar</button>
+    </div>
+  </form>
+
+  {(navPrincipal as Item[]).map((n) => (
+    <div class="sy-mega" data-mega={n.menu} hidden>
+      <div class="sy-wrap sy-mega__grid">
+        <div class="sy-mega__cols" style={`--cols:${n.columnas.length}`}>
+          {n.columnas.map((c) => (
+            <div class="sy-mega__col">
+              <h3>{c.t}</h3>
+              <ul>
+                {c.links.map((l) => <li><a href={`${base}/buscar/?q=${encodeURIComponent(l.toLowerCase())}`}>{l}</a></li>)}
+              </ul>
+            </div>
+          ))}
+        </div>
+        <div class="sy-mega__banners">
+          {n.banners.map((b) => (
+            <a href={`${base}/buscar/?q=${encodeURIComponent(n.t.toLowerCase())}`} class="sy-mega__banner">
+              <img src={b.img ?? getSydneyImg(b.seed, 380, 460)} alt={b.t} loading="lazy" />
+              <span>{b.t}<b>Comprar</b></span>
+            </a>
+          ))}
+        </div>
+      </div>
+    </div>
+  ))}
+</header>
+
+<script>
+  const btns = Array.from(document.querySelectorAll<HTMLButtonElement>('[data-abrir]'));
+  const megas = Array.from(document.querySelectorAll<HTMLElement>('[data-mega]'));
+
+  function cerrarTodo() {
+    megas.forEach((m) => (m.hidden = true));
+    btns.forEach((b) => b.classList.remove('is-on'));
+  }
+
+  btns.forEach((b) => {
+    b.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const nombre = b.dataset.abrir;
+      const target = megas.find((m) => m.dataset.mega === nombre);
+      const yaAbierto = target && !target.hidden;
+      cerrarTodo();
+      if (target && !yaAbierto) {
+        target.hidden = false;
+        b.classList.add('is-on');
+      }
+    });
+  });
+
+  document.addEventListener('click', (e) => {
+    const t = e.target as Node;
+    const dentro = megas.some((m) => m.contains(t)) || btns.some((b) => b.contains(t));
+    if (!dentro) cerrarTodo();
+  });
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') cerrarTodo();
+  });
+
+  const buscarBtn = document.getElementById('sy-buscar-btn');
+  const buscarForm = document.getElementById('sy-buscar') as HTMLElement | null;
+  const buscarInput = document.getElementById('sy-buscar-input') as HTMLInputElement | null;
+  buscarBtn?.addEventListener('click', () => {
+    if (!buscarForm) return;
+    buscarForm.hidden = !buscarForm.hidden;
+    if (!buscarForm.hidden) buscarInput?.focus();
+  });
+
+  const qActual = new URLSearchParams(location.search).get('q');
+  if (buscarInput && qActual) buscarInput.value = qActual;
+
+  const badge = document.getElementById('sy-cart-count');
+  let total = 0;
+  document.addEventListener('click', (e) => {
+    const el = e.target as HTMLElement;
+    const add = el.closest<HTMLButtonElement>('.sy-prod__add');
+    if (add) {
+      total += 1;
+      if (badge) {
+        badge.textContent = String(total);
+        badge.hidden = false;
+      }
+      const prev = add.textContent;
+      add.textContent = 'Agregado!';
+      add.classList.add('is-ok');
+      window.setTimeout(() => {
+        add.textContent = prev;
+        add.classList.remove('is-ok');
+      }, 1100);
+    }
+  });
+</script>
+
+<style>
+  .sy-hdr {
+    background: #fff;
+    position: sticky;
+    top: 0;
+    z-index: 90;
+    border-bottom: 1px solid var(--sy-linea);
+  }
+
+  .sy-hdr__row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.5rem;
+    padding-block: 1rem;
+  }
+
+  .sy-logo {
+    display: flex;
+    flex-direction: column;
+    line-height: 1;
+    flex-shrink: 0;
+  }
+
+  .sy-logo__tx {
+    font-size: 1.5rem;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+  }
+
+  .sy-logo__sub {
+    font-size: 0.55rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--sy-gris);
+    margin-top: 0.2rem;
+  }
+
+  .sy-nav__list {
+    display: flex;
+    gap: 2rem;
+    list-style: none;
+  }
+
+  .sy-nav__link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+    padding: 0.5rem 0;
+  }
+
+  .sy-nav__link svg {
+    transition: transform 0.15s ease;
+  }
+
+  .sy-nav__link.is-on svg {
+    transform: rotate(180deg);
+  }
+
+  .sy-nav__link:hover,
+  .sy-nav__link.is-on {
+    color: var(--sy-tinta-suave);
+  }
+
+  .sy-hdr__acc {
+    display: flex;
+    align-items: center;
+    gap: 1.1rem;
+    flex-shrink: 0;
+  }
+
+  .sy-hdr__ico {
+    position: relative;
+    color: var(--sy-tinta);
+    display: grid;
+    place-items: center;
+  }
+
+  .sy-hdr__ico:hover {
+    color: var(--sy-tinta-suave);
+  }
+
+  .sy-hdr__badge[hidden] {
+    display: none;
+  }
+
+  .sy-hdr__badge {
+    position: absolute;
+    top: -6px;
+    right: -8px;
+    min-width: 16px;
+    height: 16px;
+    padding: 0 4px;
+    border-radius: 999px;
+    background: var(--sy-rojo);
+    color: #fff;
+    font-size: 0.58rem;
+    font-weight: 700;
+    display: grid;
+    place-items: center;
+  }
+
+  .sy-buscar[hidden] {
+    display: none;
+  }
+
+  .sy-buscar {
+    border-top: 1px solid var(--sy-linea);
+    background: var(--sy-crema);
+  }
+
+  .sy-buscar__inner {
+    display: flex;
+    gap: 0.6rem;
+    padding-block: 0.85rem;
+  }
+
+  .sy-buscar__inner input {
+    flex: 1;
+    border: 1.5px solid var(--sy-linea);
+    background: #fff;
+    padding: 0.6rem 1rem;
+    font-size: 0.85rem;
+  }
+
+  .sy-buscar__inner button {
+    padding: 0.6rem 1.4rem;
+    background: var(--sy-tinta);
+    color: #fff;
+    font-weight: 600;
+    font-size: 0.78rem;
+    text-transform: uppercase;
+  }
+
+  .sy-mega[hidden] {
+    display: none;
+  }
+
+  .sy-mega {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 100%;
+    background: #fff;
+    border-bottom: 1px solid var(--sy-linea);
+    box-shadow: 0 30px 50px -30px rgba(0, 0, 0, 0.3);
+    z-index: 80;
+  }
+
+  .sy-mega__grid {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 2.5rem;
+    padding-block: 2.25rem;
+  }
+
+  .sy-mega__cols {
+    display: grid;
+    grid-template-columns: repeat(var(--cols), minmax(140px, 1fr));
+    gap: 2rem;
+  }
+
+  .sy-mega__col h3 {
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 0.9rem;
+  }
+
+  .sy-mega__col ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+  }
+
+  .sy-mega__col a {
+    font-size: 0.82rem;
+    color: var(--sy-gris);
+  }
+
+  .sy-mega__col a:hover {
+    color: var(--sy-tinta);
+  }
+
+  .sy-mega__banners {
+    display: flex;
+    gap: 1rem;
+  }
+
+  .sy-mega__banner {
+    position: relative;
+    width: 190px;
+    aspect-ratio: 3 / 3.7;
+    overflow: hidden;
+    display: block;
+  }
+
+  .sy-mega__banner img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .sy-mega__banner span {
+    position: absolute;
+    left: 0.9rem;
+    bottom: 0.9rem;
+    right: 0.9rem;
+    color: #fff;
+    font-weight: 700;
+    font-size: 0.9rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+  }
+
+  .sy-mega__banner span b {
+    font-size: 0.68rem;
+    font-weight: 600;
+    text-decoration: underline;
+  }
+
+  @media (max-width: 960px) {
+    .sy-nav__list {
+      display: none;
+    }
+    .sy-mega {
+      display: none !important;
+    }
+  }
+</style>

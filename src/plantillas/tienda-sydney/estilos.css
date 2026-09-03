@@ -1,0 +1,126 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap");
+
+.tpl-tienda-sydney {
+  --sy-tinta: #172033;
+  --sy-tinta-suave: #384359;
+  --sy-crema: #f5f2ec;
+  --sy-arena: #e9e3d6;
+  --sy-rojo: #c8272a;
+  --sy-gris: #6b7280;
+  --sy-linea: #e5e5e5;
+  --sy-wa: #25d366;
+
+  --sy-font: "Poppins", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+  --sy-maxw: 1280px;
+
+  background: #fff;
+  color: var(--sy-tinta);
+  font-family: var(--sy-font);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+.tpl-tienda-sydney *,
+.tpl-tienda-sydney *::before,
+.tpl-tienda-sydney *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+.tpl-tienda-sydney h1,
+.tpl-tienda-sydney h2,
+.tpl-tienda-sydney h3,
+.tpl-tienda-sydney h4 {
+  line-height: 1.2;
+  color: var(--sy-tinta);
+  font-weight: 700;
+}
+
+.tpl-tienda-sydney img {
+  max-width: 100%;
+  display: block;
+}
+
+.tpl-tienda-sydney a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.tpl-tienda-sydney button {
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+  border: none;
+  background: none;
+}
+
+.tpl-tienda-sydney input {
+  font: inherit;
+}
+
+.tpl-tienda-sydney .sy-wrap {
+  max-width: var(--sy-maxw);
+  margin-inline: auto;
+  padding-inline: clamp(1rem, 3vw, 2rem);
+}
+
+.tpl-tienda-sydney .sy-seccion {
+  padding-block: clamp(2rem, 5vw, 3.5rem);
+}
+
+.tpl-tienda-sydney .sy-titulo {
+  font-size: clamp(1.4rem, 3vw, 2rem);
+  font-weight: 700;
+  color: var(--sy-tinta);
+  margin-bottom: 0.4rem;
+}
+
+.tpl-tienda-sydney .sy-sub {
+  color: var(--sy-gris);
+  font-size: 0.9rem;
+  margin-bottom: 1.75rem;
+}
+
+.tpl-tienda-sydney .sy-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.8rem 1.6rem;
+  font-weight: 600;
+  font-size: 0.8rem;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  border: 1.5px solid var(--sy-tinta);
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+.tpl-tienda-sydney .sy-btn--oscuro {
+  background: var(--sy-tinta);
+  color: #fff;
+}
+
+.tpl-tienda-sydney .sy-btn--oscuro:hover {
+  background: var(--sy-tinta-suave);
+}
+
+.tpl-tienda-sydney .sy-btn--claro {
+  background: #fff;
+  color: var(--sy-tinta);
+}
+
+.tpl-tienda-sydney .sy-btn--claro:hover {
+  background: var(--sy-crema);
+}
+
+.tpl-tienda-sydney .sy-btn--outline-blanco {
+  border-color: #fff;
+  color: #fff;
+  background: transparent;
+}
+
+.tpl-tienda-sydney .sy-btn--outline-blanco:hover {
+  background: #fff;
+  color: var(--sy-tinta);
+}

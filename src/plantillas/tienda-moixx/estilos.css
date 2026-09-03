@@ -1,0 +1,112 @@
+@import url("https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;1,500&family=Poppins:wght@300;400;500;600;700&display=swap");
+
+.tpl-tienda-moixx {
+  --mx-crema: #f0ebdc;
+  --mx-crema-osc: #e6ded0;
+  --mx-tinta: #1c1a17;
+  --mx-gris: #757066;
+  --mx-linea: #ddd6c7;
+  --mx-rojo: #b3312c;
+  --mx-wa: #25d366;
+
+  --mx-serif: "Playfair Display", Georgia, "Times New Roman", serif;
+  --mx-font: "Poppins", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+  --mx-maxw: 1320px;
+
+  background: #fff;
+  color: var(--mx-tinta);
+  font-family: var(--mx-font);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+.tpl-tienda-moixx *,
+.tpl-tienda-moixx *::before,
+.tpl-tienda-moixx *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+.tpl-tienda-moixx h1,
+.tpl-tienda-moixx h2,
+.tpl-tienda-moixx h3,
+.tpl-tienda-moixx h4 {
+  line-height: 1.15;
+  color: var(--mx-tinta);
+  font-weight: 500;
+  font-family: var(--mx-serif);
+}
+
+.tpl-tienda-moixx img {
+  max-width: 100%;
+  display: block;
+}
+
+.tpl-tienda-moixx a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.tpl-tienda-moixx button {
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+  border: none;
+  background: none;
+}
+
+.tpl-tienda-moixx input {
+  font: inherit;
+}
+
+.tpl-tienda-moixx .mx-wrap {
+  max-width: var(--mx-maxw);
+  margin-inline: auto;
+  padding-inline: clamp(1rem, 3vw, 2.5rem);
+}
+
+.tpl-tienda-moixx .mx-seccion {
+  padding-block: clamp(2rem, 5vw, 3.5rem);
+}
+
+.tpl-tienda-moixx .mx-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.75rem;
+  font-family: var(--mx-font);
+  font-weight: 500;
+  font-size: 0.78rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  transition: background 0.15s ease, color 0.15s ease, opacity 0.15s ease;
+}
+
+.tpl-tienda-moixx .mx-btn--oscuro {
+  background: var(--mx-tinta);
+  color: #fff;
+}
+
+.tpl-tienda-moixx .mx-btn--oscuro:hover {
+  opacity: 0.85;
+}
+
+.tpl-tienda-moixx .mx-btn--claro {
+  background: #fff;
+  color: var(--mx-tinta);
+}
+
+.tpl-tienda-moixx .mx-btn--claro:hover {
+  background: var(--mx-crema);
+}
+
+.tpl-tienda-moixx .mx-link-subrayado {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.85rem;
+  border-bottom: 1px solid currentColor;
+  padding-bottom: 0.2rem;
+}

@@ -1,0 +1,42 @@
+---
+import { bannerPantalones, getMoixxImg } from '../datos/moixx.js';
+---
+
+<section class="mx-banner-full">
+  <img src={bannerPantalones.img ?? getMoixxImg(bannerPantalones.seed, 1600, 700)} alt={bannerPantalones.titulo} loading="lazy" />
+  <h2>{bannerPantalones.titulo}</h2>
+</section>
+
+<style>
+  .mx-banner-full {
+    position: relative;
+    min-height: clamp(320px, 45vw, 460px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .mx-banner-full img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .mx-banner-full::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.28);
+  }
+
+  .mx-banner-full h2 {
+    position: relative;
+    z-index: 1;
+    color: #fff;
+    text-align: center;
+    font-size: clamp(2.5rem, 6vw, 4.5rem);
+    line-height: 1.05;
+  }
+</style>

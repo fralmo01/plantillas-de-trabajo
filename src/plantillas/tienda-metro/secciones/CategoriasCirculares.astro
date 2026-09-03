@@ -1,14 +1,14 @@
 ---
-import { categoriasCirculares } from '../datos/metro.js';
+import { categoriasCirculares, getMetroImg } from '../datos/metro.js';
 ---
 
 <section class="tm-seccion tm-wrap">
   <ul class="tm-cats">
-    {categoriasCirculares.map((c: { t: string; seed: string }) => (
+    {categoriasCirculares.map((c: { t: string; seed: string; img?: string }) => (
       <li>
         <a href="#tabs" class="tm-cats__item">
           <span class="tm-cats__foto">
-            <img src={`https://picsum.photos/seed/${c.seed}/200/200`} alt={c.t} loading="lazy" />
+            <img src={c.img ?? getMetroImg(c.seed, 300, 300)} alt={c.t} loading="lazy" />
           </span>
           <span class="tm-cats__lbl">{c.t}</span>
         </a>

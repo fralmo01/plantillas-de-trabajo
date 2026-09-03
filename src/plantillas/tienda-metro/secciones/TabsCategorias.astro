@@ -1,5 +1,5 @@
 ---
-import { tabsCategorias } from '../datos/metro.js';
+import { tabsCategorias, getMetroImg } from '../datos/metro.js';
 ---
 
 <section class="tm-seccion tm-wrap" id="tabs">
@@ -12,11 +12,11 @@ import { tabsCategorias } from '../datos/metro.js';
       ))}
     </div>
     <div class="tm-tabs__panels">
-      {tabsCategorias.map((t: { t: string; items: { t: string; seed: string }[] }, i: number) => (
+      {tabsCategorias.map((t: { t: string; items: { t: string; seed: string; img?: string }[] }, i: number) => (
         <div class="tm-tabs__panel" data-panel={i} hidden={i !== 0}>
           {t.items.map((it) => (
             <a href="#" class="tm-tabs__card">
-              <img src={`https://picsum.photos/seed/${it.seed}/320/240`} alt={it.t} loading="lazy" />
+              <img src={it.img ?? getMetroImg(it.seed, 400, 300)} alt={it.t} loading="lazy" />
               <span>{it.t}</span>
             </a>
           ))}

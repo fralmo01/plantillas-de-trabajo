@@ -1,0 +1,37 @@
+<a href="#promo-dscto" class="sy-lateral sy-lateral--izq">5% de descuento</a>
+<a href="#promo-dscto" class="sy-lateral sy-lateral--der">Sin intereses</a>
+
+<style>
+  .sy-lateral {
+    position: fixed;
+    top: 50%;
+    writing-mode: vertical-rl;
+    background: var(--sy-crema);
+    border: 1px solid var(--sy-linea);
+    color: var(--sy-tinta);
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    padding: 0.9rem 0.5rem;
+    z-index: 60;
+  }
+
+  .sy-lateral--izq {
+    left: 0;
+    transform: translateY(-50%) rotate(180deg);
+    border-left: none;
+  }
+
+  .sy-lateral--der {
+    right: 0;
+    transform: translateY(-50%);
+    border-right: none;
+    background: #fff;
+  }
+
+  @media (max-width: 700px) {
+    .sy-lateral {
+      display: none;
+    }
+  }
+</style>

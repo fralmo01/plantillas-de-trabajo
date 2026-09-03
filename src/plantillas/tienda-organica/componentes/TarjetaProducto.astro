@@ -1,5 +1,5 @@
 ---
-import { soles } from '../datos/organica.js';
+import { soles, getOrganaImg } from '../datos/organica.js';
 
 interface Producto {
   nombre: string;
@@ -7,9 +7,10 @@ interface Producto {
   antes?: number;
   tag?: string;
   seed: string;
+  img?: string;
 }
 const { producto } = Astro.props as { producto: Producto };
-const img = `https://picsum.photos/seed/${producto.seed}/360/360`;
+const img = producto.img ?? getOrganaImg(producto.seed, 360, 360);
 ---
 
 <article class="or-prod" data-nombre={producto.nombre.toLowerCase()}>

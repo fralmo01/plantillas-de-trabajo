@@ -1,0 +1,95 @@
+---
+import { categoriasCirculares, getWongImg } from '../datos/wong.js';
+---
+
+<section class="wg-seccion wg-wrap">
+  <ul class="wg-cats">
+    <li>
+      <a href="#plus" class="wg-cats__item">
+        <span class="wg-cats__foto wg-cats__foto--plus">tienda.com<b>Plus</b></span>
+        <span class="wg-cats__lbl">tienda.com Plus</span>
+      </a>
+    </li>
+    {categoriasCirculares.map((c: { t: string; seed: string; img?: string }) => (
+      <li>
+        <a href="#tabs" class="wg-cats__item">
+          <span class="wg-cats__foto">
+            <img src={c.img ?? getWongImg(c.seed, 300, 300)} alt={c.t} loading="lazy" />
+          </span>
+          <span class="wg-cats__lbl">{c.t}</span>
+        </a>
+      </li>
+    ))}
+  </ul>
+</section>
+
+<style>
+  .wg-cats {
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(9, 1fr);
+    gap: 0.9rem;
+  }
+
+  .wg-cats__item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    text-align: center;
+  }
+
+  .wg-cats__foto {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    border-radius: 14px;
+    overflow: hidden;
+    background: var(--wg-suave);
+    display: block;
+  }
+
+  .wg-cats__foto img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.2s ease;
+  }
+
+  .wg-cats__item:hover .wg-cats__foto img {
+    transform: scale(1.06);
+  }
+
+  .wg-cats__foto--plus {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    background: var(--wg-negro);
+    color: #fff;
+    font-size: 0.68rem;
+    font-weight: 700;
+  }
+
+  .wg-cats__foto--plus b {
+    color: var(--wg-rosa);
+    font-size: 0.9rem;
+  }
+
+  .wg-cats__lbl {
+    font-size: 0.72rem;
+    font-weight: 600;
+    color: var(--wg-tinta);
+  }
+
+  @media (max-width: 960px) {
+    .wg-cats {
+      grid-template-columns: repeat(5, 1fr);
+    }
+  }
+
+  @media (max-width: 560px) {
+    .wg-cats {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+</style>

@@ -1,0 +1,254 @@
+---
+import { marca, footerCols, seoBloques } from '../datos/wong.js';
+---
+
+<div class="wg-news">
+  <div class="wg-wrap wg-news__inner">
+    <span>Suscribete al newsletter y recibe ofertas</span>
+    <form class="wg-news__form">
+      <input type="email" placeholder="Ingresa tu e-mail" aria-label="Correo electronico" />
+      <button type="submit" class="wg-btn wg-btn--outline">Suscribir</button>
+    </form>
+  </div>
+</div>
+
+<section class="wg-seo wg-wrap">
+  {seoBloques.map((b: { t: string; p: string }) => (
+    <div class="wg-seo__col">
+      <h3>{b.t}</h3>
+      <p>{b.p}</p>
+    </div>
+  ))}
+</section>
+
+<footer class="wg-foot">
+  <div class="wg-wrap wg-foot__grid">
+    <div class="wg-foot__marca">
+      <span class="wg-foot__logo">{marca.nombre}<b>{marca.sub}</b></span>
+      <div class="wg-foot__redes" aria-label="Redes sociales">
+        <a href="#" aria-label="Facebook">f</a>
+        <a href="#" aria-label="YouTube">&#9654;</a>
+        <a href="#" aria-label="Twitter">X</a>
+        <a href="#" aria-label="Instagram">&#9678;</a>
+      </div>
+      <a href="#" class="wg-foot__lr">
+        <span aria-hidden="true">&#128278;</span> Libro de Reclamaciones
+      </a>
+    </div>
+
+    {footerCols.map((col: { t: string; links: string[] }) => (
+      <nav class="wg-foot__col" aria-label={col.t}>
+        <h3>{col.t}</h3>
+        <ul>
+          {col.links.map((l: string) => <li><a href="#">{l}</a></li>)}
+        </ul>
+      </nav>
+    ))}
+
+    <div class="wg-foot__col">
+      <h3>Descarga nuestra app</h3>
+      <div class="wg-foot__badges">
+        <span class="wg-foot__badge">Google Play</span>
+        <span class="wg-foot__badge">App Store</span>
+      </div>
+      <h3 class="wg-foot__cont-t">Ayuda callcenter</h3>
+      <p class="wg-foot__cont">{marca.tel}</p>
+    </div>
+  </div>
+
+  <div class="wg-wrap wg-foot__base">
+    <span>Compras 100% seguras</span>
+    <span>Esta tienda usa Niubiz para realizar transacciones electronicas.</span>
+    <span>2026 {marca.nombre}, {marca.ciudad}</span>
+  </div>
+</footer>
+
+<style>
+  .wg-news {
+    background: var(--wg-amarillo);
+  }
+
+  .wg-news__inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding-block: 1.1rem;
+    flex-wrap: wrap;
+    font-weight: 700;
+    font-size: 0.85rem;
+  }
+
+  .wg-news__form {
+    display: flex;
+    gap: 0.5rem;
+  }
+
+  .wg-news__form input {
+    border: none;
+    border-radius: 6px;
+    padding: 0.55rem 0.9rem;
+    font-size: 0.82rem;
+    min-width: 240px;
+  }
+
+  .wg-seo {
+    padding-block: 2.25rem;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+  }
+
+  .wg-seo__col h3 {
+    font-size: 0.95rem;
+    margin-bottom: 0.6rem;
+    color: var(--wg-rojo);
+  }
+
+  .wg-seo__col p {
+    font-size: 0.8rem;
+    color: var(--wg-gris);
+    line-height: 1.6;
+  }
+
+  .wg-foot {
+    background: var(--wg-suave);
+    margin-top: 1rem;
+  }
+
+  .wg-foot__grid {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr 1fr 1fr 1.1fr;
+    gap: 2rem;
+    padding-block: 2.5rem 1.75rem;
+  }
+
+  .wg-foot__logo {
+    font-weight: 800;
+    font-size: 1.3rem;
+    color: var(--wg-rojo);
+    font-style: italic;
+  }
+
+  .wg-foot__logo b {
+    display: block;
+    font-size: 0.55rem;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--wg-tinta);
+    font-style: normal;
+  }
+
+  .wg-foot__redes {
+    display: flex;
+    gap: 0.4rem;
+    margin: 1rem 0;
+  }
+
+  .wg-foot__redes a {
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: #fff;
+    color: var(--wg-rojo);
+    font-weight: 700;
+    font-size: 0.75rem;
+  }
+
+  .wg-foot__lr {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    border: 1px solid var(--wg-linea);
+    background: #fff;
+    padding: 0.4rem 0.8rem;
+    border-radius: 6px;
+    font-size: 0.78rem;
+  }
+
+  .wg-foot__col h3 {
+    font-size: 0.8rem;
+    color: var(--wg-tinta);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    margin-bottom: 0.75rem;
+  }
+
+  .wg-foot__col ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .wg-foot__col a {
+    font-size: 0.8rem;
+    color: var(--wg-gris);
+  }
+
+  .wg-foot__col a:hover {
+    color: var(--wg-rojo);
+  }
+
+  .wg-foot__badges {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    margin-bottom: 1rem;
+  }
+
+  .wg-foot__badge {
+    background: #111;
+    color: #fff;
+    font-size: 0.7rem;
+    font-weight: 700;
+    padding: 0.4rem 0.7rem;
+    border-radius: 6px;
+    text-align: center;
+  }
+
+  .wg-foot__cont-t {
+    margin-top: 0.5rem;
+  }
+
+  .wg-foot__cont {
+    font-size: 0.85rem;
+    color: var(--wg-rojo);
+    font-weight: 700;
+  }
+
+  .wg-foot__base {
+    border-top: 1px solid var(--wg-linea);
+    padding-block: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    font-size: 0.72rem;
+    color: var(--wg-gris);
+    flex-wrap: wrap;
+  }
+
+  @media (max-width: 960px) {
+    .wg-foot__grid {
+      grid-template-columns: 1fr 1fr;
+    }
+    .wg-seo {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 520px) {
+    .wg-foot__grid {
+      grid-template-columns: 1fr;
+    }
+    .wg-foot__base {
+      flex-direction: column;
+      text-align: center;
+    }
+  }
+</style>

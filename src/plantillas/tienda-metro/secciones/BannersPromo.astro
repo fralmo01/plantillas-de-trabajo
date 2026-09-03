@@ -1,12 +1,12 @@
 ---
-import { bannersPromo } from '../datos/metro.js';
+import { bannersPromo, getMetroImg } from '../datos/metro.js';
 ---
 
 <section class="tm-seccion tm-wrap">
   <div class="tm-promo">
-    {bannersPromo.map((b: { titulo: string; sub: string; seed: string }) => (
+    {bannersPromo.map((b: { titulo: string; sub: string; seed: string; img?: string }) => (
       <a href="#tabs" class="tm-promo__card">
-        <img src={`https://picsum.photos/seed/${b.seed}/620/360`} alt={b.titulo} loading="lazy" />
+        <img src={b.img ?? getMetroImg(b.seed, 700, 400)} alt={b.titulo} loading="lazy" />
         <div class="tm-promo__tx">
           <strong>{b.titulo}</strong>
           <span>{b.sub}</span>

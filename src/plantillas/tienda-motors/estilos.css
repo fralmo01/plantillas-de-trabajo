@@ -20,7 +20,6 @@
   font-family: var(--tm-font);
   line-height: 1.55;
   -webkit-font-smoothing: antialiased;
-  overflow-x: hidden;
 }
 
 .tpl-tienda-motors *,

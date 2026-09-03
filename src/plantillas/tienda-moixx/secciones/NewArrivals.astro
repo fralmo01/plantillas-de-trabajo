@@ -1,0 +1,40 @@
+---
+import { newArrivals } from '../datos/moixx.js';
+import TarjetaProducto from '../componentes/TarjetaProducto.astro';
+---
+
+<section class="mx-seccion mx-wrap" id="new-arrivals">
+  <div class="mx-arrivals__cab">
+    <h2>New Arrivals</h2>
+    <a href="/plantillas/tienda-moixx/buscar/" class="mx-link-subrayado">Ver todo</a>
+  </div>
+
+  <div class="mx-arrivals__grid" data-buscable>
+    {newArrivals.map((p) => <TarjetaProducto producto={p} />)}
+  </div>
+</section>
+
+<style>
+  .mx-arrivals__cab {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    margin-bottom: 1.75rem;
+  }
+
+  .mx-arrivals__cab h2 {
+    font-size: 1.6rem;
+  }
+
+  .mx-arrivals__grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.75rem 1.25rem;
+  }
+
+  @media (max-width: 820px) {
+    .mx-arrivals__grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+</style>

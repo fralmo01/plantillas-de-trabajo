@@ -1,5 +1,5 @@
 ---
-import { categorias } from '../datos/organica.js';
+import { categorias, getOrganaImg } from '../datos/organica.js';
 
 const fondos = ['#8b7dd8', '#e8974a', '#3fc9a8', '#e88fb0'];
 ---
@@ -7,9 +7,9 @@ const fondos = ['#8b7dd8', '#e8974a', '#3fc9a8', '#e88fb0'];
 <section class="or-seccion or-wrap">
   <h2 class="or-titulo">Nuestras categorias</h2>
   <div class="or-catg">
-    {categorias.map((c: { t: string; seed: string }, i: number) => (
+    {categorias.map((c: { t: string; seed: string; img?: string }, i: number) => (
       <a href="#promos" class="or-catg__card" style={`background:${fondos[i % fondos.length]}`}>
-        <img src={`https://picsum.photos/seed/${c.seed}/380/420`} alt={c.t} loading="lazy" />
+        <img src={c.img ?? getOrganaImg(c.seed, 400, 500)} alt={c.t} loading="lazy" />
         <span>{c.t}</span>
       </a>
     ))}

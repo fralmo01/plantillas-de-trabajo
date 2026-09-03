@@ -1,5 +1,5 @@
 ---
-import { heroSlides, soles } from '../datos/metro.js';
+import { heroSlides, soles, getMetroImg } from '../datos/metro.js';
 
 interface Slide {
   kicker: string;
@@ -10,6 +10,7 @@ interface Slide {
   cuota: number;
   seed: string;
   marcaProd: string;
+  img?: string;
 }
 ---
 
@@ -19,7 +20,7 @@ interface Slide {
       <article class="tm-hero__slide">
         <div class="tm-wrap tm-hero__inner">
           <div class="tm-hero__foto">
-            <img src={`https://picsum.photos/seed/${s.seed}/700/500`} alt={s.titulo} loading={i === 0 ? 'eager' : 'lazy'} />
+            <img src={s.img ?? getMetroImg(s.seed, 900, 600)} alt={s.titulo} loading={i === 0 ? 'eager' : 'lazy'} />
           </div>
           <div class="tm-hero__texto">
             <span class="tm-hero__kicker">{s.kicker}</span>

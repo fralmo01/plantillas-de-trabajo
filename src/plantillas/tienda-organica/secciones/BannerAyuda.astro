@@ -1,10 +1,10 @@
 ---
-import { bannerAyuda, soles } from '../datos/organica.js';
+import { bannerAyuda, soles, getOrganaImg } from '../datos/organica.js';
 ---
 
 <section class="or-seccion or-wrap">
   <a href="#promos" class="or-banner">
-    <img src={`https://picsum.photos/seed/${bannerAyuda.seed}/700/400`} alt={bannerAyuda.destacado} loading="lazy" />
+    <img src={bannerAyuda.img ?? getOrganaImg(bannerAyuda.seed, 800, 500)} alt={bannerAyuda.destacado} loading="lazy" />
     <div class="or-banner__tx">
       <h2>{bannerAyuda.titulo}</h2>
       <span class="or-banner__pill">{bannerAyuda.destacado}</span>

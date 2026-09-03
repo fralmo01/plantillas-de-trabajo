@@ -1,0 +1,49 @@
+---
+import TarjetaProducto from '../componentes/TarjetaProducto.astro';
+
+interface Producto {
+  nombre: string;
+  precio: number;
+  antes?: number;
+  tag?: string;
+  seed: string;
+}
+interface Banner {
+  kicker: string;
+  titulo: string;
+  cta: string;
+}
+const { id, banner, productos, oscuro } = Astro.props as { id: string; banner: Banner; productos: Producto[]; oscuro?: boolean };
+---
+
+<section class="wg-seccion wg-wrap">
+  <div class="wg-carr">
+    <aside class={`wg-carr__banner${oscuro ? ' wg-carr__banner--oscuro' : ''}`}>
+      <span>{banner.kicker}</span>
+      <h2>{banner.titulo}</h2>
+      <a href="#tabs" class="wg-btn wg-btn--claro">{banner.cta}</a>
+    </aside>
+
+    <div class="wg-carr__area">
+      <button type="button" class="wg-flecha wg-carr__prev" data-dir="-1" aria-label="Anterior">&lsaquo;</button>
+      <div class="wg-fila wg-carr__row" id={`wg-row-${id}`} data-buscable>
+        {productos.map((p) => (
+          <TarjetaProducto producto={p} />
+        ))}
+      </div>
+      <button type="button" class="wg-flecha wg-carr__next" data-dir="1" aria-label="Siguiente">&rsaquo;</button>
+    </div>
+  </div>
+</section>
+
+<script>
+  document.querySelectorAll<HTMLElement>('.wg-carr__area').forEach((area) => {
+    const row = area.querySelector<HTMLElement>('.wg-carr__row');
+    area.querySelectorAll<HTMLButtonElement>('[data-dir]').forEach((b) => {
+      b.addEventListener('click', () => {
+        const dir = Number(b.dataset.dir || '1');
+        row?.scrollBy({ left: dir * 300, behavior: 'smooth' });
+      });
+    });
+  });
+</script>

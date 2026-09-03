@@ -1,12 +1,12 @@
 ---
-import { productosSaludables } from '../datos/organica.js';
+import { productosSaludables, getOrganaImg } from '../datos/organica.js';
 ---
 
 <section class="or-seccion or-wrap">
   <div class="or-salud">
-    {productosSaludables.map((c: { t: string; seed: string }) => (
+    {productosSaludables.map((c: { t: string; seed: string; img?: string }) => (
       <a href="#promos" class="or-salud__card">
-        <img src={`https://picsum.photos/seed/${c.seed}/380/300`} alt={c.t} loading="lazy" />
+        <img src={c.img ?? getOrganaImg(c.seed, 500, 400)} alt={c.t} loading="lazy" />
         <span class="or-salud__pill">{c.t}</span>
       </a>
     ))}

@@ -1,0 +1,20 @@
+---
+import MarcoTienda from './componentes/MarcoTienda.astro';
+import GridCategorias from './componentes/GridCategorias.astro';
+
+import HeroCollage from './secciones/HeroCollage.astro';
+import BannerPantalones from './secciones/BannerPantalones.astro';
+import BannerEstilo from './secciones/BannerEstilo.astro';
+import NewArrivals from './secciones/NewArrivals.astro';
+
+import { gridsCategoria } from './datos/moixx.js';
+---
+
+<MarcoTienda>
+  <HeroCollage />
+  <GridCategorias id="grid-1" items={gridsCategoria[0]} />
+  <BannerPantalones />
+  <GridCategorias items={gridsCategoria[1]} />
+  <BannerEstilo />
+  <NewArrivals />
+</MarcoTienda>

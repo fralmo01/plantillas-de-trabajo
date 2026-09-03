@@ -22,7 +22,6 @@
   font-family: var(--ca-sans);
   line-height: 1.65;
   -webkit-font-smoothing: antialiased;
-  overflow-x: hidden;
 }
 
 .tpl-corporativo-abogados *,

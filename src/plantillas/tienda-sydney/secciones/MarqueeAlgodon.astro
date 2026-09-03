@@ -1,0 +1,57 @@
+---
+import { marqueeTexto } from '../datos/sydney.js';
+
+const items = Array(8).fill(marqueeTexto).flat();
+---
+
+<section class="sy-marquee">
+  <div class="sy-marquee__track">
+    {[...items, ...items].map((t: string) => (
+      <span class="sy-marquee__item">
+        {t}
+        <span class="sy-marquee__dot" aria-hidden="true">&#10037;</span>
+      </span>
+    ))}
+  </div>
+</section>
+
+<style>
+  .sy-marquee {
+    overflow: hidden;
+    padding-block: 1.5rem;
+    border-block: 1px solid var(--sy-linea);
+  }
+
+  .sy-marquee__track {
+    display: flex;
+    width: max-content;
+    animation: sy-marquee-mover 26s linear infinite;
+  }
+
+  .sy-marquee__item {
+    display: inline-flex;
+    align-items: center;
+    gap: 1.5rem;
+    font-size: clamp(1.5rem, 4vw, 2.5rem);
+    font-weight: 800;
+    text-transform: uppercase;
+    color: var(--sy-tinta);
+    padding-inline: 0.75rem;
+    white-space: nowrap;
+  }
+
+  .sy-marquee__item:nth-child(even) {
+    -webkit-text-stroke: 1.5px var(--sy-tinta);
+    color: transparent;
+  }
+
+  .sy-marquee__dot {
+    color: var(--sy-tinta);
+    font-size: 1rem;
+  }
+
+  @keyframes sy-marquee-mover {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+</style>

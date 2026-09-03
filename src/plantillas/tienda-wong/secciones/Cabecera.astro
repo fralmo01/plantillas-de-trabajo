@@ -1,0 +1,408 @@
+---
+import { marca, menuCategorias } from '../datos/wong.js';
+
+const base = '/plantillas/tienda-wong';
+---
+
+<header class="wg-hdr" id="top">
+  <div class="wg-wrap wg-hdr__row">
+    <a href={`${base}/`} class="wg-logo" aria-label={`${marca.nombre} ${marca.sub}`}>
+      <span class="wg-logo__punto" aria-hidden="true"></span>
+      <span class="wg-logo__tx">{marca.nombre}<b>{marca.sub}</b></span>
+    </a>
+
+    <div class="wg-menu">
+      <button type="button" class="wg-menu__btn" id="wg-menu-btn" aria-expanded="false" aria-controls="wg-mega">
+        Categorias
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M6 9l6 6 6-6"></path></svg>
+      </button>
+
+      <div class="wg-mega" id="wg-mega" hidden>
+        <ul class="wg-mega__cats">
+          {menuCategorias.map((m: { cat: string; sub: string[] }, i: number) => (
+            <li>
+              <button type="button" class={`wg-mega__cat${i === 0 ? ' is-on' : ''}`} data-cat={m.cat}>
+                <span class="wg-mega__ico" aria-hidden="true">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6h15l-1.5 9h-12z"></path><circle cx="9" cy="20" r="1.4"></circle><circle cx="17" cy="20" r="1.4"></circle></svg>
+                </span>
+                {m.cat}
+              </button>
+            </li>
+          ))}
+        </ul>
+        <div class="wg-mega__panel">
+          {menuCategorias.map((m: { cat: string; sub: string[] }, i: number) => (
+            <div class="wg-mega__sub" data-for={m.cat} hidden={i !== 0}>
+              <h3>{m.cat}</h3>
+              <ul>
+                {m.sub.map((s: string) => <li><a href={`${base}/buscar/?q=${encodeURIComponent(s.toLowerCase())}`}>{s}</a></li>)}
+              </ul>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+
+    <form class="wg-buscar" id="wg-buscar" role="search" action={`${base}/buscar/`} method="get">
+      <input type="search" name="q" id="wg-buscar-input" placeholder="Que buscas hoy?" aria-label="Buscar productos" autocomplete="off" />
+      <button type="submit" aria-label="Buscar">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+          <circle cx="11" cy="11" r="7"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+        </svg>
+      </button>
+    </form>
+
+    <div class="wg-hdr__acc">
+      <a href={`${base}/#tabs`} class="wg-hdr__ico" aria-label="Mis listas">
+        <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 3h12v18l-6-3-6 3z"></path></svg>
+        <span>Mis listas</span>
+      </a>
+      <a href={`${base}/#tabs`} class="wg-hdr__ico" aria-label="Rastrea tu pedido">
+        <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 7h13v10H3zM16 10h4l1 3v4h-5"></path><circle cx="7" cy="18" r="1.6"></circle><circle cx="17.5" cy="18" r="1.6"></circle></svg>
+        <span>Rastrea tu pedido</span>
+      </a>
+      <button type="button" class="wg-hdr__ico wg-hdr__cart" id="wg-cart" aria-label="Ver carrito">
+        <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6h15l-1.5 9h-12z"></path><path d="M6 6 5 3H2"></path><circle cx="9" cy="20" r="1.6"></circle><circle cx="18" cy="20" r="1.6"></circle></svg>
+        <span>Carrito</span>
+        <span class="wg-hdr__badge" id="wg-cart-count" hidden>0</span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<script>
+  const btn = document.getElementById('wg-menu-btn');
+  const mega = document.getElementById('wg-mega');
+  const cats = Array.from(document.querySelectorAll<HTMLButtonElement>('.wg-mega__cat'));
+  const subs = Array.from(document.querySelectorAll<HTMLElement>('.wg-mega__sub'));
+
+  function abrir(v: boolean) {
+    if (!mega || !btn) return;
+    mega.hidden = !v;
+    btn.classList.toggle('is-active', v);
+    btn.setAttribute('aria-expanded', String(v));
+  }
+
+  btn?.addEventListener('click', (e) => {
+    e.stopPropagation();
+    abrir(mega?.hidden ?? true);
+  });
+
+  cats.forEach((c) => {
+    const activar = () => {
+      cats.forEach((x) => x.classList.toggle('is-on', x === c));
+      subs.forEach((s) => (s.hidden = s.dataset.for !== c.dataset.cat));
+    };
+    c.addEventListener('mouseenter', activar);
+    c.addEventListener('click', activar);
+  });
+
+  document.addEventListener('click', (e) => {
+    const t = e.target as Node;
+    if (mega && btn && !mega.contains(t) && !btn.contains(t)) abrir(false);
+  });
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') abrir(false);
+  });
+  mega?.querySelectorAll('a').forEach((a) => a.addEventListener('click', () => abrir(false)));
+
+  const input = document.getElementById('wg-buscar-input') as HTMLInputElement | null;
+  const qActual = new URLSearchParams(location.search).get('q');
+  if (input && qActual) input.value = qActual;
+
+  const badge = document.getElementById('wg-cart-count');
+  let total = 0;
+
+  document.addEventListener('click', (e) => {
+    const el = e.target as HTMLElement;
+
+    const step = el.closest<HTMLButtonElement>('.wg-qty__b');
+    if (step) {
+      const cont = step.closest('.wg-prod__qty');
+      const n = cont?.querySelector<HTMLElement>('.wg-qty__n');
+      if (n) {
+        const val = Math.max(1, (parseInt(n.textContent || '1', 10) || 1) + Number(step.dataset.step));
+        n.textContent = String(val);
+      }
+      return;
+    }
+
+    const add = el.closest<HTMLButtonElement>('.wg-prod__add');
+    if (add) {
+      const card = add.closest('.wg-prod');
+      const n = card?.querySelector<HTMLElement>('.wg-qty__n');
+      total += parseInt(n?.textContent || '1', 10) || 1;
+      if (badge) {
+        badge.textContent = String(total);
+        badge.hidden = false;
+      }
+      const prev = add.textContent;
+      add.textContent = 'Agregado!';
+      add.classList.add('is-ok');
+      window.setTimeout(() => {
+        add.textContent = prev;
+        add.classList.remove('is-ok');
+      }, 1100);
+    }
+  });
+</script>
+
+<style>
+  .wg-hdr {
+    background: #fff;
+    border-bottom: 1px solid var(--wg-linea);
+    position: sticky;
+    top: 0;
+    z-index: 80;
+  }
+
+  .wg-hdr__row {
+    display: flex;
+    align-items: center;
+    gap: clamp(0.6rem, 2vw, 1.5rem);
+    padding-block: 0.75rem;
+  }
+
+  .wg-logo {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    flex-shrink: 0;
+  }
+
+  .wg-logo__punto {
+    width: 0.5rem;
+    height: 0.5rem;
+    border-radius: 50%;
+    background: var(--wg-rojo);
+  }
+
+  .wg-logo__tx {
+    font-weight: 800;
+    font-size: 1.5rem;
+    color: var(--wg-rojo);
+    line-height: 1;
+    font-style: italic;
+  }
+
+  .wg-logo__tx b {
+    display: block;
+    font-size: 0.55rem;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--wg-tinta);
+    font-style: normal;
+    margin-top: 0.1rem;
+  }
+
+  .wg-menu {
+    position: relative;
+    flex-shrink: 0;
+  }
+
+  .wg-menu__btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    font-weight: 700;
+    font-size: 0.85rem;
+    color: var(--wg-tinta);
+    padding: 0.5rem 0.25rem;
+  }
+
+  .wg-menu__btn.is-active svg {
+    transform: rotate(180deg);
+  }
+
+  .wg-menu__btn svg {
+    transition: transform 0.15s ease;
+  }
+
+  .wg-buscar {
+    flex: 1;
+    max-width: 560px;
+    display: flex;
+    align-items: center;
+    background: #fff;
+    border: 1.5px solid var(--wg-linea);
+    border-radius: var(--wg-pill);
+    padding: 0.15rem 0.3rem 0.15rem 1rem;
+  }
+
+  .wg-buscar:focus-within {
+    border-color: var(--wg-rojo);
+  }
+
+  .wg-buscar input {
+    flex: 1;
+    border: none;
+    outline: none;
+    background: none;
+    padding: 0.55rem 0;
+    font-size: 0.85rem;
+  }
+
+  .wg-buscar button {
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    background: var(--wg-rojo);
+    color: #fff;
+    display: grid;
+    place-items: center;
+    flex-shrink: 0;
+  }
+
+  .wg-hdr__acc {
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+    flex-shrink: 0;
+  }
+
+  .wg-hdr__ico {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.15rem;
+    color: var(--wg-tinta);
+    font-size: 0.62rem;
+    font-weight: 600;
+  }
+
+  .wg-hdr__ico:hover {
+    color: var(--wg-rojo);
+  }
+
+  .wg-hdr__badge[hidden] {
+    display: none;
+  }
+
+  .wg-hdr__badge {
+    position: absolute;
+    top: -6px;
+    right: -8px;
+    min-width: 16px;
+    height: 16px;
+    padding: 0 4px;
+    border-radius: var(--wg-pill);
+    background: var(--wg-rojo);
+    color: #fff;
+    font-size: 0.6rem;
+    font-weight: 700;
+    display: grid;
+    place-items: center;
+  }
+
+  .wg-mega {
+    position: absolute;
+    top: calc(100% + 0.75rem);
+    left: 0;
+    width: min(760px, 90vw);
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 24px 48px -20px rgba(0, 0, 0, 0.35);
+    display: grid;
+    grid-template-columns: 230px 1fr;
+    z-index: 90;
+    overflow: hidden;
+  }
+
+  .wg-mega[hidden] {
+    display: none;
+  }
+
+  .wg-mega__cats {
+    list-style: none;
+    background: var(--wg-suave);
+    padding: 0.6rem;
+  }
+
+  .wg-mega__cat {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.55rem 0.6rem;
+    border-radius: 8px;
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: var(--wg-tinta);
+    text-align: left;
+  }
+
+  .wg-mega__ico {
+    color: var(--wg-gris);
+    flex-shrink: 0;
+    display: grid;
+    place-items: center;
+  }
+
+  .wg-mega__cat:hover,
+  .wg-mega__cat.is-on {
+    background: #fff;
+    color: var(--wg-rojo);
+    box-shadow: 0 2px 8px -4px rgba(0, 0, 0, 0.25);
+  }
+
+  .wg-mega__cat.is-on .wg-mega__ico,
+  .wg-mega__cat:hover .wg-mega__ico {
+    color: var(--wg-rojo);
+  }
+
+  .wg-mega__panel {
+    padding: 1.25rem 1.5rem;
+  }
+
+  .wg-mega__sub h3 {
+    font-size: 0.95rem;
+    color: var(--wg-rojo);
+    margin-bottom: 0.75rem;
+  }
+
+  .wg-mega__sub ul {
+    list-style: none;
+    columns: 2;
+    column-gap: 1.5rem;
+  }
+
+  .wg-mega__sub li {
+    margin-bottom: 0.6rem;
+    break-inside: avoid;
+  }
+
+  .wg-mega__sub a {
+    font-size: 0.82rem;
+    color: var(--wg-gris);
+  }
+
+  .wg-mega__sub a:hover {
+    color: var(--wg-rojo);
+  }
+
+  @media (max-width: 960px) {
+    .wg-buscar {
+      order: 3;
+      flex-basis: 100%;
+      max-width: none;
+    }
+    .wg-hdr__row {
+      flex-wrap: wrap;
+    }
+    .wg-hdr__ico span {
+      display: none;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .wg-mega {
+      grid-template-columns: 1fr;
+      width: 92vw;
+    }
+    .wg-mega__sub ul {
+      columns: 1;
+    }
+  }
+</style>

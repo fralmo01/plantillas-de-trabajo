@@ -1,12 +1,12 @@
 ---
-import { bannersDuo } from '../datos/organica.js';
+import { bannersDuo, getOrganaImg } from '../datos/organica.js';
 ---
 
 <section class="or-seccion or-wrap">
   <div class="or-duo">
-    {bannersDuo.map((b: { titulo: string; sub: string; seed: string }, i: number) => (
+    {bannersDuo.map((b: { titulo: string; sub: string; seed: string; img?: string }, i: number) => (
       <a href="#promos" class={`or-duo__card${i === 1 ? ' is-claro' : ''}`}>
-        <img src={`https://picsum.photos/seed/${b.seed}/620/360`} alt={b.titulo} loading="lazy" />
+        <img src={b.img ?? getOrganaImg(b.seed, 700, 400)} alt={b.titulo} loading="lazy" />
         <div class="or-duo__tx">
           <strong>{b.titulo}</strong>
           <span>{b.sub}</span>

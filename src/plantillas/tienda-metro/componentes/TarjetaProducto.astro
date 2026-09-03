@@ -1,5 +1,5 @@
 ---
-import { soles } from '../datos/metro.js';
+import { soles, getMetroImg } from '../datos/metro.js';
 
 interface Producto {
   nombre: string;
@@ -7,9 +7,10 @@ interface Producto {
   antes?: number;
   tag?: string;
   seed: string;
+  img?: string;
 }
 const { producto } = Astro.props as { producto: Producto };
-const img = `https://picsum.photos/seed/${producto.seed}/360/360`;
+const img = producto.img ?? getMetroImg(producto.seed, 360, 360);
 ---
 
 <article class="tm-prod" data-nombre={producto.nombre.toLowerCase()} data-precio={producto.precio}>

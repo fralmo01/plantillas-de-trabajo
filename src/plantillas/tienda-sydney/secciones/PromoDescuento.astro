@@ -1,0 +1,68 @@
+---
+import { promoDscto, getSydneyImg } from '../datos/sydney.js';
+---
+
+<section class="sy-promo" id="promo-dscto">
+  <div class="sy-promo__foto">
+    <img src={promoDscto.img ?? getSydneyImg(promoDscto.seed, 900, 600)} alt="Descuentos de temporada" loading="lazy" />
+  </div>
+  <div class="sy-promo__tx">
+    <span>Hasta</span>
+    <strong>{promoDscto.dscto} DSCTO</strong>
+    <p>{promoDscto.nota}</p>
+    <p class="sy-promo__nota">{promoDscto.sub}</p>
+    <a href="/plantillas/tienda-sydney/buscar/" class="sy-btn sy-btn--outline-blanco">{promoDscto.cta}</a>
+  </div>
+</section>
+
+<style>
+  .sy-promo {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .sy-promo__foto {
+    aspect-ratio: 4 / 3;
+  }
+
+  .sy-promo__foto img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .sy-promo__tx {
+    background: var(--sy-rojo);
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    gap: 0.5rem;
+    padding: 2.5rem;
+  }
+
+  .sy-promo__tx span {
+    font-size: 0.85rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .sy-promo__tx strong {
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 800;
+  }
+
+  .sy-promo__nota {
+    font-size: 0.85rem;
+    max-width: 26ch;
+    margin-bottom: 0.75rem;
+  }
+
+  @media (max-width: 760px) {
+    .sy-promo {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

@@ -1,0 +1,239 @@
+---
+import { marca, footerCols, beneficios } from '../datos/sydney.js';
+---
+
+<section class="sy-beneficios">
+  <div class="sy-wrap sy-beneficios__grid">
+    {beneficios.map((b: { t: string; d: string }, i: number) => (
+      <div class="sy-beneficios__item">
+        <span class="sy-beneficios__ico" aria-hidden="true">
+          {i === 0 && <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="1" y="7" width="14" height="10"></rect><path d="M15 10h4l3 3v4h-7z"></path><circle cx="6" cy="19" r="1.6"></circle><circle cx="18" cy="19" r="1.6"></circle></svg>}
+          {i === 1 && <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="m12 2 8 3v6c0 5-3.5 8.5-8 11-4.5-2.5-8-6-8-11V5z"></path><path d="m9 12 2 2 4-4"></path></svg>}
+          {i === 2 && <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M17 2l4 4-4 4"></path><path d="M21 6H9a4 4 0 0 0-4 4v1"></path><path d="M7 22l-4-4 4-4"></path><path d="M3 18h12a4 4 0 0 0 4-4v-1"></path></svg>}
+          {i === 3 && <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="10"></circle><path d="M9.1 9a3 3 0 0 1 5.8 1c0 2-3 2-3 4"></path><circle cx="12" cy="17" r="0.3"></circle></svg>}
+        </span>
+        <div>
+          <strong>{b.t}</strong>
+          <p>{b.d}</p>
+        </div>
+      </div>
+    ))}
+  </div>
+</section>
+
+<footer class="sy-foot">
+  <div class="sy-wrap sy-foot__top">
+    <div class="sy-foot__marca">
+      <span class="sy-foot__logo">{marca.nombre}</span>
+      <span class="sy-foot__sub">{marca.sub}</span>
+    </div>
+    <p class="sy-foot__tag">Grupo tienda.com, desde {marca.desde}. Calidad, etica y tradicion en cada prenda.</p>
+  </div>
+
+  <div class="sy-wrap sy-foot__grid">
+    <div class="sy-foot__redes">
+      <a href="#" aria-label="Facebook">f</a>
+      <a href="#" aria-label="Instagram">&#9678;</a>
+    </div>
+
+    {footerCols.map((col: { t: string; links: string[] }) => (
+      <nav class="sy-foot__col" aria-label={col.t}>
+        <h3>{col.t}</h3>
+        <ul>
+          {col.links.map((l: string) => <li><a href="#top">{l}</a></li>)}
+        </ul>
+      </nav>
+    ))}
+
+    <div class="sy-foot__col">
+      <h3>Suscribete</h3>
+      <form class="sy-foot__news" onsubmit="return false">
+        <input type="email" placeholder="Email" aria-label="Correo electronico" />
+        <button type="submit">Suscribirme</button>
+      </form>
+      <a href="#top" class="sy-foot__libro">Libro de Reclamaciones</a>
+    </div>
+  </div>
+
+  <div class="sy-wrap sy-foot__base">
+    <span>&copy; 2026 {marca.nombre}. Todos los derechos reservados.</span>
+  </div>
+</footer>
+
+<style>
+  .sy-beneficios {
+    background: var(--sy-tinta);
+    color: #fff;
+  }
+
+  .sy-beneficios__grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.5rem;
+    padding-block: 2rem;
+  }
+
+  .sy-beneficios__item {
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+  }
+
+  .sy-beneficios__ico {
+    width: 46px;
+    height: 46px;
+    border-radius: 50%;
+    border: 1.5px solid rgba(255, 255, 255, 0.4);
+    display: grid;
+    place-items: center;
+    flex-shrink: 0;
+  }
+
+  .sy-beneficios__item strong {
+    display: block;
+    font-size: 0.88rem;
+    margin-bottom: 0.15rem;
+  }
+
+  .sy-beneficios__item p {
+    font-size: 0.75rem;
+    color: rgba(255, 255, 255, 0.7);
+  }
+
+  .sy-foot {
+    background: var(--sy-crema);
+  }
+
+  .sy-foot__top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1rem;
+    padding-block: 2rem 1rem;
+  }
+
+  .sy-foot__marca {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .sy-foot__logo {
+    font-size: 1.6rem;
+    font-weight: 700;
+  }
+
+  .sy-foot__sub {
+    font-size: 0.55rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--sy-gris);
+  }
+
+  .sy-foot__tag {
+    font-size: 0.9rem;
+    max-width: 28ch;
+  }
+
+  .sy-foot__grid {
+    display: grid;
+    grid-template-columns: auto 1fr 1fr 1.2fr;
+    gap: 2rem;
+    padding-block: 1.5rem 2.5rem;
+  }
+
+  .sy-foot__redes {
+    display: flex;
+    gap: 0.5rem;
+    align-items: flex-start;
+  }
+
+  .sy-foot__redes a {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background: #fff;
+    display: grid;
+    place-items: center;
+    font-weight: 700;
+    font-size: 0.85rem;
+  }
+
+  .sy-foot__col h3 {
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    margin-bottom: 0.9rem;
+  }
+
+  .sy-foot__col ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.55rem;
+  }
+
+  .sy-foot__col a {
+    font-size: 0.82rem;
+    color: var(--sy-gris);
+  }
+
+  .sy-foot__col a:hover {
+    color: var(--sy-tinta);
+  }
+
+  .sy-foot__news {
+    display: flex;
+    margin-bottom: 1rem;
+  }
+
+  .sy-foot__news input {
+    flex: 1;
+    border: 1.5px solid var(--sy-linea);
+    background: #fff;
+    padding: 0.55rem 0.8rem;
+    font-size: 0.8rem;
+  }
+
+  .sy-foot__news button {
+    background: var(--sy-tinta);
+    color: #fff;
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    padding: 0 1rem;
+  }
+
+  .sy-foot__libro {
+    display: inline-block;
+    border: 1.5px solid var(--sy-tinta);
+    padding: 0.4rem 0.9rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+  }
+
+  .sy-foot__base {
+    border-top: 1px solid var(--sy-linea);
+    padding-block: 1.25rem;
+    font-size: 0.75rem;
+    color: var(--sy-gris);
+  }
+
+  @media (max-width: 900px) {
+    .sy-beneficios__grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    .sy-foot__grid {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  @media (max-width: 520px) {
+    .sy-beneficios__grid {
+      grid-template-columns: 1fr;
+    }
+    .sy-foot__grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

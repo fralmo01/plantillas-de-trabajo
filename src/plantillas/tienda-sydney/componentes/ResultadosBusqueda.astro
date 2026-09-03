@@ -1,0 +1,250 @@
+---
+import Filtros from './Filtros.astro';
+import TarjetaProducto from './TarjetaProducto.astro';
+import { catalogo, ordenarPor, sugerenciasBusqueda } from '../datos/sydney.js';
+
+interface Producto {
+  nombre: string;
+  precio: number;
+  antes?: number;
+  tag?: string;
+  seed: string;
+  categoria: string;
+  genero: string;
+  tags?: string[];
+}
+const base = '/plantillas/tienda-sydney';
+const productos = catalogo as Producto[];
+const heno = (p: Producto) => [p.nombre, p.categoria, p.genero, ...(p.tags ?? [])].join(' ').toLowerCase();
+---
+
+<section class="sy-res sy-wrap">
+  <nav class="sy-res__migas" aria-label="Migas de pan">
+    <a href={`${base}/`}>Home</a>
+    <span>&rsaquo;</span>
+    <span id="sy-res-miga">busqueda</span>
+  </nav>
+
+  <div class="sy-res__top">
+    <h1 id="sy-res-titulo">Resultados</h1>
+    <label class="sy-res__orden">
+      <span>Ordenar:</span>
+      <select id="sy-res-orden">
+        {ordenarPor.map((o: string) => <option>{o}</option>)}
+      </select>
+    </label>
+  </div>
+
+  <button class="sy-res__toggle" type="button" id="sy-toggle-filtros">Filtros</button>
+
+  <div class="sy-res__layout">
+    <Filtros />
+
+    <div class="sy-res__grid-wrap">
+      <p class="sy-res__conteo">Estas viendo <b id="sy-res-n">0</b> de {productos.length} productos</p>
+
+      <div class="sy-res__vacio" id="sy-res-vacio" hidden>
+        <p>No encontramos productos para <b id="sy-res-vacio-q"></b>.</p>
+        <p class="sy-res__prueba">Prueba buscando:</p>
+        <div class="sy-res__sugs">
+          {sugerenciasBusqueda.map((s: string) => (
+            <a href={`${base}/buscar/?q=${encodeURIComponent(s)}`} class="sy-btn sy-btn--claro">{s}</a>
+          ))}
+        </div>
+      </div>
+
+      <div class="sy-res__grid" id="sy-res-grid">
+        {productos.map((p) => (
+          <div data-item data-heno={heno(p)} data-categoria={p.categoria} data-genero={p.genero} data-precio={p.precio}>
+            <TarjetaProducto producto={p} />
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  const norm = (s: string) => (s ?? '').toString().toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '');
+
+  const termino = (new URLSearchParams(location.search).get('q') ?? '').trim();
+  const items = Array.from(document.querySelectorAll<HTMLElement>('[data-item]'));
+
+  const migaEl = document.getElementById('sy-res-miga');
+  const tituloEl = document.getElementById('sy-res-titulo');
+  const nEl = document.getElementById('sy-res-n');
+  const vacio = document.getElementById('sy-res-vacio') as HTMLElement | null;
+  const vacioQ = document.getElementById('sy-res-vacio-q');
+  const grid = document.getElementById('sy-res-grid') as HTMLElement | null;
+
+  if (migaEl) migaEl.textContent = termino || 'todos los productos';
+  if (tituloEl) tituloEl.textContent = termino ? `Resultados para "${termino}"` : 'Todos los productos';
+  if (vacioQ) vacioQ.textContent = `"${termino}"`;
+
+  function checkboxesActivos(nombre: string) {
+    return Array.from(document.querySelectorAll<HTMLInputElement>(`input[name="${nombre}"]:checked`)).map((i) => i.value);
+  }
+
+  function aplicar() {
+    const palabras = norm(termino).split(/\s+/).filter(Boolean);
+    const generos = checkboxesActivos('genero');
+    const cats = checkboxesActivos('categoria');
+
+    let visibles = 0;
+    for (const it of items) {
+      const heno = norm(it.dataset.heno || '');
+      const nombreOk = palabras.length === 0 || palabras.every((w) => heno.includes(w));
+      const generoOk = generos.length === 0 || generos.includes(it.dataset.genero || '');
+      const catOk = cats.length === 0 || cats.includes(it.dataset.categoria || '');
+      const ok = nombreOk && generoOk && catOk;
+      it.hidden = !ok;
+      if (ok) visibles++;
+    }
+    if (nEl) nEl.textContent = String(visibles);
+    if (vacio) vacio.hidden = visibles > 0;
+    if (grid) grid.hidden = visibles === 0;
+  }
+
+  document.querySelectorAll<HTMLInputElement>('.sy-filtros input[type="checkbox"]').forEach((cb) => {
+    cb.addEventListener('change', aplicar);
+  });
+
+  const ordenSel = document.getElementById('sy-res-orden') as HTMLSelectElement | null;
+  ordenSel?.addEventListener('change', () => {
+    if (!grid) return;
+    const orden = ordenSel.value;
+    const visibles = items.filter((it) => !it.hidden);
+    const precio = (it: HTMLElement) => Number(it.dataset.precio || '0');
+    if (orden === 'Menor precio') visibles.sort((a, b) => precio(a) - precio(b));
+    if (orden === 'Mayor precio') visibles.sort((a, b) => precio(b) - precio(a));
+    visibles.forEach((it) => grid.appendChild(it));
+  });
+
+  document.getElementById('sy-filtros-limpiar')?.addEventListener('click', () => {
+    document.querySelectorAll<HTMLInputElement>('.sy-filtros input[type="checkbox"]').forEach((cb) => (cb.checked = false));
+    aplicar();
+  });
+
+  const panel = document.getElementById('sy-filtros');
+  const abrirBtn = document.getElementById('sy-toggle-filtros');
+  const cerrarBtn = panel?.querySelector('.sy-filtros__x');
+  abrirBtn?.addEventListener('click', () => panel?.classList.toggle('is-abierto'));
+  cerrarBtn?.addEventListener('click', () => panel?.classList.remove('is-abierto'));
+
+  aplicar();
+</script>
+
+<style>
+  .sy-res {
+    padding-block: 2rem 3.5rem;
+  }
+
+  .sy-res__migas {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--sy-gris);
+    font-size: 0.8rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .sy-res__top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .sy-res__top h1 {
+    font-size: 1.6rem;
+    text-transform: uppercase;
+  }
+
+  .sy-res__orden {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.8rem;
+    font-weight: 600;
+  }
+
+  .sy-res__orden select {
+    font: inherit;
+    font-size: 0.8rem;
+    padding: 0.5rem 0.8rem;
+    border: 1.5px solid var(--sy-linea);
+  }
+
+  .sy-res__toggle {
+    display: none;
+    border: 1.5px solid var(--sy-tinta);
+    padding: 0.5rem 1rem;
+    font-weight: 700;
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+  }
+
+  .sy-res__layout {
+    display: grid;
+    grid-template-columns: 230px 1fr;
+    gap: clamp(1.5rem, 3vw, 2.5rem);
+    align-items: start;
+  }
+
+  .sy-res__conteo {
+    font-size: 0.8rem;
+    color: var(--sy-gris);
+    margin-bottom: 1.25rem;
+  }
+
+  .sy-res__grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.75rem 1.25rem;
+  }
+
+  .sy-res__grid[hidden] {
+    display: none;
+  }
+
+  .sy-res__vacio[hidden] {
+    display: none;
+  }
+
+  .sy-res__vacio {
+    border: 1px dashed var(--sy-linea);
+    padding: 2rem 1.25rem;
+    text-align: center;
+  }
+
+  .sy-res__prueba {
+    margin-top: 0.75rem;
+    font-weight: 700;
+  }
+
+  .sy-res__sugs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    justify-content: center;
+    margin-top: 0.75rem;
+  }
+
+  @media (max-width: 900px) {
+    .sy-res__layout {
+      grid-template-columns: 1fr;
+    }
+    .sy-res__toggle {
+      display: inline-flex;
+    }
+  }
+
+  @media (max-width: 700px) {
+    .sy-res__grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+</style>

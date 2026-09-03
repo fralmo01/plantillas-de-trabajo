@@ -1,5 +1,5 @@
 ---
-import { heroSlides, soles } from '../datos/organica.js';
+import { heroSlides, soles, getOrganaImg } from '../datos/organica.js';
 
 interface Slide {
   kicker: string;
@@ -8,6 +8,7 @@ interface Slide {
   precio: number;
   antes: number;
   seed: string;
+  img?: string;
 }
 ---
 
@@ -27,7 +28,7 @@ interface Slide {
             <a href="#promos" class="or-btn or-btn--verde">Ver mas</a>
           </div>
           <div class="or-hero__foto">
-            <img src={`https://picsum.photos/seed/${s.seed}/700/520`} alt={s.titulo} loading={i === 0 ? 'eager' : 'lazy'} />
+            <img src={s.img ?? getOrganaImg(s.seed, 900, 600)} alt={s.titulo} loading={i === 0 ? 'eager' : 'lazy'} />
           </div>
         </div>
       </article>

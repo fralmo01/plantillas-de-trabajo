@@ -1,0 +1,46 @@
+---
+import { anuncio } from '../datos/moixx.js';
+---
+
+<div class="mx-anuncio" id="mx-anuncio">
+  <span>{anuncio}</span>
+  <button type="button" id="mx-anuncio-cerrar" aria-label="Cerrar aviso">&times;</button>
+</div>
+
+<script>
+  document.getElementById('mx-anuncio-cerrar')?.addEventListener('click', () => {
+    const el = document.getElementById('mx-anuncio');
+    if (el) el.hidden = true;
+  });
+</script>
+
+<style>
+  .mx-anuncio[hidden] {
+    display: none;
+  }
+
+  .mx-anuncio {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 100;
+    background: var(--mx-rojo);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    padding: 0.6rem 1rem;
+    font-size: 0.8rem;
+    font-weight: 500;
+  }
+
+  .mx-anuncio button {
+    position: absolute;
+    right: 1rem;
+    color: #fff;
+    font-size: 1.1rem;
+    line-height: 1;
+  }
+</style>

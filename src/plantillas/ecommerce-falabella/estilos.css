@@ -23,7 +23,6 @@
   font-family: var(--ef-font);
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
-  overflow-x: hidden;
 }
 
 .tpl-ecommerce-falabella *,

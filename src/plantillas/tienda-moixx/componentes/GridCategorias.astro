@@ -1,0 +1,113 @@
+---
+import { getMoixxImg } from "../datos/moixx.js";
+
+interface Item {
+  t: string;
+  n: number;
+  seed: string;
+  img?: string;
+}
+const { items, id } = Astro.props as { items: Item[]; id?: string };
+const base = "/plantillas/tienda-moixx";
+---
+
+<section class="mx-gridcat" id={id}>
+  {
+    items.map((c) => (
+      <a
+        href={`${base}/buscar/?q=${encodeURIComponent(c.t.toLowerCase())}`}
+        class="mx-gridcat__item"
+      >
+        <img
+          src={c.img ?? getMoixxImg(c.seed, 700, 900)}
+          alt={c.t}
+          loading="lazy"
+        />
+        <div class="mx-gridcat__tx">
+          <h3>{c.t}</h3>
+          <span class="mx-link-subrayado">Shop now</span>
+        </div>
+      </a>
+    ))
+  }
+  <div class="mx-gridcat__leyendas">
+    {
+      items.map((c) => (
+        <div class="mx-gridcat__leyenda">
+          <strong>{c.t}</strong>
+          <span>{c.n} productos</span>
+        </div>
+      ))
+    }
+  </div>
+</section>
+
+<style>
+  .mx-gridcat {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .mx-gridcat__leyendas {
+    display: contents;
+  }
+
+  .mx-gridcat__item {
+    position: relative;
+    aspect-ratio: 3 / 4;
+    display: block;
+  }
+
+  .mx-gridcat__item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .mx-gridcat__tx {
+    position: absolute;
+    left: 1.5rem;
+    bottom: 1.5rem;
+    z-index: 1;
+    color: #fff;
+  }
+
+  .mx-gridcat__tx h3 {
+    color: #fff;
+    font-size: clamp(1.3rem, 2.5vw, 1.8rem);
+    margin-bottom: 0.6rem;
+  }
+
+  .mx-gridcat__tx .mx-link-subrayado {
+    color: #fff;
+  }
+
+  .mx-gridcat__leyenda {
+    text-align: center;
+    padding: 1rem 0.5rem;
+    background: var(--mx-crema);
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+  }
+
+  .mx-gridcat__leyenda strong {
+    font-family: var(--mx-font);
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+  }
+
+  .mx-gridcat__leyenda span {
+    font-size: 0.78rem;
+    color: var(--mx-gris);
+  }
+
+  @media (max-width: 760px) {
+    .mx-gridcat,
+    .mx-gridcat__leyendas {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

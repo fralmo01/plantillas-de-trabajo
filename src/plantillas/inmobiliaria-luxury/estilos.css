@@ -32,7 +32,6 @@
   font-family: var(--il-sans);
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
-  overflow-x: hidden;
 }
 
 .tpl-inmobiliaria-luxury *,

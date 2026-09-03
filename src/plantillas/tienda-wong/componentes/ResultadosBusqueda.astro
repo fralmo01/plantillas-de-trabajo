@@ -1,0 +1,274 @@
+---
+import Filtros from './Filtros.astro';
+import TarjetaProducto from './TarjetaProducto.astro';
+import { catalogo, ordenarPor, sugerenciasBusqueda } from '../datos/wong.js';
+
+interface Producto {
+  nombre: string;
+  precio: number;
+  antes?: number;
+  tag?: string;
+  seed: string;
+  departamento: string;
+  categoria: string;
+  marca: string;
+  tags?: string[];
+}
+const base = '/plantillas/tienda-wong';
+const productos = catalogo as Producto[];
+const heno = (p: Producto) => [p.nombre, p.marca, p.categoria, ...(p.tags ?? [])].join(' ').toLowerCase();
+---
+
+<section class="wg-res wg-wrap">
+  <nav class="wg-res__migas" aria-label="Migas de pan">
+    <a href={`${base}/`} aria-label="Inicio">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 11l9-8 9 8"></path><path d="M5 10v10h14V10"></path></svg>
+    </a>
+    <span>/</span>
+    <span id="wg-res-miga">busqueda</span>
+  </nav>
+
+  <div class="wg-res__top">
+    <h1>Resultado de busqueda: <b id="wg-res-n">0</b> productos</h1>
+    <label class="wg-res__orden">
+      <span>Ordenar por:</span>
+      <select id="wg-res-orden">
+        {ordenarPor.map((o: string) => <option>{o}</option>)}
+      </select>
+    </label>
+  </div>
+
+  <button class="wg-res__toggle" type="button" id="wg-toggle-filtros">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <line x1="4" y1="6" x2="20" y2="6"></line><line x1="7" y1="12" x2="17" y2="12"></line><line x1="10" y1="18" x2="14" y2="18"></line>
+    </svg>
+    Filtros
+  </button>
+
+  <div class="wg-res__layout">
+    <Filtros />
+
+    <div class="wg-res__grid-wrap">
+      <div class="wg-res__vacio" id="wg-res-vacio" hidden>
+        <p>No encontramos productos para <b id="wg-res-vacio-q"></b>.</p>
+        <p class="wg-res__prueba">Prueba buscando:</p>
+        <div class="wg-res__sugs">
+          {sugerenciasBusqueda.map((s: string) => (
+            <a href={`${base}/buscar/?q=${encodeURIComponent(s)}`} class="wg-btn wg-btn--outline">{s}</a>
+          ))}
+        </div>
+      </div>
+
+      <div class="wg-res__grid" id="wg-res-grid">
+        {productos.map((p) => (
+          <div data-item data-heno={heno(p)} data-departamento={p.departamento} data-categoria={p.categoria} data-marca={p.marca} data-precio={p.precio}>
+            <TarjetaProducto producto={p} />
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  const norm = (s: string) => (s ?? '').toString().toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '');
+
+  const termino = (new URLSearchParams(location.search).get('q') ?? '').trim();
+  const items = Array.from(document.querySelectorAll<HTMLElement>('[data-item]'));
+
+  const migaEl = document.getElementById('wg-res-miga');
+  const nEl = document.getElementById('wg-res-n');
+  const vacio = document.getElementById('wg-res-vacio') as HTMLElement | null;
+  const vacioQ = document.getElementById('wg-res-vacio-q');
+  const grid = document.getElementById('wg-res-grid') as HTMLElement | null;
+
+  if (migaEl) migaEl.textContent = termino || 'todos los productos';
+  if (vacioQ) vacioQ.textContent = `"${termino}"`;
+
+  function checkboxesActivos(nombre: string) {
+    return Array.from(document.querySelectorAll<HTMLInputElement>(`input[name="${nombre}"]:checked`)).map((i) => i.value);
+  }
+
+  function aplicar() {
+    const palabras = norm(termino).split(/\s+/).filter(Boolean);
+    const deps = checkboxesActivos('departamento');
+    const cats = checkboxesActivos('categoria');
+    const marcas = checkboxesActivos('marca');
+
+    let visibles = 0;
+    for (const it of items) {
+      const heno = norm(it.dataset.heno || '');
+      const nombreOk = palabras.length === 0 || palabras.every((w) => heno.includes(w));
+      const depOk = deps.length === 0 || deps.includes(it.dataset.departamento || '');
+      const catOk = cats.length === 0 || cats.includes(it.dataset.categoria || '');
+      const marcaOk = marcas.length === 0 || marcas.includes(it.dataset.marca || '');
+      const ok = nombreOk && depOk && catOk && marcaOk;
+      it.hidden = !ok;
+      if (ok) visibles++;
+    }
+    if (nEl) nEl.textContent = String(visibles);
+    if (vacio) vacio.hidden = visibles > 0;
+    if (grid) grid.hidden = visibles === 0;
+  }
+
+  document.querySelectorAll<HTMLInputElement>('.wg-filtros input[type="checkbox"]').forEach((cb) => {
+    cb.addEventListener('change', aplicar);
+  });
+
+  const ordenSel = document.getElementById('wg-res-orden') as HTMLSelectElement | null;
+  ordenSel?.addEventListener('change', () => {
+    if (!grid) return;
+    const orden = ordenSel.value;
+    const visibles = items.filter((it) => !it.hidden);
+    const precio = (it: HTMLElement) => Number(it.dataset.precio || '0');
+    if (orden === 'Menor precio') visibles.sort((a, b) => precio(a) - precio(b));
+    if (orden === 'Mayor precio') visibles.sort((a, b) => precio(b) - precio(a));
+    visibles.forEach((it) => grid.appendChild(it));
+  });
+
+  const buscarMarca = document.querySelector<HTMLInputElement>('.wg-grupo__buscar');
+  buscarMarca?.addEventListener('input', () => {
+    const q = norm(buscarMarca.value);
+    document.querySelectorAll<HTMLElement>('[data-filtro="marca"] li').forEach((li) => {
+      const texto = norm(li.textContent || '');
+      li.hidden = q.length > 0 && !texto.includes(q);
+    });
+  });
+
+  document.getElementById('wg-filtros-limpiar')?.addEventListener('click', () => {
+    document.querySelectorAll<HTMLInputElement>('.wg-filtros input[type="checkbox"]').forEach((cb) => (cb.checked = false));
+    aplicar();
+  });
+
+  const panel = document.getElementById('wg-filtros');
+  const abrirBtn = document.getElementById('wg-toggle-filtros');
+  const cerrarBtn = panel?.querySelector('.wg-filtros__x');
+  abrirBtn?.addEventListener('click', () => panel?.classList.toggle('is-abierto'));
+  cerrarBtn?.addEventListener('click', () => panel?.classList.remove('is-abierto'));
+
+  aplicar();
+</script>
+
+<style>
+  .wg-res {
+    padding-block: 1.5rem 3rem;
+  }
+
+  .wg-res__migas {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--wg-gris);
+    font-size: 0.8rem;
+    margin-bottom: 1rem;
+  }
+
+  .wg-res__migas a {
+    display: grid;
+    place-items: center;
+    color: var(--wg-gris);
+  }
+
+  .wg-res__top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--wg-linea);
+    margin-bottom: 1.25rem;
+  }
+
+  .wg-res__top h1 {
+    font-size: 1.05rem;
+  }
+
+  .wg-res__top h1 b {
+    color: var(--wg-rojo);
+  }
+
+  .wg-res__orden {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.82rem;
+    font-weight: 600;
+  }
+
+  .wg-res__orden select {
+    font: inherit;
+    font-size: 0.82rem;
+    padding: 0.45rem 0.8rem;
+    border: 1px solid var(--wg-linea);
+    border-radius: 6px;
+  }
+
+  .wg-res__toggle {
+    display: none;
+    align-items: center;
+    gap: 0.4rem;
+    border: 1px solid var(--wg-linea);
+    border-radius: var(--wg-pill);
+    padding: 0.4rem 0.9rem;
+    font-weight: 700;
+    font-size: 0.8rem;
+    margin-bottom: 1rem;
+  }
+
+  .wg-res__layout {
+    display: grid;
+    grid-template-columns: 250px 1fr;
+    gap: clamp(1.25rem, 3vw, 2rem);
+    align-items: start;
+  }
+
+  .wg-res__grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.1rem;
+  }
+
+  .wg-res__grid[hidden] {
+    display: none;
+  }
+
+  .wg-res__vacio[hidden] {
+    display: none;
+  }
+
+  .wg-res__vacio {
+    border: 1px dashed var(--wg-linea);
+    border-radius: 10px;
+    padding: 2rem 1.25rem;
+    text-align: center;
+  }
+
+  .wg-res__prueba {
+    margin-top: 0.75rem;
+    font-weight: 700;
+  }
+
+  .wg-res__sugs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    justify-content: center;
+    margin-top: 0.75rem;
+  }
+
+  @media (max-width: 900px) {
+    .wg-res__layout {
+      grid-template-columns: 1fr;
+    }
+    .wg-res__toggle {
+      display: inline-flex;
+    }
+  }
+
+  @media (max-width: 700px) {
+    .wg-res__grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+</style>

@@ -1,0 +1,216 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap");
+
+.tpl-tienda-wong {
+  --wg-amarillo: #e4032e;
+  --wg-amarillo-osc: #b8021f;
+  --wg-rojo: #d1092f;
+  --wg-rojo-osc: #9c0722;
+  --wg-rosa: #ff2f92;
+  --wg-negro: #101010;
+  --wg-tinta: #1a1a1a;
+  --wg-gris: #6b6b6b;
+  --wg-linea: #ececec;
+  --wg-suave: #f7f7f7;
+  --wg-verde: #1a9c4a;
+
+  --wg-font: "Poppins", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+  --wg-maxw: 1280px;
+  --wg-pill: 999px;
+
+  background: #fff;
+  color: var(--wg-tinta);
+  font-family: var(--wg-font);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+.tpl-tienda-wong *,
+.tpl-tienda-wong *::before,
+.tpl-tienda-wong *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+.tpl-tienda-wong h1,
+.tpl-tienda-wong h2,
+.tpl-tienda-wong h3,
+.tpl-tienda-wong h4 {
+  line-height: 1.2;
+  color: var(--wg-tinta);
+  font-weight: 700;
+}
+
+.tpl-tienda-wong img {
+  max-width: 100%;
+  display: block;
+}
+
+.tpl-tienda-wong a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.tpl-tienda-wong button {
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+  border: none;
+  background: none;
+}
+
+.tpl-tienda-wong input {
+  font: inherit;
+}
+
+.tpl-tienda-wong .wg-wrap {
+  max-width: var(--wg-maxw);
+  margin-inline: auto;
+  padding-inline: clamp(1rem, 3vw, 2rem);
+}
+
+.tpl-tienda-wong .wg-seccion {
+  padding-block: clamp(1.75rem, 4vw, 2.75rem);
+}
+
+.tpl-tienda-wong .wg-titulo {
+  font-size: clamp(1.1rem, 2.4vw, 1.5rem);
+  font-weight: 800;
+  color: var(--wg-tinta);
+  margin-bottom: 1.25rem;
+  text-transform: uppercase;
+  letter-spacing: 0.01em;
+}
+
+.tpl-tienda-wong .wg-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.65rem 1.4rem;
+  font-weight: 700;
+  font-size: 0.82rem;
+  border-radius: var(--wg-pill);
+  transition: transform 0.15s ease, background 0.15s ease, color 0.15s ease;
+}
+
+.tpl-tienda-wong .wg-btn:hover {
+  transform: translateY(-2px);
+}
+
+.tpl-tienda-wong .wg-btn--amarillo {
+  background: var(--wg-amarillo);
+  color: var(--wg-tinta);
+}
+
+.tpl-tienda-wong .wg-btn--amarillo:hover {
+  background: var(--wg-amarillo-osc);
+}
+
+.tpl-tienda-wong .wg-btn--claro {
+  background: #fff;
+  color: var(--wg-tinta);
+}
+
+.tpl-tienda-wong .wg-btn--outline {
+  border: 1.5px solid var(--wg-linea);
+  color: var(--wg-tinta);
+  background: #fff;
+}
+
+.tpl-tienda-wong .wg-btn--outline:hover {
+  border-color: var(--wg-rojo);
+  color: var(--wg-rojo);
+}
+
+.tpl-tienda-wong .wg-fila {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(220px, 1fr);
+  gap: 1rem;
+  overflow-x: auto;
+  scroll-snap-type: x proximity;
+  padding-bottom: 0.5rem;
+  scrollbar-width: thin;
+}
+
+.tpl-tienda-wong .wg-fila > * {
+  scroll-snap-align: start;
+}
+
+.tpl-tienda-wong .wg-flecha {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  color: var(--wg-amarillo);
+  font-size: 1.4rem;
+  line-height: 1;
+  background: #fff;
+  box-shadow: 0 6px 16px -8px rgba(0, 0, 0, 0.35);
+  flex-shrink: 0;
+}
+
+.tpl-tienda-wong .wg-flecha:hover {
+  background: var(--wg-suave);
+}
+
+.tpl-tienda-wong .wg-carr {
+  display: grid;
+  grid-template-columns: 250px 1fr;
+  gap: 1.25rem;
+  align-items: stretch;
+}
+
+.tpl-tienda-wong .wg-carr__banner {
+  border-radius: 14px;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 0.5rem;
+  color: var(--wg-tinta);
+  background: linear-gradient(160deg, var(--wg-amarillo) 0%, var(--wg-amarillo-osc) 100%);
+}
+
+.tpl-tienda-wong .wg-carr__banner span {
+  font-size: 0.68rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-weight: 700;
+}
+
+.tpl-tienda-wong .wg-carr__banner h2 {
+  font-size: 1.5rem;
+  margin-bottom: 0.35rem;
+}
+
+.tpl-tienda-wong .wg-carr__banner--oscuro {
+  color: #fff;
+  background: linear-gradient(160deg, var(--wg-negro) 0%, #000 100%);
+}
+
+.tpl-tienda-wong .wg-carr__banner--oscuro h2,
+.tpl-tienda-wong .wg-carr__banner--oscuro span {
+  color: #fff;
+}
+
+.tpl-tienda-wong .wg-carr__banner--oscuro span {
+  color: var(--wg-rosa);
+}
+
+.tpl-tienda-wong .wg-carr__area {
+  position: relative;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+@media (max-width: 820px) {
+  .tpl-tienda-wong .wg-carr {
+    grid-template-columns: 1fr;
+  }
+}

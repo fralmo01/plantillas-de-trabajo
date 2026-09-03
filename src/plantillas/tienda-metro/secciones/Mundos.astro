@@ -1,13 +1,13 @@
 ---
-import { mundos } from '../datos/metro.js';
+import { mundos, getMetroImg } from '../datos/metro.js';
 ---
 
 <section class="tm-seccion tm-wrap">
   <h2 class="tm-titulo">Descubre lo genial de nuestros mundos</h2>
   <div class="tm-fila tm-mundos">
-    {mundos.map((m: { t: string; seed: string }) => (
+    {mundos.map((m: { t: string; seed: string; img?: string }) => (
       <a href="#tabs" class="tm-mundos__item">
-        <img src={`https://picsum.photos/seed/${m.seed}/320/220`} alt={m.t} loading="lazy" />
+        <img src={m.img ?? getMetroImg(m.seed, 400, 280)} alt={m.t} loading="lazy" />
         <span>{m.t}</span>
       </a>
     ))}

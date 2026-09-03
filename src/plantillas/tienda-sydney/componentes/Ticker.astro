@@ -1,0 +1,41 @@
+---
+import { ticker } from '../datos/sydney.js';
+---
+
+<div class="sy-ticker">
+  <div class="sy-ticker__track">
+    {[...ticker, ...ticker].map((t: string) => (
+      <span class="sy-ticker__item">{t}</span>
+    ))}
+  </div>
+</div>
+
+<style>
+  .sy-ticker {
+    background: var(--sy-crema);
+    overflow: hidden;
+    border-bottom: 1px solid var(--sy-linea);
+  }
+
+  .sy-ticker__track {
+    display: flex;
+    width: max-content;
+    animation: sy-desplazar 32s linear infinite;
+    padding-block: 0.5rem;
+  }
+
+  .sy-ticker__item {
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    color: var(--sy-tinta-suave);
+    white-space: nowrap;
+    padding-inline: 2rem;
+    border-right: 1px solid var(--sy-linea);
+  }
+
+  @keyframes sy-desplazar {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+</style>

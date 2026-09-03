@@ -1,0 +1,20 @@
+---
+import '../estilos.css';
+
+import Ticker from './Ticker.astro';
+import Cabecera from './Cabecera.astro';
+import TabsLaterales from './TabsLaterales.astro';
+import PiePagina from './PiePagina.astro';
+import BurbujaWhatsApp from './BurbujaWhatsApp.astro';
+---
+
+<div class="tpl-tienda-sydney">
+  <Ticker />
+  <Cabecera />
+  <TabsLaterales />
+  <main>
+    <slot />
+  </main>
+  <PiePagina />
+  <BurbujaWhatsApp />
+</div>

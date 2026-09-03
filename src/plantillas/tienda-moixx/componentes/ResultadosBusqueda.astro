@@ -1,0 +1,190 @@
+---
+import Filtros from './Filtros.astro';
+import TarjetaProducto from './TarjetaProducto.astro';
+import { catalogo, sugerenciasBusqueda } from '../datos/moixx.js';
+
+interface Producto {
+  nombre: string;
+  precio: number;
+  antes?: number;
+  seed: string;
+  tipo: string;
+  tags?: string[];
+}
+const base = '/plantillas/tienda-moixx';
+const productos = catalogo as Producto[];
+const heno = (p: Producto) => [p.nombre, p.tipo, ...(p.tags ?? [])].join(' ').toLowerCase();
+---
+
+<section class="mx-res mx-wrap">
+  <h1 class="mx-res__titulo" id="mx-res-titulo">Todos los productos</h1>
+
+  <button class="mx-res__toggle" type="button" id="mx-toggle-filtros">Filtrar</button>
+
+  <div class="mx-res__layout">
+    <Filtros />
+
+    <div class="mx-res__grid-wrap">
+      <div class="mx-res__vacio" id="mx-res-vacio" hidden>
+        <p>No encontramos productos para <b id="mx-res-vacio-q"></b>.</p>
+        <p class="mx-res__prueba">Prueba buscando:</p>
+        <div class="mx-res__sugs">
+          {sugerenciasBusqueda.map((s: string) => (
+            <a href={`${base}/buscar/?q=${encodeURIComponent(s)}`} class="mx-btn mx-btn--claro">{s}</a>
+          ))}
+        </div>
+      </div>
+
+      <div class="mx-res__grid" id="mx-res-grid">
+        {productos.map((p) => (
+          <div data-item data-heno={heno(p)} data-tipo={p.tipo} data-precio={p.precio}>
+            <TarjetaProducto producto={p} />
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  const norm = (s: string) => (s ?? '').toString().toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '');
+
+  const termino = (new URLSearchParams(location.search).get('q') ?? '').trim();
+  const items = Array.from(document.querySelectorAll<HTMLElement>('[data-item]'));
+
+  const tituloEl = document.getElementById('mx-res-titulo');
+  const vacio = document.getElementById('mx-res-vacio') as HTMLElement | null;
+  const vacioQ = document.getElementById('mx-res-vacio-q');
+  const grid = document.getElementById('mx-res-grid') as HTMLElement | null;
+
+  if (tituloEl && termino) tituloEl.textContent = `Resultados para "${termino}"`;
+  if (vacioQ) vacioQ.textContent = `"${termino}"`;
+
+  function checkboxesActivos(nombre: string) {
+    return Array.from(document.querySelectorAll<HTMLInputElement>(`input[name="${nombre}"]:checked`)).map((i) => i.value);
+  }
+
+  function aplicar() {
+    const palabras = norm(termino).split(/\s+/).filter(Boolean);
+    const tipos = checkboxesActivos('tipo');
+
+    let visibles = 0;
+    for (const it of items) {
+      const heno = norm(it.dataset.heno || '');
+      const nombreOk = palabras.length === 0 || palabras.every((w) => heno.includes(w));
+      const tipoOk = tipos.length === 0 || tipos.includes(it.dataset.tipo || '');
+      const ok = nombreOk && tipoOk;
+      it.hidden = !ok;
+      if (ok) visibles++;
+    }
+    if (vacio) vacio.hidden = visibles > 0;
+    if (grid) grid.hidden = visibles === 0;
+  }
+
+  document.querySelectorAll<HTMLInputElement>('.mx-filtros input[type="checkbox"]').forEach((cb) => {
+    cb.addEventListener('change', aplicar);
+  });
+
+  const ordenRadios = document.querySelectorAll<HTMLInputElement>('input[name="orden"]');
+  ordenRadios.forEach((r) => {
+    r.addEventListener('change', () => {
+      if (!grid) return;
+      const visibles = items.filter((it) => !it.hidden);
+      const precio = (it: HTMLElement) => Number(it.dataset.precio || '0');
+      if (r.value === 'Precio, menor a mayor') visibles.sort((a, b) => precio(a) - precio(b));
+      if (r.value === 'Precio, mayor a menor') visibles.sort((a, b) => precio(b) - precio(a));
+      if (r.value === 'Alfabeticamente, A-Z') visibles.sort((a, b) => (a.dataset.heno || '').localeCompare(b.dataset.heno || ''));
+      visibles.forEach((it) => grid.appendChild(it));
+    });
+  });
+
+  document.getElementById('mx-filtros-limpiar')?.addEventListener('click', () => {
+    document.querySelectorAll<HTMLInputElement>('.mx-filtros input[type="checkbox"]').forEach((cb) => (cb.checked = false));
+    aplicar();
+  });
+
+  const panel = document.getElementById('mx-filtros');
+  const abrirBtn = document.getElementById('mx-toggle-filtros');
+  const cerrarBtn = panel?.querySelector('.mx-filtros__x');
+  abrirBtn?.addEventListener('click', () => panel?.classList.toggle('is-abierto'));
+  cerrarBtn?.addEventListener('click', () => panel?.classList.remove('is-abierto'));
+
+  aplicar();
+</script>
+
+<style>
+  .mx-res {
+    padding-block: 2.25rem 4rem;
+  }
+
+  .mx-res__titulo {
+    font-size: clamp(1.4rem, 3vw, 2rem);
+    margin-bottom: 1.75rem;
+    text-align: center;
+  }
+
+  .mx-res__toggle {
+    display: none;
+    border: 1px solid var(--mx-tinta);
+    padding: 0.5rem 1rem;
+    font-weight: 500;
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+  }
+
+  .mx-res__layout {
+    display: grid;
+    grid-template-columns: 230px 1fr;
+    gap: clamp(1.5rem, 3vw, 2.5rem);
+    align-items: start;
+  }
+
+  .mx-res__grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.75rem 1.25rem;
+  }
+
+  .mx-res__grid[hidden] {
+    display: none;
+  }
+
+  .mx-res__vacio[hidden] {
+    display: none;
+  }
+
+  .mx-res__vacio {
+    border: 1px dashed var(--mx-linea);
+    padding: 2rem 1.25rem;
+    text-align: center;
+  }
+
+  .mx-res__prueba {
+    margin-top: 0.75rem;
+    font-weight: 600;
+  }
+
+  .mx-res__sugs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    justify-content: center;
+    margin-top: 0.75rem;
+  }
+
+  @media (max-width: 900px) {
+    .mx-res__layout {
+      grid-template-columns: 1fr;
+    }
+    .mx-res__toggle {
+      display: inline-flex;
+    }
+  }
+
+  @media (max-width: 700px) {
+    .mx-res__grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+</style>

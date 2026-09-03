@@ -1,0 +1,67 @@
+---
+import { tilesGenero, getSydneyImg } from '../datos/sydney.js';
+---
+
+<section class="sy-tiles">
+  {tilesGenero.map((t: { t: string; sub: string; seed: string; img?: string }) => (
+    <a href="/plantillas/tienda-sydney/buscar/" class="sy-tiles__item">
+      <img src={t.img ?? getSydneyImg(t.seed, 900, 550)} alt={t.t} loading="lazy" />
+      <div class="sy-tiles__tx">
+        <h3>{t.t}</h3>
+        <span>{t.sub}</span>
+      </div>
+    </a>
+  ))}
+</section>
+
+<style>
+  .sy-tiles {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1px;
+    background: var(--sy-linea);
+  }
+
+  .sy-tiles__item {
+    position: relative;
+    aspect-ratio: 16 / 9;
+    display: block;
+  }
+
+  .sy-tiles__item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .sy-tiles__item::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(0deg, rgba(23, 32, 51, 0.55), transparent 55%);
+  }
+
+  .sy-tiles__tx {
+    position: absolute;
+    left: 1.5rem;
+    bottom: 1.5rem;
+    z-index: 1;
+    color: #fff;
+  }
+
+  .sy-tiles__tx h3 {
+    color: #fff;
+    font-size: 1.5rem;
+    text-transform: uppercase;
+  }
+
+  .sy-tiles__tx span {
+    font-size: 0.85rem;
+  }
+
+  @media (max-width: 760px) {
+    .sy-tiles {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

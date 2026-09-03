@@ -1,0 +1,56 @@
+---
+import { categoriasDestacadas, getSydneyImg } from '../datos/sydney.js';
+---
+
+<section class="sy-seccion sy-wrap" id="destacadas">
+  <h2 class="sy-titulo">Categorias Destacadas</h2>
+  <p class="sy-sub">Explora nuestra gama de productos. 100% algodon.</p>
+
+  <div class="sy-cats">
+    {categoriasDestacadas.map((c: { t: string; seed: string; img?: string }) => (
+      <a href="/plantillas/tienda-sydney/buscar/" class="sy-cats__item">
+        <img src={c.img ?? getSydneyImg(c.seed, 400, 500)} alt={c.t} loading="lazy" />
+        <span>{c.t}</span>
+      </a>
+    ))}
+  </div>
+</section>
+
+<style>
+  .sy-cats {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 1rem;
+  }
+
+  .sy-cats__item {
+    display: flex;
+    flex-direction: column;
+    gap: 0.7rem;
+  }
+
+  .sy-cats__item img {
+    aspect-ratio: 4 / 5;
+    object-fit: cover;
+  }
+
+  .sy-cats__item span {
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    text-align: center;
+  }
+
+  @media (max-width: 900px) {
+    .sy-cats {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  @media (max-width: 560px) {
+    .sy-cats {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+</style>

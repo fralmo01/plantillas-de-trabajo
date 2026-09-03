@@ -1,4 +1,74 @@
-const img = (seed, w = 500, h = 500) => `https://picsum.photos/seed/${seed}/${w}/${h}`;
+const u = (id, w = 500, h = 500) =>
+  `https://images.unsplash.com/photo-${id}?auto=format&fit=crop&w=${w}&h=${h}&q=80`;
+
+export const ORGANA_IMG = {
+  // Hero slides
+  'org-hero-1': '1536256263959-770b48d82b0a', // Coco / Berry Matcha
+  'org-hero-2': '1540420773420-3366772f4999', // Ultra Colageno Grass Fed
+  'org-hero-3': '1517838277536-f5f99be501cd', // Creatina Monohidratada
+
+  // Promos countdown
+  'org-p1': '1584308666744-24d5c474f2ae', // Omega 3 Nutricost
+  'org-p2': '1617897903246-719242758050', // Citrato de Magnesio
+  'org-p3': '1586201375761-83865001e31c', // Avena en Hojuela sin Gluten
+  'org-p4': '1579722821273-0f6c7d44362f', // Gelatina sin Sabor Natural
+  'org-p5': '1579758629938-03607ccdbaba', // Creatina Monohidratada 500g
+  'org-p6': '1584017911766-d451b3d0e843', // Magnesio con Vitamina B6
+
+  // Novedades
+  'org-n1': '1540420773420-3366772f4999', // Ultra Collagen Grass Fed Peptides
+  'org-n2': '1509440159596-0249088772ff', // Galletas de Arroz con Leche
+  'org-n3': '1509440159596-0249088772ff', // Galletas de Arroz Integral
+  'org-n4': '1488477181946-6428a0291777', // Pudin Proteico Vainilla
+  'org-n5': '1518110925495-5fe27b293810', // Sal Rosada del Himalaya
+  'org-n6': '1617897903246-719242758050', // Citrato de Potasio
+
+  // Productos saludables
+  'org-cat-1': '1556228720-195a672e8a03', // Antiedad
+  'org-cat-2': '1544787219-7f47ccb76574', // Antiestres
+  'org-cat-3': '1517838277536-f5f99be501cd', // Todo para el Gym
+  'org-cat-4': '1587049352846-4a222e784d38', // Endulzantes
+
+  // Banner ayuda
+  'org-banner-hgh': '1502086223501-7ea6ecd79368', // Premium HGH / Ninos
+
+  // Banners duo
+  'org-duo-1': '1517838277536-f5f99be501cd', // Proteinas y creatinas
+  'org-duo-2': '1540420773420-3366772f4999', // Productos naturales
+
+  // Categorias
+  'org-nc-1': '1509440159596-0249088772ff', // Sin Gluten
+  'org-nc-2': '1610832958506-aa56368176cf', // Organicos
+  'org-nc-3': '1540420773420-3366772f4999', // Keto
+  'org-nc-4': '1512621776951-a57141f2eefd', // Veganos
+
+  // Tiendas
+  'org-t1': '1555396273-367ea4eb4db5', // Miraflores
+  'org-t2': '1441986300917-64674bd600d8', // San Isidro
+  'org-t3': '1567401893414-76b7b1e5a7a5', // San Borja
+  'org-t4': '1604719312566-8912e9227c6a', // Surco
+  'org-t5': '1555396273-367ea4eb4db5', // Pueblo Libre
+  'org-t6': '1441986300917-64674bd600d8', // Magdalena
+  'org-t7': '1567401893414-76b7b1e5a7a5', // Los Olivos
+  'org-t8': '1604719312566-8912e9227c6a', // Jesus Maria
+  'org-t9': '1555396273-367ea4eb4db5', // SJL
+  'org-t10': '1441986300917-64674bd600d8', // San Isidro 2
+
+  // Productos extra
+  'org-h1': '1584308666744-24d5c474f2ae', // Ashwagandha
+  'org-h2': '1556228720-195a672e8a03', // Pasta Dental sin Fluor
+  'org-h3': '1579758629938-03607ccdbaba', // Whey Protein Chocolate
+  'org-h4': '1550583724-b2692b85b150', // Leche de Almendra
+  'org-h5': '1586201375761-83865001e31c', // Harina de Almendra
+  'org-h6': '1587049352846-4a222e784d38', // Monkfruit
+};
+
+export const getOrganaImg = (seed, w = 500, h = 500) => {
+  const id = ORGANA_IMG[seed] || '1540420773420-3366772f4999';
+  return u(id, w, h);
+};
+
+export const img = getOrganaImg;
 
 export const marca = {
   nombre: 'tienda.com',
@@ -65,6 +135,7 @@ export const heroSlides = [
     precio: 33.92,
     antes: 39.9,
     seed: 'org-hero-1',
+    img: getOrganaImg('org-hero-1', 900, 600),
   },
   {
     kicker: 'Recien llegado',
@@ -73,6 +144,7 @@ export const heroSlides = [
     precio: 79.9,
     antes: 99.9,
     seed: 'org-hero-2',
+    img: getOrganaImg('org-hero-2', 900, 600),
   },
   {
     kicker: 'Lo mas top',
@@ -81,32 +153,33 @@ export const heroSlides = [
     precio: 89.9,
     antes: 109.9,
     seed: 'org-hero-3',
+    img: getOrganaImg('org-hero-3', 900, 600),
   },
 ];
 
 export const promos = [
-  { nombre: 'Omega 3 Nutricost x120caps', precio: 172.8, antes: 192, tag: '-10%', seed: 'org-p1' },
-  { nombre: 'Citrato de Magnesio Premium x200gr', precio: 40.41, antes: 44.9, tag: '-10%', seed: 'org-p2' },
-  { nombre: 'Avena en Hojuela sin Gluten 1.5kg', precio: 27.12, antes: 31.9, tag: '-15%', seed: 'org-p3' },
-  { nombre: 'Gelatina sin Sabor x300gr 100% Natural', precio: 28.8, antes: 32, tag: '-10%', seed: 'org-p4' },
-  { nombre: 'Creatina Monohidratada x500gr', precio: 98.91, antes: 109.9, tag: '-10%', seed: 'org-p5' },
-  { nombre: 'Magnesio con Vitamina B6 x100tabletas', precio: 69.3, antes: 99, tag: '-30%', seed: 'org-p6' },
+  { nombre: 'Omega 3 Nutricost x120caps', precio: 172.8, antes: 192, tag: '-10%', seed: 'org-p1', img: getOrganaImg('org-p1', 400, 400) },
+  { nombre: 'Citrato de Magnesio Premium x200gr', precio: 40.41, antes: 44.9, tag: '-10%', seed: 'org-p2', img: getOrganaImg('org-p2', 400, 400) },
+  { nombre: 'Avena en Hojuela sin Gluten 1.5kg', precio: 27.12, antes: 31.9, tag: '-15%', seed: 'org-p3', img: getOrganaImg('org-p3', 400, 400) },
+  { nombre: 'Gelatina sin Sabor x300gr 100% Natural', precio: 28.8, antes: 32, tag: '-10%', seed: 'org-p4', img: getOrganaImg('org-p4', 400, 400) },
+  { nombre: 'Creatina Monohidratada x500gr', precio: 98.91, antes: 109.9, tag: '-10%', seed: 'org-p5', img: getOrganaImg('org-p5', 400, 400) },
+  { nombre: 'Magnesio con Vitamina B6 x100tabletas', precio: 69.3, antes: 99, tag: '-30%', seed: 'org-p6', img: getOrganaImg('org-p6', 400, 400) },
 ];
 
 export const novedades = [
-  { nombre: 'Ultra Collagen Grass Fed Peptides', precio: 79.9, antes: 99.9, tag: '-20%', seed: 'org-n1' },
-  { nombre: 'Galletas de Arroz con Leche', precio: 12.5, seed: 'org-n2' },
-  { nombre: 'Galletas de Arroz Integral', precio: 12.5, seed: 'org-n3' },
-  { nombre: 'Pudin Proteico Sabor Vainilla', precio: 9.9, seed: 'org-n4' },
-  { nombre: 'Sal Rosada del Himalaya 454g', precio: 15.9, antes: 18.7, tag: '-15%', seed: 'org-n5' },
-  { nombre: 'Citrato de Potasio Premium 200g', precio: 33.5, seed: 'org-n6' },
+  { nombre: 'Ultra Collagen Grass Fed Peptides', precio: 79.9, antes: 99.9, tag: '-20%', seed: 'org-n1', img: getOrganaImg('org-n1', 400, 400) },
+  { nombre: 'Galletas de Arroz con Leche', precio: 12.5, seed: 'org-n2', img: getOrganaImg('org-n2', 400, 400) },
+  { nombre: 'Galletas de Arroz Integral', precio: 12.5, seed: 'org-n3', img: getOrganaImg('org-n3', 400, 400) },
+  { nombre: 'Pudin Proteico Sabor Vainilla', precio: 9.9, seed: 'org-n4', img: getOrganaImg('org-n4', 400, 400) },
+  { nombre: 'Sal Rosada del Himalaya 454g', precio: 15.9, antes: 18.7, tag: '-15%', seed: 'org-n5', img: getOrganaImg('org-n5', 400, 400) },
+  { nombre: 'Citrato de Potasio Premium 200g', precio: 33.5, seed: 'org-n6', img: getOrganaImg('org-n6', 400, 400) },
 ];
 
 export const productosSaludables = [
-  { t: 'Antiedad', seed: 'org-cat-1' },
-  { t: 'Antiestres', seed: 'org-cat-2' },
-  { t: 'Todo para el Gym', seed: 'org-cat-3' },
-  { t: 'Endulzantes', seed: 'org-cat-4' },
+  { t: 'Antiedad', seed: 'org-cat-1', img: getOrganaImg('org-cat-1', 500, 400) },
+  { t: 'Antiestres', seed: 'org-cat-2', img: getOrganaImg('org-cat-2', 500, 400) },
+  { t: 'Todo para el Gym', seed: 'org-cat-3', img: getOrganaImg('org-cat-3', 500, 400) },
+  { t: 'Endulzantes', seed: 'org-cat-4', img: getOrganaImg('org-cat-4', 500, 400) },
 ];
 
 export const bannerAyuda = {
@@ -115,18 +188,19 @@ export const bannerAyuda = {
   precio: 188.72,
   antes: 235.9,
   seed: 'org-banner-hgh',
+  img: getOrganaImg('org-banner-hgh', 800, 500),
 };
 
 export const bannersDuo = [
-  { titulo: 'Hasta 15% dcto.', sub: 'en proteinas y creatinas', seed: 'org-duo-1' },
-  { titulo: '10% en toda la linea', sub: 'productos naturales para tu bienestar', seed: 'org-duo-2' },
+  { titulo: 'Hasta 15% dcto.', sub: 'en proteinas y creatinas', seed: 'org-duo-1', img: getOrganaImg('org-duo-1', 700, 400) },
+  { titulo: '10% en toda la linea', sub: 'productos naturales para tu bienestar', seed: 'org-duo-2', img: getOrganaImg('org-duo-2', 700, 400) },
 ];
 
 export const categorias = [
-  { t: 'Sin Gluten', seed: 'org-nc-1' },
-  { t: 'Organicos', seed: 'org-nc-2' },
-  { t: 'Keto y Bajos en Carbos', seed: 'org-nc-3' },
-  { t: 'Veganos', seed: 'org-nc-4' },
+  { t: 'Sin Gluten', seed: 'org-nc-1', img: getOrganaImg('org-nc-1', 400, 500) },
+  { t: 'Organicos', seed: 'org-nc-2', img: getOrganaImg('org-nc-2', 400, 500) },
+  { t: 'Keto y Bajos en Carbos', seed: 'org-nc-3', img: getOrganaImg('org-nc-3', 400, 500) },
+  { t: 'Veganos', seed: 'org-nc-4', img: getOrganaImg('org-nc-4', 400, 500) },
 ];
 
 export const marcas = ['La Purita', 'Smart Blends', 'Herbals & Health', "Nature's Truth", 'Nutricost', 'Lab Nutrition'];
@@ -152,6 +226,7 @@ export const tiendas = [
     telefono: '(+51) 986 425 088',
     horario: 'Lunes a Domingo 9:00 am a 9:00 pm',
     seed: 'org-t1',
+    img: getOrganaImg('org-t1', 600, 400),
   },
   {
     nombre: 'tienda.com San Isidro',
@@ -160,6 +235,7 @@ export const tiendas = [
     telefono: '(+51) 944 209 570',
     horario: 'Lunes a Domingo 9:00 am a 9:00 pm',
     seed: 'org-t2',
+    img: getOrganaImg('org-t2', 600, 400),
   },
   {
     nombre: 'tienda.com San Borja',
@@ -168,6 +244,7 @@ export const tiendas = [
     telefono: '(+51) 944 596 281',
     horario: 'Lunes a Domingo 9:00 am a 9:00 pm',
     seed: 'org-t3',
+    img: getOrganaImg('org-t3', 600, 400),
   },
   {
     nombre: 'tienda.com Surco',
@@ -176,6 +253,7 @@ export const tiendas = [
     telefono: '(+51) 920 517 582',
     horario: 'Lunes a Domingo 9:00 am a 9:00 pm',
     seed: 'org-t4',
+    img: getOrganaImg('org-t4', 600, 400),
   },
   {
     nombre: 'tienda.com Pueblo Libre',
@@ -184,6 +262,7 @@ export const tiendas = [
     telefono: '(+51) 967 195 989',
     horario: 'Lunes a Domingo 9:00 am a 9:00 pm',
     seed: 'org-t5',
+    img: getOrganaImg('org-t5', 600, 400),
   },
   {
     nombre: 'tienda.com Magdalena',
@@ -192,6 +271,7 @@ export const tiendas = [
     telefono: '(+51) 989 960 536',
     horario: 'Lunes a Domingo 9:00 am a 9:00 pm',
     seed: 'org-t6',
+    img: getOrganaImg('org-t6', 600, 400),
   },
   {
     nombre: 'tienda.com Vitaminas Los Olivos',
@@ -200,6 +280,7 @@ export const tiendas = [
     telefono: '(+51) 932 562 949',
     horario: 'Lunes a Sabado 9:00 am a 9:00 pm, Domingo 9 am a 6 pm',
     seed: 'org-t7',
+    img: getOrganaImg('org-t7', 600, 400),
   },
   {
     nombre: 'tienda.com Vitaminas Jesus Maria',
@@ -208,6 +289,7 @@ export const tiendas = [
     telefono: '(+51) 986 021 000',
     horario: 'Lunes a Sabado 9:00 am a 9:00 pm, Domingo 9 am a 6 pm',
     seed: 'org-t8',
+    img: getOrganaImg('org-t8', 600, 400),
   },
   {
     nombre: 'tienda.com Vitaminas SJL',
@@ -216,6 +298,7 @@ export const tiendas = [
     telefono: '(+51) 907 497 685',
     horario: 'Lunes a Sabado 9:00 am a 9:00 pm, Domingo 9 am a 6 pm',
     seed: 'org-t9',
+    img: getOrganaImg('org-t9', 600, 400),
   },
   {
     nombre: 'tienda.com Vitaminas San Isidro',
@@ -224,30 +307,31 @@ export const tiendas = [
     telefono: '(+51) 934 206 060',
     horario: 'Lunes a Sabado 9:00 am a 9:00 pm, Domingo 9 am a 6 pm',
     seed: 'org-t10',
+    img: getOrganaImg('org-t10', 600, 400),
   },
 ];
 
 export const soles = (n) => 'S/ ' + Number(n).toLocaleString('es-PE', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 
 export const catalogo = [
-  { nombre: 'Omega 3 Nutricost x120caps', precio: 172.8, antes: 192, tag: '-10%', seed: 'org-p1', departamento: 'Vitaminas', categoria: 'Bienestar', marca: 'Nutricost', naturaleza: 'Con Gluten', tags: ['omega', 'vitaminas'] },
-  { nombre: 'Citrato de Magnesio Premium x200gr', precio: 40.41, antes: 44.9, tag: '-10%', seed: 'org-p2', departamento: 'Vitaminas', categoria: 'Naturales', marca: 'Smart Blends', naturaleza: 'Sin Azucar', tags: ['magnesio', 'mineral'] },
-  { nombre: 'Avena en Hojuela sin Gluten 1.5kg', precio: 27.12, antes: 31.9, tag: '-15%', seed: 'org-p3', departamento: 'Abarrotes', categoria: 'Despensa', marca: 'La Purita', naturaleza: 'Sin Gluten', tags: ['avena', 'cereal'] },
-  { nombre: 'Gelatina sin Sabor x300gr 100% Natural', precio: 28.8, antes: 32, tag: '-10%', seed: 'org-p4', departamento: 'Suplementos', categoria: 'Proteinas', marca: 'Oriundos', naturaleza: 'Organico', tags: ['gelatina', 'colageno', 'proteina'] },
-  { nombre: 'Creatina Monohidratada x500gr', precio: 98.91, antes: 109.9, tag: '-10%', seed: 'org-p5', departamento: 'Suplementos', categoria: 'Rendimiento', marca: 'Applied Nutrition', naturaleza: 'Sin Azucar', tags: ['creatina', 'rendimiento'] },
-  { nombre: 'Magnesio con Vitamina B6 x100tabletas', precio: 69.3, antes: 99, tag: '-30%', seed: 'org-p6', departamento: 'Vitaminas', categoria: 'Bienestar', marca: 'Solgar', naturaleza: 'Vegano', tags: ['magnesio', 'vitamina b6'] },
-  { nombre: 'Ultra Collagen Grass Fed Peptides', precio: 79.9, antes: 99.9, tag: '-20%', seed: 'org-n1', departamento: 'Vitaminas', categoria: 'Bienestar', marca: "Nature's Truth", naturaleza: 'Sin Gluten', tags: ['colageno', 'collagen'] },
-  { nombre: 'Galletas de Arroz con Leche', precio: 12.5, seed: 'org-n2', departamento: 'Abarrotes', categoria: 'Snacks', marca: 'Dr Muller', naturaleza: 'Sin Gluten', tags: ['galletas', 'snack'] },
-  { nombre: 'Galletas de Arroz Integral', precio: 12.5, seed: 'org-n3', departamento: 'Abarrotes', categoria: 'Snacks', marca: 'Dr Muller', naturaleza: 'Sin Gluten', tags: ['galletas', 'snack'] },
-  { nombre: 'Pudin Proteico Sabor Vainilla', precio: 9.9, seed: 'org-n4', departamento: 'Frescos y Congelados', categoria: 'Congelados', marca: 'Hopp', naturaleza: 'Vegano', tags: ['proteina', 'postre'] },
-  { nombre: 'Sal Rosada del Himalaya 454g', precio: 15.9, antes: 18.7, tag: '-15%', seed: 'org-n5', departamento: 'Abarrotes', categoria: 'Despensa', marca: 'Vivir Power Snacks', naturaleza: 'Organico', tags: ['sal'] },
-  { nombre: 'Citrato de Potasio Premium 200g', precio: 33.5, seed: 'org-n6', departamento: 'Vitaminas', categoria: 'Naturales', marca: 'Smartblend', naturaleza: 'Vegano', tags: ['potasio', 'mineral'] },
-  { nombre: 'Ashwagandha SriSri Tattva x60caps', precio: 45.9, seed: 'org-h1', departamento: 'Vitaminas', categoria: 'Naturales', marca: 'SriSri Tattva', naturaleza: 'Organico', tags: ['ashwagandha', 'estres'] },
-  { nombre: 'Pasta Dental sin Fluor SriSri', precio: 18.5, seed: 'org-h2', departamento: 'Cuidado Personal', categoria: 'Higiene oral', marca: 'SriSri Tattva', naturaleza: 'Organico', tags: ['pasta dental', 'higiene'] },
-  { nombre: 'Whey Protein Chocolate Applied Nutrition', precio: 149.9, antes: 179.9, tag: '-17%', seed: 'org-h3', departamento: 'Suplementos', categoria: 'Proteinas', marca: 'Applied Nutrition', naturaleza: 'Con Gluten', tags: ['proteina', 'whey', 'protein'] },
-  { nombre: 'Leche de Almendra sin Azucar 1L', precio: 14.9, seed: 'org-h4', departamento: 'Frescos y Congelados', categoria: 'Bebidas vegetales', marca: 'Blue Llama', naturaleza: 'Vegano', tags: ['leche vegetal', 'almendra'] },
-  { nombre: 'Harina de Almendra Bob\'s Red Mill 400g', precio: 32.9, seed: 'org-h5', departamento: 'Abarrotes', categoria: 'Despensa', marca: 'La Purita', naturaleza: 'Sin Gluten', tags: ['harina', 'sin gluten'] },
-  { nombre: 'Endulzante Monkfruit Lakanto 100g', precio: 39.9, antes: 45.9, tag: '-13%', seed: 'org-h6', departamento: 'Abarrotes', categoria: 'Despensa', marca: 'Zana', naturaleza: 'Keto', tags: ['endulzante', 'keto'] },
+  { nombre: 'Omega 3 Nutricost x120caps', precio: 172.8, antes: 192, tag: '-10%', seed: 'org-p1', img: getOrganaImg('org-p1', 400, 400), departamento: 'Vitaminas', categoria: 'Bienestar', marca: 'Nutricost', naturaleza: 'Con Gluten', tags: ['omega', 'vitaminas'] },
+  { nombre: 'Citrato de Magnesio Premium x200gr', precio: 40.41, antes: 44.9, tag: '-10%', seed: 'org-p2', img: getOrganaImg('org-p2', 400, 400), departamento: 'Vitaminas', categoria: 'Naturales', marca: 'Smart Blends', naturaleza: 'Sin Azucar', tags: ['magnesio', 'mineral'] },
+  { nombre: 'Avena en Hojuela sin Gluten 1.5kg', precio: 27.12, antes: 31.9, tag: '-15%', seed: 'org-p3', img: getOrganaImg('org-p3', 400, 400), departamento: 'Abarrotes', categoria: 'Despensa', marca: 'La Purita', naturaleza: 'Sin Gluten', tags: ['avena', 'cereal'] },
+  { nombre: 'Gelatina sin Sabor x300gr 100% Natural', precio: 28.8, antes: 32, tag: '-10%', seed: 'org-p4', img: getOrganaImg('org-p4', 400, 400), departamento: 'Suplementos', categoria: 'Proteinas', marca: 'Oriundos', naturaleza: 'Organico', tags: ['gelatina', 'colageno', 'proteina'] },
+  { nombre: 'Creatina Monohidratada x500gr', precio: 98.91, antes: 109.9, tag: '-10%', seed: 'org-p5', img: getOrganaImg('org-p5', 400, 400), departamento: 'Suplementos', categoria: 'Rendimiento', marca: 'Applied Nutrition', naturaleza: 'Sin Azucar', tags: ['creatina', 'rendimiento'] },
+  { nombre: 'Magnesio con Vitamina B6 x100tabletas', precio: 69.3, antes: 99, tag: '-30%', seed: 'org-p6', img: getOrganaImg('org-p6', 400, 400), departamento: 'Vitaminas', categoria: 'Bienestar', marca: 'Solgar', naturaleza: 'Vegano', tags: ['magnesio', 'vitamina b6'] },
+  { nombre: 'Ultra Collagen Grass Fed Peptides', precio: 79.9, antes: 99.9, tag: '-20%', seed: 'org-n1', img: getOrganaImg('org-n1', 400, 400), departamento: 'Vitaminas', categoria: 'Bienestar', marca: "Nature's Truth", naturaleza: 'Sin Gluten', tags: ['colageno', 'collagen'] },
+  { nombre: 'Galletas de Arroz con Leche', precio: 12.5, seed: 'org-n2', img: getOrganaImg('org-n2', 400, 400), departamento: 'Abarrotes', categoria: 'Snacks', marca: 'Dr Muller', naturaleza: 'Sin Gluten', tags: ['galletas', 'snack'] },
+  { nombre: 'Galletas de Arroz Integral', precio: 12.5, seed: 'org-n3', img: getOrganaImg('org-n3', 400, 400), departamento: 'Abarrotes', categoria: 'Snacks', marca: 'Dr Muller', naturaleza: 'Sin Gluten', tags: ['galletas', 'snack'] },
+  { nombre: 'Pudin Proteico Sabor Vainilla', precio: 9.9, seed: 'org-n4', img: getOrganaImg('org-n4', 400, 400), departamento: 'Frescos y Congelados', categoria: 'Congelados', marca: 'Hopp', naturaleza: 'Vegano', tags: ['proteina', 'postre'] },
+  { nombre: 'Sal Rosada del Himalaya 454g', precio: 15.9, antes: 18.7, tag: '-15%', seed: 'org-n5', img: getOrganaImg('org-n5', 400, 400), departamento: 'Abarrotes', categoria: 'Despensa', marca: 'Vivir Power Snacks', naturaleza: 'Organico', tags: ['sal'] },
+  { nombre: 'Citrato de Potasio Premium 200g', precio: 33.5, seed: 'org-n6', img: getOrganaImg('org-n6', 400, 400), departamento: 'Vitaminas', categoria: 'Naturales', marca: 'Smartblend', naturaleza: 'Vegano', tags: ['potasio', 'mineral'] },
+  { nombre: 'Ashwagandha SriSri Tattva x60caps', precio: 45.9, seed: 'org-h1', img: getOrganaImg('org-h1', 400, 400), departamento: 'Vitaminas', categoria: 'Naturales', marca: 'SriSri Tattva', naturaleza: 'Organico', tags: ['ashwagandha', 'estres'] },
+  { nombre: 'Pasta Dental sin Fluor SriSri', precio: 18.5, seed: 'org-h2', img: getOrganaImg('org-h2', 400, 400), departamento: 'Cuidado Personal', categoria: 'Higiene oral', marca: 'SriSri Tattva', naturaleza: 'Organico', tags: ['pasta dental', 'higiene'] },
+  { nombre: 'Whey Protein Chocolate Applied Nutrition', precio: 149.9, antes: 179.9, tag: '-17%', seed: 'org-h3', img: getOrganaImg('org-h3', 400, 400), departamento: 'Suplementos', categoria: 'Proteinas', marca: 'Applied Nutrition', naturaleza: 'Con Gluten', tags: ['proteina', 'whey', 'protein'] },
+  { nombre: 'Leche de Almendra sin Azucar 1L', precio: 14.9, seed: 'org-h4', img: getOrganaImg('org-h4', 400, 400), departamento: 'Frescos y Congelados', categoria: 'Bebidas vegetales', marca: 'Blue Llama', naturaleza: 'Vegano', tags: ['leche vegetal', 'almendra'] },
+  { nombre: 'Harina de Almendra Bob\'s Red Mill 400g', precio: 32.9, seed: 'org-h5', img: getOrganaImg('org-h5', 400, 400), departamento: 'Abarrotes', categoria: 'Despensa', marca: 'La Purita', naturaleza: 'Sin Gluten', tags: ['harina', 'sin gluten'] },
+  { nombre: 'Endulzante Monkfruit Lakanto 100g', precio: 39.9, antes: 45.9, tag: '-13%', seed: 'org-h6', img: getOrganaImg('org-h6', 400, 400), departamento: 'Abarrotes', categoria: 'Despensa', marca: 'Zana', naturaleza: 'Keto', tags: ['endulzante', 'keto'] },
 ];
 
 export const filtrosDepartamento = ['Vitaminas', 'Suplementos', 'Abarrotes', 'Frescos y Congelados', 'Cuidado Personal'];

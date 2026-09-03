@@ -1,3 +1,7 @@
+---
+import { getMetroImg } from '../datos/metro.js';
+---
+
 <section class="tm-app">
   <div class="tm-wrap tm-app__inner">
     <div class="tm-app__tx">
@@ -9,7 +13,7 @@
       </div>
       <button type="button" class="tm-btn tm-btn--claro">Descargala aqui</button>
     </div>
-    <img src="https://picsum.photos/seed/tm-app/420/320" alt="App tienda.com Market" loading="lazy" />
+    <img src={getMetroImg('tm-app', 500, 360)} alt="App tienda.com Market" loading="lazy" />
   </div>
 </section>
 

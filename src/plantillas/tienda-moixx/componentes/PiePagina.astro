@@ -1,0 +1,136 @@
+---
+import { marca, footerCols } from '../datos/moixx.js';
+---
+
+<footer class="mx-foot">
+  <div class="mx-wrap mx-foot__grid">
+    {footerCols.map((col: { t: string; links: string[] }) => (
+      <nav class="mx-foot__col" aria-label={col.t}>
+        <h3>{col.t}</h3>
+        <ul>
+          {col.links.map((l: string) => <li><a href="#top">{l}</a></li>)}
+        </ul>
+      </nav>
+    ))}
+
+    <div class="mx-foot__col mx-foot__libro">
+      <p class="mx-foot__libro-tit">Libro de<br />Reclamaciones</p>
+      <a href="#top" class="mx-foot__libro-ico" aria-label="Libro de Reclamaciones">
+        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M2 5c3-1 6-1 9 0v14c-3-1-6-1-9 0z"></path><path d="M22 5c-3-1-6-1-9 0v14c3-1 6-1 9 0z"></path></svg>
+      </a>
+      <a href="#top" class="mx-link-subrayado">Libro de Reclamaciones</a>
+    </div>
+
+    <nav class="mx-foot__col" aria-label="Follow Us">
+      <h3>Follow Us</h3>
+      <ul>
+        <li><a href="#top">Instagram</a></li>
+        <li><a href="#top">Facebook</a></li>
+        <li><a href="#top">Tiktok</a></li>
+        <li><a href="#top">Pinterest</a></li>
+        <li><a href="#top">Youtube</a></li>
+      </ul>
+    </nav>
+  </div>
+
+  <div class="mx-wrap mx-foot__base">
+    <span>&copy; 2026 {marca.nombre}.</span>
+    <div class="mx-foot__pagos">
+      <span>AMEX</span>
+      <span>DINERS</span>
+      <span>MASTERCARD</span>
+      <span>VISA</span>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .mx-foot {
+    background: #fff;
+    border-top: 1px solid var(--mx-linea);
+    padding-bottom: 3.5rem;
+  }
+
+  .mx-foot__grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    gap: 2rem;
+    padding-block: 3rem 2rem;
+  }
+
+  .mx-foot__col h3 {
+    font-family: var(--mx-font);
+    font-size: 0.85rem;
+    font-weight: 600;
+    margin-bottom: 1.1rem;
+  }
+
+  .mx-foot__col ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.7rem;
+  }
+
+  .mx-foot__col a {
+    font-size: 0.85rem;
+    color: var(--mx-gris);
+  }
+
+  .mx-foot__col a:hover {
+    color: var(--mx-tinta);
+  }
+
+  .mx-foot__libro {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .mx-foot__libro-tit {
+    font-family: var(--mx-serif);
+    font-size: 1.1rem;
+    color: #2563a8;
+  }
+
+  .mx-foot__libro-ico {
+    color: #2563a8;
+  }
+
+  .mx-foot__base {
+    border-top: 1px solid var(--mx-linea);
+    padding-block: 1.25rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1rem;
+    font-size: 0.78rem;
+    color: var(--mx-gris);
+  }
+
+  .mx-foot__pagos {
+    display: flex;
+    gap: 0.75rem;
+  }
+
+  .mx-foot__pagos span {
+    border: 1px solid var(--mx-linea);
+    padding: 0.2rem 0.5rem;
+    font-size: 0.62rem;
+    font-weight: 600;
+    letter-spacing: 0.03em;
+  }
+
+  @media (max-width: 900px) {
+    .mx-foot__grid {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  @media (max-width: 520px) {
+    .mx-foot__grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
