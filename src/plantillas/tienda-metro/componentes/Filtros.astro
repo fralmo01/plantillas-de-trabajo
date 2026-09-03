@@ -1,0 +1,214 @@
+---
+import { catalogo, filtrosDepartamento, filtrosCategoria, filtrosMarca } from '../datos/metro.js';
+
+const contar = (campo: 'departamento' | 'categoria' | 'marca', valor: string) =>
+  catalogo.filter((p: Record<string, unknown>) => p[campo] === valor).length;
+---
+
+<aside class="tm-filtros" id="tm-filtros">
+  <div class="tm-filtros__cab">
+    <h2>Filtrar productos</h2>
+    <button class="tm-filtros__x" type="button" aria-label="Cerrar filtros">&times;</button>
+  </div>
+
+  <form class="tm-filtros__form" onsubmit="return false">
+    <details class="tm-grupo" open>
+      <summary>Departamento</summary>
+      <div class="tm-grupo__cuerpo">
+        <ul class="tm-grupo__lista" data-filtro="departamento">
+          {filtrosDepartamento.map((d: string) => (
+            <li>
+              <label>
+                <input type="checkbox" name="departamento" value={d} />
+                <span>{d}</span>
+                <b>({contar('departamento', d)})</b>
+              </label>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </details>
+
+    <details class="tm-grupo" open>
+      <summary>Categoria</summary>
+      <div class="tm-grupo__cuerpo">
+        <ul class="tm-grupo__lista tm-grupo__lista--scroll" data-filtro="categoria">
+          {filtrosCategoria.map((c: string) => (
+            <li>
+              <label>
+                <input type="checkbox" name="categoria" value={c} />
+                <span>{c}</span>
+                <b>({contar('categoria', c)})</b>
+              </label>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </details>
+
+    <details class="tm-grupo">
+      <summary>Marca</summary>
+      <div class="tm-grupo__cuerpo">
+        <input type="search" class="tm-grupo__buscar" placeholder="Buscar marca" aria-label="Buscar marca" />
+        <ul class="tm-grupo__lista tm-grupo__lista--scroll" data-filtro="marca">
+          {filtrosMarca.map((m: string) => (
+            <li>
+              <label>
+                <input type="checkbox" name="marca" value={m} />
+                <span>{m}</span>
+                <b>({contar('marca', m)})</b>
+              </label>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </details>
+
+    <details class="tm-grupo">
+      <summary>Rango de precio</summary>
+      <div class="tm-grupo__cuerpo">
+        <input type="range" min="0" max="3200" value="3200" class="tm-rango" aria-label="Precio maximo" />
+        <div class="tm-rango__val"><span>S/ 0</span><span>S/ 3,200</span></div>
+      </div>
+    </details>
+
+    <button type="button" class="tm-btn tm-btn--outline tm-filtros__limpiar" id="tm-filtros-limpiar">Limpiar filtros</button>
+  </form>
+</aside>
+
+<style>
+  .tm-filtros {
+    align-self: start;
+  }
+
+  .tm-filtros__cab {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-left: 4px solid var(--tm-rojo);
+    padding: 0.4rem 0 0.4rem 0.7rem;
+    margin-bottom: 1rem;
+  }
+
+  .tm-filtros__cab h2 {
+    font-size: 0.95rem;
+    text-transform: uppercase;
+  }
+
+  .tm-filtros__x {
+    display: none;
+    font-size: 1.1rem;
+  }
+
+  .tm-grupo {
+    border-bottom: 1px solid var(--tm-linea);
+    padding-block: 0.65rem;
+  }
+
+  .tm-grupo summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 0.86rem;
+    font-weight: 700;
+    cursor: pointer;
+    list-style: none;
+  }
+
+  .tm-grupo summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .tm-grupo summary::after {
+    content: "\203A";
+    transform: rotate(90deg);
+    color: var(--tm-gris);
+  }
+
+  .tm-grupo[open] summary::after {
+    transform: rotate(-90deg);
+  }
+
+  .tm-grupo__cuerpo {
+    padding-top: 0.65rem;
+    display: grid;
+    gap: 0.55rem;
+  }
+
+  .tm-grupo__buscar {
+    width: 100%;
+    padding: 0.5rem 0.7rem;
+    border: 1px solid var(--tm-linea);
+    border-radius: 6px;
+    font: inherit;
+    font-size: 0.8rem;
+  }
+
+  .tm-grupo__lista {
+    list-style: none;
+    display: grid;
+    gap: 0.5rem;
+  }
+
+  .tm-grupo__lista--scroll {
+    max-height: 190px;
+    overflow-y: auto;
+    padding-right: 0.25rem;
+  }
+
+  .tm-grupo__lista label {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.8rem;
+    cursor: pointer;
+  }
+
+  .tm-grupo__lista label b {
+    margin-left: auto;
+    color: var(--tm-gris);
+    font-weight: 600;
+    font-size: 0.7rem;
+  }
+
+  .tm-grupo__lista input {
+    accent-color: var(--tm-rojo);
+  }
+
+  .tm-rango {
+    width: 100%;
+    accent-color: var(--tm-rojo);
+  }
+
+  .tm-rango__val {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.72rem;
+    color: var(--tm-gris);
+  }
+
+  .tm-filtros__limpiar {
+    width: 100%;
+    margin-top: 0.5rem;
+  }
+
+  @media (max-width: 900px) {
+    .tm-filtros {
+      position: fixed;
+      inset: 0 25% 0 0;
+      z-index: 350;
+      background: #fff;
+      padding: 1.25rem;
+      overflow-y: auto;
+      transform: translateX(-105%);
+      transition: transform 0.25s ease;
+      box-shadow: 0 0 40px rgba(0, 0, 0, 0.25);
+    }
+    .tm-filtros.is-abierto {
+      transform: none;
+    }
+    .tm-filtros__x {
+      display: block;
+    }
+  }
+</style>

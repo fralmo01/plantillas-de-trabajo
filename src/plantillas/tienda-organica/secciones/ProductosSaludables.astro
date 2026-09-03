@@ -1,0 +1,55 @@
+---
+import { productosSaludables } from '../datos/organica.js';
+---
+
+<section class="or-seccion or-wrap">
+  <div class="or-salud">
+    {productosSaludables.map((c: { t: string; seed: string }) => (
+      <a href="#promos" class="or-salud__card">
+        <img src={`https://picsum.photos/seed/${c.seed}/380/300`} alt={c.t} loading="lazy" />
+        <span class="or-salud__pill">{c.t}</span>
+      </a>
+    ))}
+  </div>
+</section>
+
+<style>
+  .or-salud {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.1rem;
+  }
+
+  .or-salud__card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: var(--or-verde-claro);
+    border-radius: 16px;
+    padding: 1.5rem 1rem 1.75rem;
+    gap: 1.25rem;
+  }
+
+  .or-salud__card img {
+    border-radius: 10px;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+  }
+
+  .or-salud__pill {
+    background: #fff;
+    color: var(--or-tinta);
+    font-weight: 700;
+    font-size: 0.82rem;
+    padding: 0.55rem 1.4rem;
+    border-radius: var(--or-pill);
+    text-align: center;
+  }
+
+  @media (max-width: 820px) {
+    .or-salud {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+</style>

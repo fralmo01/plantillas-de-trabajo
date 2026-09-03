@@ -1,0 +1,103 @@
+---
+import { promos } from '../datos/organica.js';
+import TarjetaProducto from '../componentes/TarjetaProducto.astro';
+---
+
+<section class="or-promos" id="promos">
+  <div class="or-wrap">
+    <div class="or-promos__head">
+      <h2>⚡ Promos tienda.com 💚 <span>Por tiempo limitado!</span></h2>
+      <div class="or-promos__timer" id="or-timer">
+        <div><b id="or-t-d">00</b><span>Dias</span></div>
+        <div><b id="or-t-h">00</b><span>Horas</span></div>
+        <div><b id="or-t-m">00</b><span>Minutos</span></div>
+        <div><b id="or-t-s">00</b><span>Segundos</span></div>
+      </div>
+      <a href="#novedades" class="or-btn or-btn--pill">Ver mas</a>
+    </div>
+
+    <div class="or-fila" data-buscable>
+      {promos.map((p) => <TarjetaProducto producto={p} />)}
+    </div>
+  </div>
+</section>
+
+<script>
+  const fin = Date.now() + (21 * 24 * 3600 + 15 * 3600 + 15 * 60) * 1000;
+  const d = document.getElementById('or-t-d');
+  const h = document.getElementById('or-t-h');
+  const m = document.getElementById('or-t-m');
+  const s = document.getElementById('or-t-s');
+
+  function tick() {
+    const rest = Math.max(0, fin - Date.now());
+    const dias = Math.floor(rest / 86400000);
+    const horas = Math.floor((rest % 86400000) / 3600000);
+    const min = Math.floor((rest % 3600000) / 60000);
+    const seg = Math.floor((rest % 60000) / 1000);
+    if (d) d.textContent = String(dias).padStart(2, '0');
+    if (h) h.textContent = String(horas).padStart(2, '0');
+    if (m) m.textContent = String(min).padStart(2, '0');
+    if (s) s.textContent = String(seg).padStart(2, '0');
+  }
+  tick();
+  window.setInterval(tick, 1000);
+</script>
+
+<style>
+  .or-promos {
+    background: var(--or-verde);
+    color: #fff;
+    padding-block: 1.75rem;
+  }
+
+  .or-promos__head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    flex-wrap: wrap;
+    margin-bottom: 1.25rem;
+  }
+
+  .or-promos__head h2 {
+    color: #fff;
+    font-size: 1.1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    flex-wrap: wrap;
+  }
+
+  .or-promos__head h2 span {
+    background: rgba(255, 255, 255, 0.2);
+    font-size: 0.72rem;
+    font-weight: 600;
+    padding: 0.25rem 0.6rem;
+    border-radius: var(--or-pill);
+  }
+
+  .or-promos__timer {
+    display: flex;
+    gap: 0.5rem;
+  }
+
+  .or-promos__timer div {
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 8px;
+    padding: 0.4rem 0.7rem;
+    text-align: center;
+    min-width: 52px;
+  }
+
+  .or-promos__timer b {
+    display: block;
+    font-size: 1.1rem;
+  }
+
+  .or-promos__timer span {
+    font-size: 0.6rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+</style>

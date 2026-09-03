@@ -1,0 +1,75 @@
+---
+import { bannerAyuda, soles } from '../datos/organica.js';
+---
+
+<section class="or-seccion or-wrap">
+  <a href="#promos" class="or-banner">
+    <img src={`https://picsum.photos/seed/${bannerAyuda.seed}/700/400`} alt={bannerAyuda.destacado} loading="lazy" />
+    <div class="or-banner__tx">
+      <h2>{bannerAyuda.titulo}</h2>
+      <span class="or-banner__pill">{bannerAyuda.destacado}</span>
+      <p><b>{soles(bannerAyuda.precio)}</b> <s>P. regular {soles(bannerAyuda.antes)}</s></p>
+    </div>
+  </a>
+</section>
+
+<style>
+  .or-banner {
+    position: relative;
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    align-items: center;
+    background: linear-gradient(120deg, #0c2b1d 0%, var(--or-verde-osc) 100%);
+    border-radius: 16px;
+    overflow: hidden;
+    min-height: 220px;
+  }
+
+  .or-banner img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0.9;
+  }
+
+  .or-banner__tx {
+    padding: 1.75rem;
+    color: #fff;
+  }
+
+  .or-banner__tx h2 {
+    color: #fff;
+    font-size: clamp(1.2rem, 2.6vw, 1.7rem);
+    margin-bottom: 0.75rem;
+    max-width: 20ch;
+  }
+
+  .or-banner__pill {
+    display: inline-block;
+    background: #fff;
+    color: var(--or-verde-osc);
+    font-weight: 800;
+    font-size: 0.85rem;
+    padding: 0.35rem 0.9rem;
+    border-radius: var(--or-pill);
+    margin-bottom: 0.75rem;
+  }
+
+  .or-banner__tx p {
+    font-size: 1.4rem;
+    font-weight: 800;
+  }
+
+  .or-banner__tx p s {
+    font-size: 0.8rem;
+    font-weight: 400;
+    color: rgba(255, 255, 255, 0.7);
+    margin-left: 0.5rem;
+  }
+
+  @media (max-width: 700px) {
+    .or-banner {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

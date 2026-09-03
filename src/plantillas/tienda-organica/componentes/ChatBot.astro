@@ -1,0 +1,157 @@
+---
+import { chatCanned } from '../datos/organica.js';
+---
+
+<div class="or-chat" id="or-chat">
+  <button type="button" class="or-chat__fab" id="or-chat-fab" aria-label="Abrir chat de ayuda">
+    <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.5 8.5 0 0 1-8.5 8.5 8.4 8.4 0 0 1-3.9-.94L3 21l1.94-5.6A8.5 8.5 0 1 1 21 11.5Z"></path></svg>
+  </button>
+
+  <div class="or-chat__panel" id="or-chat-panel" hidden>
+    <header class="or-chat__head">
+      <span>Asistente tienda.com</span>
+      <button type="button" id="or-chat-close" aria-label="Cerrar chat">&times;</button>
+    </header>
+    <div class="or-chat__body" id="or-chat-body">
+      <p class="or-chat__msg or-chat__msg--bot">Hola! Soy el asistente de tienda.com. En que puedo ayudarte hoy?</p>
+    </div>
+    <form class="or-chat__form" id="or-chat-form">
+      <input type="text" id="or-chat-input" placeholder="Escribe aqui..." aria-label="Escribe tu mensaje" />
+      <button type="submit" aria-label="Enviar">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M22 2 11 13"></path><path d="M22 2 15 22l-4-9-9-4 20-7Z"></path></svg>
+      </button>
+    </form>
+  </div>
+</div>
+
+<script define:vars={{ chatCanned }}>
+  const fab = document.getElementById('or-chat-fab');
+  const panel = document.getElementById('or-chat-panel');
+  const closeBtn = document.getElementById('or-chat-close');
+  const body = document.getElementById('or-chat-body');
+  const form = document.getElementById('or-chat-form');
+  const input = document.getElementById('or-chat-input');
+  let i = 0;
+
+  function abrir(v) {
+    if (!panel) return;
+    panel.hidden = !v;
+  }
+
+  fab?.addEventListener('click', () => abrir(panel?.hidden ?? true));
+  closeBtn?.addEventListener('click', () => abrir(false));
+
+  form?.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const val = (input?.value || '').trim();
+    if (!val || !body) return;
+    const yo = document.createElement('p');
+    yo.className = 'or-chat__msg or-chat__msg--yo';
+    yo.textContent = val;
+    body.appendChild(yo);
+    input.value = '';
+    body.scrollTop = body.scrollHeight;
+
+    window.setTimeout(() => {
+      const bot = document.createElement('p');
+      bot.className = 'or-chat__msg or-chat__msg--bot';
+      bot.textContent = chatCanned[i % chatCanned.length];
+      i++;
+      body.appendChild(bot);
+      body.scrollTop = body.scrollHeight;
+    }, 650);
+  });
+</script>
+
+<style>
+  .or-chat__fab {
+    position: fixed;
+    right: 1.25rem;
+    bottom: 1.25rem;
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background: var(--or-verde);
+    color: #fff;
+    display: grid;
+    place-items: center;
+    box-shadow: 0 12px 28px -10px rgba(0, 0, 0, 0.45);
+    z-index: 95;
+  }
+
+  .or-chat__fab:hover {
+    background: var(--or-verde-osc);
+  }
+
+  .or-chat__panel[hidden] {
+    display: none;
+  }
+
+  .or-chat__panel {
+    position: fixed;
+    right: 1.25rem;
+    bottom: 5.5rem;
+    width: min(320px, 88vw);
+    height: min(420px, 65vh);
+    background: #fff;
+    border-radius: 14px;
+    box-shadow: 0 24px 48px -16px rgba(0, 0, 0, 0.4);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    z-index: 95;
+  }
+
+  .or-chat__head {
+    background: var(--or-verde);
+    color: #fff;
+    padding: 0.75rem 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-weight: 700;
+    font-size: 0.9rem;
+  }
+
+  .or-chat__head button {
+    color: #fff;
+    font-size: 1.3rem;
+    line-height: 1;
+  }
+
+  .or-chat__body {
+    flex: 1;
+    overflow-y: auto;
+    padding: 0.9rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+  }
+
+  .or-chat__form {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    border-top: 1px solid var(--or-linea);
+    padding: 0.6rem;
+  }
+
+  .or-chat__form input {
+    flex: 1;
+    border: none;
+    outline: none;
+    font-size: 0.82rem;
+    padding: 0.4rem;
+  }
+
+  .or-chat__form button {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: var(--or-verde);
+    color: #fff;
+    display: grid;
+    place-items: center;
+    flex-shrink: 0;
+  }
+</style>

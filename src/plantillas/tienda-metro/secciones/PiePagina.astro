@@ -1,0 +1,254 @@
+---
+import { marca, footerCols, seoBloques } from '../datos/metro.js';
+---
+
+<div class="tm-news">
+  <div class="tm-wrap tm-news__inner">
+    <span>Suscribete al newsletter y recibe ofertas</span>
+    <form class="tm-news__form">
+      <input type="email" placeholder="Ingresa tu e-mail" aria-label="Correo electronico" />
+      <button type="submit" class="tm-btn tm-btn--outline">Suscribir</button>
+    </form>
+  </div>
+</div>
+
+<section class="tm-seo tm-wrap">
+  {seoBloques.map((b: { t: string; p: string }) => (
+    <div class="tm-seo__col">
+      <h3>{b.t}</h3>
+      <p>{b.p}</p>
+    </div>
+  ))}
+</section>
+
+<footer class="tm-foot">
+  <div class="tm-wrap tm-foot__grid">
+    <div class="tm-foot__marca">
+      <span class="tm-foot__logo">{marca.nombre}<b>{marca.sub}</b></span>
+      <div class="tm-foot__redes" aria-label="Redes sociales">
+        <a href="#" aria-label="Facebook">f</a>
+        <a href="#" aria-label="YouTube">&#9654;</a>
+        <a href="#" aria-label="Twitter">X</a>
+        <a href="#" aria-label="Instagram">&#9678;</a>
+      </div>
+      <a href="#" class="tm-foot__lr">
+        <span aria-hidden="true">&#128278;</span> Libro de Reclamaciones
+      </a>
+    </div>
+
+    {footerCols.map((col: { t: string; links: string[] }) => (
+      <nav class="tm-foot__col" aria-label={col.t}>
+        <h3>{col.t}</h3>
+        <ul>
+          {col.links.map((l: string) => <li><a href="#">{l}</a></li>)}
+        </ul>
+      </nav>
+    ))}
+
+    <div class="tm-foot__col">
+      <h3>Descarga nuestra app</h3>
+      <div class="tm-foot__badges">
+        <span class="tm-foot__badge">Google Play</span>
+        <span class="tm-foot__badge">App Store</span>
+      </div>
+      <h3 class="tm-foot__cont-t">Ayuda callcenter</h3>
+      <p class="tm-foot__cont">{marca.tel}</p>
+    </div>
+  </div>
+
+  <div class="tm-wrap tm-foot__base">
+    <span>Compras 100% seguras</span>
+    <span>Esta tienda usa Niubiz para realizar transacciones electronicas.</span>
+    <span>2026 {marca.nombre}, {marca.ciudad}</span>
+  </div>
+</footer>
+
+<style>
+  .tm-news {
+    background: var(--tm-amarillo);
+  }
+
+  .tm-news__inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding-block: 1.1rem;
+    flex-wrap: wrap;
+    font-weight: 700;
+    font-size: 0.85rem;
+  }
+
+  .tm-news__form {
+    display: flex;
+    gap: 0.5rem;
+  }
+
+  .tm-news__form input {
+    border: none;
+    border-radius: 6px;
+    padding: 0.55rem 0.9rem;
+    font-size: 0.82rem;
+    min-width: 240px;
+  }
+
+  .tm-seo {
+    padding-block: 2.25rem;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+  }
+
+  .tm-seo__col h3 {
+    font-size: 0.95rem;
+    margin-bottom: 0.6rem;
+    color: var(--tm-rojo);
+  }
+
+  .tm-seo__col p {
+    font-size: 0.8rem;
+    color: var(--tm-gris);
+    line-height: 1.6;
+  }
+
+  .tm-foot {
+    background: var(--tm-suave);
+    margin-top: 1rem;
+  }
+
+  .tm-foot__grid {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr 1fr 1fr 1.1fr;
+    gap: 2rem;
+    padding-block: 2.5rem 1.75rem;
+  }
+
+  .tm-foot__logo {
+    font-weight: 800;
+    font-size: 1.3rem;
+    color: var(--tm-rojo);
+    font-style: italic;
+  }
+
+  .tm-foot__logo b {
+    display: block;
+    font-size: 0.55rem;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--tm-tinta);
+    font-style: normal;
+  }
+
+  .tm-foot__redes {
+    display: flex;
+    gap: 0.4rem;
+    margin: 1rem 0;
+  }
+
+  .tm-foot__redes a {
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: #fff;
+    color: var(--tm-rojo);
+    font-weight: 700;
+    font-size: 0.75rem;
+  }
+
+  .tm-foot__lr {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    border: 1px solid var(--tm-linea);
+    background: #fff;
+    padding: 0.4rem 0.8rem;
+    border-radius: 6px;
+    font-size: 0.78rem;
+  }
+
+  .tm-foot__col h3 {
+    font-size: 0.8rem;
+    color: var(--tm-tinta);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    margin-bottom: 0.75rem;
+  }
+
+  .tm-foot__col ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .tm-foot__col a {
+    font-size: 0.8rem;
+    color: var(--tm-gris);
+  }
+
+  .tm-foot__col a:hover {
+    color: var(--tm-rojo);
+  }
+
+  .tm-foot__badges {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    margin-bottom: 1rem;
+  }
+
+  .tm-foot__badge {
+    background: #111;
+    color: #fff;
+    font-size: 0.7rem;
+    font-weight: 700;
+    padding: 0.4rem 0.7rem;
+    border-radius: 6px;
+    text-align: center;
+  }
+
+  .tm-foot__cont-t {
+    margin-top: 0.5rem;
+  }
+
+  .tm-foot__cont {
+    font-size: 0.85rem;
+    color: var(--tm-rojo);
+    font-weight: 700;
+  }
+
+  .tm-foot__base {
+    border-top: 1px solid var(--tm-linea);
+    padding-block: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    font-size: 0.72rem;
+    color: var(--tm-gris);
+    flex-wrap: wrap;
+  }
+
+  @media (max-width: 960px) {
+    .tm-foot__grid {
+      grid-template-columns: 1fr 1fr;
+    }
+    .tm-seo {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 520px) {
+    .tm-foot__grid {
+      grid-template-columns: 1fr;
+    }
+    .tm-foot__base {
+      flex-direction: column;
+      text-align: center;
+    }
+  }
+</style>

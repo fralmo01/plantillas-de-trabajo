@@ -1,0 +1,69 @@
+---
+import { bannersDuo } from '../datos/organica.js';
+---
+
+<section class="or-seccion or-wrap">
+  <div class="or-duo">
+    {bannersDuo.map((b: { titulo: string; sub: string; seed: string }, i: number) => (
+      <a href="#promos" class={`or-duo__card${i === 1 ? ' is-claro' : ''}`}>
+        <img src={`https://picsum.photos/seed/${b.seed}/620/360`} alt={b.titulo} loading="lazy" />
+        <div class="or-duo__tx">
+          <strong>{b.titulo}</strong>
+          <span>{b.sub}</span>
+        </div>
+      </a>
+    ))}
+  </div>
+</section>
+
+<style>
+  .or-duo {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
+
+  .or-duo__card {
+    position: relative;
+    border-radius: 14px;
+    overflow: hidden;
+    min-height: 190px;
+    display: block;
+  }
+
+  .or-duo__card img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .or-duo__tx {
+    position: relative;
+    z-index: 1;
+    height: 100%;
+    padding: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    gap: 0.3rem;
+    color: #fff;
+    background: linear-gradient(0deg, rgba(0, 0, 0, 0.62), transparent 65%);
+  }
+
+  .or-duo__tx strong {
+    font-size: 1.15rem;
+    font-weight: 800;
+  }
+
+  .or-duo__tx span {
+    font-size: 0.82rem;
+  }
+
+  @media (max-width: 700px) {
+    .or-duo {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

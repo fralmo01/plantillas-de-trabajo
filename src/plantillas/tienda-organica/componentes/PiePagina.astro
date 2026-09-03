@@ -1,0 +1,192 @@
+---
+import { marca, footerCols, marcas } from '../datos/organica.js';
+---
+
+<section class="or-marcas or-wrap">
+  <p class="or-marcas__intro">Trabajamos con las mejores marcas para ofrecerte productos de calidad que cuidan tu salud y bienestar.</p>
+  <div class="or-marcas__grid">
+    {marcas.map((m: string, i: number) => (
+      <div class="or-marcas__logo" style={`background:hsl(${(i * 47) % 360} 35% 32%)`}>{m}</div>
+    ))}
+  </div>
+</section>
+
+<footer class="or-foot">
+  <div class="or-wrap or-foot__grid">
+    <div class="or-foot__marca">
+      <span class="or-foot__logo">{marca.nombre}<b>{marca.sub}</b></span>
+      <a href="#top" class="or-foot__libro">Libro de Reclamaciones</a>
+    </div>
+
+    {footerCols.map((col: { t: string; links: string[] }) => (
+      <nav class="or-foot__col" aria-label={col.t}>
+        <h3>{col.t}</h3>
+        <ul>
+          {col.links.map((l: string) => <li><a href="#top">{l}</a></li>)}
+        </ul>
+      </nav>
+    ))}
+
+    <div class="or-foot__col">
+      <h3>Contacto</h3>
+      <div class="or-foot__redes" aria-label="Redes sociales">
+        <a href="#" aria-label="Instagram">&#9678;</a>
+        <a href="#" aria-label="Facebook">f</a>
+        <a href="#" aria-label="TikTok">&#9835;</a>
+      </div>
+      <p class="or-foot__cont">{marca.tel}<br />{marca.correo}</p>
+    </div>
+  </div>
+
+  <div class="or-wrap or-foot__base">
+    <span>{marca.nombre} 2026 | Todos los derechos reservados</span>
+  </div>
+</footer>
+
+<style>
+  .or-marcas {
+    padding-block: 2rem;
+  }
+
+  .or-marcas__intro {
+    text-align: center;
+    color: var(--or-gris);
+    font-size: 0.85rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .or-marcas__grid {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 1rem;
+  }
+
+  .or-marcas__logo {
+    aspect-ratio: 1 / 1;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: #fff;
+    font-weight: 700;
+    font-size: 0.85rem;
+    padding: 0.5rem;
+  }
+
+  .or-foot {
+    background: var(--or-verde);
+    color: #fff;
+    margin-top: 1rem;
+  }
+
+  .or-foot__grid {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr 1fr 1fr;
+    gap: 2rem;
+    padding-block: 2.5rem 1.75rem;
+  }
+
+  .or-foot__logo {
+    font-weight: 800;
+    font-size: 1.4rem;
+    color: #fff;
+    display: block;
+    margin-bottom: 1rem;
+  }
+
+  .or-foot__logo b {
+    display: block;
+    font-size: 0.55rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.8);
+  }
+
+  .or-foot__libro {
+    display: inline-block;
+    background: #fff;
+    color: var(--or-verde-osc);
+    font-weight: 700;
+    font-size: 0.78rem;
+    padding: 0.6rem 1rem;
+    border-radius: 6px;
+  }
+
+  .or-foot__col h3 {
+    color: #fff;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    margin-bottom: 0.85rem;
+  }
+
+  .or-foot__col ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.55rem;
+  }
+
+  .or-foot__col a {
+    font-size: 0.82rem;
+    color: rgba(255, 255, 255, 0.85);
+  }
+
+  .or-foot__col a:hover {
+    color: #fff;
+    text-decoration: underline;
+  }
+
+  .or-foot__redes {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+  }
+
+  .or-foot__redes a {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.15);
+    color: #fff;
+    font-weight: 700;
+    font-size: 0.8rem;
+  }
+
+  .or-foot__cont {
+    font-size: 0.82rem;
+    color: rgba(255, 255, 255, 0.9);
+    line-height: 1.7;
+  }
+
+  .or-foot__base {
+    border-top: 1px solid rgba(255, 255, 255, 0.25);
+    padding-block: 1rem;
+    font-size: 0.78rem;
+    color: rgba(255, 255, 255, 0.85);
+    text-align: center;
+  }
+
+  @media (max-width: 900px) {
+    .or-foot__grid {
+      grid-template-columns: 1fr 1fr;
+    }
+    .or-marcas__grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  @media (max-width: 520px) {
+    .or-foot__grid {
+      grid-template-columns: 1fr;
+    }
+    .or-marcas__grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+</style>

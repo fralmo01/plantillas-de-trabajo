@@ -7,7 +7,7 @@
   "tags": ["moda", "ropa", "ecommerce", "multipágina", "denim", "urbano"],
   "paleta": ["#ffd200", "#111111", "#e30613", "#f7f1e6"],
   "destacada": true,
-  "nuevo": true,
+  "nuevo": false,
   "inspiradoEn": "pionier.pe",
   "orden": 8
 }

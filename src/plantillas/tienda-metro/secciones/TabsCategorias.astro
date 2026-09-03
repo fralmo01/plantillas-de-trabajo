@@ -1,0 +1,107 @@
+---
+import { tabsCategorias } from '../datos/metro.js';
+---
+
+<section class="tm-seccion tm-wrap" id="tabs">
+  <div class="tm-tabs" id="tm-tabs">
+    <div class="tm-tabs__nav" role="tablist">
+      {tabsCategorias.map((t: { t: string }, i: number) => (
+        <button type="button" class={`tm-tabs__btn${i === 0 ? ' is-on' : ''}`} data-tab={i} role="tab" aria-selected={i === 0}>
+          {t.t}
+        </button>
+      ))}
+    </div>
+    <div class="tm-tabs__panels">
+      {tabsCategorias.map((t: { t: string; items: { t: string; seed: string }[] }, i: number) => (
+        <div class="tm-tabs__panel" data-panel={i} hidden={i !== 0}>
+          {t.items.map((it) => (
+            <a href="#" class="tm-tabs__card">
+              <img src={`https://picsum.photos/seed/${it.seed}/320/240`} alt={it.t} loading="lazy" />
+              <span>{it.t}</span>
+            </a>
+          ))}
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<script>
+  const tabs = document.getElementById('tm-tabs');
+  const btns = Array.from(tabs?.querySelectorAll<HTMLButtonElement>('.tm-tabs__btn') ?? []);
+  const panels = Array.from(tabs?.querySelectorAll<HTMLElement>('.tm-tabs__panel') ?? []);
+
+  btns.forEach((b) => {
+    b.addEventListener('click', () => {
+      btns.forEach((x) => {
+        x.classList.toggle('is-on', x === b);
+        x.setAttribute('aria-selected', String(x === b));
+      });
+      panels.forEach((p) => (p.hidden = p.dataset.panel !== b.dataset.tab));
+    });
+  });
+</script>
+
+<style>
+  .tm-tabs__nav {
+    display: flex;
+    border-bottom: 2px solid var(--tm-linea);
+    margin-bottom: 1.5rem;
+  }
+
+  .tm-tabs__btn {
+    padding: 0.85rem 1.5rem;
+    font-weight: 700;
+    font-size: 0.85rem;
+    color: var(--tm-gris);
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+    border-bottom: 3px solid transparent;
+    margin-bottom: -2px;
+  }
+
+  .tm-tabs__btn.is-on {
+    color: var(--tm-tinta);
+    background: var(--tm-amarillo);
+    border-bottom-color: var(--tm-amarillo);
+  }
+
+  .tm-tabs__panel {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.25rem;
+  }
+
+  .tm-tabs__panel[hidden] {
+    display: none;
+  }
+
+  .tm-tabs__card {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    text-align: center;
+  }
+
+  .tm-tabs__card img {
+    border-radius: 12px;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+    background: var(--tm-suave);
+  }
+
+  .tm-tabs__card span {
+    font-size: 0.85rem;
+    font-weight: 600;
+  }
+
+  @media (max-width: 760px) {
+    .tm-tabs__panel {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    .tm-tabs__btn {
+      padding: 0.7rem 0.9rem;
+      font-size: 0.72rem;
+    }
+  }
+</style>

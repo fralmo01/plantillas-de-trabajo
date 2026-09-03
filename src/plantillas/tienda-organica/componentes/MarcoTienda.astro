@@ -1,0 +1,22 @@
+---
+import '../estilos.css';
+
+import BarraSuperior from './BarraSuperior.astro';
+import Cabecera from './Cabecera.astro';
+import NavPrincipal from './NavPrincipal.astro';
+import PiePagina from './PiePagina.astro';
+import ChatBot from './ChatBot.astro';
+
+const { activo } = Astro.props as { activo?: string };
+---
+
+<div class="tpl-tienda-organica">
+  <BarraSuperior />
+  <Cabecera />
+  <NavPrincipal activo={activo} />
+  <main>
+    <slot />
+  </main>
+  <PiePagina />
+  <ChatBot />
+</div>

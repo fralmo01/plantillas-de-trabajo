@@ -1,0 +1,177 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap");
+
+.tpl-tienda-organica {
+  --or-verde: #2fae52;
+  --or-verde-osc: #1f8f3f;
+  --or-verde-claro: #eaf7ee;
+  --or-rojo: #e2231a;
+  --or-tinta: #1c1c1c;
+  --or-gris: #6b6b6b;
+  --or-linea: #e7ece8;
+
+  --or-font: "Poppins", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+  --or-maxw: 1280px;
+  --or-pill: 999px;
+
+  background: #fff;
+  color: var(--or-tinta);
+  font-family: var(--or-font);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+.tpl-tienda-organica *,
+.tpl-tienda-organica *::before,
+.tpl-tienda-organica *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+.tpl-tienda-organica h1,
+.tpl-tienda-organica h2,
+.tpl-tienda-organica h3,
+.tpl-tienda-organica h4 {
+  line-height: 1.2;
+  color: var(--or-tinta);
+  font-weight: 700;
+}
+
+.tpl-tienda-organica img {
+  max-width: 100%;
+  display: block;
+}
+
+.tpl-tienda-organica a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.tpl-tienda-organica button {
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+  border: none;
+  background: none;
+}
+
+.tpl-tienda-organica input {
+  font: inherit;
+}
+
+.tpl-tienda-organica .or-wrap {
+  max-width: var(--or-maxw);
+  margin-inline: auto;
+  padding-inline: clamp(1rem, 3vw, 2rem);
+}
+
+.tpl-tienda-organica .or-seccion {
+  padding-block: clamp(1.75rem, 4vw, 2.75rem);
+}
+
+.tpl-tienda-organica .or-titulo {
+  font-size: clamp(1.15rem, 2.4vw, 1.6rem);
+  font-weight: 800;
+  color: var(--or-tinta);
+  margin-bottom: 1.25rem;
+  text-align: center;
+}
+
+.tpl-tienda-organica .or-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.7rem 1.4rem;
+  font-weight: 700;
+  font-size: 0.82rem;
+  border-radius: 8px;
+  transition: transform 0.15s ease, background 0.15s ease, color 0.15s ease;
+}
+
+.tpl-tienda-organica .or-btn:hover {
+  transform: translateY(-2px);
+}
+
+.tpl-tienda-organica .or-btn--verde {
+  background: var(--or-verde);
+  color: #fff;
+}
+
+.tpl-tienda-organica .or-btn--verde:hover {
+  background: var(--or-verde-osc);
+}
+
+.tpl-tienda-organica .or-btn--outline {
+  border: 1.5px solid var(--or-verde);
+  color: var(--or-verde);
+  background: #fff;
+}
+
+.tpl-tienda-organica .or-btn--outline:hover {
+  background: var(--or-verde);
+  color: #fff;
+}
+
+.tpl-tienda-organica .or-btn--pill {
+  border-radius: var(--or-pill);
+  background: #fff;
+  color: var(--or-tinta);
+}
+
+.tpl-tienda-organica .or-fila {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(220px, 1fr);
+  gap: 1rem;
+  overflow-x: auto;
+  scroll-snap-type: x proximity;
+  padding-bottom: 0.5rem;
+  scrollbar-width: thin;
+}
+
+.tpl-tienda-organica .or-fila > * {
+  scroll-snap-align: start;
+}
+
+.tpl-tienda-organica .or-flecha {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  color: var(--or-verde);
+  font-size: 1.4rem;
+  line-height: 1;
+  background: #fff;
+  box-shadow: 0 6px 16px -8px rgba(0, 0, 0, 0.3);
+  flex-shrink: 0;
+}
+
+.tpl-tienda-organica .or-flecha:hover {
+  background: var(--or-verde);
+  color: #fff;
+}
+
+.tpl-tienda-organica .or-chat__msg {
+  max-width: 82%;
+  padding: 0.6rem 0.85rem;
+  border-radius: 12px;
+  font-size: 0.82rem;
+  line-height: 1.45;
+}
+
+.tpl-tienda-organica .or-chat__msg--bot {
+  background: var(--or-verde-claro);
+  color: var(--or-tinta);
+  align-self: flex-start;
+  border-bottom-left-radius: 3px;
+}
+
+.tpl-tienda-organica .or-chat__msg--yo {
+  background: var(--or-verde);
+  color: #fff;
+  align-self: flex-end;
+  border-bottom-right-radius: 3px;
+}

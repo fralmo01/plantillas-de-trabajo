@@ -7,7 +7,7 @@
   "tags": ["marketplace", "ecommerce", "retail", "electro", "moda", "maqueta"],
   "paleta": ["#101014", "#6a148e", "#e5007e", "#ffd100"],
   "destacada": false,
-  "nuevo": true,
+  "nuevo": false,
   "inspiradoEn": "simple.ripley.cl",
   "orden": 12
 }

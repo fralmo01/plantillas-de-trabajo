@@ -1,0 +1,58 @@
+---
+import { categorias } from '../datos/organica.js';
+
+const fondos = ['#8b7dd8', '#e8974a', '#3fc9a8', '#e88fb0'];
+---
+
+<section class="or-seccion or-wrap">
+  <h2 class="or-titulo">Nuestras categorias</h2>
+  <div class="or-catg">
+    {categorias.map((c: { t: string; seed: string }, i: number) => (
+      <a href="#promos" class="or-catg__card" style={`background:${fondos[i % fondos.length]}`}>
+        <img src={`https://picsum.photos/seed/${c.seed}/380/420`} alt={c.t} loading="lazy" />
+        <span>{c.t}</span>
+      </a>
+    ))}
+  </div>
+</section>
+
+<style>
+  .or-catg {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.1rem;
+  }
+
+  .or-catg__card {
+    position: relative;
+    border-radius: 16px;
+    overflow: hidden;
+    aspect-ratio: 3 / 4;
+    display: flex;
+    align-items: flex-end;
+    padding: 1.1rem;
+  }
+
+  .or-catg__card img {
+    position: absolute;
+    inset: 12% 8% 0 8%;
+    width: 84%;
+    height: auto;
+    object-fit: contain;
+  }
+
+  .or-catg__card span {
+    position: relative;
+    z-index: 1;
+    color: #fff;
+    font-weight: 800;
+    font-size: 1rem;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.35);
+  }
+
+  @media (max-width: 820px) {
+    .or-catg {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+</style>

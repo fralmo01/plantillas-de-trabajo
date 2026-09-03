@@ -1,0 +1,34 @@
+---
+import MarcoTienda from '../componentes/MarcoTienda.astro';
+import ListadoTiendas from '../componentes/ListadoTiendas.astro';
+
+export const titulo = 'Nuestras Tiendas | tienda.com Natural';
+export const descripcion = 'Encuentra la tienda.com Natural mas cercana: direccion, telefono y horario de atencion.';
+---
+
+<MarcoTienda activo="Tiendas">
+  <section class="or-tiendas-hero or-wrap">
+    <div class="or-tiendas-hero__banner">
+      <h1>Nuestras Tiendas</h1>
+    </div>
+  </section>
+  <ListadoTiendas />
+</MarcoTienda>
+
+<style>
+  .or-tiendas-hero {
+    padding-top: 1.5rem;
+  }
+
+  .or-tiendas-hero__banner {
+    background: var(--or-verde);
+    border-radius: 16px;
+    padding: 2rem;
+    text-align: center;
+  }
+
+  .or-tiendas-hero__banner h1 {
+    color: #fff;
+    font-size: clamp(1.6rem, 4vw, 2.4rem);
+  }
+</style>

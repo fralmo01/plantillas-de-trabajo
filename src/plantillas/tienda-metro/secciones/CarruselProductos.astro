@@ -1,0 +1,49 @@
+---
+import TarjetaProducto from '../componentes/TarjetaProducto.astro';
+
+interface Producto {
+  nombre: string;
+  precio: number;
+  antes?: number;
+  tag?: string;
+  seed: string;
+}
+interface Banner {
+  kicker: string;
+  titulo: string;
+  cta: string;
+}
+const { id, banner, productos } = Astro.props as { id: string; banner: Banner; productos: Producto[] };
+---
+
+<section class="tm-seccion tm-wrap">
+  <div class="tm-carr">
+    <aside class="tm-carr__banner">
+      <span>{banner.kicker}</span>
+      <h2>{banner.titulo}</h2>
+      <a href="#tabs" class="tm-btn tm-btn--claro">{banner.cta}</a>
+    </aside>
+
+    <div class="tm-carr__area">
+      <button type="button" class="tm-flecha tm-carr__prev" data-dir="-1" aria-label="Anterior">&lsaquo;</button>
+      <div class="tm-fila tm-carr__row" id={`tm-row-${id}`} data-buscable>
+        {productos.map((p) => (
+          <TarjetaProducto producto={p} />
+        ))}
+      </div>
+      <button type="button" class="tm-flecha tm-carr__next" data-dir="1" aria-label="Siguiente">&rsaquo;</button>
+    </div>
+  </div>
+</section>
+
+<script>
+  document.querySelectorAll<HTMLElement>('.tm-carr__area').forEach((area) => {
+    const row = area.querySelector<HTMLElement>('.tm-carr__row');
+    area.querySelectorAll<HTMLButtonElement>('[data-dir]').forEach((b) => {
+      b.addEventListener('click', () => {
+        const dir = Number(b.dataset.dir || '1');
+        row?.scrollBy({ left: dir * 300, behavior: 'smooth' });
+      });
+    });
+  });
+</script>

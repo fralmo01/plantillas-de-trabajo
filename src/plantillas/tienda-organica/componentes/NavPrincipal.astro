@@ -1,0 +1,168 @@
+---
+import { navPrincipal, megaMenus } from '../datos/organica.js';
+
+interface Item {
+  t: string;
+  href?: string;
+  menu?: string;
+}
+const { activo } = Astro.props as { activo?: string };
+---
+
+<nav class="or-nav" aria-label="Navegacion principal">
+  <div class="or-wrap or-nav__row">
+    <ul class="or-nav__links">
+      {(navPrincipal as Item[]).map((n) => (
+        <li class={n.menu ? 'has-mega' : ''} data-menu={n.menu}>
+          <a href={n.href ?? '#'} class={activo === n.t ? 'is-on' : ''}>
+            {n.t}
+            {n.menu && (
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M6 9l6 6 6-6"></path></svg>
+            )}
+          </a>
+          {n.menu && (
+            <div class="or-mega">
+              <div class="or-wrap or-mega__grid">
+                {megaMenus[n.menu as keyof typeof megaMenus].columnas.map((c: { t: string; links: string[] }) => (
+                  <div class="or-mega__col">
+                    <h3>{c.t}</h3>
+                    <ul>
+                      {c.links.map((l: string) => <li><a href="/plantillas/tienda-organica/#promos">{l}</a></li>)}
+                    </ul>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+        </li>
+      ))}
+    </ul>
+
+    <a href="/plantillas/tienda-organica/#promos" class="or-nav__promo">Promociones</a>
+    <a href="/plantillas/tienda-organica/contacto" class="or-nav__link">Contacto</a>
+    <a href="/plantillas/tienda-organica/tiendas" class={`or-nav__link${activo === 'Tiendas' ? ' is-on' : ''}`}>Tiendas</a>
+  </div>
+</nav>
+
+<style>
+  .or-nav {
+    background: var(--or-verde-claro);
+    position: relative;
+    z-index: 70;
+  }
+
+  .or-nav__row {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    padding-block: 0.6rem;
+  }
+
+  .or-nav__links {
+    display: flex;
+    gap: 1.4rem;
+    list-style: none;
+    font-size: 0.85rem;
+    font-weight: 600;
+  }
+
+  .or-nav__links li {
+    position: relative;
+  }
+
+  .or-nav__links a {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    padding: 0.4rem 0;
+  }
+
+  .or-nav__links a:hover,
+  .or-nav__links a.is-on {
+    color: var(--or-verde-osc);
+  }
+
+  .or-mega {
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: max(760px, 60vw);
+    max-width: 900px;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 24px 48px -20px rgba(0, 0, 0, 0.3);
+    display: none;
+    padding-block: 1.5rem;
+  }
+
+  .has-mega:hover .or-mega {
+    display: block;
+  }
+
+  .or-mega__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .or-mega__col h3 {
+    font-size: 0.85rem;
+    color: var(--or-verde-osc);
+    margin-bottom: 0.7rem;
+  }
+
+  .or-mega__col ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .or-mega__col a {
+    font-size: 0.78rem;
+    font-weight: 500;
+    color: var(--or-gris);
+  }
+
+  .or-mega__col a:hover {
+    color: var(--or-verde-osc);
+  }
+
+  .or-nav__promo {
+    background: var(--or-verde);
+    color: #fff;
+    font-weight: 700;
+    font-size: 0.78rem;
+    padding: 0.5rem 1.1rem;
+    border-radius: 6px;
+  }
+
+  .or-nav__promo:hover {
+    background: var(--or-verde-osc);
+  }
+
+  .or-nav__link {
+    margin-left: auto;
+    font-size: 0.82rem;
+    font-weight: 600;
+  }
+
+  .or-nav__link:hover,
+  .or-nav__link.is-on {
+    color: var(--or-verde-osc);
+  }
+
+  .or-nav__link + .or-nav__link {
+    margin-left: 1.25rem;
+  }
+
+  @media (max-width: 960px) {
+    .or-nav__links {
+      display: none;
+    }
+    .or-mega {
+      display: none !important;
+    }
+  }
+</style>

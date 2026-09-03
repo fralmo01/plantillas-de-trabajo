@@ -1,0 +1,193 @@
+---
+import { heroSlides, soles } from '../datos/organica.js';
+
+interface Slide {
+  kicker: string;
+  titulo: string;
+  sub: string;
+  precio: number;
+  antes: number;
+  seed: string;
+}
+---
+
+<section class="or-hero" aria-roledescription="carrusel">
+  <div class="or-hero__track" id="or-hero-track">
+    {(heroSlides as Slide[]).map((s, i) => (
+      <article class="or-hero__slide">
+        <div class="or-wrap or-hero__inner">
+          <div class="or-hero__texto">
+            <span class="or-hero__kicker">{s.kicker}</span>
+            <h2>{s.titulo}</h2>
+            <p>{s.sub}</p>
+            <div class="or-hero__precio">
+              <b>{soles(s.precio)}</b>
+              <s>{soles(s.antes)}</s>
+            </div>
+            <a href="#promos" class="or-btn or-btn--verde">Ver mas</a>
+          </div>
+          <div class="or-hero__foto">
+            <img src={`https://picsum.photos/seed/${s.seed}/700/520`} alt={s.titulo} loading={i === 0 ? 'eager' : 'lazy'} />
+          </div>
+        </div>
+      </article>
+    ))}
+  </div>
+  <button class="or-hero__nav or-hero__nav--prev" id="or-hero-prev" aria-label="Anterior">&lsaquo;</button>
+  <button class="or-hero__nav or-hero__nav--next" id="or-hero-next" aria-label="Siguiente">&rsaquo;</button>
+  <div class="or-hero__dots" id="or-hero-dots">
+    {heroSlides.map((_: unknown, i: number) => <button aria-label={`Ir al slide ${i + 1}`} data-dot={i}></button>)}
+  </div>
+</section>
+
+<script>
+  const track = document.getElementById('or-hero-track');
+  const dots = Array.from(document.querySelectorAll<HTMLButtonElement>('#or-hero-dots button'));
+  const total = track ? track.children.length : 0;
+  let idx = 0;
+
+  function ir(n: number) {
+    if (!track) return;
+    idx = (n + total) % total;
+    track.style.transform = `translateX(-${idx * 100}%)`;
+    dots.forEach((d, i) => d.classList.toggle('is-on', i === idx));
+  }
+
+  document.getElementById('or-hero-prev')?.addEventListener('click', () => ir(idx - 1));
+  document.getElementById('or-hero-next')?.addEventListener('click', () => ir(idx + 1));
+  dots.forEach((d, i) => d.addEventListener('click', () => ir(i)));
+
+  let timer = window.setInterval(() => ir(idx + 1), 6000);
+  const box = track?.parentElement;
+  box?.addEventListener('mouseenter', () => window.clearInterval(timer));
+  box?.addEventListener('mouseleave', () => (timer = window.setInterval(() => ir(idx + 1), 6000)));
+  ir(0);
+</script>
+
+<style>
+  .or-hero {
+    position: relative;
+    overflow: hidden;
+    background: var(--or-verde-claro);
+  }
+
+  .or-hero__track {
+    display: flex;
+    transition: transform 0.5s ease;
+  }
+
+  .or-hero__slide {
+    flex: 0 0 100%;
+  }
+
+  .or-hero__inner {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    gap: 1.5rem;
+    padding-block: clamp(2rem, 5vw, 3.5rem);
+    min-height: clamp(320px, 32vw, 420px);
+  }
+
+  .or-hero__kicker {
+    display: inline-block;
+    font-size: 0.68rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    background: var(--or-verde);
+    color: #fff;
+    padding: 0.25rem 0.7rem;
+    border-radius: var(--or-pill);
+    margin-bottom: 0.75rem;
+  }
+
+  .or-hero__texto h2 {
+    font-size: clamp(1.6rem, 3.6vw, 2.5rem);
+    margin-bottom: 0.6rem;
+  }
+
+  .or-hero__texto p {
+    font-size: 0.9rem;
+    color: var(--or-gris);
+    margin-bottom: 1rem;
+    max-width: 34ch;
+  }
+
+  .or-hero__precio {
+    display: flex;
+    align-items: baseline;
+    gap: 0.6rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .or-hero__precio b {
+    color: var(--or-verde-osc);
+    font-size: 1.9rem;
+    font-weight: 800;
+  }
+
+  .or-hero__precio s {
+    color: var(--or-gris);
+    font-size: 1rem;
+  }
+
+  .or-hero__foto {
+    border-radius: 16px;
+    overflow: hidden;
+    aspect-ratio: 4 / 3;
+  }
+
+  .or-hero__foto img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .or-hero__nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.9);
+    color: var(--or-verde-osc);
+    font-size: 1.4rem;
+    line-height: 1;
+  }
+
+  .or-hero__nav--prev { left: 1rem; }
+  .or-hero__nav--next { right: 1rem; }
+
+  .or-hero__dots {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 12px;
+    display: flex;
+    justify-content: center;
+    gap: 6px;
+  }
+
+  .or-hero__dots button {
+    width: 8px;
+    height: 8px;
+    border-radius: var(--or-pill);
+    background: rgba(31, 143, 63, 0.35);
+  }
+
+  .or-hero__dots button.is-on {
+    background: var(--or-verde-osc);
+    width: 20px;
+  }
+
+  @media (max-width: 760px) {
+    .or-hero__inner {
+      grid-template-columns: 1fr;
+    }
+    .or-hero__texto {
+      order: 2;
+    }
+  }
+</style>

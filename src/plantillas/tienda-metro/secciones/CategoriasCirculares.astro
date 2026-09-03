@@ -1,0 +1,73 @@
+---
+import { categoriasCirculares } from '../datos/metro.js';
+---
+
+<section class="tm-seccion tm-wrap">
+  <ul class="tm-cats">
+    {categoriasCirculares.map((c: { t: string; seed: string }) => (
+      <li>
+        <a href="#tabs" class="tm-cats__item">
+          <span class="tm-cats__foto">
+            <img src={`https://picsum.photos/seed/${c.seed}/200/200`} alt={c.t} loading="lazy" />
+          </span>
+          <span class="tm-cats__lbl">{c.t}</span>
+        </a>
+      </li>
+    ))}
+  </ul>
+</section>
+
+<style>
+  .tm-cats {
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(9, 1fr);
+    gap: 0.9rem;
+  }
+
+  .tm-cats__item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    text-align: center;
+  }
+
+  .tm-cats__foto {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    border-radius: 14px;
+    overflow: hidden;
+    background: var(--tm-suave);
+    display: block;
+  }
+
+  .tm-cats__foto img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.2s ease;
+  }
+
+  .tm-cats__item:hover .tm-cats__foto img {
+    transform: scale(1.06);
+  }
+
+  .tm-cats__lbl {
+    font-size: 0.72rem;
+    font-weight: 600;
+    color: var(--tm-tinta);
+  }
+
+  @media (max-width: 960px) {
+    .tm-cats {
+      grid-template-columns: repeat(5, 1fr);
+    }
+  }
+
+  @media (max-width: 560px) {
+    .tm-cats {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+</style>

@@ -1,0 +1,149 @@
+---
+import { soles } from '../datos/metro.js';
+
+interface Producto {
+  nombre: string;
+  precio: number;
+  antes?: number;
+  tag?: string;
+  seed: string;
+}
+const { producto } = Astro.props as { producto: Producto };
+const img = `https://picsum.photos/seed/${producto.seed}/360/360`;
+---
+
+<article class="tm-prod" data-nombre={producto.nombre.toLowerCase()} data-precio={producto.precio}>
+  <div class="tm-prod__media">
+    {producto.tag && <span class="tm-prod__tag">{producto.tag}</span>}
+    <img src={img} alt={producto.nombre} loading="lazy" decoding="async" />
+  </div>
+  <div class="tm-prod__body">
+    <h3 class="tm-prod__nombre">{producto.nombre}</h3>
+    <p class="tm-prod__precio">
+      {producto.antes && <s>{soles(producto.antes)}</s>}
+      <b>{soles(producto.precio)}</b>
+    </p>
+    <div class="tm-prod__qty" role="group" aria-label="Cantidad">
+      <button type="button" class="tm-qty__b" data-step="-1" aria-label="Quitar uno">-</button>
+      <span class="tm-qty__n">1</span>
+      <button type="button" class="tm-qty__b" data-step="1" aria-label="Agregar uno">+</button>
+    </div>
+    <button type="button" class="tm-btn tm-btn--amarillo tm-prod__add">Agregar</button>
+  </div>
+</article>
+
+<style>
+  .tm-prod[hidden] {
+    display: none;
+  }
+
+  .tm-prod {
+    display: flex;
+    flex-direction: column;
+    background: #fff;
+    border: 1px solid var(--tm-linea);
+    border-radius: 12px;
+    overflow: hidden;
+    transition: box-shadow 0.15s ease, transform 0.15s ease;
+  }
+
+  .tm-prod:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 18px 36px -22px rgba(0, 0, 0, 0.35);
+  }
+
+  .tm-prod__media {
+    position: relative;
+    aspect-ratio: 1 / 1;
+    background: var(--tm-suave);
+  }
+
+  .tm-prod__media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .tm-prod__tag {
+    position: absolute;
+    top: 0.6rem;
+    left: 0.6rem;
+    background: var(--tm-rojo);
+    color: #fff;
+    font-size: 0.7rem;
+    font-weight: 800;
+    padding: 0.2rem 0.55rem;
+    border-radius: var(--tm-pill);
+  }
+
+  .tm-prod__body {
+    padding: 0.85rem 0.9rem 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    flex: 1;
+  }
+
+  .tm-prod__nombre {
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-align: left;
+    min-height: 2.4em;
+  }
+
+  .tm-prod__precio {
+    display: flex;
+    gap: 0.5rem;
+    align-items: baseline;
+  }
+
+  .tm-prod__precio s {
+    color: var(--tm-gris);
+    font-size: 0.78rem;
+  }
+
+  .tm-prod__precio b {
+    color: var(--tm-rojo);
+    font-size: 1.05rem;
+    font-weight: 800;
+  }
+
+  .tm-prod__qty {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.9rem;
+  }
+
+  .tm-qty__b {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: var(--tm-suave);
+    color: var(--tm-tinta);
+    font-weight: 700;
+    line-height: 1;
+    display: grid;
+    place-items: center;
+  }
+
+  .tm-qty__b:hover {
+    background: var(--tm-linea);
+  }
+
+  .tm-qty__n {
+    min-width: 1.4ch;
+    text-align: center;
+    font-weight: 600;
+  }
+
+  .tm-prod__add {
+    margin-top: auto;
+    width: 100%;
+  }
+
+  .tm-prod__add.is-ok {
+    background: var(--tm-verde);
+    color: #fff;
+  }
+</style>

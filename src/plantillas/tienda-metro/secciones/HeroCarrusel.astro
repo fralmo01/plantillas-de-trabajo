@@ -1,0 +1,207 @@
+---
+import { heroSlides, soles } from '../datos/metro.js';
+
+interface Slide {
+  kicker: string;
+  titulo: string;
+  sub: string;
+  precioAntes: number;
+  precioOferta: number;
+  cuota: number;
+  seed: string;
+  marcaProd: string;
+}
+---
+
+<section class="tm-hero" aria-roledescription="carrusel">
+  <div class="tm-hero__track" id="tm-hero-track">
+    {(heroSlides as Slide[]).map((s, i) => (
+      <article class="tm-hero__slide">
+        <div class="tm-wrap tm-hero__inner">
+          <div class="tm-hero__foto">
+            <img src={`https://picsum.photos/seed/${s.seed}/700/500`} alt={s.titulo} loading={i === 0 ? 'eager' : 'lazy'} />
+          </div>
+          <div class="tm-hero__texto">
+            <span class="tm-hero__kicker">{s.kicker}</span>
+            <p class="tm-hero__marca">{s.marcaProd}</p>
+            <h2>{s.titulo}</h2>
+            <p class="tm-hero__sub">{s.sub}</p>
+            <div class="tm-hero__precios">
+              <span class="tm-hero__oferta">Precio oferta: <b>{soles(s.precioOferta)}</b></span>
+              <span class="tm-hero__antes">Precio regular {soles(s.precioAntes)}</span>
+              <span class="tm-hero__cuota">14 cuotas sin intereses de {soles(s.cuota)}</span>
+            </div>
+          </div>
+        </div>
+      </article>
+    ))}
+  </div>
+  <button class="tm-hero__nav tm-hero__nav--prev" id="tm-hero-prev" aria-label="Anterior">&lsaquo;</button>
+  <button class="tm-hero__nav tm-hero__nav--next" id="tm-hero-next" aria-label="Siguiente">&rsaquo;</button>
+  <div class="tm-hero__dots" id="tm-hero-dots">
+    {heroSlides.map((_: unknown, i: number) => <button aria-label={`Ir al slide ${i + 1}`} data-dot={i}></button>)}
+  </div>
+</section>
+
+<script>
+  const track = document.getElementById('tm-hero-track');
+  const dots = Array.from(document.querySelectorAll<HTMLButtonElement>('#tm-hero-dots button'));
+  const total = track ? track.children.length : 0;
+  let idx = 0;
+
+  function ir(n: number) {
+    if (!track) return;
+    idx = (n + total) % total;
+    track.style.transform = `translateX(-${idx * 100}%)`;
+    dots.forEach((d, i) => d.classList.toggle('is-on', i === idx));
+  }
+
+  document.getElementById('tm-hero-prev')?.addEventListener('click', () => ir(idx - 1));
+  document.getElementById('tm-hero-next')?.addEventListener('click', () => ir(idx + 1));
+  dots.forEach((d, i) => d.addEventListener('click', () => ir(i)));
+
+  let timer = window.setInterval(() => ir(idx + 1), 6000);
+  const box = track?.parentElement;
+  box?.addEventListener('mouseenter', () => window.clearInterval(timer));
+  box?.addEventListener('mouseleave', () => (timer = window.setInterval(() => ir(idx + 1), 6000)));
+  ir(0);
+</script>
+
+<style>
+  .tm-hero {
+    position: relative;
+    overflow: hidden;
+    background: linear-gradient(180deg, var(--tm-amarillo) 0%, var(--tm-amarillo-osc) 100%);
+  }
+
+  .tm-hero__track {
+    display: flex;
+    transition: transform 0.5s ease;
+  }
+
+  .tm-hero__slide {
+    flex: 0 0 100%;
+  }
+
+  .tm-hero__inner {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    gap: 1.5rem;
+    padding-block: clamp(2rem, 5vw, 3.5rem);
+    min-height: clamp(320px, 34vw, 420px);
+  }
+
+  .tm-hero__foto {
+    border-radius: 16px;
+    overflow: hidden;
+    aspect-ratio: 4 / 3;
+  }
+
+  .tm-hero__foto img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .tm-hero__kicker {
+    display: inline-block;
+    font-size: 0.68rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    background: var(--tm-tinta);
+    color: #fff;
+    padding: 0.25rem 0.7rem;
+    border-radius: var(--tm-pill);
+    margin-bottom: 0.75rem;
+  }
+
+  .tm-hero__marca {
+    font-weight: 800;
+    font-size: 1rem;
+    letter-spacing: 0.04em;
+  }
+
+  .tm-hero__texto h2 {
+    font-size: clamp(1.4rem, 3.2vw, 2.1rem);
+    margin: 0.35rem 0 0.6rem;
+  }
+
+  .tm-hero__sub {
+    font-size: 0.9rem;
+    margin-bottom: 1.1rem;
+    max-width: 34ch;
+  }
+
+  .tm-hero__precios {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+  }
+
+  .tm-hero__oferta {
+    font-size: 0.85rem;
+  }
+
+  .tm-hero__oferta b {
+    color: var(--tm-rojo);
+    font-size: 1.6rem;
+  }
+
+  .tm-hero__antes {
+    font-size: 0.78rem;
+    color: var(--tm-tinta);
+    text-decoration: line-through;
+    opacity: 0.7;
+  }
+
+  .tm-hero__cuota {
+    font-size: 0.78rem;
+    font-weight: 700;
+  }
+
+  .tm-hero__nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.85);
+    color: var(--tm-tinta);
+    font-size: 1.4rem;
+    line-height: 1;
+  }
+
+  .tm-hero__nav--prev { left: 1rem; }
+  .tm-hero__nav--next { right: 1rem; }
+
+  .tm-hero__dots {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 12px;
+    display: flex;
+    justify-content: center;
+    gap: 6px;
+  }
+
+  .tm-hero__dots button {
+    width: 8px;
+    height: 8px;
+    border-radius: var(--tm-pill);
+    background: rgba(26, 26, 26, 0.3);
+  }
+
+  .tm-hero__dots button.is-on {
+    background: var(--tm-tinta);
+    width: 20px;
+  }
+
+  @media (max-width: 760px) {
+    .tm-hero__inner {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

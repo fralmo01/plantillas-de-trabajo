@@ -7,7 +7,7 @@
   "tags": ["floreria", "regalos", "ecommerce", "delivery", "mega-menu", "chatbot", "carrito"],
   "paleta": ["#e50f2b", "#f0544c", "#f7bcd0", "#fdeef2"],
   "destacada": false,
-  "nuevo": true,
+  "nuevo": false,
   "inspiradoEn": "rosatel.pe",
   "orden": 14
 }

@@ -1,0 +1,46 @@
+---
+import { novedades } from '../datos/organica.js';
+import TarjetaProducto from '../componentes/TarjetaProducto.astro';
+---
+
+<section class="or-seccion or-wrap" id="novedades">
+  <div class="or-nov__head">
+    <h2 class="or-titulo" style="margin-bottom:0; text-align:left;">Los mas nuevo</h2>
+    <a href="#promos" class="or-btn or-btn--outline">Ver mas</a>
+  </div>
+
+  <div class="or-carr">
+    <button type="button" class="or-flecha" data-dir="-1" aria-label="Anterior">&lsaquo;</button>
+    <div class="or-fila" id="or-nov-row" data-buscable>
+      {novedades.map((p) => <TarjetaProducto producto={p} />)}
+    </div>
+    <button type="button" class="or-flecha" data-dir="1" aria-label="Siguiente">&rsaquo;</button>
+  </div>
+</section>
+
+<script>
+  document.querySelectorAll<HTMLElement>('.or-carr').forEach((area) => {
+    const row = area.querySelector<HTMLElement>('.or-fila');
+    area.querySelectorAll<HTMLButtonElement>('[data-dir]').forEach((b) => {
+      b.addEventListener('click', () => {
+        const dir = Number(b.dataset.dir || '1');
+        row?.scrollBy({ left: dir * 300, behavior: 'smooth' });
+      });
+    });
+  });
+</script>
+
+<style>
+  .or-nov__head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1.25rem;
+  }
+
+  .or-carr {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+  }
+</style>

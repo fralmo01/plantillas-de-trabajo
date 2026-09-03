@@ -1,0 +1,211 @@
+---
+import { catalogo, filtrosDepartamento, filtrosCategoria, filtrosMarca, filtrosNaturaleza } from '../datos/organica.js';
+
+const contar = (campo: 'departamento' | 'categoria' | 'marca' | 'naturaleza', valor: string) =>
+  catalogo.filter((p: Record<string, unknown>) => p[campo] === valor).length;
+---
+
+<aside class="or-filtros" id="or-filtros">
+  <div class="or-filtros__cab">
+    <h2>Filtrar productos</h2>
+    <button class="or-filtros__x" type="button" aria-label="Cerrar filtros">&times;</button>
+  </div>
+
+  <form class="or-filtros__form" onsubmit="return false">
+    <details class="or-grupo" open>
+      <summary>Departamento</summary>
+      <div class="or-grupo__cuerpo">
+        <ul class="or-grupo__lista" data-filtro="departamento">
+          {filtrosDepartamento.map((d: string) => (
+            <li>
+              <label>
+                <input type="checkbox" name="departamento" value={d} />
+                <span>{d}</span>
+                <b>({contar('departamento', d)})</b>
+              </label>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </details>
+
+    <details class="or-grupo" open>
+      <summary>Categoria</summary>
+      <div class="or-grupo__cuerpo">
+        <ul class="or-grupo__lista or-grupo__lista--scroll" data-filtro="categoria">
+          {filtrosCategoria.map((c: string) => (
+            <li>
+              <label>
+                <input type="checkbox" name="categoria" value={c} />
+                <span>{c}</span>
+                <b>({contar('categoria', c)})</b>
+              </label>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </details>
+
+    <details class="or-grupo">
+      <summary>Marca</summary>
+      <div class="or-grupo__cuerpo">
+        <input type="search" class="or-grupo__buscar" placeholder="Buscar marca" aria-label="Buscar marca" />
+        <ul class="or-grupo__lista or-grupo__lista--scroll" data-filtro="marca">
+          {filtrosMarca.map((m: string) => (
+            <li>
+              <label>
+                <input type="checkbox" name="marca" value={m} />
+                <span>{m}</span>
+                <b>({contar('marca', m)})</b>
+              </label>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </details>
+
+    <details class="or-grupo">
+      <summary>Naturaleza</summary>
+      <div class="or-grupo__cuerpo">
+        <ul class="or-grupo__lista" data-filtro="naturaleza">
+          {filtrosNaturaleza.map((n: string) => (
+            <li>
+              <label>
+                <input type="checkbox" name="naturaleza" value={n} />
+                <span>{n}</span>
+                <b>({contar('naturaleza', n)})</b>
+              </label>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </details>
+
+    <button type="button" class="or-btn or-btn--outline or-filtros__limpiar" id="or-filtros-limpiar">Limpiar filtros</button>
+  </form>
+</aside>
+
+<style>
+  .or-filtros {
+    align-self: start;
+  }
+
+  .or-filtros__cab {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-left: 4px solid var(--or-verde);
+    padding: 0.4rem 0 0.4rem 0.7rem;
+    margin-bottom: 1rem;
+  }
+
+  .or-filtros__cab h2 {
+    font-size: 0.95rem;
+    text-transform: uppercase;
+  }
+
+  .or-filtros__x {
+    display: none;
+    font-size: 1.1rem;
+  }
+
+  .or-grupo {
+    border-bottom: 1px solid var(--or-linea);
+    padding-block: 0.65rem;
+  }
+
+  .or-grupo summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 0.86rem;
+    font-weight: 700;
+    cursor: pointer;
+    list-style: none;
+  }
+
+  .or-grupo summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .or-grupo summary::after {
+    content: "\203A";
+    transform: rotate(90deg);
+    color: var(--or-gris);
+  }
+
+  .or-grupo[open] summary::after {
+    transform: rotate(-90deg);
+  }
+
+  .or-grupo__cuerpo {
+    padding-top: 0.65rem;
+    display: grid;
+    gap: 0.55rem;
+  }
+
+  .or-grupo__buscar {
+    width: 100%;
+    padding: 0.5rem 0.7rem;
+    border: 1px solid var(--or-linea);
+    border-radius: 6px;
+    font: inherit;
+    font-size: 0.8rem;
+  }
+
+  .or-grupo__lista {
+    list-style: none;
+    display: grid;
+    gap: 0.5rem;
+  }
+
+  .or-grupo__lista--scroll {
+    max-height: 190px;
+    overflow-y: auto;
+    padding-right: 0.25rem;
+  }
+
+  .or-grupo__lista label {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.8rem;
+    cursor: pointer;
+  }
+
+  .or-grupo__lista label b {
+    margin-left: auto;
+    color: var(--or-gris);
+    font-weight: 600;
+    font-size: 0.7rem;
+  }
+
+  .or-grupo__lista input {
+    accent-color: var(--or-verde);
+  }
+
+  .or-filtros__limpiar {
+    width: 100%;
+    margin-top: 0.5rem;
+  }
+
+  @media (max-width: 900px) {
+    .or-filtros {
+      position: fixed;
+      inset: 0 25% 0 0;
+      z-index: 350;
+      background: #fff;
+      padding: 1.25rem;
+      overflow-y: auto;
+      transform: translateX(-105%);
+      transition: transform 0.25s ease;
+      box-shadow: 0 0 40px rgba(0, 0, 0, 0.25);
+    }
+    .or-filtros.is-abierto {
+      transform: none;
+    }
+    .or-filtros__x {
+      display: block;
+    }
+  }
+</style>

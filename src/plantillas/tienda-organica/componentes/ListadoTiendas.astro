@@ -1,0 +1,79 @@
+---
+import { tiendas } from '../datos/organica.js';
+import TarjetaTienda from './TarjetaTienda.astro';
+
+const filtros = [
+  { t: 'Todas las tiendas', grupo: 'todas' },
+  { t: 'Tiendas tienda.com', grupo: 'natural' },
+  { t: 'Tiendas tienda.com Vitaminas', grupo: 'vitaminas' },
+];
+---
+
+<section class="or-seccion or-wrap">
+  <div class="or-tiendas__filtros" id="or-tiendas-filtros" role="tablist">
+    {filtros.map((f, i) => (
+      <button type="button" class={`or-tiendas__tab${i === 0 ? ' is-on' : ''}`} data-grupo={f.grupo}>{f.t}</button>
+    ))}
+  </div>
+
+  <div class="or-tiendas__grid" id="or-tiendas-grid">
+    {tiendas.map((t) => <TarjetaTienda tienda={t} />)}
+  </div>
+</section>
+
+<script>
+  const tabs = Array.from(document.querySelectorAll<HTMLButtonElement>('#or-tiendas-filtros button'));
+  const cards = Array.from(document.querySelectorAll<HTMLElement>('#or-tiendas-grid .or-tienda'));
+
+  tabs.forEach((tab) => {
+    tab.addEventListener('click', () => {
+      tabs.forEach((t) => t.classList.toggle('is-on', t === tab));
+      const grupo = tab.dataset.grupo;
+      cards.forEach((c) => {
+        c.hidden = grupo !== 'todas' && c.dataset.grupo !== grupo;
+      });
+    });
+  });
+</script>
+
+<style>
+  .or-tiendas__filtros {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+    margin-bottom: 1.75rem;
+  }
+
+  .or-tiendas__tab {
+    padding: 0.55rem 1.1rem;
+    border-radius: 8px;
+    border: 1.5px solid var(--or-linea);
+    font-weight: 600;
+    font-size: 0.82rem;
+    color: var(--or-tinta);
+  }
+
+  .or-tiendas__tab.is-on {
+    background: var(--or-verde);
+    border-color: var(--or-verde);
+    color: #fff;
+  }
+
+  .or-tiendas__grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+  }
+
+  @media (max-width: 960px) {
+    .or-tiendas__grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 640px) {
+    .or-tiendas__grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

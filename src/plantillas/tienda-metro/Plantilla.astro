@@ -1,0 +1,26 @@
+---
+import MarcoTienda from './componentes/MarcoTienda.astro';
+
+import HeroCarrusel from './secciones/HeroCarrusel.astro';
+import CategoriasCirculares from './secciones/CategoriasCirculares.astro';
+import BannersPromo from './secciones/BannersPromo.astro';
+import Mundos from './secciones/Mundos.astro';
+import TabsCategorias from './secciones/TabsCategorias.astro';
+import CarruselProductos from './secciones/CarruselProductos.astro';
+import Marcas from './secciones/Marcas.astro';
+import AppBanner from './secciones/AppBanner.astro';
+
+import { carrusel1, carrusel2 } from './datos/metro.js';
+---
+
+<MarcoTienda>
+  <HeroCarrusel />
+  <CategoriasCirculares />
+  <BannersPromo />
+  <Mundos />
+  <TabsCategorias />
+  <CarruselProductos id={carrusel1.id} banner={carrusel1.banner} productos={carrusel1.productos} />
+  <CarruselProductos id={carrusel2.id} banner={carrusel2.banner} productos={carrusel2.productos} />
+  <Marcas />
+  <AppBanner />
+</MarcoTienda>
