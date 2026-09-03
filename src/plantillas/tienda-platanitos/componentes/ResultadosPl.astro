@@ -1,13 +1,13 @@
 ---
 import FiltrosPl from './FiltrosPl.astro';
 import TarjetaProducto from './TarjetaProducto.astro';
-import { productos, sugerencias, ordenarPor } from '../datos/productos.js';
+import { productosOrdenados, sugerencias, ordenarPor } from '../datos/productos.js';
 
 const base = '/plantillas/tienda-platanitos';
 
 const norm = (s: unknown) =>
   (s ?? '').toString().toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '');
-const conHeno = productos.map((p) => ({
+const conHeno = productosOrdenados.map((p) => ({
   p,
   heno: norm([p.nombre, p.marca, p.cat, p.v, ...(p.tags ?? [])].join(' ')),
 }));

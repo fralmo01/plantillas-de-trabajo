@@ -1,0 +1,127 @@
+---
+import { soles, getVfImg } from '../datos/ventasfree.js';
+
+interface Producto {
+  nombre: string;
+  marca?: string;
+  precio: number;
+  cod: string;
+  categoria?: string;
+  seed: string;
+  img?: string;
+}
+const { producto } = Astro.props as { producto: Producto };
+const img = producto.img ?? getVfImg(producto.seed, 400, 400);
+---
+
+<article class="vf-prod">
+  <div class="vf-prod__media">
+    <img src={img} alt={producto.nombre} loading="lazy" decoding="async" />
+    <span class="vf-cod vf-prod__cod">COD: {producto.cod}</span>
+  </div>
+  <div class="vf-prod__body">
+    {producto.categoria && <p class="vf-prod__cat">{producto.categoria}</p>}
+    <h3 class="vf-prod__nombre">{producto.nombre}</h3>
+    <div class="vf-prod__pie">
+      <p class="vf-prod__precio">{soles(producto.precio)}</p>
+      <button type="button" class="vf-prod__add" aria-label="Agregar al carrito">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="20" r="1.6"></circle><circle cx="18" cy="20" r="1.6"></circle><path d="M2 3h3l2.4 12.4a2 2 0 0 0 2 1.6h8.7a2 2 0 0 0 2-1.6L23 7H6"></path></svg>
+      </button>
+    </div>
+  </div>
+</article>
+
+<style>
+  .vf-prod[hidden] {
+    display: none;
+  }
+
+  .vf-prod {
+    display: flex;
+    flex-direction: column;
+    background: #fff;
+    border: 1px solid var(--vf-linea);
+    border-radius: 10px;
+    overflow: hidden;
+    transition: box-shadow 0.15s ease;
+  }
+
+  .vf-prod:hover {
+    box-shadow: 0 12px 30px -18px rgba(20, 30, 50, 0.35);
+  }
+
+  .vf-prod__media {
+    position: relative;
+    aspect-ratio: 1 / 1;
+    background: var(--vf-fondo);
+  }
+
+  .vf-prod__media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .vf-prod__cod {
+    position: absolute;
+    left: 0.6rem;
+    bottom: 0.6rem;
+  }
+
+  .vf-prod__body {
+    padding: 0.85rem 0.9rem 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+    flex: 1;
+  }
+
+  .vf-prod__cat {
+    font-size: 0.68rem;
+    color: var(--vf-gris);
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+  }
+
+  .vf-prod__nombre {
+    font-size: 0.85rem;
+    font-weight: 600;
+    line-height: 1.35;
+    color: var(--vf-azul-osc);
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    min-height: 2.3em;
+  }
+
+  .vf-prod__pie {
+    margin-top: auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 0.4rem;
+  }
+
+  .vf-prod__precio {
+    font-size: 1rem;
+    font-weight: 800;
+    color: var(--vf-tinta);
+  }
+
+  .vf-prod__add {
+    width: 34px;
+    height: 34px;
+    border-radius: 8px;
+    background: var(--vf-fondo);
+    color: var(--vf-azul);
+    display: grid;
+    place-items: center;
+    flex-shrink: 0;
+  }
+
+  .vf-prod__add:hover {
+    background: var(--vf-azul);
+    color: #fff;
+  }
+</style>

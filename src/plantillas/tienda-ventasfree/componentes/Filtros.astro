@@ -1,0 +1,240 @@
+---
+import { catalogo, filtrosCategoria, filtrosMarca, ordenarPor } from '../datos/ventasfree.js';
+
+const contarCat = (c: string) => catalogo.filter((p: Record<string, unknown>) => p.categoria === c).length;
+const contarMarca = (m: string) => catalogo.filter((p: Record<string, unknown>) => p.marca === m).length;
+---
+
+<aside class="vf-filtros" id="vf-filtros">
+  <div class="vf-filtros__cab">
+    <span>Filtrar productos</span>
+    <button class="vf-filtros__x" type="button" aria-label="Cerrar filtros">&times;</button>
+  </div>
+
+  <form class="vf-filtros__form" onsubmit="return false">
+    <details class="vf-grupo" open>
+      <summary>Categorías</summary>
+      <div class="vf-grupo__cuerpo">
+        <ul class="vf-grupo__lista" data-filtro="categoria">
+          {filtrosCategoria.map((c: string) => (
+            <li>
+              <label>
+                <input type="checkbox" name="categoria" value={c} />
+                <span>{c}</span>
+                <b>{contarCat(c)}</b>
+              </label>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </details>
+
+    <details class="vf-grupo" open>
+      <summary>Marcas</summary>
+      <div class="vf-grupo__cuerpo">
+        <ul class="vf-grupo__lista" data-filtro="marca">
+          {filtrosMarca.map((m: string) => (
+            <li>
+              <label>
+                <input type="checkbox" name="marca" value={m} />
+                <span>{m}</span>
+                <b>{contarMarca(m)}</b>
+              </label>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </details>
+
+    <details class="vf-grupo" open>
+      <summary>Precio</summary>
+      <div class="vf-grupo__cuerpo vf-grupo__precio">
+        <label>
+          <span>Desde</span>
+          <input type="number" id="vf-precio-desde" placeholder="S/ 0" min="0" />
+        </label>
+        <span class="vf-precio__sep">—</span>
+        <label>
+          <span>Hasta</span>
+          <input type="number" id="vf-precio-hasta" placeholder="S/ Máximo" min="0" />
+        </label>
+        <button type="button" class="vf-btn vf-btn--azul vf-precio__aplicar" id="vf-precio-aplicar">Aplicar precio</button>
+      </div>
+    </details>
+
+    <details class="vf-grupo">
+      <summary>Ordenar por</summary>
+      <div class="vf-grupo__cuerpo">
+        <ul class="vf-grupo__radios">
+          {ordenarPor.map((o: string, i: number) => (
+            <li>
+              <label>
+                <input type="radio" name="orden" value={o} checked={i === 0} />
+                <span>{o}</span>
+              </label>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </details>
+
+    <button type="button" class="vf-btn vf-btn--claro vf-filtros__limpiar" id="vf-filtros-limpiar">Limpiar filtros</button>
+  </form>
+</aside>
+
+<style>
+  .vf-filtros {
+    align-self: start;
+    background: #fff;
+    border: 1px solid var(--vf-linea);
+    border-radius: 10px;
+    padding: 1.1rem;
+  }
+
+  .vf-filtros__cab {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-bottom: 0.75rem;
+    margin-bottom: 0.5rem;
+    border-bottom: 2px solid var(--vf-azul);
+  }
+
+  .vf-filtros__cab span {
+    font-size: 0.85rem;
+    font-weight: 800;
+    color: var(--vf-azul);
+  }
+
+  .vf-filtros__x {
+    display: none;
+    font-size: 1.1rem;
+  }
+
+  .vf-grupo {
+    border-bottom: 1px solid var(--vf-linea);
+    padding-block: 0.85rem;
+  }
+
+  .vf-grupo summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 0.85rem;
+    font-weight: 700;
+    cursor: pointer;
+    list-style: none;
+  }
+
+  .vf-grupo summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .vf-grupo summary::after {
+    content: "\002B";
+    color: var(--vf-gris);
+  }
+
+  .vf-grupo[open] summary::after {
+    content: "\2212";
+  }
+
+  .vf-grupo__cuerpo {
+    padding-top: 0.8rem;
+    display: grid;
+    gap: 0.55rem;
+  }
+
+  .vf-grupo__lista,
+  .vf-grupo__radios {
+    list-style: none;
+    display: grid;
+    gap: 0.5rem;
+    max-height: 220px;
+    overflow-y: auto;
+  }
+
+  .vf-grupo__lista label,
+  .vf-grupo__radios label {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.8rem;
+    cursor: pointer;
+  }
+
+  .vf-grupo__lista label b {
+    margin-left: auto;
+    color: var(--vf-gris);
+    font-weight: 600;
+    font-size: 0.7rem;
+    background: var(--vf-fondo);
+    border-radius: 999px;
+    padding: 0.05rem 0.45rem;
+  }
+
+  .vf-grupo__lista input,
+  .vf-grupo__radios input {
+    accent-color: var(--vf-azul);
+  }
+
+  .vf-grupo__precio {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: end;
+    gap: 0.5rem;
+  }
+
+  .vf-grupo__precio label {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    font-size: 0.72rem;
+    color: var(--vf-gris);
+    flex: 1;
+    min-width: 90px;
+  }
+
+  .vf-grupo__precio input {
+    border: 1px solid var(--vf-linea);
+    border-radius: 6px;
+    padding: 0.45rem 0.6rem;
+    font-size: 0.8rem;
+  }
+
+  .vf-precio__sep {
+    padding-bottom: 0.6rem;
+    color: var(--vf-gris);
+  }
+
+  .vf-precio__aplicar {
+    width: 100%;
+    margin-top: 0.4rem;
+    font-size: 0.78rem;
+    padding: 0.6rem;
+  }
+
+  .vf-filtros__limpiar {
+    width: 100%;
+    margin-top: 0.5rem;
+  }
+
+  @media (max-width: 900px) {
+    .vf-filtros {
+      position: fixed;
+      inset: 0 25% 0 0;
+      z-index: 350;
+      border-radius: 0;
+      overflow-y: auto;
+      transform: translateX(-105%);
+      transition: transform 0.25s ease;
+      box-shadow: 0 0 40px rgba(0, 0, 0, 0.25);
+    }
+    .vf-filtros.is-abierto {
+      transform: none;
+    }
+    .vf-filtros__x {
+      display: block;
+    }
+  }
+</style>

@@ -1,0 +1,60 @@
+---
+import { marcasDestacadas } from '../datos/ventasfree.js';
+---
+
+<section class="vf-seccion vf-wrap" id="marcas">
+  <div class="vf-marcas__cab">
+    <h2 class="vf-titulo-seccion">Marcas destacadas</h2>
+    <a href="#top" class="vf-marcas__ver">Ver todas las marcas →</a>
+  </div>
+  <div class="vf-marcas__grid">
+    {marcasDestacadas.map((m: string) => (
+      <div class="vf-marcas__logo">{m}</div>
+    ))}
+  </div>
+</section>
+
+<style>
+  .vf-marcas__cab {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+  }
+
+  .vf-marcas__ver {
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: var(--vf-azul);
+  }
+
+  .vf-marcas__grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 1rem;
+  }
+
+  .vf-marcas__logo {
+    display: grid;
+    place-items: center;
+    height: 64px;
+    border: 1px solid var(--vf-linea);
+    border-radius: 8px;
+    font-weight: 800;
+    font-size: 0.9rem;
+    color: var(--vf-tinta);
+    letter-spacing: 0.02em;
+  }
+
+  @media (max-width: 900px) {
+    .vf-marcas__grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  @media (max-width: 560px) {
+    .vf-marcas__grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+</style>

@@ -1,0 +1,94 @@
+---
+import { heroSplit, getRevolveImg } from '../datos/revolve.js';
+
+const base = '/plantillas/tienda-revolve';
+---
+
+<section class="rv-hero">
+  <div class="rv-hero__paneles">
+    {heroSplit.paneles.map((p: { seed: string }) => (
+      <div class="rv-hero__panel">
+        <img src={getRevolveImg(p.seed, 900, 1100)} alt="" loading="eager" />
+      </div>
+    ))}
+  </div>
+
+  <div class="rv-hero__overlay rv-wrap">
+    <p class="rv-eyebrow">{heroSplit.credito}</p>
+    <h1 class="rv-hero__titulo">
+      <span>{heroSplit.titulo1}</span>
+      <span>{heroSplit.titulo2}</span>
+    </h1>
+    <p class="rv-hero__kicker">{heroSplit.kicker}</p>
+    <a href={`${base}/buscar/`} class="rv-btn rv-btn--oscuro">{heroSplit.cta}</a>
+  </div>
+</section>
+
+<style>
+  .rv-hero {
+    position: relative;
+  }
+
+  .rv-hero__paneles {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .rv-hero__panel {
+    aspect-ratio: 4 / 5;
+    overflow: hidden;
+  }
+
+  .rv-hero__panel img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .rv-hero__overlay {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: clamp(1.5rem, 5vw, 4rem);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.6rem;
+    text-align: center;
+  }
+
+  .rv-hero__overlay .rv-eyebrow {
+    color: #fff;
+    text-shadow: 0 1px 8px rgba(0, 0, 0, 0.5);
+  }
+
+  .rv-hero__titulo {
+    display: flex;
+    flex-direction: column;
+    line-height: 0.95;
+  }
+
+  .rv-hero__titulo span {
+    font-size: clamp(2.5rem, 9vw, 6rem);
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    color: #fff;
+    text-shadow: 0 4px 24px rgba(0, 0, 0, 0.35);
+  }
+
+  .rv-hero__kicker {
+    max-width: 480px;
+    font-size: 0.85rem;
+    color: #fff;
+    text-shadow: 0 1px 8px rgba(0, 0, 0, 0.55);
+  }
+
+  @media (max-width: 720px) {
+    .rv-hero__paneles {
+      grid-template-columns: 1fr;
+    }
+    .rv-hero__panel {
+      aspect-ratio: 4 / 3;
+    }
+  }
+</style>

@@ -1,0 +1,228 @@
+---
+import Filtros from './Filtros.astro';
+import TarjetaProducto from './TarjetaProducto.astro';
+import { catalogo, sugerenciasBusqueda } from '../datos/ventasfree.js';
+
+interface Producto {
+  nombre: string;
+  marca?: string;
+  precio: number;
+  cod: string;
+  categoria?: string;
+  seed: string;
+  tags?: string[];
+}
+const base = '/plantillas/tienda-ventasfree';
+const productos = catalogo as Producto[];
+const heno = (p: Producto) => [p.nombre, p.marca, p.categoria, ...(p.tags ?? [])].join(' ').toLowerCase();
+---
+
+<section class="vf-res vf-wrap">
+  <h1 class="vf-res__titulo" id="vf-res-titulo">Todos los productos</h1>
+
+  <button class="vf-res__toggle" type="button" id="vf-toggle-filtros">Filtrar productos</button>
+
+  <div class="vf-res__layout">
+    <Filtros />
+
+    <div class="vf-res__grid-wrap">
+      <div class="vf-res__top">
+        <p class="vf-res__conteo"><span id="vf-n">0</span> productos</p>
+      </div>
+
+      <div class="vf-res__vacio" id="vf-res-vacio" hidden>
+        <p>No encontramos productos para <b id="vf-res-vacio-q"></b>.</p>
+        <p class="vf-res__prueba">Prueba buscando:</p>
+        <div class="vf-res__sugs">
+          {sugerenciasBusqueda.map((s: string) => (
+            <a href={`${base}/buscar/?q=${encodeURIComponent(s)}`} class="vf-btn vf-btn--claro">{s}</a>
+          ))}
+        </div>
+      </div>
+
+      <div class="vf-res__grid" id="vf-res-grid">
+        {productos.map((p) => (
+          <div data-item data-heno={heno(p)} data-categoria={p.categoria} data-marca={p.marca} data-precio={p.precio}>
+            <TarjetaProducto producto={p} />
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  const norm = (s: string) => (s ?? '').toString().toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '');
+
+  const termino = (new URLSearchParams(location.search).get('q') ?? '').trim();
+  const items = Array.from(document.querySelectorAll<HTMLElement>('[data-item]'));
+
+  const tituloEl = document.getElementById('vf-res-titulo');
+  const vacio = document.getElementById('vf-res-vacio') as HTMLElement | null;
+  const vacioQ = document.getElementById('vf-res-vacio-q');
+  const grid = document.getElementById('vf-res-grid') as HTMLElement | null;
+  const conteo = document.getElementById('vf-n');
+
+  if (tituloEl && termino) tituloEl.textContent = `Resultados de búsqueda: "${termino}"`;
+  if (vacioQ) vacioQ.textContent = `"${termino}"`;
+
+  function checkboxesActivos(nombre: string) {
+    return Array.from(document.querySelectorAll<HTMLInputElement>(`input[name="${nombre}"]:checked`)).map((i) => i.value);
+  }
+
+  function aplicar() {
+    const palabras = norm(termino).split(/\s+/).filter(Boolean);
+    const categorias = checkboxesActivos('categoria');
+    const marcas = checkboxesActivos('marca');
+    const desde = Number((document.getElementById('vf-precio-desde') as HTMLInputElement | null)?.value || 0);
+    const hasta = Number((document.getElementById('vf-precio-hasta') as HTMLInputElement | null)?.value || 0);
+
+    let visibles = 0;
+    for (const it of items) {
+      const heno = norm(it.dataset.heno || '');
+      const precio = Number(it.dataset.precio || '0');
+      const nombreOk = palabras.length === 0 || palabras.every((w) => heno.includes(w));
+      const catOk = categorias.length === 0 || categorias.includes(it.dataset.categoria || '');
+      const marcaOk = marcas.length === 0 || marcas.includes(it.dataset.marca || '');
+      const desdeOk = !desde || precio >= desde;
+      const hastaOk = !hasta || precio <= hasta;
+      const ok = nombreOk && catOk && marcaOk && desdeOk && hastaOk;
+      it.hidden = !ok;
+      if (ok) visibles++;
+    }
+    if (vacio) vacio.hidden = visibles > 0;
+    if (grid) grid.hidden = visibles === 0;
+    if (conteo) conteo.textContent = String(visibles);
+  }
+
+  document.querySelectorAll<HTMLInputElement>('.vf-filtros input[type="checkbox"]').forEach((cb) => {
+    cb.addEventListener('change', aplicar);
+  });
+  document.getElementById('vf-precio-aplicar')?.addEventListener('click', aplicar);
+
+  const ordenRadios = document.querySelectorAll<HTMLInputElement>('input[name="orden"]');
+  ordenRadios.forEach((r) => {
+    r.addEventListener('change', () => {
+      if (!grid) return;
+      const visibles = items.filter((it) => !it.hidden);
+      const precio = (it: HTMLElement) => Number(it.dataset.precio || '0');
+      if (r.value === 'Menor precio') visibles.sort((a, b) => precio(a) - precio(b));
+      if (r.value === 'Mayor precio') visibles.sort((a, b) => precio(b) - precio(a));
+      visibles.forEach((it) => grid.appendChild(it));
+    });
+  });
+
+  document.getElementById('vf-filtros-limpiar')?.addEventListener('click', () => {
+    document.querySelectorAll<HTMLInputElement>('.vf-filtros input[type="checkbox"]').forEach((cb) => (cb.checked = false));
+    const desdeEl = document.getElementById('vf-precio-desde') as HTMLInputElement | null;
+    const hastaEl = document.getElementById('vf-precio-hasta') as HTMLInputElement | null;
+    if (desdeEl) desdeEl.value = '';
+    if (hastaEl) hastaEl.value = '';
+    aplicar();
+  });
+
+  const panel = document.getElementById('vf-filtros');
+  const abrirBtn = document.getElementById('vf-toggle-filtros');
+  const cerrarBtn = panel?.querySelector('.vf-filtros__x');
+  abrirBtn?.addEventListener('click', () => panel?.classList.toggle('is-abierto'));
+  cerrarBtn?.addEventListener('click', () => panel?.classList.remove('is-abierto'));
+
+  aplicar();
+</script>
+
+<style>
+  .vf-res {
+    padding-block: 1.75rem 3.5rem;
+  }
+
+  .vf-res__titulo {
+    font-size: clamp(1.2rem, 2.6vw, 1.6rem);
+    margin-bottom: 1.25rem;
+  }
+
+  .vf-res__toggle {
+    display: none;
+    border: 1px solid var(--vf-azul);
+    color: var(--vf-azul);
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    font-weight: 700;
+    font-size: 0.78rem;
+    margin-bottom: 1rem;
+  }
+
+  .vf-res__layout {
+    display: grid;
+    grid-template-columns: 260px 1fr;
+    gap: clamp(1.25rem, 3vw, 2rem);
+    align-items: start;
+  }
+
+  .vf-res__top {
+    margin-bottom: 0.9rem;
+  }
+
+  .vf-res__conteo {
+    font-size: 0.8rem;
+    color: var(--vf-gris);
+    font-weight: 600;
+  }
+
+  .vf-res__grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 1.1rem;
+  }
+
+  .vf-res__grid[hidden] {
+    display: none;
+  }
+
+  .vf-res__vacio[hidden] {
+    display: none;
+  }
+
+  .vf-res__vacio {
+    border: 1px dashed var(--vf-linea);
+    border-radius: 10px;
+    padding: 2rem 1.25rem;
+    text-align: center;
+  }
+
+  .vf-res__prueba {
+    margin-top: 0.75rem;
+    font-weight: 700;
+  }
+
+  .vf-res__sugs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    justify-content: center;
+    margin-top: 0.75rem;
+  }
+
+  @media (max-width: 1200px) {
+    .vf-res__grid {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+
+  @media (max-width: 900px) {
+    .vf-res__layout {
+      grid-template-columns: 1fr;
+    }
+    .vf-res__toggle {
+      display: inline-flex;
+    }
+    .vf-res__grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  @media (max-width: 620px) {
+    .vf-res__grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+</style>

@@ -1,0 +1,178 @@
+---
+import { marca, footerCols } from '../datos/revolve.js';
+---
+
+<footer class="rv-foot">
+  <div class="rv-wrap rv-foot__promo">
+    <div class="rv-foot__promo-item">
+      <h3>Unete a nuestra lista</h3>
+      <p>Recibe adelantos de nuevas colecciones y ofertas exclusivas.</p>
+      <form class="rv-foot__form" onsubmit="return false">
+        <input type="email" placeholder="Tu correo" aria-label="Correo electronico" />
+        <button type="submit" class="rv-btn rv-btn--oscuro">Suscribirme</button>
+      </form>
+    </div>
+    <div class="rv-foot__promo-item">
+      <h3>Cuentanos tu opinion</h3>
+      <p>Ayudanos a mejorar respondiendo una breve encuesta.</p>
+      <a href="#top" class="rv-btn rv-btn--claro">Ir a la encuesta</a>
+    </div>
+    <div class="rv-foot__promo-item">
+      <h3>Descarga la app</h3>
+      <p>Compra desde tu celular con envio y devoluciones gratis.</p>
+      <a href="#top" class="rv-btn rv-btn--claro">Ver mas</a>
+    </div>
+  </div>
+
+  <div class="rv-wrap rv-foot__grid">
+    {footerCols.map((col: { t: string; links: string[] }) => (
+      <nav class="rv-foot__col" aria-label={col.t}>
+        <h3>{col.t}</h3>
+        <ul>
+          {col.links.map((l: string) => <li><a href="#top">{l}</a></li>)}
+        </ul>
+      </nav>
+    ))}
+
+    <nav class="rv-foot__col" aria-label="Marcas">
+      <h3>Nuestras Marcas</h3>
+      <ul>
+        <li><a href="#top">{marca.nombre}</a></li>
+        <li><a href="#top">{marca.hermana}</a></li>
+      </ul>
+    </nav>
+
+    <nav class="rv-foot__col" aria-label="Siguenos">
+      <h3>Siguenos</h3>
+      <ul>
+        <li><a href="#top">Instagram</a></li>
+        <li><a href="#top">Facebook</a></li>
+        <li><a href="#top">Tiktok</a></li>
+        <li><a href="#top">Pinterest</a></li>
+      </ul>
+    </nav>
+  </div>
+
+  <div class="rv-wrap rv-foot__base">
+    <span>&copy; 2026 {marca.nombre}.</span>
+    <div class="rv-foot__pagos">
+      <span>AMEX</span>
+      <span>MASTERCARD</span>
+      <span>VISA</span>
+      <span>PAYPAL</span>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .rv-foot {
+    background: var(--rv-crema);
+    border-top: 1px solid var(--rv-linea);
+  }
+
+  .rv-foot__promo {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+    padding-block: 3rem;
+    border-bottom: 1px solid var(--rv-linea);
+    text-align: center;
+  }
+
+  .rv-foot__promo-item h3 {
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .rv-foot__promo-item p {
+    font-size: 0.8rem;
+    color: var(--rv-gris);
+    margin-bottom: 1rem;
+  }
+
+  .rv-foot__form {
+    display: flex;
+    gap: 0.5rem;
+    max-width: 320px;
+    margin-inline: auto;
+  }
+
+  .rv-foot__form input {
+    flex: 1;
+    border: 1px solid var(--rv-linea);
+    padding: 0.7rem 0.9rem;
+    font-size: 0.82rem;
+    background: #fff;
+  }
+
+  .rv-foot__grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2rem;
+    padding-block: 3rem 2rem;
+  }
+
+  .rv-foot__col h3 {
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    margin-bottom: 1.1rem;
+  }
+
+  .rv-foot__col ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.7rem;
+  }
+
+  .rv-foot__col a {
+    font-size: 0.83rem;
+    color: var(--rv-gris);
+  }
+
+  .rv-foot__col a:hover {
+    color: var(--rv-tinta);
+  }
+
+  .rv-foot__base {
+    border-top: 1px solid var(--rv-linea);
+    padding-block: 1.25rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1rem;
+    font-size: 0.75rem;
+    color: var(--rv-gris);
+  }
+
+  .rv-foot__pagos {
+    display: flex;
+    gap: 0.75rem;
+  }
+
+  .rv-foot__pagos span {
+    border: 1px solid var(--rv-linea);
+    padding: 0.2rem 0.5rem;
+    font-size: 0.6rem;
+    font-weight: 600;
+    letter-spacing: 0.03em;
+  }
+
+  @media (max-width: 900px) {
+    .rv-foot__promo {
+      grid-template-columns: 1fr;
+    }
+    .rv-foot__grid {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  @media (max-width: 520px) {
+    .rv-foot__grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

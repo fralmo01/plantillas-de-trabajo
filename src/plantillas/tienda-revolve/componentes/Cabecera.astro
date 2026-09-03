@@ -1,0 +1,431 @@
+---
+import { marca, generos, navPrincipal, getRevolveImg } from '../datos/revolve.js';
+
+const base = '/plantillas/tienda-revolve';
+
+interface Item {
+  t: string;
+  href?: string;
+  menu?: string;
+  destacado?: boolean;
+  columnas?: { t: string; links: string[] }[];
+  banners?: { t: string; sub: string; seed: string }[];
+}
+---
+
+<header class="rv-hdr" id="top">
+  <div class="rv-wrap rv-hdr__generos">
+    {generos.map((g: string, i: number) => (
+      <button type="button" class={`rv-genero${i === 0 ? ' is-on' : ''}`}>{g}</button>
+    ))}
+  </div>
+
+  <div class="rv-wrap rv-hdr__row">
+    <button type="button" class="rv-hdr__ico rv-hdr__menu" id="rv-menu-btn" aria-label="Abrir menu">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+    </button>
+
+    <a href={`${base}/`} class="rv-logo">{marca.nombre}</a>
+
+    <nav class="rv-nav" aria-label="Navegacion principal">
+      <ul class="rv-nav__list">
+        {(navPrincipal as Item[]).map((n) => (
+          <li data-menu={n.menu}>
+            {n.menu ? (
+              <button type="button" class={`rv-nav__link${n.destacado ? ' es-destacado' : ''}`} data-abrir={n.menu}>{n.t}</button>
+            ) : (
+              <a href={n.href} class={`rv-nav__link${n.destacado ? ' es-destacado' : ''}`}>{n.t}</a>
+            )}
+          </li>
+        ))}
+      </ul>
+    </nav>
+
+    <div class="rv-hdr__acc">
+      <button type="button" class="rv-hdr__ico" id="rv-buscar-btn" aria-label="Buscar">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="11" cy="11" r="7"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+      </button>
+      <a href={`${base}/#top`} class="rv-hdr__ico" aria-label="Mi cuenta">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="8" r="4"></circle><path d="M4 21c0-4 4-6 8-6s8 2 8 6"></path></svg>
+      </a>
+      <a href={`${base}/#top`} class="rv-hdr__ico" aria-label="Favoritos">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 21s-7-4.35-9.5-8.5C.8 9 2 5 6 5c2 0 3.5 1.2 4 2.5C10.5 6.2 12 5 14 5c4 0 5.2 4 3.5 7.5C19 16.65 12 21 12 21z"></path></svg>
+      </a>
+      <button type="button" class="rv-hdr__ico rv-hdr__cart" id="rv-cart" aria-label="Ver carrito">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"></path><path d="M3 6h18"></path><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
+        <span class="rv-hdr__badge" id="rv-cart-count" hidden>0</span>
+      </button>
+    </div>
+  </div>
+
+  <form class="rv-buscar" id="rv-buscar" role="search" action={`${base}/buscar/`} method="get" hidden>
+    <div class="rv-wrap rv-buscar__inner">
+      <input type="search" name="q" id="rv-buscar-input" placeholder="Buscar disenadores, articulos..." aria-label="Buscar productos" autocomplete="off" />
+      <button type="submit">Buscar</button>
+    </div>
+  </form>
+
+  {(navPrincipal as Item[]).filter((n) => n.menu).map((n) => (
+    <div class="rv-mega" data-mega={n.menu} hidden>
+      <div class="rv-wrap rv-mega__grid" style={`--cols:${n.columnas?.length ?? 1}`}>
+        <div class="rv-mega__cols">
+          {n.columnas?.map((c) => (
+            <div class="rv-mega__col">
+              <h3>{c.t}</h3>
+              <ul>
+                {c.links.map((l) => <li><a href={`${base}/buscar/?q=${encodeURIComponent(l.toLowerCase())}`}>{l}</a></li>)}
+              </ul>
+            </div>
+          ))}
+        </div>
+        {n.banners && (
+          <div class="rv-mega__banners">
+            {n.banners.map((b) => (
+              <a href={`${base}/buscar/`} class="rv-mega__banner">
+                <img src={getRevolveImg(b.seed, 420, 280)} alt={b.t} loading="lazy" />
+                <span>
+                  <b>{b.t}</b>
+                  <small>{b.sub}</small>
+                </span>
+              </a>
+            ))}
+          </div>
+        )}
+      </div>
+    </div>
+  ))}
+</header>
+
+<script>
+  const generos = Array.from(document.querySelectorAll<HTMLButtonElement>('.rv-genero'));
+  generos.forEach((g) => {
+    g.addEventListener('click', () => {
+      generos.forEach((x) => x.classList.remove('is-on'));
+      g.classList.add('is-on');
+    });
+  });
+
+  const btns = Array.from(document.querySelectorAll<HTMLButtonElement>('[data-abrir]'));
+  const megas = Array.from(document.querySelectorAll<HTMLElement>('[data-mega]'));
+
+  function cerrarTodo() {
+    megas.forEach((m) => (m.hidden = true));
+    btns.forEach((b) => b.classList.remove('is-on'));
+  }
+
+  btns.forEach((b) => {
+    b.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const nombre = b.dataset.abrir;
+      const target = megas.find((m) => m.dataset.mega === nombre);
+      const yaAbierto = target && !target.hidden;
+      cerrarTodo();
+      if (target && !yaAbierto) {
+        target.hidden = false;
+        b.classList.add('is-on');
+      }
+    });
+  });
+
+  document.addEventListener('click', (e) => {
+    const t = e.target as Node;
+    const dentro = megas.some((m) => m.contains(t)) || btns.some((b) => b.contains(t));
+    if (!dentro) cerrarTodo();
+  });
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') cerrarTodo();
+  });
+
+  const buscarBtn = document.getElementById('rv-buscar-btn');
+  const buscarForm = document.getElementById('rv-buscar') as HTMLElement | null;
+  const buscarInput = document.getElementById('rv-buscar-input') as HTMLInputElement | null;
+  buscarBtn?.addEventListener('click', () => {
+    if (!buscarForm) return;
+    buscarForm.hidden = !buscarForm.hidden;
+    if (!buscarForm.hidden) buscarInput?.focus();
+  });
+
+  const qActual = new URLSearchParams(location.search).get('q');
+  if (buscarInput && qActual) buscarInput.value = qActual;
+
+  const badge = document.getElementById('rv-cart-count');
+  let total = 0;
+  document.addEventListener('click', (e) => {
+    const el = e.target as HTMLElement;
+    const add = el.closest<HTMLButtonElement>('.rv-prod__add');
+    if (add) {
+      e.preventDefault();
+      total += 1;
+      if (badge) {
+        badge.textContent = String(total);
+        badge.hidden = false;
+      }
+      const prev = add.textContent;
+      add.textContent = 'Anadido';
+      add.classList.add('is-ok');
+      window.setTimeout(() => {
+        add.textContent = prev;
+        add.classList.remove('is-ok');
+      }, 1100);
+    }
+    const fav = el.closest<HTMLButtonElement>('.rv-prod__fav');
+    if (fav) {
+      fav.classList.toggle('is-on');
+    }
+  });
+</script>
+
+<style>
+  .rv-hdr {
+    background: #fff;
+    position: sticky;
+    top: 0;
+    z-index: 90;
+    border-bottom: 1px solid var(--rv-linea);
+  }
+
+  .rv-hdr__generos {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    border-bottom: 1px solid var(--rv-linea);
+  }
+
+  .rv-genero {
+    padding: 0.6rem 0.2rem;
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--rv-gris);
+    border-bottom: 2px solid transparent;
+  }
+
+  .rv-genero.is-on {
+    color: var(--rv-tinta);
+    border-color: var(--rv-tinta);
+  }
+
+  .rv-hdr__row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.5rem;
+    padding-block: 1rem;
+  }
+
+  .rv-hdr__menu {
+    display: none;
+  }
+
+  .rv-logo {
+    font-size: 1.5rem;
+    font-weight: 700;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    flex-shrink: 0;
+  }
+
+  .rv-nav__list {
+    display: flex;
+    gap: 1.6rem;
+    list-style: none;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .rv-nav__link {
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    padding-block: 0.4rem;
+  }
+
+  .rv-nav__link:hover,
+  .rv-nav__link.is-on {
+    color: var(--rv-gris);
+  }
+
+  .rv-nav__link.es-destacado {
+    color: var(--rv-rojo);
+  }
+
+  .rv-hdr__acc {
+    display: flex;
+    align-items: center;
+    gap: 1.1rem;
+    flex-shrink: 0;
+  }
+
+  .rv-hdr__ico {
+    position: relative;
+    color: var(--rv-tinta);
+    display: grid;
+    place-items: center;
+  }
+
+  .rv-hdr__ico:hover {
+    color: var(--rv-gris);
+  }
+
+  .rv-hdr__badge[hidden] {
+    display: none;
+  }
+
+  .rv-hdr__badge {
+    position: absolute;
+    top: -6px;
+    right: -8px;
+    min-width: 15px;
+    height: 15px;
+    padding: 0 4px;
+    border-radius: 999px;
+    background: var(--rv-rojo);
+    color: #fff;
+    font-size: 0.55rem;
+    font-weight: 700;
+    display: grid;
+    place-items: center;
+  }
+
+  .rv-buscar[hidden] {
+    display: none;
+  }
+
+  .rv-buscar {
+    border-top: 1px solid var(--rv-linea);
+    background: var(--rv-crema);
+  }
+
+  .rv-buscar__inner {
+    display: flex;
+    gap: 0.6rem;
+    padding-block: 0.85rem;
+  }
+
+  .rv-buscar__inner input {
+    flex: 1;
+    border: none;
+    background: transparent;
+    border-bottom: 1px solid var(--rv-tinta);
+    padding: 0.5rem 0;
+    font-size: 0.9rem;
+  }
+
+  .rv-buscar__inner input:focus {
+    outline: none;
+  }
+
+  .rv-buscar__inner button {
+    padding: 0.5rem 1.4rem;
+    background: var(--rv-tinta);
+    color: #fff;
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+
+  .rv-mega[hidden] {
+    display: none;
+  }
+
+  .rv-mega {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 100%;
+    background: #fff;
+    border-top: 1px solid var(--rv-linea);
+    box-shadow: 0 30px 50px -30px rgba(0, 0, 0, 0.25);
+    z-index: 80;
+  }
+
+  .rv-mega__grid {
+    display: flex;
+    gap: 3rem;
+    padding-block: 2.25rem;
+  }
+
+  .rv-mega__cols {
+    display: grid;
+    grid-template-columns: repeat(var(--cols), 1fr);
+    gap: 2rem;
+    flex: 1;
+  }
+
+  .rv-mega__col h3 {
+    font-size: 0.7rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--rv-gris);
+    margin-bottom: 1rem;
+  }
+
+  .rv-mega__col ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.65rem;
+  }
+
+  .rv-mega__col a {
+    font-size: 0.83rem;
+  }
+
+  .rv-mega__col a:hover {
+    color: var(--rv-gris);
+  }
+
+  .rv-mega__banners {
+    display: flex;
+    gap: 1rem;
+    flex-shrink: 0;
+  }
+
+  .rv-mega__banner {
+    position: relative;
+    width: 210px;
+    overflow: hidden;
+  }
+
+  .rv-mega__banner img {
+    width: 100%;
+    aspect-ratio: 3 / 2;
+    object-fit: cover;
+  }
+
+  .rv-mega__banner span {
+    position: absolute;
+    left: 0.75rem;
+    bottom: 0.75rem;
+    right: 0.75rem;
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+    text-shadow: 0 1px 6px rgba(0, 0, 0, 0.5);
+  }
+
+  .rv-mega__banner b {
+    font-size: 0.85rem;
+    font-weight: 600;
+  }
+
+  .rv-mega__banner small {
+    font-size: 0.68rem;
+  }
+
+  @media (max-width: 960px) {
+    .rv-nav__list {
+      display: none;
+    }
+    .rv-mega {
+      display: none !important;
+    }
+    .rv-hdr__menu {
+      display: grid;
+    }
+  }
+</style>

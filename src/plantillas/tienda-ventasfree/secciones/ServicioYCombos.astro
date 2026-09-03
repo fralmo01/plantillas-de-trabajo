@@ -1,0 +1,170 @@
+---
+import { serviciosTecnicos, combosTaller, soles, getVfImg } from '../datos/ventasfree.js';
+
+const ICONOS: Record<string, string> = {
+  bateria: 'M7 7h9a2 2 0 0 1 2 2v6a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2Zm13 3h1v4h-1',
+  pantalla: 'M5 4h14v13H5zM9 20h6',
+  check: 'm20 6-11 11L4 12',
+  tienda: 'M3 9l1-5h16l1 5M4 9v11h16V9M9 21v-6h6v6',
+};
+---
+
+<section class="vf-seccion vf-wrap" id="servicio">
+  <div class="vf-sc__grid">
+    <div class="vf-sc__card vf-sc__card--servicio">
+      <h2 class="vf-titulo-seccion">Servicio técnico especializado</h2>
+      <p class="vf-sub-seccion">Cambio de batería y pantalla para iPhone de todas las series</p>
+      <div class="vf-sc__servicios">
+        {serviciosTecnicos.map((s: { t: string; icono: string }) => (
+          <div class="vf-sc__servicio">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d={ICONOS[s.icono]}></path></svg>
+            <span>{s.t}</span>
+          </div>
+        ))}
+      </div>
+      <a href="#top" class="vf-btn vf-btn--azul vf-sc__agendar">Agendar servicio</a>
+    </div>
+
+    <div class="vf-sc__card vf-sc__card--combos" id="combos">
+      <h2 class="vf-titulo-seccion">Combos para emprender tu taller</h2>
+      <p class="vf-sub-seccion">Equipos listos para comenzar o potenciar tu taller</p>
+      <div class="vf-sc__combos">
+        {combosTaller.map((c: { nombre: string; precio: number; antes: number; seed: string; cod: string; img?: string }) => (
+          <a href="#top" class="vf-sc__combo">
+            <div class="vf-sc__combo-media">
+              <img src={c.img ?? getVfImg(c.seed, 260, 200)} alt={c.nombre} loading="lazy" />
+              <span class="vf-cod">COD: {c.cod}</span>
+            </div>
+            <p class="vf-sc__combo-nombre">{c.nombre}</p>
+            <p class="vf-sc__combo-precio"><s>{soles(c.antes)}</s> <b>{soles(c.precio)}</b></p>
+          </a>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .vf-sc__grid {
+    display: grid;
+    grid-template-columns: 1fr 1.3fr;
+    gap: 1.5rem;
+  }
+
+  .vf-sc__card {
+    border-radius: 12px;
+    padding: 1.5rem;
+  }
+
+  .vf-sc__card--servicio {
+    background: #f0faf3;
+    border: 1px solid #cdeed9;
+  }
+
+  .vf-sc__card--combos {
+    background: #eef3fd;
+    border: 1px solid #d3e0f8;
+  }
+
+  .vf-sc__servicios {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.9rem;
+    margin-block: 1.25rem;
+  }
+
+  .vf-sc__servicio {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    background: #fff;
+    border-radius: 8px;
+    padding: 0.9rem;
+    font-size: 0.8rem;
+    font-weight: 600;
+  }
+
+  .vf-sc__servicio svg {
+    color: var(--vf-verde);
+    flex-shrink: 0;
+  }
+
+  .vf-sc__agendar {
+    width: 100%;
+    background: var(--vf-verde);
+  }
+
+  .vf-sc__agendar:hover {
+    opacity: 0.9;
+  }
+
+  .vf-sc__combos {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    margin-top: 1.25rem;
+  }
+
+  .vf-sc__combo {
+    background: #fff;
+    border-radius: 10px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .vf-sc__combo-media {
+    position: relative;
+    aspect-ratio: 1 / 1;
+  }
+
+  .vf-sc__combo-media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .vf-sc__combo-media .vf-cod {
+    position: absolute;
+    left: 0.5rem;
+    bottom: 0.5rem;
+  }
+
+  .vf-sc__combo-nombre {
+    font-size: 0.78rem;
+    font-weight: 600;
+    padding: 0.7rem 0.7rem 0.3rem;
+    line-height: 1.3;
+  }
+
+  .vf-sc__combo-precio {
+    padding: 0 0.7rem 0.9rem;
+    font-size: 0.85rem;
+    display: flex;
+    gap: 0.4rem;
+    align-items: baseline;
+  }
+
+  .vf-sc__combo-precio s {
+    color: var(--vf-gris);
+    font-size: 0.72rem;
+  }
+
+  .vf-sc__combo-precio b {
+    color: var(--vf-rojo);
+    font-weight: 800;
+  }
+
+  @media (max-width: 1000px) {
+    .vf-sc__grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 620px) {
+    .vf-sc__servicios,
+    .vf-sc__combos {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+</style>

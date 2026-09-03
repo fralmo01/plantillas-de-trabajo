@@ -1,0 +1,47 @@
+---
+const base = '/plantillas/tienda-ventasfree';
+const busquedas = [
+  'Estaciones de soldar',
+  'Microscopios trinoculares',
+  'Fuentes de alimentación',
+  'Estaciones de calor',
+  'Extractores de humo',
+  'Accesorios de soldadura',
+  'Combos de herramientas',
+  'Cautines y repuestos',
+  'Multímetros digitales',
+  'Programadores para celulares',
+  'Máquinas de hidrogel',
+  'Herramientas para celulares',
+];
+---
+
+<section class="vf-seccion vf-wrap">
+  <h2 class="vf-titulo-seccion">Búsquedas populares</h2>
+  <div class="vf-pop__tags">
+    {busquedas.map((b) => (
+      <a href={`${base}/buscar/?q=${encodeURIComponent(b.toLowerCase())}`} class="vf-pop__tag">{b}</a>
+    ))}
+  </div>
+</section>
+
+<style>
+  .vf-pop__tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+  }
+
+  .vf-pop__tag {
+    border: 1px solid var(--vf-linea);
+    border-radius: 999px;
+    padding: 0.5rem 1rem;
+    font-size: 0.78rem;
+    font-weight: 600;
+  }
+
+  .vf-pop__tag:hover {
+    border-color: var(--vf-azul);
+    color: var(--vf-azul);
+  }
+</style>

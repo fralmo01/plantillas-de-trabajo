@@ -1,0 +1,78 @@
+---
+import { barraSuperior } from '../datos/ventasfree.js';
+---
+
+<div class="vf-top">
+  <div class="vf-wrap vf-top__row">
+    <div class="vf-top__izq">
+      <span class="vf-top__item">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s-7-6.2-7-11a7 7 0 0 1 14 0c0 4.8-7 11-7 11z"></path><circle cx="12" cy="10" r="2.5"></circle></svg>
+        {barraSuperior.tienda} - {barraSuperior.direccion}
+      </span>
+      <span class="vf-top__item">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.68 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.32 1.85.55 2.81.68A2 2 0 0 1 22 16.92z"></path></svg>
+        {barraSuperior.telefono}
+      </span>
+    </div>
+    <nav class="vf-top__der" aria-label="Enlaces de ayuda">
+      <a href="#top">Tienda</a>
+      <a href="#top">Métodos de envío</a>
+      <a href="#top">Ubícanos</a>
+      <a href="#top">Transparencia</a>
+      <a href="#top">Mi cuenta</a>
+    </nav>
+  </div>
+</div>
+
+<style>
+  .vf-top {
+    background: var(--vf-azul);
+    color: #fff;
+  }
+
+  .vf-top__row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding-block: 0.5rem;
+    font-size: 0.75rem;
+  }
+
+  .vf-top__izq {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+  }
+
+  .vf-top__item {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    white-space: nowrap;
+  }
+
+  .vf-top__der {
+    display: flex;
+    align-items: center;
+    gap: 1.1rem;
+    flex-shrink: 0;
+  }
+
+  .vf-top__der a:hover {
+    text-decoration: underline;
+  }
+
+  @media (max-width: 900px) {
+    .vf-top__item:first-child {
+      display: none;
+    }
+    .vf-top__der {
+      gap: 0.75rem;
+    }
+    .vf-top__der a:nth-child(n + 3) {
+      display: none;
+    }
+  }
+</style>

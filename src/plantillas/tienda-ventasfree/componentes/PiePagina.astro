@@ -1,0 +1,269 @@
+---
+import { marca, whatsapp } from '../datos/ventasfree.js';
+
+const hrefWa = `https://wa.me/${whatsapp.numero}?text=${encodeURIComponent(whatsapp.mensajeModelo)}`;
+---
+
+<footer class="vf-foot">
+  <div class="vf-wrap vf-foot__cta">
+    <div>
+      <h2>¿No encuentras tu modelo?</h2>
+      <p>Escríbenos por WhatsApp y te ayudamos a encontrar el accesorio o producto ideal.</p>
+    </div>
+    <a href={hrefWa} target="_blank" rel="noopener noreferrer" class="vf-btn vf-btn--wa">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12.02 2C6.5 2 2 6.5 2 12.02c0 1.77.47 3.45 1.3 4.9L2 22l5.2-1.27a9.98 9.98 0 0 0 4.82 1.23c5.52 0 10.02-4.5 10.02-10.02C22 6.5 17.54 2 12.02 2Z" opacity=".001"/><path d="M17.47 14.38c-.27-.14-1.6-.79-1.85-.88-.25-.09-.43-.14-.61.14-.18.27-.7.88-.86 1.06-.16.18-.32.2-.59.07-.27-.14-1.13-.42-2.16-1.34-.8-.71-1.34-1.59-1.5-1.86-.16-.27-.02-.42.12-.55.12-.12.27-.32.41-.48.14-.16.18-.27.27-.45.09-.18.05-.34-.02-.48-.07-.14-.61-1.47-.84-2.01-.22-.53-.44-.46-.61-.47h-.52c-.18 0-.48.07-.73.34-.25.27-.95.93-.95 2.27s.97 2.63 1.11 2.81c.14.18 1.91 2.92 4.63 4.1.65.28 1.15.45 1.54.57.65.21 1.24.18 1.71.11.52-.08 1.6-.65 1.83-1.28.23-.63.23-1.18.16-1.29-.07-.11-.25-.18-.52-.32Z"/></svg>
+      Escríbenos por WhatsApp
+    </a>
+  </div>
+
+  <div class="vf-wrap vf-foot__badges">
+    <span>Atención personalizada</span>
+    <span>Compra fácil y segura</span>
+    <span>Envíos a todo el Perú</span>
+    <span>Cambios sujetos a evaluación</span>
+    <span>Soporte antes y después</span>
+    <span>Ofertas y nuevos ingresos</span>
+  </div>
+
+  <div class="vf-wrap vf-foot__grid">
+    <div class="vf-foot__col vf-foot__marca">
+      <a href="#top" class="vf-logo-foot">{marca.nombre}</a>
+      <p>Herramientas, repuestos y equipos especializados para técnicos de celulares y talleres electrónicos.</p>
+      <p class="vf-foot__tienda"><b>Tienda física en Lima</b><br />{marca.tiendaFisica}<br />{marca.direccion}</p>
+    </div>
+
+    <nav class="vf-foot__col" aria-label="Compra">
+      <h3>Compra</h3>
+      <ul>
+        <li><a href="#top">Todos los productos</a></li>
+        <li><a href="#top">Estaciones de soldar</a></li>
+        <li><a href="#top">Microscopios</a></li>
+        <li><a href="#top">Fuentes de alimentación</a></li>
+        <li><a href="#top">Combos de herramientas</a></li>
+        <li><a href="#top">Marcas</a></li>
+      </ul>
+    </nav>
+
+    <nav class="vf-foot__col" aria-label="Ayuda">
+      <h3>Ayuda</h3>
+      <ul>
+        <li><a href="#top">Envíos a Lima y todo el Perú</a></li>
+        <li><a href="#top">Métodos de pago</a></li>
+        <li><a href="#top">Cambios coordinados</a></li>
+        <li><a href="#top">Términos y condiciones</a></li>
+        <li><a href="#top">Política de privacidad</a></li>
+      </ul>
+    </nav>
+
+    <div class="vf-foot__col">
+      <h3>¿Necesitas ayuda con tu compra?</h3>
+      <p class="vf-foot__horario">Atendemos de lunes a sábado de 10:30 a.m. a 6:30 p.m.</p>
+      <p class="vf-foot__tel">941 508 011 · 955 217 413</p>
+      <a href={hrefWa} target="_blank" rel="noopener noreferrer" class="vf-foot__wa-link">Escríbenos por WhatsApp</a>
+      <div class="vf-foot__social">
+        <a href="#top" aria-label="Facebook">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M13.5 21v-7.5H16l.4-3H13.5V8.4c0-.87.24-1.46 1.5-1.46H16.5V4.35C16.24 4.32 15.36 4.25 14.34 4.25 12.2 4.25 10.75 5.53 10.75 7.9v2.6H8.3v3h2.45V21h2.75Z"/></svg>
+        </a>
+        <a href="#top" aria-label="TikTok">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M14 3c.3 1.9 1.6 3.3 3.5 3.6v2.6c-1.2 0-2.4-.4-3.5-1.1v6.4c0 3-2.4 5.5-5.5 5.5S3 17.5 3 14.5 5.4 9 8.5 9c.3 0 .6 0 1 .1v2.7a2.8 2.8 0 1 0 1.9 2.7V3H14Z"/></svg>
+        </a>
+        <a href="#top" aria-label="Instagram">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="5"></rect><circle cx="12" cy="12" r="4"></circle><circle cx="17.5" cy="6.5" r="1"></circle></svg>
+        </a>
+      </div>
+      <a href="#top" class="vf-foot__libro">Libro de reclamaciones</a>
+    </div>
+  </div>
+
+  <div class="vf-wrap vf-foot__pagos">
+    <span>Métodos de pago:</span>
+    <span class="vf-foot__pago">VISA</span>
+    <span class="vf-foot__pago">MASTERCARD</span>
+    <span class="vf-foot__pago">AMEX</span>
+    <span class="vf-foot__pago">BCP</span>
+    <span class="vf-foot__pago">INTERBANK</span>
+    <span class="vf-foot__pago">BBVA</span>
+  </div>
+
+  <div class="vf-wrap vf-foot__base">
+    <span>&copy; 2026 {marca.nombre}. Todos los derechos reservados.</span>
+    <span>Compra segura · Sitio protegido</span>
+  </div>
+</footer>
+
+<style>
+  .vf-foot {
+    background: #fff;
+    border-top: 1px solid var(--vf-linea);
+  }
+
+  .vf-foot__cta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+    padding-block: 2rem;
+    background: linear-gradient(90deg, #fef2ef, #fff);
+  }
+
+  .vf-foot__cta h2 {
+    font-size: 1.2rem;
+    margin-bottom: 0.3rem;
+  }
+
+  .vf-foot__cta p {
+    font-size: 0.85rem;
+    color: var(--vf-gris);
+  }
+
+  .vf-foot__badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem 2rem;
+    padding-block: 1.25rem;
+    border-block: 1px solid var(--vf-linea);
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--vf-tinta);
+  }
+
+  .vf-foot__grid {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr 1fr 1.2fr;
+    gap: 2rem;
+    padding-block: 2.5rem 1.5rem;
+  }
+
+  .vf-logo-foot {
+    display: inline-block;
+    font-size: 1.2rem;
+    font-weight: 800;
+    color: var(--vf-azul);
+    margin-bottom: 0.6rem;
+  }
+
+  .vf-foot__marca p {
+    font-size: 0.8rem;
+    color: var(--vf-gris);
+    margin-bottom: 0.9rem;
+    line-height: 1.5;
+  }
+
+  .vf-foot__tienda {
+    color: var(--vf-tinta) !important;
+  }
+
+  .vf-foot__col h3 {
+    font-size: 0.85rem;
+    margin-bottom: 1rem;
+  }
+
+  .vf-foot__col ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+  }
+
+  .vf-foot__col ul a {
+    font-size: 0.82rem;
+    color: var(--vf-gris);
+  }
+
+  .vf-foot__col ul a:hover {
+    color: var(--vf-azul);
+  }
+
+  .vf-foot__horario {
+    font-size: 0.78rem;
+    color: var(--vf-gris);
+    margin-bottom: 0.6rem;
+  }
+
+  .vf-foot__tel {
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+  }
+
+  .vf-foot__wa-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    color: var(--vf-verde);
+    font-weight: 700;
+    font-size: 0.82rem;
+    margin-bottom: 0.9rem;
+  }
+
+  .vf-foot__social {
+    display: flex;
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+  }
+
+  .vf-foot__social a {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: var(--vf-fondo);
+    color: var(--vf-tinta);
+    display: grid;
+    place-items: center;
+  }
+
+  .vf-foot__social a:hover {
+    background: var(--vf-azul);
+    color: #fff;
+  }
+
+  .vf-foot__libro {
+    display: inline-block;
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: var(--vf-rojo);
+  }
+
+  .vf-foot__pagos {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    padding-block: 1.25rem;
+    border-top: 1px solid var(--vf-linea);
+    font-size: 0.78rem;
+    color: var(--vf-gris);
+  }
+
+  .vf-foot__pago {
+    border: 1px solid var(--vf-linea);
+    border-radius: 6px;
+    padding: 0.25rem 0.6rem;
+    font-size: 0.68rem;
+    font-weight: 700;
+  }
+
+  .vf-foot__base {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    padding-block: 1rem;
+    border-top: 1px solid var(--vf-linea);
+    font-size: 0.72rem;
+    color: var(--vf-gris);
+  }
+
+  @media (max-width: 1000px) {
+    .vf-foot__grid {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  @media (max-width: 560px) {
+    .vf-foot__grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

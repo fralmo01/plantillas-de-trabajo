@@ -1,0 +1,116 @@
+---
+import { categoriasCirculares, getVfImg } from '../datos/ventasfree.js';
+
+const base = '/plantillas/tienda-ventasfree';
+---
+
+<section class="vf-seccion vf-wrap">
+  <div class="vf-cc__cab">
+    <div>
+      <h2 class="vf-titulo-seccion">Categorías</h2>
+      <a href="#top" class="vf-cc__ver">Mostrar todas las categorías</a>
+    </div>
+    <div class="vf-cc__nav">
+      <button type="button" class="vf-cc__flecha" id="vf-cc-izq" aria-label="Anterior">&#8592;</button>
+      <button type="button" class="vf-cc__flecha" id="vf-cc-der" aria-label="Siguiente">&#8594;</button>
+    </div>
+  </div>
+
+  <div class="vf-cc__track" id="vf-cc-track">
+    {categoriasCirculares.map((c: { t: string; seed: string; img?: string }) => (
+      <a href={`${base}/buscar/?q=${encodeURIComponent(c.t.toLowerCase())}`} class="vf-cc__item">
+        <span class="vf-cc__foto"><img src={c.img ?? getVfImg(c.seed, 140, 140)} alt={c.t} loading="lazy" /></span>
+        <span class="vf-cc__nombre">{c.t}</span>
+      </a>
+    ))}
+  </div>
+</section>
+
+<script>
+  const track = document.getElementById('vf-cc-track');
+  document.getElementById('vf-cc-izq')?.addEventListener('click', () => track?.scrollBy({ left: -300, behavior: 'smooth' }));
+  document.getElementById('vf-cc-der')?.addEventListener('click', () => track?.scrollBy({ left: 300, behavior: 'smooth' }));
+</script>
+
+<style>
+  .vf-cc__cab {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+  }
+
+  .vf-cc__ver {
+    font-size: 0.78rem;
+    color: var(--vf-azul);
+    font-weight: 600;
+  }
+
+  .vf-cc__nav {
+    display: flex;
+    gap: 0.5rem;
+  }
+
+  .vf-cc__flecha {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    border: 1px solid var(--vf-linea);
+    background: #fff;
+    display: grid;
+    place-items: center;
+  }
+
+  .vf-cc__flecha:hover {
+    border-color: var(--vf-azul);
+    color: var(--vf-azul);
+  }
+
+  .vf-cc__track {
+    display: flex;
+    gap: 1.25rem;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    padding-bottom: 0.5rem;
+  }
+
+  .vf-cc__track::-webkit-scrollbar {
+    height: 6px;
+  }
+
+  .vf-cc__item {
+    flex: 0 0 auto;
+    width: 110px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    text-align: center;
+    scroll-snap-align: start;
+  }
+
+  .vf-cc__foto {
+    width: 84px;
+    height: 84px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 1px solid var(--vf-linea);
+    background: var(--vf-fondo);
+  }
+
+  .vf-cc__foto img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .vf-cc__nombre {
+    font-size: 0.72rem;
+    font-weight: 600;
+    line-height: 1.3;
+  }
+
+  .vf-cc__item:hover .vf-cc__nombre {
+    color: var(--vf-azul);
+  }
+</style>

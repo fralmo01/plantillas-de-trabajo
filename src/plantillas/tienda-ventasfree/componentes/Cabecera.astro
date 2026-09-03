@@ -1,0 +1,321 @@
+---
+import { marca, megaMenu, navSecundaria } from '../datos/ventasfree.js';
+
+const base = '/plantillas/tienda-ventasfree';
+---
+
+<header class="vf-hdr" id="top">
+  <div class="vf-wrap vf-hdr__row">
+    <a href={`${base}/`} class="vf-logo" aria-label={`${marca.nombre} — inicio`}>
+      <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="2" width="14" height="20" rx="2"></rect><line x1="9" y1="18" x2="15" y2="18"></line></svg>
+      <span>{marca.nombre}</span>
+    </a>
+
+    <form class="vf-buscar" role="search" action={`${base}/buscar/`} method="get">
+      <input type="search" name="q" id="vf-buscar-input" placeholder="Buscar código o nombre" aria-label="Buscar productos" autocomplete="off" />
+      <button type="submit" aria-label="Buscar">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="11" cy="11" r="7"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+      </button>
+    </form>
+
+    <div class="vf-hdr__acc">
+      <a href="#top" class="vf-btn vf-btn--azul vf-hdr__pill">Servicio aduanero</a>
+      <a href="#top" class="vf-btn vf-btn--claro vf-hdr__pill">Catálogo PDF</a>
+      <a href="#top" class="vf-hdr__ico" aria-label="Mi cuenta">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="4"></circle><path d="M4 21c0-4 4-6 8-6s8 2 8 6"></path></svg>
+      </a>
+      <button type="button" class="vf-hdr__ico vf-hdr__cart" id="vf-cart" aria-label="Ver carrito">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6 6h15l-1.5 9h-12z"></path><path d="M6 6 5 3H2"></path><circle cx="9" cy="20" r="1.6"></circle><circle cx="18" cy="20" r="1.6"></circle></svg>
+        <span class="vf-hdr__badge" id="vf-cart-count" hidden>0</span>
+      </button>
+    </div>
+  </div>
+
+  <nav class="vf-nav">
+    <div class="vf-wrap vf-nav__row">
+      <div class="vf-nav__cats">
+        <button type="button" class="vf-nav__cats-btn" id="vf-cats-btn" aria-expanded="false" aria-controls="vf-mega">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="4" y1="6" x2="20" y2="6"></line><line x1="4" y1="12" x2="20" y2="12"></line><line x1="4" y1="18" x2="20" y2="18"></line></svg>
+          Categorías
+        </button>
+
+        <div class="vf-mega" id="vf-mega" hidden>
+          {megaMenu.map((c) => (
+            <div class="vf-mega__col">
+              <h3>{c.col}</h3>
+              <ul>
+                {c.links.map((l) => <li><a href={`${base}/buscar/?q=${encodeURIComponent(l.toLowerCase())}`}>{l}</a></li>)}
+              </ul>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <ul class="vf-nav__list">
+        {navSecundaria.map((n) => (
+          <li><a href={n.href}>{n.t}</a></li>
+        ))}
+      </ul>
+    </div>
+  </nav>
+</header>
+
+<script>
+  const btn = document.getElementById('vf-cats-btn');
+  const mega = document.getElementById('vf-mega') as HTMLElement | null;
+
+  btn?.addEventListener('click', (e) => {
+    e.stopPropagation();
+    if (!mega) return;
+    mega.hidden = !mega.hidden;
+    btn.setAttribute('aria-expanded', String(!mega.hidden));
+  });
+
+  document.addEventListener('click', (e) => {
+    const t = e.target as Node;
+    if (mega && !mega.hidden && !mega.contains(t) && !btn?.contains(t)) {
+      mega.hidden = true;
+      btn?.setAttribute('aria-expanded', 'false');
+    }
+  });
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && mega) {
+      mega.hidden = true;
+      btn?.setAttribute('aria-expanded', 'false');
+    }
+  });
+
+  const qActual = new URLSearchParams(location.search).get('q');
+  const input = document.getElementById('vf-buscar-input') as HTMLInputElement | null;
+  if (input && qActual) input.value = qActual;
+
+  const badge = document.getElementById('vf-cart-count');
+  let total = 0;
+  document.addEventListener('click', (e) => {
+    const el = e.target as HTMLElement;
+    const add = el.closest<HTMLButtonElement>('.vf-prod__add');
+    if (add) {
+      total += 1;
+      if (badge) {
+        badge.textContent = String(total);
+        badge.hidden = false;
+      }
+    }
+  });
+</script>
+
+<style>
+  .vf-hdr {
+    background: #fff;
+    position: sticky;
+    top: 0;
+    z-index: 90;
+  }
+
+  .vf-hdr__row {
+    display: flex;
+    align-items: center;
+    gap: clamp(0.75rem, 2vw, 1.5rem);
+    padding-block: 0.85rem;
+  }
+
+  .vf-logo {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 1.3rem;
+    font-weight: 800;
+    color: var(--vf-azul);
+    flex-shrink: 0;
+  }
+
+  .vf-buscar {
+    flex: 1;
+    max-width: 480px;
+    display: flex;
+    align-items: center;
+    border: 1.5px solid var(--vf-linea);
+    border-radius: 8px;
+    padding-left: 0.9rem;
+  }
+
+  .vf-buscar:focus-within {
+    border-color: var(--vf-azul);
+  }
+
+  .vf-buscar input {
+    flex: 1;
+    border: none;
+    outline: none;
+    background: none;
+    padding-block: 0.6rem;
+    font-size: 0.85rem;
+  }
+
+  .vf-buscar button {
+    width: 42px;
+    height: 40px;
+    display: grid;
+    place-items: center;
+    color: var(--vf-gris);
+  }
+
+  .vf-hdr__acc {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    flex-shrink: 0;
+  }
+
+  .vf-hdr__pill {
+    padding: 0.6rem 1.1rem;
+    font-size: 0.75rem;
+    white-space: nowrap;
+  }
+
+  .vf-hdr__ico {
+    position: relative;
+    color: var(--vf-tinta);
+    display: grid;
+    place-items: center;
+  }
+
+  .vf-hdr__badge[hidden] {
+    display: none;
+  }
+
+  .vf-hdr__badge {
+    position: absolute;
+    top: -6px;
+    right: -8px;
+    min-width: 16px;
+    height: 16px;
+    padding: 0 4px;
+    border-radius: 999px;
+    background: var(--vf-rojo);
+    color: #fff;
+    font-size: 0.6rem;
+    font-weight: 700;
+    display: grid;
+    place-items: center;
+  }
+
+  .vf-nav {
+    background: var(--vf-fondo);
+    border-block: 1px solid var(--vf-linea);
+  }
+
+  .vf-nav__row {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    position: relative;
+  }
+
+  .vf-nav__cats {
+    position: relative;
+  }
+
+  .vf-nav__cats-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding-block: 0.75rem;
+    font-weight: 700;
+    font-size: 0.85rem;
+    color: var(--vf-azul);
+  }
+
+  .vf-nav__list {
+    display: flex;
+    gap: 1.75rem;
+    list-style: none;
+    flex-wrap: wrap;
+  }
+
+  .vf-nav__list a {
+    display: inline-block;
+    padding-block: 0.75rem;
+    font-size: 0.82rem;
+    font-weight: 500;
+  }
+
+  .vf-nav__list a:hover {
+    color: var(--vf-azul);
+  }
+
+  .vf-mega[hidden] {
+    display: none;
+  }
+
+  .vf-mega {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    z-index: 95;
+    background: #fff;
+    border: 1px solid var(--vf-linea);
+    border-radius: 0 10px 10px 10px;
+    box-shadow: 0 30px 60px -30px rgba(0, 0, 0, 0.3);
+    padding: 1.5rem;
+    display: grid;
+    grid-template-columns: repeat(5, minmax(170px, 1fr));
+    gap: 1.5rem;
+    width: max-content;
+    max-width: 90vw;
+  }
+
+  .vf-mega__col h3 {
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--vf-azul);
+    border-bottom: 2px solid var(--vf-azul);
+    padding-bottom: 0.4rem;
+    margin-bottom: 0.6rem;
+  }
+
+  .vf-mega__col ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .vf-mega__col a {
+    font-size: 0.78rem;
+    color: var(--vf-tinta);
+  }
+
+  .vf-mega__col a:hover {
+    color: var(--vf-azul);
+  }
+
+  @media (max-width: 1100px) {
+    .vf-mega {
+      grid-template-columns: repeat(3, minmax(150px, 1fr));
+    }
+  }
+
+  @media (max-width: 900px) {
+    .vf-hdr__pill {
+      display: none;
+    }
+    .vf-nav__list {
+      display: none;
+    }
+    .vf-mega {
+      grid-template-columns: repeat(2, minmax(140px, 1fr));
+    }
+  }
+
+  @media (max-width: 620px) {
+    .vf-hdr__row {
+      flex-wrap: wrap;
+    }
+    .vf-buscar {
+      order: 3;
+      flex-basis: 100%;
+      max-width: none;
+    }
+  }
+</style>

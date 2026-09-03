@@ -28,8 +28,11 @@ export const productos = [
 
 export const soles = (n) => 'S/ ' + n.toFixed(2);
 
-export const porVertical = (v) => productos.filter((p) => p.v === v);
-export const porCat = (cat) => productos.filter((p) => p.cat === cat);
+const nuevoPrimero = (lista) => [...lista].sort((a, b) => Number(b.nuevo) - Number(a.nuevo));
+
+export const productosOrdenados = nuevoPrimero(productos);
+export const porVertical = (v) => nuevoPrimero(productos.filter((p) => p.v === v));
+export const porCat = (cat) => nuevoPrimero(productos.filter((p) => p.cat === cat));
 
 const norm = (s) =>
   (s ?? '').toString().toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '');
@@ -40,10 +43,12 @@ export function buscar(termino) {
   
   
   const coincide = (heno, w) => heno.includes(w) || heno.includes(w.replace(/s$/, ''));
-  return productos.filter((p) => {
-    const heno = norm([p.nombre, p.marca, p.cat, p.v, ...(p.tags ?? [])].join(' '));
-    return palabras.every((w) => coincide(heno, w));
-  });
+  return nuevoPrimero(
+    productos.filter((p) => {
+      const heno = norm([p.nombre, p.marca, p.cat, p.v, ...(p.tags ?? [])].join(' '));
+      return palabras.every((w) => coincide(heno, w));
+    }),
+  );
 }
 
 export const sugerencias = ['zapatillas', 'pizza', 'sofá', 'balón', 'labial', 'ollas'];

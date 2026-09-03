@@ -1,0 +1,63 @@
+---
+import { getRevolveImg } from '../datos/revolve.js';
+
+interface Tile {
+  t: string;
+  seed: string;
+}
+const { titulo, items } = Astro.props as { titulo: string; items: Tile[] };
+const base = '/plantillas/tienda-revolve';
+---
+
+<section class="rv-seccion rv-grided">
+  <div class="rv-wrap">
+    <h2 class="rv-titulo-seccion">{titulo}</h2>
+    <div class="rv-grided__grid">
+      {items.map((it) => (
+        <a href={`${base}/buscar/`} class="rv-grided__tile">
+          <img src={getRevolveImg(it.seed, 700, 900)} alt={it.t} loading="lazy" />
+          <span>{it.t}</span>
+        </a>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .rv-grided__grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.25rem;
+  }
+
+  .rv-grided__tile {
+    display: block;
+    text-align: center;
+  }
+
+  .rv-grided__tile img {
+    aspect-ratio: 3 / 4;
+    object-fit: cover;
+    width: 100%;
+    margin-bottom: 0.9rem;
+    transition: opacity 0.2s ease;
+  }
+
+  .rv-grided__tile:hover img {
+    opacity: 0.85;
+  }
+
+  .rv-grided__tile span {
+    font-size: 0.82rem;
+    font-weight: 500;
+    letter-spacing: 0.03em;
+    text-decoration: underline;
+    text-underline-offset: 4px;
+  }
+
+  @media (max-width: 720px) {
+    .rv-grided__grid {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+</style>

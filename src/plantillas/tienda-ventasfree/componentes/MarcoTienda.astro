@@ -1,0 +1,18 @@
+---
+import '../estilos.css';
+
+import BarraSuperior from './BarraSuperior.astro';
+import Cabecera from './Cabecera.astro';
+import PiePagina from './PiePagina.astro';
+import BurbujaWhatsApp from './BurbujaWhatsApp.astro';
+---
+
+<div class="tpl-tienda-ventasfree">
+  <BarraSuperior />
+  <Cabecera />
+  <main>
+    <slot />
+  </main>
+  <PiePagina />
+  <BurbujaWhatsApp />
+</div>

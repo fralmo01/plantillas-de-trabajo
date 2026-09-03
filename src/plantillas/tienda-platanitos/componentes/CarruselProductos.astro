@@ -1,6 +1,6 @@
 ---
 import TarjetaProducto from './TarjetaProducto.astro';
-import { productos, porCat, porVertical } from '../datos/productos.js';
+import { productosOrdenados, porCat, porVertical } from '../datos/productos.js';
 
 const { titulo, sub, cat, vertical } = Astro.props as {
   titulo: string;
@@ -8,8 +8,8 @@ const { titulo, sub, cat, vertical } = Astro.props as {
   cat?: string;
   vertical?: string;
 };
-let lista = cat ? porCat(cat) : vertical ? porVertical(vertical) : productos;
-if (lista.length < 4) lista = [...lista, ...productos].slice(0, 6);
+let lista = cat ? porCat(cat) : vertical ? porVertical(vertical) : productosOrdenados;
+if (lista.length < 4) lista = [...lista, ...productosOrdenados].slice(0, 6);
 lista = lista.slice(0, 6);
 ---
 

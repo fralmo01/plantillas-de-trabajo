@@ -1,0 +1,177 @@
+---
+import { hidrogelProductos, soles, getVfImg } from '../datos/ventasfree.js';
+
+const base = '/plantillas/tienda-ventasfree';
+---
+
+<section class="vf-seccion vf-wrap" id="hidrogel">
+  <div class="vf-hg__grid">
+    <a href={`${base}/buscar/?q=hidrogel`} class="vf-hg__banner">
+      <img src={getVfImg('vf-hidrogel-banner', 640, 420)} alt="Emprende con Hidrogel" loading="lazy" />
+      <div class="vf-hg__banner-tx">
+        <span>EMPRENDE CON</span>
+        <strong>HIDROGEL</strong>
+        <em>Máquinas + láminas</em>
+      </div>
+    </a>
+
+    <div class="vf-hg__col">
+      <div class="vf-hg__cab">
+        <div>
+          <h2 class="vf-titulo-seccion">Soluciones hidrogel para tu negocio</h2>
+          <p class="vf-sub-seccion">Máquinas de corte y láminas HD, mate, antiespía y personalizadas para iniciar o potenciar tu tienda de accesorios.</p>
+        </div>
+        <div class="vf-hg__links">
+          <a href={`${base}/buscar/?q=maquina`} class="vf-btn vf-btn--claro">Ver máquinas →</a>
+          <a href={`${base}/buscar/?q=lamina`} class="vf-btn vf-btn--claro">Ver láminas →</a>
+        </div>
+      </div>
+
+      <div class="vf-hg__grid-prod">
+        {hidrogelProductos.map((p: { marca: string; nombre: string; precio: number; cod: string; seed: string; img?: string }) => (
+          <a href="#top" class="vf-hg__prod">
+            <div class="vf-hg__prod-media">
+              <img src={p.img ?? getVfImg(p.seed, 260, 220)} alt={p.nombre} loading="lazy" />
+              <span class="vf-cod">COD: {p.cod}</span>
+            </div>
+            <p class="vf-hg__prod-marca">{p.marca}</p>
+            <p class="vf-hg__prod-nombre">{p.nombre}</p>
+            <p class="vf-hg__prod-precio">{soles(p.precio)}</p>
+          </a>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .vf-hg__grid {
+    display: grid;
+    grid-template-columns: 0.9fr 2fr;
+    gap: 1.5rem;
+  }
+
+  .vf-hg__banner {
+    position: relative;
+    display: block;
+    border-radius: 12px;
+    overflow: hidden;
+    background: #0b1330;
+  }
+
+  .vf-hg__banner img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0.5;
+    position: absolute;
+    inset: 0;
+  }
+
+  .vf-hg__banner-tx {
+    position: relative;
+    z-index: 1;
+    height: 100%;
+    min-height: 260px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 1.5rem;
+    color: #fff;
+  }
+
+  .vf-hg__banner-tx span {
+    font-size: 0.85rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+  }
+
+  .vf-hg__banner-tx strong {
+    font-size: 1.9rem;
+    font-weight: 800;
+    line-height: 1.1;
+    margin-block: 0.2rem;
+  }
+
+  .vf-hg__banner-tx em {
+    font-style: normal;
+    font-size: 0.8rem;
+    opacity: 0.85;
+  }
+
+  .vf-hg__cab {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 1rem;
+    flex-wrap: wrap;
+    margin-bottom: 1.25rem;
+  }
+
+  .vf-hg__links {
+    display: flex;
+    gap: 0.6rem;
+    flex-shrink: 0;
+  }
+
+  .vf-hg__grid-prod {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+  }
+
+  .vf-hg__prod {
+    background: #fff;
+    border: 1px solid var(--vf-linea);
+    border-radius: 10px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .vf-hg__prod-media {
+    position: relative;
+    aspect-ratio: 4 / 3;
+  }
+
+  .vf-hg__prod-media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .vf-hg__prod-media .vf-cod {
+    position: absolute;
+    left: 0.5rem;
+    bottom: 0.5rem;
+  }
+
+  .vf-hg__prod-marca {
+    font-size: 0.68rem;
+    color: var(--vf-gris);
+    padding: 0.6rem 0.7rem 0;
+  }
+
+  .vf-hg__prod-nombre {
+    font-size: 0.78rem;
+    font-weight: 600;
+    padding: 0.2rem 0.7rem 0.4rem;
+    line-height: 1.35;
+    flex: 1;
+  }
+
+  .vf-hg__prod-precio {
+    padding: 0 0.7rem 0.8rem;
+    font-weight: 800;
+    color: var(--vf-tinta);
+  }
+
+  @media (max-width: 1000px) {
+    .vf-hg__grid {
+      grid-template-columns: 1fr;
+    }
+    .vf-hg__grid-prod {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+</style>
