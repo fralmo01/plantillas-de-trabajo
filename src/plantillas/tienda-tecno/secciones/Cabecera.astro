@@ -1,0 +1,559 @@
+---
+import { marca, categoriasMenu } from '../datos/tecno.js';
+import Icono from '../componentes/Icono.astro';
+---
+
+<header class="tn-hdr" id="top">
+  <div class="tn-wrap tn-hdr__row">
+    <a href="#top" class="tn-logo" aria-label={marca.nombre}>
+      <span class="tn-logo__ico" aria-hidden="true"><Icono name="carrito" size={22} /></span>
+      <span class="tn-logo__tx">{marca.nombre}<b>{marca.sub}</b></span>
+    </a>
+
+    <button type="button" class="tn-cat-btn" id="tn-cat-toggle" aria-expanded="false">
+      <Icono name="menu" size={17} /> Categorias
+    </button>
+
+    <form class="tn-buscar" id="tn-buscar-form" role="search">
+      <input type="search" id="tn-buscar-input" placeholder="Que estas buscando?" aria-label="Buscar productos" />
+      <button type="submit" aria-label="Buscar"><Icono name="busqueda" size={18} /></button>
+    </form>
+
+    <div class="tn-hdr__acc">
+      <button type="button" class="tn-hdr__ico" id="tn-cart-toggle" aria-label="Ver carrito">
+        <Icono name="carrito" size={21} />
+        <span class="tn-hdr__badge" id="tn-cart-count" hidden>0</span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<!-- Drawer de categorias -->
+<div class="tn-drawer-overlay" id="tn-cat-overlay" hidden></div>
+<aside class="tn-cat-drawer" id="tn-cat-drawer" hidden aria-label="Categorias">
+  <div class="tn-cat-drawer__head">
+    <h2>Categorias</h2>
+  </div>
+  <ul class="tn-cat-drawer__lista" id="tn-cat-lista">
+    {categoriasMenu.map((c: { cat: string; ico: string; sub: string[] }, i: number) => (
+      <li>
+        <button type="button" class={`tn-cat-drawer__item${i === 0 ? ' is-on' : ''}`} data-idx={i}>
+          <Icono name={c.ico} size={17} />
+          <span>{c.cat}</span>
+          <Icono name="chevron" size={13} />
+        </button>
+      </li>
+    ))}
+  </ul>
+
+  <div class="tn-cat-panel" id="tn-cat-panel" hidden>
+    <button type="button" class="tn-cat-panel__cerrar" id="tn-cat-panel-cerrar" aria-label="Cerrar">
+      <Icono name="cerrar" size={20} />
+    </button>
+    {categoriasMenu.map((c: { cat: string; sub: string[] }, i: number) => (
+      <div class="tn-cat-panel__grupo" data-panel={i} hidden={i !== 0}>
+        <h3>{c.cat}</h3>
+        <ul>
+          {c.sub.map((s: string) => <li><a href="#destacados">{s}</a></li>)}
+        </ul>
+      </div>
+    ))}
+  </div>
+</aside>
+
+<!-- Drawer de carrito -->
+<div class="tn-cart-overlay" id="tn-cart-overlay" hidden></div>
+<aside class="tn-cart" id="tn-cart" hidden aria-label="Carrito de compras">
+  <header class="tn-cart__head">
+    <h2>Mis compras <small id="tn-cart-n">(0)</small></h2>
+    <button type="button" id="tn-cart-cerrar" aria-label="Cerrar carrito"><Icono name="cerrar" size={20} /></button>
+  </header>
+  <div class="tn-cart__body" id="tn-cart-body">
+    <p class="tn-cart__vacio" id="tn-cart-vacio">Tu carrito esta vacio.</p>
+  </div>
+  <footer class="tn-cart__foot">
+    <div class="tn-cart__total">
+      <span>Subtotal</span>
+      <b id="tn-cart-total">S/ 0.00</b>
+    </div>
+  </footer>
+</aside>
+
+<script>
+  const catToggle = document.getElementById('tn-cat-toggle');
+  const catOverlay = document.getElementById('tn-cat-overlay');
+  const catDrawer = document.getElementById('tn-cat-drawer');
+  const catPanel = document.getElementById('tn-cat-panel');
+  const catPanelCerrar = document.getElementById('tn-cat-panel-cerrar');
+  const catItems = Array.from(document.querySelectorAll<HTMLButtonElement>('.tn-cat-drawer__item'));
+
+  function abrirCat(v: boolean) {
+    if (!catDrawer || !catOverlay || !catToggle) return;
+    catDrawer.hidden = !v;
+    catOverlay.hidden = !v;
+    catToggle.setAttribute('aria-expanded', String(v));
+    if (!v && catPanel) catPanel.hidden = true;
+  }
+
+  catToggle?.addEventListener('click', () => abrirCat(true));
+  catOverlay?.addEventListener('click', () => abrirCat(false));
+
+  catItems.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      catItems.forEach((b) => b.classList.toggle('is-on', b === btn));
+      document.querySelectorAll<HTMLElement>('.tn-cat-panel__grupo').forEach((g) => {
+        g.hidden = g.dataset.panel !== btn.dataset.idx;
+      });
+      if (catPanel) catPanel.hidden = false;
+    });
+  });
+
+  catPanelCerrar?.addEventListener('click', () => {
+    if (catPanel) catPanel.hidden = true;
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      abrirCat(false);
+      abrirCarrito(false);
+    }
+  });
+
+  const buscarForm = document.getElementById('tn-buscar-form');
+  const buscarInput = document.getElementById('tn-buscar-input') as HTMLInputElement | null;
+  buscarForm?.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const q = (buscarInput?.value || '').trim().toLowerCase();
+    let visibles = 0;
+    document.querySelectorAll<HTMLElement>('.tn-prod').forEach((card) => {
+      const hit = !q || (card.dataset.nombre || '').includes(q);
+      card.hidden = !hit;
+      if (hit) visibles++;
+    });
+    document.getElementById('destacados')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+
+  interface ItemCarrito { nombre: string; precio: number; img: string; cantidad: number }
+  const carrito: ItemCarrito[] = [];
+
+  const cartToggle = document.getElementById('tn-cart-toggle');
+  const cartPanelEl = document.getElementById('tn-cart');
+  const cartOverlay = document.getElementById('tn-cart-overlay');
+  const cartCerrar = document.getElementById('tn-cart-cerrar');
+  const cartBody = document.getElementById('tn-cart-body');
+  const cartVacio = document.getElementById('tn-cart-vacio');
+  const cartN = document.getElementById('tn-cart-n');
+  const cartTotalEl = document.getElementById('tn-cart-total');
+  const badge = document.getElementById('tn-cart-count');
+
+  function soles(n: number): string {
+    return 'S/ ' + n.toLocaleString('es-PE', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  }
+
+  function pintarCarrito() {
+    if (!cartBody || !cartN || !cartTotalEl || !badge) return;
+    const totalItems = carrito.reduce((a, i) => a + i.cantidad, 0);
+    const totalSoles = carrito.reduce((a, i) => a + i.cantidad * i.precio, 0);
+    cartN.textContent = `(${totalItems})`;
+    cartTotalEl.textContent = soles(totalSoles);
+    badge.textContent = String(totalItems);
+    badge.hidden = totalItems === 0;
+
+    cartBody.querySelectorAll('.tn-cart__item').forEach((el) => el.remove());
+    if (cartVacio) cartVacio.hidden = carrito.length > 0;
+
+    carrito.forEach((item) => {
+      const row = document.createElement('div');
+      row.className = 'tn-cart__item';
+      row.innerHTML = `
+        <img src="${item.img}" alt="" />
+        <div class="tn-cart__item-tx">
+          <b>${item.nombre}</b>
+          <span>${item.cantidad} x ${soles(item.precio)}</span>
+        </div>
+      `;
+      cartBody.appendChild(row);
+    });
+  }
+
+  function abrirCarrito(v: boolean) {
+    if (!cartPanelEl || !cartOverlay) return;
+    cartPanelEl.hidden = !v;
+    cartOverlay.hidden = !v;
+  }
+
+  cartToggle?.addEventListener('click', () => abrirCarrito(true));
+  cartCerrar?.addEventListener('click', () => abrirCarrito(false));
+  cartOverlay?.addEventListener('click', () => abrirCarrito(false));
+
+  document.addEventListener('click', (e) => {
+    const el = e.target as HTMLElement;
+
+    const step = el.closest<HTMLButtonElement>('.tn-qty__b');
+    if (step) {
+      const cont = step.closest('.tn-prod__qty');
+      const n = cont?.querySelector<HTMLElement>('.tn-qty__n');
+      if (n) {
+        const val = Math.max(1, (parseInt(n.textContent || '1', 10) || 1) + Number(step.dataset.step));
+        n.textContent = String(val);
+      }
+      return;
+    }
+
+    const add = el.closest<HTMLButtonElement>('.tn-prod__add');
+    if (add) {
+      const card = add.closest<HTMLElement>('.tn-prod');
+      const n = card?.querySelector<HTMLElement>('.tn-qty__n');
+      const cantidad = parseInt(n?.textContent || '1', 10) || 1;
+      const nombre = card?.querySelector<HTMLElement>('.tn-prod__nombre')?.textContent || 'Producto';
+      const precio = Number(card?.dataset.precio || '0');
+      const img = card?.querySelector('img')?.getAttribute('src') || '';
+
+      const existente = carrito.find((i) => i.nombre === nombre);
+      if (existente) existente.cantidad += cantidad;
+      else carrito.push({ nombre, precio, img, cantidad });
+      pintarCarrito();
+
+      const prev = add.textContent;
+      add.textContent = 'Agregado!';
+      add.classList.add('is-ok');
+      window.setTimeout(() => {
+        add.textContent = prev;
+        add.classList.remove('is-ok');
+      }, 1100);
+    }
+  });
+</script>
+
+<style>
+  .tn-hdr {
+    background: #fff;
+    position: sticky;
+    top: 0;
+    z-index: 65;
+  }
+
+  .tn-hdr__row {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding-block: 0.85rem;
+  }
+
+  .tn-logo {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    flex-shrink: 0;
+  }
+
+  .tn-logo__ico {
+    color: var(--tn-rojo);
+    display: grid;
+    place-items: center;
+  }
+
+  .tn-logo__tx {
+    font-size: 1.35rem;
+    font-weight: 700;
+    color: var(--tn-texto);
+    letter-spacing: -0.02em;
+  }
+
+  .tn-logo__tx b {
+    font-weight: 700;
+    color: var(--tn-rojo);
+  }
+
+  .tn-cat-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: var(--tn-rojo);
+    color: #fff;
+    font-weight: 700;
+    font-size: 0.85rem;
+    padding: 0.6rem 1rem;
+    border-radius: 5px;
+    flex-shrink: 0;
+  }
+
+  .tn-cat-btn:hover {
+    background: var(--tn-rojo-osc);
+  }
+
+  .tn-buscar {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    border: 1.5px solid var(--tn-linea);
+    border-radius: 5px;
+    max-width: 620px;
+  }
+
+  .tn-buscar input {
+    flex: 1;
+    border: none;
+    outline: none;
+    padding: 0.6rem 0.9rem;
+    font-size: 0.85rem;
+  }
+
+  .tn-buscar button {
+    width: 40px;
+    display: grid;
+    place-items: center;
+    color: var(--tn-texto);
+  }
+
+  .tn-hdr__acc {
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+  }
+
+  .tn-hdr__ico {
+    position: relative;
+    width: 40px;
+    height: 40px;
+    display: grid;
+    place-items: center;
+    color: var(--tn-texto);
+  }
+
+  .tn-hdr__ico:hover {
+    color: var(--tn-rojo);
+  }
+
+  .tn-hdr__badge[hidden] {
+    display: none;
+  }
+
+  .tn-hdr__badge {
+    position: absolute;
+    top: 2px;
+    right: 2px;
+    min-width: 16px;
+    height: 16px;
+    padding: 0 4px;
+    border-radius: 50%;
+    background: var(--tn-rojo);
+    color: #fff;
+    font-size: 0.6rem;
+    font-weight: 700;
+    display: grid;
+    place-items: center;
+  }
+
+  .tn-drawer-overlay[hidden],
+  .tn-cart-overlay[hidden] {
+    display: none;
+  }
+
+  .tn-drawer-overlay,
+  .tn-cart-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 140;
+  }
+
+  .tn-cat-drawer[hidden],
+  .tn-cart[hidden] {
+    display: none;
+  }
+
+  .tn-cat-drawer {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: min(300px, 85vw);
+    background: var(--tn-negro);
+    color: #fff;
+    z-index: 150;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .tn-cat-drawer__head {
+    padding: 1.25rem 1.25rem 0.75rem;
+  }
+
+  .tn-cat-drawer__lista {
+    list-style: none;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .tn-cat-drawer__item {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.85rem 1.25rem;
+    text-align: left;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  }
+
+  .tn-cat-drawer__item span {
+    flex: 1;
+    font-size: 0.85rem;
+    font-weight: 500;
+  }
+
+  .tn-cat-drawer__item:hover,
+  .tn-cat-drawer__item.is-on {
+    background: var(--tn-rojo);
+  }
+
+  .tn-cat-panel[hidden] {
+    display: none;
+  }
+
+  .tn-cat-panel {
+    position: fixed;
+    top: 0;
+    left: min(300px, 85vw);
+    bottom: 0;
+    width: min(360px, 85vw);
+    background: #fff;
+    color: var(--tn-texto);
+    z-index: 151;
+    padding: 1.5rem;
+    overflow-y: auto;
+    box-shadow: 10px 0 30px -10px rgba(0, 0, 0, 0.3);
+  }
+
+  .tn-cat-panel__cerrar {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    color: var(--tn-gris);
+  }
+
+  .tn-cat-panel__grupo[hidden] {
+    display: none;
+  }
+
+  .tn-cat-panel__grupo h3 {
+    color: var(--tn-rojo);
+    font-size: 1rem;
+    margin-bottom: 1rem;
+  }
+
+  .tn-cat-panel__grupo ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .tn-cat-panel__grupo a {
+    font-size: 0.85rem;
+    color: var(--tn-texto);
+  }
+
+  .tn-cat-panel__grupo a:hover {
+    color: var(--tn-rojo);
+  }
+
+  .tn-cart {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: min(400px, 92vw);
+    background: #fff;
+    z-index: 150;
+    display: flex;
+    flex-direction: column;
+    box-shadow: -20px 0 40px -20px rgba(0, 0, 0, 0.5);
+  }
+
+  .tn-cart__head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.25rem 1.5rem;
+    border-bottom: 1px solid var(--tn-linea);
+  }
+
+  .tn-cart__head small {
+    text-transform: none;
+    font-size: 0.75rem;
+    color: var(--tn-gris);
+    font-weight: 600;
+  }
+
+  .tn-cart__body {
+    flex: 1;
+    overflow-y: auto;
+    padding: 1.25rem 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .tn-cart__vacio[hidden] {
+    display: none;
+  }
+
+  .tn-cart__vacio {
+    color: var(--tn-gris);
+    font-size: 0.88rem;
+  }
+
+  .tn-cart :global(.tn-cart__item) {
+    display: flex;
+    gap: 0.75rem;
+    align-items: center;
+  }
+
+  .tn-cart :global(.tn-cart__item img) {
+    width: 56px;
+    height: 56px;
+    object-fit: cover;
+    background: var(--tn-fondo);
+    border-radius: 4px;
+  }
+
+  .tn-cart :global(.tn-cart__item-tx) {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+  }
+
+  .tn-cart :global(.tn-cart__item-tx b) {
+    font-size: 0.82rem;
+    font-weight: 500;
+  }
+
+  .tn-cart :global(.tn-cart__item-tx span) {
+    font-size: 0.76rem;
+    color: var(--tn-gris);
+  }
+
+  .tn-cart__foot {
+    border-top: 1px solid var(--tn-linea);
+    padding: 1.25rem 1.5rem;
+  }
+
+  .tn-cart__total {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.95rem;
+    font-weight: 600;
+  }
+
+  @media (max-width: 900px) {
+    .tn-buscar {
+      order: 3;
+      flex-basis: 100%;
+      max-width: none;
+    }
+    .tn-hdr__row {
+      flex-wrap: wrap;
+    }
+  }
+</style>

@@ -1,0 +1,191 @@
+---
+import { marca, footerCols1, footerCols2, footerCols3, footerCols4, pagoMetodos } from '../datos/tecno.js';
+import Icono from '../componentes/Icono.astro';
+---
+
+<footer class="tn-foot" id="footer">
+  <div class="tn-wrap tn-foot__grid">
+    <div class="tn-foot__contacto">
+      <h3>Contactanos</h3>
+      <p><Icono name="whatsapp" size={15} /> Atencion por WhatsApp</p>
+      <p><Icono name="ayuda" size={15} /> {marca.tel}</p>
+      <p>Lun - Sab 9:00 am a 6:00 pm</p>
+      <p>{marca.correo}</p>
+    </div>
+
+    <nav class="tn-foot__col" aria-label="Sobre nosotros">
+      <h3>Sobre nosotros</h3>
+      <ul>{footerCols1.map((l: string) => <li><a href="#top">{l}</a></li>)}</ul>
+    </nav>
+
+    <nav class="tn-foot__col" aria-label="Te informamos">
+      <h3>Te informamos</h3>
+      <ul>{footerCols2.map((l: string) => <li><a href="#top">{l}</a></li>)}</ul>
+    </nav>
+
+    <nav class="tn-foot__col" aria-label="Servicios al cliente">
+      <h3>Servicios al cliente</h3>
+      <ul>{footerCols3.map((l: string) => <li><a href="#top">{l}</a></li>)}</ul>
+    </nav>
+
+    <nav class="tn-foot__col" aria-label="Destacados">
+      <h3>Destacados</h3>
+      <ul>{footerCols4.map((l: string) => <li><a href="#top">{l}</a></li>)}</ul>
+    </nav>
+  </div>
+
+  <div class="tn-wrap tn-foot__pagos">
+    <span>Metodos de pago</span>
+    <ul>{pagoMetodos.map((p: string) => <li>{p}</li>)}</ul>
+    <span class="tn-foot__seguro">Realiza tus compras de forma segura &mdash; Compra Protegida</span>
+  </div>
+
+  <div class="tn-wrap tn-foot__base">
+    <div class="tn-foot__redes" aria-label="Redes sociales">
+      <a href="#" aria-label="Facebook">f</a>
+      <a href="#" aria-label="Instagram">&#9678;</a>
+      <a href="#" aria-label="YouTube">&#9654;</a>
+      <a href="#" aria-label="TikTok">&#9835;</a>
+    </div>
+    <span>&copy; 2026 {marca.nombre} {marca.sub}. Todos los derechos reservados.</span>
+  </div>
+</footer>
+
+<style>
+  .tn-foot {
+    background: var(--tn-negro);
+    color: #fff;
+    margin-top: 1rem;
+  }
+
+  .tn-foot__grid {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr 1.4fr 1fr 1fr;
+    gap: 2rem;
+    padding-block: 2.5rem 1.5rem;
+  }
+
+  .tn-foot__contacto h3,
+  .tn-foot__col h3 {
+    color: #fff;
+    font-size: 0.85rem;
+    margin-bottom: 1rem;
+  }
+
+  .tn-foot__contacto p {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.78rem;
+    color: #ccc;
+    margin-bottom: 0.6rem;
+  }
+
+  .tn-foot__contacto p :global(svg) {
+    color: var(--tn-rojo);
+    flex-shrink: 0;
+  }
+
+  .tn-foot__col ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+  }
+
+  .tn-foot__col a {
+    font-size: 0.78rem;
+    color: #ccc;
+  }
+
+  .tn-foot__col a:hover {
+    color: var(--tn-rojo);
+  }
+
+  .tn-foot__pagos {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+    padding-block: 1.25rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .tn-foot__pagos > span {
+    font-size: 0.78rem;
+    font-weight: 600;
+  }
+
+  .tn-foot__pagos ul {
+    list-style: none;
+    display: flex;
+    gap: 0.5rem;
+  }
+
+  .tn-foot__pagos li {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 0.25rem 0.6rem;
+    border-radius: 4px;
+    font-size: 0.7rem;
+    font-weight: 700;
+  }
+
+  .tn-foot__seguro {
+    margin-left: auto;
+    font-size: 0.72rem;
+    color: #aaa;
+  }
+
+  .tn-foot__base {
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    padding-block: 1.1rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    font-size: 0.72rem;
+    color: #aaa;
+    flex-wrap: wrap;
+  }
+
+  .tn-foot__redes {
+    display: flex;
+    gap: 0.5rem;
+  }
+
+  .tn-foot__redes a {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.1);
+    color: #fff;
+    font-weight: 700;
+    font-size: 0.75rem;
+  }
+
+  .tn-foot__redes a:hover {
+    background: var(--tn-rojo);
+  }
+
+  @media (max-width: 1000px) {
+    .tn-foot__grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    .tn-foot__seguro {
+      margin-left: 0;
+    }
+  }
+
+  @media (max-width: 560px) {
+    .tn-foot__grid {
+      grid-template-columns: 1fr;
+    }
+    .tn-foot__base {
+      justify-content: center;
+      text-align: center;
+    }
+  }
+</style>

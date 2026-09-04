@@ -1,0 +1,83 @@
+---
+import { ubicacion, marcasChip, navUtilidad } from '../datos/tecno.js';
+import Icono from '../componentes/Icono.astro';
+---
+
+<div class="tn-top">
+  <div class="tn-wrap tn-top__inner">
+    <span class="tn-top__ubi">
+      <Icono name="pin" size={14} />
+      <b>{ubicacion.split(',')[0]}</b>, {ubicacion.split(',')[1]}
+    </span>
+    <div class="tn-top__marcas">
+      {marcasChip.map((m: string) => <span>{m}</span>)}
+    </div>
+    <nav class="tn-top__links" aria-label="Enlaces utilitarios">
+      {navUtilidad.map((n: string) => <a href="#footer">{n}</a>)}
+    </nav>
+  </div>
+</div>
+
+<style>
+  .tn-top {
+    background: #fff;
+    border-bottom: 1px solid var(--tn-linea);
+    font-size: 0.72rem;
+  }
+
+  .tn-top__inner {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    padding-block: 0.55rem;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+
+  .tn-top__ubi {
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+    color: var(--tn-texto);
+    flex-shrink: 0;
+  }
+
+  .tn-top__ubi :global(svg) {
+    color: var(--tn-gris-tenue);
+  }
+
+  .tn-top__marcas {
+    display: flex;
+    gap: 1.25rem;
+    flex-shrink: 0;
+  }
+
+  .tn-top__marcas span {
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    color: var(--tn-gris);
+    font-size: 0.68rem;
+  }
+
+  .tn-top__links {
+    display: flex;
+    gap: 1.25rem;
+    margin-left: auto;
+    flex-shrink: 0;
+  }
+
+  .tn-top__links a {
+    color: var(--tn-gris);
+    font-weight: 500;
+  }
+
+  .tn-top__links a:hover {
+    color: var(--tn-rojo);
+  }
+
+  @media (max-width: 900px) {
+    .tn-top__marcas {
+      display: none;
+    }
+  }
+</style>

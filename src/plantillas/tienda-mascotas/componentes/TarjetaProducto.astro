@@ -1,0 +1,151 @@
+---
+import { soles } from '../datos/mascotas.js';
+
+interface Producto {
+  marca: string;
+  nombre: string;
+  precio: number;
+  antes: number | null;
+  dscto: string | null;
+  img: string;
+}
+const { producto } = Astro.props as { producto: Producto };
+const { marca, nombre, precio, antes, dscto, img } = producto;
+---
+
+<article class="ms-prod tn-prod" data-nombre={nombre.toLowerCase()} data-precio={precio}>
+  <div class="ms-prod__img">
+    <img src={img} alt={nombre} loading="lazy" />
+    {dscto && <span class="ms-prod__dscto">{dscto} DSCTO</span>}
+  </div>
+  <div class="ms-prod__tx">
+    <span class="ms-prod__marca">{marca}</span>
+    <p class="ms-prod__nombre">{nombre}</p>
+    <div class="ms-prod__precio">
+      {antes && <s>{soles(antes)}</s>}
+      <b>{soles(precio)}</b>
+    </div>
+    <div class="ms-prod__qty">
+      <button type="button" class="ms-qty__b" data-step="-1" aria-label="Restar">−</button>
+      <span class="ms-qty__n">1</span>
+      <button type="button" class="ms-qty__b" data-step="1" aria-label="Sumar">+</button>
+    </div>
+    <button type="button" class="ms-prod__add">Añadir al carrito</button>
+  </div>
+</article>
+
+<style>
+  .ms-prod {
+    background: #fff;
+    border: 1px solid var(--ms-linea);
+    border-radius: 10px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .ms-prod[hidden] {
+    display: none;
+  }
+
+  .ms-prod__img {
+    position: relative;
+    aspect-ratio: 1 / 1;
+    background: var(--ms-fondo);
+  }
+
+  .ms-prod__img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .ms-prod__dscto {
+    position: absolute;
+    top: 0.5rem;
+    left: 0.5rem;
+    background: var(--ms-verde);
+    color: #fff;
+    font-size: 0.65rem;
+    font-weight: 800;
+    padding: 0.22rem 0.5rem;
+    border-radius: 4px;
+  }
+
+  .ms-prod__tx {
+    padding: 0.8rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+  }
+
+  .ms-prod__marca {
+    font-size: 0.65rem;
+    font-weight: 800;
+    color: var(--ms-gris);
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+  }
+
+  .ms-prod__nombre {
+    font-size: 0.85rem;
+    font-weight: 600;
+    line-height: 1.3;
+    min-height: 2.6em;
+  }
+
+  .ms-prod__precio {
+    display: flex;
+    align-items: baseline;
+    gap: 0.45rem;
+  }
+
+  .ms-prod__precio s {
+    font-size: 0.75rem;
+    color: var(--ms-gris-tenue);
+  }
+
+  .ms-prod__precio b {
+    font-size: 1.05rem;
+    color: var(--ms-rojo);
+  }
+
+  .ms-prod__qty {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    margin-top: 0.15rem;
+  }
+
+  .ms-qty__b {
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    background: var(--ms-fondo);
+    font-weight: 700;
+    display: grid;
+    place-items: center;
+  }
+
+  .ms-qty__n {
+    font-size: 0.85rem;
+    font-weight: 600;
+    min-width: 1ch;
+    text-align: center;
+  }
+
+  .ms-prod__add {
+    margin-top: 0.3rem;
+    background: var(--ms-negro);
+    color: #fff;
+    padding: 0.6rem;
+    border-radius: 6px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-align: center;
+  }
+
+  .ms-prod__add.is-ok {
+    background: var(--ms-verde);
+  }
+</style>

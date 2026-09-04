@@ -1,0 +1,250 @@
+---
+import { heroSlides, soles } from '../datos/mascotas.js';
+
+interface Producto { nombre: string; precio: number; antes: number }
+interface Slide { kicker: string; titulo: string; pct: string; img: string; productos: Producto[] }
+---
+
+<section class="ms-hero" id="hero">
+  <div class="ms-hero__track" id="ms-hero-track">
+    {heroSlides.map((s: Slide, i: number) => (
+      <div class="ms-hero__slide" data-idx={i}>
+        <img src={s.img} alt={s.titulo} loading={i === 0 ? 'eager' : 'lazy'} />
+        <div class="ms-hero__overlay"></div>
+        <div class="ms-wrap ms-hero__inner">
+          <div class="ms-hero__tx">
+            <span class="ms-hero__kicker">{s.kicker}</span>
+            <h1>{s.titulo}</h1>
+            <span class="ms-hero__pct">{s.pct}</span>
+            <a href="#ofertas" class="ms-btn ms-btn--negro">Comprar</a>
+          </div>
+          <div class="ms-hero__callouts">
+            {s.productos.map((p: Producto) => (
+              <div class="ms-hero__callout">
+                <b>{p.nombre}</b>
+                <div>
+                  <s>{soles(p.antes)}</s>
+                  <strong>{soles(p.precio)}</strong>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    ))}
+  </div>
+
+  <button type="button" class="ms-hero__flecha ms-hero__flecha--prev" id="ms-hero-prev" aria-label="Anterior">‹</button>
+  <button type="button" class="ms-hero__flecha ms-hero__flecha--next" id="ms-hero-next" aria-label="Siguiente">›</button>
+
+  <div class="ms-hero__dots" id="ms-hero-dots">
+    {heroSlides.map((_s: Slide, i: number) => (
+      <button type="button" class={`ms-hero__dot${i === 0 ? ' is-on' : ''}`} data-idx={i} aria-label={`Ir a slide ${i + 1}`}></button>
+    ))}
+  </div>
+</section>
+
+<script>
+  const track = document.getElementById('ms-hero-track');
+  const dots = Array.from(document.querySelectorAll<HTMLButtonElement>('#ms-hero-dots .ms-hero__dot'));
+  const prev = document.getElementById('ms-hero-prev');
+  const next = document.getElementById('ms-hero-next');
+  const total = dots.length;
+  let idx = 0;
+  let timer: ReturnType<typeof setInterval> | undefined;
+
+  function ir(n: number) {
+    idx = (n + total) % total;
+    if (track) track.style.transform = `translateX(-${idx * 100}%)`;
+    dots.forEach((d, i) => d.classList.toggle('is-on', i === idx));
+  }
+
+  function play() {
+    timer = setInterval(() => ir(idx + 1), 7000);
+  }
+
+  function pause() {
+    if (timer) clearInterval(timer);
+  }
+
+  prev?.addEventListener('click', () => ir(idx - 1));
+  next?.addEventListener('click', () => ir(idx + 1));
+  dots.forEach((d) => d.addEventListener('click', () => ir(Number(d.dataset.idx))));
+
+  const hero = document.getElementById('hero');
+  hero?.addEventListener('mouseenter', pause);
+  hero?.addEventListener('mouseleave', play);
+
+  play();
+</script>
+
+<style>
+  .ms-hero {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .ms-hero__track {
+    display: flex;
+    transition: transform 0.5s ease;
+  }
+
+  .ms-hero__slide {
+    position: relative;
+    min-width: 100%;
+    height: clamp(360px, 52vw, 560px);
+  }
+
+  .ms-hero__slide img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .ms-hero__overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(100deg, rgba(10, 10, 10, 0.82) 0%, rgba(10, 10, 10, 0.35) 48%, rgba(10, 10, 10, 0.05) 75%);
+  }
+
+  .ms-hero__inner {
+    position: relative;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+  }
+
+  .ms-hero__tx {
+    color: #fff;
+    max-width: 30ch;
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+  }
+
+  .ms-hero__kicker {
+    font-size: 0.85rem;
+    font-weight: 800;
+    letter-spacing: 0.1em;
+    color: var(--ms-crema);
+  }
+
+  .ms-hero__tx h1 {
+    font-size: clamp(1.6rem, 3.4vw, 2.6rem);
+    font-weight: 800;
+    line-height: 1.15;
+  }
+
+  .ms-hero__pct {
+    font-size: clamp(2rem, 5vw, 3.4rem);
+    font-weight: 800;
+    color: var(--ms-rojo);
+    line-height: 1;
+  }
+
+  .ms-hero__tx .ms-btn {
+    align-self: flex-start;
+  }
+
+  .ms-hero__callouts {
+    display: flex;
+    flex-direction: column;
+    gap: 0.7rem;
+  }
+
+  .ms-hero__callout {
+    background: #fff;
+    border-radius: 10px;
+    padding: 0.8rem 1.1rem;
+    min-width: 230px;
+    box-shadow: 0 16px 32px -16px rgba(0, 0, 0, 0.4);
+  }
+
+  .ms-hero__callout b {
+    display: block;
+    font-size: 0.82rem;
+    margin-bottom: 0.35rem;
+    color: var(--ms-texto);
+  }
+
+  .ms-hero__callout div {
+    display: flex;
+    align-items: baseline;
+    gap: 0.5rem;
+  }
+
+  .ms-hero__callout s {
+    font-size: 0.72rem;
+    color: var(--ms-gris-tenue);
+  }
+
+  .ms-hero__callout strong {
+    font-size: 1.1rem;
+    color: var(--ms-rojo);
+  }
+
+  .ms-hero__flecha {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.9);
+    color: var(--ms-negro);
+    font-size: 1.4rem;
+    display: grid;
+    place-items: center;
+    z-index: 5;
+  }
+
+  .ms-hero__flecha--prev {
+    left: 1rem;
+  }
+
+  .ms-hero__flecha--next {
+    right: 1rem;
+  }
+
+  .ms-hero__dots {
+    position: absolute;
+    bottom: 1rem;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 0.5rem;
+    z-index: 5;
+  }
+
+  .ms-hero__dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.5);
+  }
+
+  .ms-hero__dot.is-on {
+    background: var(--ms-rojo);
+    width: 22px;
+    border-radius: 4px;
+  }
+
+  @media (max-width: 720px) {
+    .ms-hero__inner {
+      justify-content: center;
+      text-align: center;
+    }
+    .ms-hero__tx {
+      max-width: 100%;
+      align-items: center;
+    }
+    .ms-hero__callouts {
+      display: none;
+    }
+  }
+</style>

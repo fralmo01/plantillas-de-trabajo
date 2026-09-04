@@ -1,0 +1,132 @@
+---
+import { tresDestacados, soles } from '../datos/tecno.js';
+
+interface Item { titulo: string; dscto: string; nombre: string; precio: number; antes: number; precioWeb: number | null; img: string }
+const lista = tresDestacados as Item[];
+---
+
+<section class="tn-seccion tn-wrap" id="destacados">
+  <div class="tn-tres">
+    {lista.map((it) => (
+      <article class="tn-tres__card">
+        <div class="tn-tres__head">
+          <span>{it.titulo}</span>
+          <b>{it.dscto}</b>
+        </div>
+        <img src={it.img} alt={it.nombre} loading="lazy" />
+        <p class="tn-tres__nombre">{it.nombre}</p>
+        <p class="tn-tres__precios">
+          <b>{soles(it.precio)}</b>
+          <s>{soles(it.antes)}</s>
+        </p>
+        {it.precioWeb && (
+          <p class="tn-tres__web">{soles(it.precioWeb)} <span>Precio web</span></p>
+        )}
+        <a href="#footer" class="tn-tres__vertodo">Ver todo</a>
+      </article>
+    ))}
+  </div>
+</section>
+
+<style>
+  .tn-tres {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.25rem;
+  }
+
+  .tn-tres__card {
+    background: #fff;
+    border-radius: 6px;
+    padding: 1.25rem;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .tn-tres__head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 0.75rem;
+  }
+
+  .tn-tres__head span {
+    font-weight: 700;
+    font-size: 0.95rem;
+  }
+
+  .tn-tres__head b {
+    background: var(--tn-verde);
+    color: #fff;
+    font-size: 0.7rem;
+    padding: 0.15rem 0.5rem;
+    border-radius: 999px;
+  }
+
+  .tn-tres__card img {
+    width: 100%;
+    height: 130px;
+    object-fit: contain;
+    margin-bottom: 0.75rem;
+  }
+
+  .tn-tres__nombre {
+    font-size: 0.8rem;
+    color: var(--tn-texto);
+    margin-bottom: 0.5rem;
+    min-height: 2.2em;
+  }
+
+  .tn-tres__precios {
+    display: flex;
+    align-items: baseline;
+    gap: 0.6rem;
+    margin-bottom: 0.35rem;
+  }
+
+  .tn-tres__precios b {
+    font-size: 1.1rem;
+    color: var(--tn-gris);
+  }
+
+  .tn-tres__precios s {
+    font-size: 0.78rem;
+    color: var(--tn-gris-tenue);
+  }
+
+  .tn-tres__web {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    background: var(--tn-fondo);
+    font-size: 0.8rem;
+    font-weight: 700;
+    padding: 0.3rem 0.6rem;
+    border-radius: 4px;
+    width: fit-content;
+    margin-bottom: 0.75rem;
+  }
+
+  .tn-tres__web span {
+    font-size: 0.62rem;
+    font-weight: 500;
+    color: var(--tn-gris);
+  }
+
+  .tn-tres__vertodo {
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: var(--tn-gris);
+    margin-top: auto;
+  }
+
+  .tn-tres__vertodo:hover {
+    color: var(--tn-rojo);
+  }
+
+  @media (max-width: 780px) {
+    .tn-tres {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

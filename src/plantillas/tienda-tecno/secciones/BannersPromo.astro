@@ -1,0 +1,89 @@
+---
+import { bannersPromo } from '../datos/tecno.js';
+
+interface Banner { titulo: string; sub: string; img: string; cta: string }
+const lista = bannersPromo as Banner[];
+---
+
+<section class="tn-seccion tn-wrap">
+  <div class="tn-banners">
+    {lista.map((b) => (
+      <a href="#destacados" class="tn-banner">
+        <img src={b.img} alt={b.titulo} loading="lazy" />
+        <div class="tn-banner__overlay"></div>
+        <div class="tn-banner__tx">
+          <b>{b.titulo}</b>
+          <p>{b.sub}</p>
+          <span>{b.cta} &rarr;</span>
+        </div>
+      </a>
+    ))}
+  </div>
+</section>
+
+<style>
+  .tn-banners {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.25rem;
+  }
+
+  .tn-banner {
+    position: relative;
+    aspect-ratio: 4 / 3;
+    border-radius: 6px;
+    overflow: hidden;
+    display: block;
+  }
+
+  .tn-banner img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+  }
+
+  .tn-banner:hover img {
+    transform: scale(1.05);
+  }
+
+  .tn-banner__overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(0deg, rgba(0, 0, 0, 0.75) 20%, transparent 60%);
+  }
+
+  .tn-banner__tx {
+    position: absolute;
+    left: 1.1rem;
+    right: 1.1rem;
+    bottom: 1.1rem;
+    color: #fff;
+  }
+
+  .tn-banner__tx b {
+    display: block;
+    font-size: 1.1rem;
+    color: #fff;
+  }
+
+  .tn-banner__tx p {
+    font-size: 0.78rem;
+    color: #ddd;
+    margin: 0.3rem 0 0.5rem;
+  }
+
+  .tn-banner__tx span {
+    font-size: 0.78rem;
+    font-weight: 700;
+    text-decoration: underline;
+  }
+
+  @media (max-width: 780px) {
+    .tn-banners {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

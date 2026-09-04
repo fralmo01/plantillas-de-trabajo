@@ -1,0 +1,30 @@
+---
+import { categoriasBloques } from '../datos/tecno.js';
+import CategoriaBloque from '../componentes/CategoriaBloque.astro';
+
+interface Subcat { t: string; img: string }
+interface Producto { marca: string; nombre: string; precio: number; antes: number | null; dscto: string | null; img: string }
+interface Bloque {
+  nombre: string;
+  bannerTitulo: string;
+  bannerDscto: string;
+  bannerImg: string;
+  subcats: Subcat[];
+  productos: Producto[];
+}
+const bloques = categoriasBloques as Bloque[];
+---
+
+<section class="tn-seccion tn-wrap">
+  {bloques.map((b, i) => (
+    <CategoriaBloque
+      id={`cat-${i}`}
+      nombre={b.nombre}
+      bannerTitulo={b.bannerTitulo}
+      bannerDscto={b.bannerDscto}
+      bannerImg={b.bannerImg}
+      subcats={b.subcats}
+      productos={b.productos}
+    />
+  ))}
+</section>

@@ -1,0 +1,261 @@
+---
+import { heroSlides, soles } from '../datos/tecno.js';
+
+interface ProdCallout { nombre: string; precio: number; antes: number; dscto: string; img: string }
+interface Slide { kicker: string; titulo: string; pct: string; img: string; productos: ProdCallout[] }
+const slides = heroSlides as Slide[];
+---
+
+<section class="tn-hero" aria-roledescription="carrusel">
+  <div class="tn-hero__track" id="tn-hero-track">
+    {slides.map((s) => (
+      <article class="tn-hero__slide">
+        <img src={s.img} alt={s.titulo} loading="eager" />
+        <div class="tn-hero__overlay"></div>
+        <div class="tn-wrap tn-hero__inner">
+          <div class="tn-hero__tx">
+            <span>{s.kicker}</span>
+            <h2>{s.titulo}</h2>
+            <div class="tn-hero__pct">
+              <b>{s.pct}</b>
+              <small>Dscto</small>
+            </div>
+            <a href="#destacados" class="tn-btn tn-btn--negro">Ver ofertas</a>
+          </div>
+          <div class="tn-hero__prods">
+            {s.productos.map((p) => (
+              <div class="tn-hero__prod">
+                <img src={p.img} alt={p.nombre} loading="lazy" />
+                <b class="tn-hero__prod-nombre">{p.nombre}</b>
+                <span class="tn-hero__prod-dscto">{p.dscto}</span>
+                <div class="tn-hero__prod-precio">
+                  <b>{soles(p.precio)}</b>
+                  <s>Antes: {soles(p.antes)}</s>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </article>
+    ))}
+  </div>
+  <div class="tn-hero__dots" id="tn-hero-dots">
+    {slides.map((_: unknown, i: number) => <button aria-label={`Ir al slide ${i + 1}`} data-dot={i}></button>)}
+  </div>
+  <button type="button" class="tn-hero__nav tn-hero__nav--prev" id="tn-hero-prev" aria-label="Anterior">&larr;</button>
+  <button type="button" class="tn-hero__nav tn-hero__nav--next" id="tn-hero-next" aria-label="Siguiente">&rarr;</button>
+</section>
+
+<script>
+  const track = document.getElementById('tn-hero-track');
+  const dots = Array.from(document.querySelectorAll<HTMLButtonElement>('#tn-hero-dots button'));
+  const total = track ? track.children.length : 0;
+  let idx = 0;
+
+  function ir(n: number) {
+    if (!track) return;
+    idx = (n + total) % total;
+    track.style.transform = `translateX(-${idx * 100}%)`;
+    dots.forEach((d, i) => d.classList.toggle('is-on', i === idx));
+  }
+
+  document.getElementById('tn-hero-prev')?.addEventListener('click', () => ir(idx - 1));
+  document.getElementById('tn-hero-next')?.addEventListener('click', () => ir(idx + 1));
+  dots.forEach((d, i) => d.addEventListener('click', () => ir(i)));
+
+  let timer = window.setInterval(() => ir(idx + 1), 7000);
+  const box = track?.closest('section');
+  box?.addEventListener('mouseenter', () => window.clearInterval(timer));
+  box?.addEventListener('mouseleave', () => (timer = window.setInterval(() => ir(idx + 1), 7000)));
+  ir(0);
+</script>
+
+<style>
+  .tn-hero {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .tn-hero__track {
+    display: flex;
+    transition: transform 0.5s ease;
+  }
+
+  .tn-hero__slide {
+    position: relative;
+    flex: 0 0 100%;
+    min-height: clamp(340px, 40vw, 500px);
+    display: flex;
+    align-items: center;
+  }
+
+  .tn-hero__slide img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .tn-hero__overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg, rgba(0, 0, 0, 0.55) 0%, rgba(0, 0, 0, 0.15) 45%, rgba(0, 0, 0, 0.35) 100%);
+  }
+
+  .tn-hero__inner {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.5rem;
+    width: 100%;
+    flex-wrap: wrap;
+  }
+
+  .tn-hero__tx {
+    color: #fff;
+    max-width: 20rem;
+  }
+
+  .tn-hero__tx span {
+    text-transform: uppercase;
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+  }
+
+  .tn-hero__tx h2 {
+    color: #fff;
+    font-size: clamp(1.6rem, 3.4vw, 2.3rem);
+    margin: 0.4rem 0 0.6rem;
+  }
+
+  .tn-hero__pct {
+    display: flex;
+    align-items: baseline;
+    gap: 0.4rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .tn-hero__pct b {
+    font-size: 2.6rem;
+    color: var(--tn-rojo);
+    font-weight: 700;
+    line-height: 1;
+  }
+
+  .tn-hero__pct small {
+    font-size: 1.1rem;
+    font-weight: 600;
+  }
+
+  .tn-hero__prods {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .tn-hero__prod {
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 8px;
+    padding: 0.85rem;
+    width: 150px;
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+    color: var(--tn-texto);
+  }
+
+  .tn-hero__prod img {
+    position: static;
+    width: 100%;
+    height: 80px;
+    object-fit: contain;
+    margin-bottom: 0.3rem;
+  }
+
+  .tn-hero__prod-nombre {
+    font-size: 0.72rem;
+    font-weight: 600;
+    min-height: 2.4em;
+  }
+
+  .tn-hero__prod-dscto {
+    background: var(--tn-rojo);
+    color: #fff;
+    font-size: 0.65rem;
+    font-weight: 700;
+    padding: 0.1rem 0.4rem;
+    border-radius: 3px;
+    align-self: flex-start;
+  }
+
+  .tn-hero__prod-precio {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .tn-hero__prod-precio b {
+    font-size: 0.95rem;
+    color: var(--tn-rojo);
+  }
+
+  .tn-hero__prod-precio s {
+    font-size: 0.65rem;
+    color: var(--tn-gris-tenue);
+  }
+
+  .tn-hero__dots {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 1rem;
+    display: flex;
+    justify-content: center;
+    gap: 6px;
+    z-index: 2;
+  }
+
+  .tn-hero__dots button {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.5);
+  }
+
+  .tn-hero__dots button.is-on {
+    background: var(--tn-rojo);
+    width: 20px;
+    border-radius: 999px;
+  }
+
+  .tn-hero__nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.85);
+    color: var(--tn-texto);
+    z-index: 2;
+  }
+
+  .tn-hero__nav:hover {
+    background: #fff;
+  }
+
+  .tn-hero__nav--prev { left: 1rem; }
+  .tn-hero__nav--next { right: 1rem; }
+
+  @media (max-width: 780px) {
+    .tn-hero__prods {
+      display: none;
+    }
+    .tn-hero__nav {
+      display: none;
+    }
+  }
+</style>

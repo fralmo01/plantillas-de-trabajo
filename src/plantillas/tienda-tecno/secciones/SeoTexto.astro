@@ -1,0 +1,104 @@
+---
+import { seoTexto } from '../datos/tecno.js';
+import Icono from '../componentes/Icono.astro';
+---
+
+<section class="tn-seo tn-wrap">
+  <div class="tn-seo__inner" id="tn-seo-inner">
+    <div class="tn-seo__col">
+      <h3>{seoTexto.col1.titulo}</h3>
+      {seoTexto.col1.parrafos.map((p: string) => <p>{p}</p>)}
+    </div>
+    <div class="tn-seo__col">
+      <h3>{seoTexto.col2.titulo}</h3>
+      {seoTexto.col2.parrafos.map((p: string) => <p>{p}</p>)}
+    </div>
+    <div class="tn-seo__fade" id="tn-seo-fade"></div>
+  </div>
+  <button type="button" class="tn-seo__toggle" id="tn-seo-toggle">
+    <span>Ver mas</span>
+    <Icono name="chevron" size={14} />
+  </button>
+</section>
+
+<script>
+  const inner = document.getElementById('tn-seo-inner');
+  const fade = document.getElementById('tn-seo-fade');
+  const toggle = document.getElementById('tn-seo-toggle');
+  const label = toggle?.querySelector('span');
+
+  toggle?.addEventListener('click', () => {
+    const abierto = inner?.classList.toggle('is-open');
+    if (fade) fade.hidden = !!abierto;
+    if (label) label.textContent = abierto ? 'Resumir informacion' : 'Ver mas';
+    toggle.classList.toggle('is-open', abierto);
+  });
+</script>
+
+<style>
+  .tn-seo {
+    padding-block: 1rem 2rem;
+  }
+
+  .tn-seo__inner {
+    position: relative;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    max-height: 150px;
+    overflow: hidden;
+  }
+
+  .tn-seo__inner.is-open {
+    max-height: none;
+  }
+
+  .tn-seo__col h3 {
+    font-size: 0.95rem;
+    margin-bottom: 0.6rem;
+  }
+
+  .tn-seo__col p {
+    font-size: 0.78rem;
+    color: var(--tn-gris);
+    line-height: 1.6;
+    margin-bottom: 0.75rem;
+  }
+
+  .tn-seo__fade {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 60px;
+    background: linear-gradient(0deg, var(--tn-fondo), transparent);
+  }
+
+  .tn-seo__toggle {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    margin: 1rem auto 0;
+    background: #fff;
+    border: 1px solid var(--tn-linea);
+    padding: 0.5rem 1rem;
+    border-radius: 999px;
+    font-size: 0.8rem;
+    font-weight: 600;
+  }
+
+  .tn-seo__toggle :global(svg) {
+    transition: transform 0.2s ease;
+    transform: rotate(90deg);
+  }
+
+  .tn-seo__toggle.is-open :global(svg) {
+    transform: rotate(-90deg);
+  }
+
+  @media (max-width: 780px) {
+    .tn-seo__inner {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

@@ -1,0 +1,96 @@
+---
+import { comboGrid } from '../datos/mascotas.js';
+
+interface Combo { badge: string; dscto?: string; gratis?: string; titulo: string; sub: string; img: string }
+---
+
+<section class="ms-seccion">
+  <div class="ms-wrap">
+    <div class="ms-combo__grid">
+      {comboGrid.map((c: Combo) => (
+        <div class="ms-combo__card">
+          <div class="ms-combo__cabecera">
+            <span class="ms-combo__badge">{c.badge}</span>
+            <div>
+              {c.gratis && <span class="ms-combo__tag">{c.gratis}</span>}
+              {c.dscto && <span class="ms-combo__tag">{c.dscto}</span>}
+              <b>{c.titulo}</b>
+            </div>
+          </div>
+          <img src={c.img} alt={c.titulo} loading="lazy" />
+          <a href="#bomba" class="ms-btn ms-btn--rojo ms-combo__btn">Comprar</a>
+          <p>{c.sub}</p>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .ms-combo__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1.25rem;
+  }
+
+  .ms-combo__card {
+    background: #fdf3d8;
+    border: 1px solid #f0dfa0;
+    border-radius: 10px;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.7rem;
+  }
+
+  .ms-combo__cabecera {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    border-bottom: 2px solid var(--ms-rojo);
+    padding-bottom: 0.6rem;
+  }
+
+  .ms-combo__badge {
+    font-size: 1.9rem;
+    font-weight: 800;
+    color: var(--ms-rojo);
+    line-height: 1;
+  }
+
+  .ms-combo__cabecera div {
+    display: flex;
+    flex-direction: column;
+    gap: 0.1rem;
+  }
+
+  .ms-combo__tag {
+    font-size: 0.68rem;
+    font-weight: 700;
+    color: var(--ms-rojo);
+    text-transform: uppercase;
+  }
+
+  .ms-combo__cabecera b {
+    font-size: 0.85rem;
+    font-weight: 700;
+  }
+
+  .ms-combo__card img {
+    width: 100%;
+    height: 110px;
+    object-fit: cover;
+    border-radius: 6px;
+  }
+
+  .ms-combo__btn {
+    width: 100%;
+  }
+
+  .ms-combo__card p {
+    text-align: center;
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--ms-texto);
+  }
+</style>

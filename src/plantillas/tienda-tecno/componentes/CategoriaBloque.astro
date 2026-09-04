@@ -1,0 +1,163 @@
+---
+import TarjetaProducto from './TarjetaProducto.astro';
+
+interface Subcat { t: string; img: string }
+interface Producto { marca: string; nombre: string; precio: number; antes: number | null; dscto: string | null; img: string }
+const { nombre, bannerTitulo, bannerDscto, bannerImg, subcats, productos, id } = Astro.props as {
+  nombre: string;
+  bannerTitulo: string;
+  bannerDscto: string;
+  bannerImg: string;
+  subcats: Subcat[];
+  productos: Producto[];
+  id: string;
+};
+---
+
+<div class="tn-catbloque" id={id}>
+  <h2 class="tn-titulo">{nombre}</h2>
+
+  <div class="tn-catbloque__top">
+    <div class="tn-catbloque__banner">
+      <img src={bannerImg} alt={bannerTitulo} loading="lazy" />
+      <div class="tn-catbloque__banner-overlay"></div>
+      <div class="tn-catbloque__banner-tx">
+        <b>{bannerTitulo}</b>
+        <span>{bannerDscto}</span>
+      </div>
+    </div>
+    <div class="tn-catbloque__subcats">
+      {subcats.map((s: Subcat) => (
+        <a href="#footer" class="tn-catbloque__subcat">
+          <img src={s.img} alt={s.t} loading="lazy" />
+          <span>{s.t}</span>
+        </a>
+      ))}
+    </div>
+  </div>
+
+  <div class="tn-carr-area">
+    <button type="button" class="tn-flecha" data-dir="-1" aria-label="Anterior">&lsaquo;</button>
+    <div class="tn-fila">
+      {productos.map((p: Producto) => <TarjetaProducto producto={p} />)}
+    </div>
+    <button type="button" class="tn-flecha" data-dir="1" aria-label="Siguiente">&rsaquo;</button>
+  </div>
+</div>
+
+<script>
+  document.querySelectorAll<HTMLElement>('.tn-catbloque .tn-carr-area').forEach((area) => {
+    if (area.dataset.wired) return;
+    area.dataset.wired = '1';
+    const row = area.querySelector<HTMLElement>('.tn-fila');
+    area.querySelectorAll<HTMLButtonElement>('[data-dir]').forEach((b) => {
+      b.addEventListener('click', () => {
+        const dir = Number(b.dataset.dir || '1');
+        row?.scrollBy({ left: dir * 260, behavior: 'smooth' });
+      });
+    });
+  });
+</script>
+
+<style>
+  .tn-catbloque {
+    padding-block: 1.5rem;
+    border-top: 1px solid var(--tn-linea);
+  }
+
+  .tn-catbloque__top {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr;
+    align-items: start;
+    gap: 1rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .tn-catbloque__banner {
+    position: relative;
+    border-radius: 6px;
+    overflow: hidden;
+    background: #e8e8e8;
+    height: 260px;
+  }
+
+  .tn-catbloque__banner img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .tn-catbloque__banner-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg, rgba(0, 0, 0, 0.55) 0%, transparent 65%);
+  }
+
+  .tn-catbloque__banner-tx {
+    position: absolute;
+    left: 1.25rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #fff;
+  }
+
+  .tn-catbloque__banner-tx b {
+    display: block;
+    font-size: 1.3rem;
+    max-width: 14ch;
+    line-height: 1.2;
+  }
+
+  .tn-catbloque__banner-tx span {
+    display: inline-block;
+    margin-top: 0.5rem;
+    background: var(--tn-rojo);
+    color: #fff;
+    font-size: 0.72rem;
+    font-weight: 700;
+    padding: 0.25rem 0.6rem;
+    border-radius: 4px;
+  }
+
+  .tn-catbloque__subcats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.6rem;
+  }
+
+  .tn-catbloque__subcat {
+    background: #fff;
+    border-radius: 6px;
+    padding: 0.6rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .tn-catbloque__subcat:hover {
+    box-shadow: 0 4px 14px -8px rgba(0, 0, 0, 0.3);
+  }
+
+  .tn-catbloque__subcat img {
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    object-fit: cover;
+    flex-shrink: 0;
+  }
+
+  .tn-catbloque__subcat span {
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: var(--tn-texto);
+  }
+
+  @media (max-width: 780px) {
+    .tn-catbloque__top {
+      grid-template-columns: 1fr;
+    }
+    .tn-catbloque__subcats {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+</style>

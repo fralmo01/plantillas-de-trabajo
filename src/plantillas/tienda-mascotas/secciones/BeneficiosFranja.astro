@@ -1,0 +1,55 @@
+---
+import { beneficios } from '../datos/mascotas.js';
+import Icono from '../componentes/Icono.astro';
+
+interface Beneficio { ico: string; titulo: string; sub: string }
+---
+
+<section class="ms-benef">
+  <div class="ms-wrap ms-benef__grid">
+    {beneficios.map((b: Beneficio) => (
+      <div class="ms-benef__item">
+        <span class="ms-benef__ico"><Icono name={b.ico} size={24} /></span>
+        <div>
+          <b>{b.titulo}</b>
+          <span>{b.sub}</span>
+        </div>
+      </div>
+    ))}
+  </div>
+</section>
+
+<style>
+  .ms-benef {
+    border-bottom: 1px solid var(--ms-linea);
+    padding-block: 1.1rem;
+  }
+
+  .ms-benef__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+    gap: 1rem;
+  }
+
+  .ms-benef__item {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+  }
+
+  .ms-benef__ico {
+    color: var(--ms-rojo);
+    flex-shrink: 0;
+  }
+
+  .ms-benef__item b {
+    display: block;
+    font-size: 0.85rem;
+    font-weight: 700;
+  }
+
+  .ms-benef__item span {
+    font-size: 0.76rem;
+    color: var(--ms-gris);
+  }
+</style>

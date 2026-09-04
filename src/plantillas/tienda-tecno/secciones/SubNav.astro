@@ -1,0 +1,72 @@
+---
+import { subnav } from '../datos/tecno.js';
+import Icono from '../componentes/Icono.astro';
+---
+
+<nav class="tn-subnav" aria-label="Categorias rapidas">
+  <div class="tn-wrap tn-subnav__inner">
+    <span class="tn-subnav__tag">Lo mejor en tecnologia!</span>
+    <ul class="tn-subnav__lista">
+      {subnav.map((s: { t: string; ico: string }) => (
+        <li>
+          <a href="#destacados">
+            <Icono name={s.ico} size={16} />
+            {s.t}
+            <Icono name="chevron" size={12} />
+          </a>
+        </li>
+      ))}
+    </ul>
+  </div>
+</nav>
+
+<style>
+  .tn-subnav {
+    background: var(--tn-negro);
+    color: #fff;
+  }
+
+  .tn-subnav__inner {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    padding-block: 0.6rem;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+
+  .tn-subnav__tag {
+    background: var(--tn-rojo);
+    color: #fff;
+    font-size: 0.72rem;
+    font-weight: 700;
+    padding: 0.4rem 0.8rem;
+    border-radius: 4px;
+    flex-shrink: 0;
+    white-space: nowrap;
+  }
+
+  .tn-subnav__lista {
+    display: flex;
+    gap: 1.5rem;
+    list-style: none;
+  }
+
+  .tn-subnav__lista a {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.78rem;
+    font-weight: 500;
+    white-space: nowrap;
+    color: #fff;
+  }
+
+  .tn-subnav__lista a:hover {
+    color: var(--tn-rojo);
+  }
+
+  .tn-subnav__lista a :global(svg:last-child) {
+    opacity: 0.6;
+  }
+</style>

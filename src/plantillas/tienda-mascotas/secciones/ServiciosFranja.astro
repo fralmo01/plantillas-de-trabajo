@@ -1,0 +1,51 @@
+---
+import { servicios } from '../datos/mascotas.js';
+import Icono from '../componentes/Icono.astro';
+
+interface Servicio { ico: string; titulo: string; sub: string }
+---
+
+<section class="ms-servicios" id="servicios">
+  <div class="ms-wrap ms-servicios__grid">
+    {servicios.map((s: Servicio) => (
+      <div class="ms-servicios__item">
+        <span class="ms-servicios__ico"><Icono name={s.ico} size={26} /></span>
+        <b>{s.titulo}</b>
+        <span>{s.sub}</span>
+      </div>
+    ))}
+  </div>
+</section>
+
+<style>
+  .ms-servicios {
+    background: var(--ms-rojo);
+    color: #fff;
+    padding-block: 2rem;
+  }
+
+  .ms-servicios__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1.5rem;
+    text-align: center;
+  }
+
+  .ms-servicios__item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.4rem;
+  }
+
+  .ms-servicios__item b {
+    font-size: 0.95rem;
+    font-weight: 800;
+  }
+
+  .ms-servicios__item span {
+    font-size: 0.78rem;
+    opacity: 0.9;
+    max-width: 26ch;
+  }
+</style>

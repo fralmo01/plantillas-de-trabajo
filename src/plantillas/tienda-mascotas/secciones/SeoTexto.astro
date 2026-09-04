@@ -1,0 +1,85 @@
+---
+import { seoTexto } from '../datos/mascotas.js';
+
+interface Sub { titulo: string; texto: string }
+---
+
+<section class="ms-seccion">
+  <div class="ms-wrap">
+    <div class="ms-seo" id="ms-seo">
+      <h2>{seoTexto.titulo}</h2>
+      {seoTexto.parrafos.map((p: string) => <p>{p}</p>)}
+      {seoTexto.subsecciones.map((s: Sub) => (
+        <>
+          <h3>{s.titulo}</h3>
+          <p>{s.texto}</p>
+        </>
+      ))}
+    </div>
+    <button type="button" class="ms-btn ms-btn--outline ms-seo__toggle" id="ms-seo-toggle">
+      <span>Ver mas</span>
+    </button>
+  </div>
+</section>
+
+<script>
+  const box = document.getElementById('ms-seo');
+  const btn = document.getElementById('ms-seo-toggle');
+  const label = btn?.querySelector('span');
+
+  btn?.addEventListener('click', () => {
+    const abierto = box?.classList.toggle('is-open');
+    if (label) label.textContent = abierto ? 'Resumir informacion' : 'Ver mas';
+  });
+</script>
+
+<style>
+  .ms-seo {
+    max-height: 150px;
+    overflow: hidden;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .ms-seo::after {
+    content: '';
+    position: absolute;
+    inset: auto 0 0 0;
+    height: 60px;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0), #fff);
+  }
+
+  .ms-seo.is-open {
+    max-height: none;
+  }
+
+  .ms-seo.is-open::after {
+    display: none;
+  }
+
+  .ms-seo h2 {
+    font-size: 1.1rem;
+    font-weight: 800;
+    color: var(--ms-negro);
+  }
+
+  .ms-seo h3 {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--ms-rojo);
+    margin-top: 0.4rem;
+  }
+
+  .ms-seo p {
+    font-size: 0.82rem;
+    color: var(--ms-gris);
+    line-height: 1.6;
+  }
+
+  .ms-seo__toggle {
+    margin-top: 1.25rem;
+    display: flex;
+  }
+</style>

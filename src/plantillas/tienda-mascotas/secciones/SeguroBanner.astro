@@ -1,0 +1,100 @@
+---
+import { seguro, soles } from '../datos/mascotas.js';
+---
+
+<section class="ms-seccion" id="seguro">
+  <div class="ms-wrap">
+    <div class="ms-seguro">
+      <div class="ms-seguro__tx">
+        <span class="ms-seguro__kicker">{seguro.titulo}</span>
+        <p>{seguro.detalle}</p>
+      </div>
+      <div class="ms-seguro__precio">
+        <span>Desde</span>
+        <b>{soles(seguro.desde)}</b>
+        <span>Al mes en plan semestral</span>
+      </div>
+      <div class="ms-seguro__foto">
+        <img src={seguro.img} alt={seguro.titulo} loading="lazy" />
+        <a href="#footer" class="ms-btn ms-btn--negro">Cotiza aqui</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .ms-seguro {
+    background: linear-gradient(120deg, #0d5c52 0%, #0a4a42 100%);
+    border-radius: 14px;
+    color: #fff;
+    display: grid;
+    grid-template-columns: 1.3fr auto auto;
+    align-items: center;
+    gap: 1.5rem;
+    padding: 1.75rem 2rem;
+  }
+
+  .ms-seguro__kicker {
+    display: block;
+    font-size: 1.35rem;
+    font-weight: 800;
+    color: var(--ms-verde);
+    margin-bottom: 0.4rem;
+  }
+
+  .ms-seguro__tx p {
+    font-size: 0.85rem;
+    opacity: 0.9;
+    max-width: 34ch;
+  }
+
+  .ms-seguro__precio {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    background: #fff;
+    color: var(--ms-texto);
+    border-radius: 10px;
+    padding: 0.9rem 1.3rem;
+  }
+
+  .ms-seguro__precio span {
+    font-size: 0.7rem;
+    color: var(--ms-gris);
+  }
+
+  .ms-seguro__precio b {
+    font-size: 2rem;
+    color: var(--ms-negro);
+    line-height: 1.1;
+  }
+
+  .ms-seguro__foto {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .ms-seguro__foto img {
+    width: 96px;
+    height: 96px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid #fff;
+  }
+
+  @media (max-width: 860px) {
+    .ms-seguro {
+      grid-template-columns: 1fr;
+      text-align: center;
+    }
+    .ms-seguro__tx p {
+      max-width: none;
+      margin-inline: auto;
+    }
+    .ms-seguro__foto {
+      justify-content: center;
+    }
+  }
+</style>

@@ -1,0 +1,78 @@
+---
+import { marcasChip, selloTexto } from '../datos/mascotas.js';
+import Icono from '../componentes/Icono.astro';
+---
+
+<section class="ms-sello">
+  <div class="ms-wrap ms-sello__inner">
+    <div class="ms-sello__estrellas" aria-hidden="true">
+      <Icono name="estrella" size={16} />
+      <Icono name="estrella" size={16} />
+      <Icono name="estrella" size={16} />
+    </div>
+    <h2>Satisfacción garantizada</h2>
+    <p>{selloTexto}</p>
+    <div class="ms-sello__marcas">
+      {marcasChip.map((m: string) => <span>{m}</span>)}
+    </div>
+    <small>*Aplican condiciones.</small>
+  </div>
+</section>
+
+<style>
+  .ms-sello {
+    background: #fff;
+    border: 1px solid var(--ms-linea);
+    border-radius: 14px;
+    margin-inline: clamp(1rem, 3vw, 2rem);
+    padding-block: 2rem;
+  }
+
+  .ms-sello__inner {
+    text-align: center;
+    max-width: 720px;
+  }
+
+  .ms-sello__estrellas {
+    display: flex;
+    justify-content: center;
+    gap: 0.2rem;
+    color: #ffb800;
+    margin-bottom: 0.6rem;
+  }
+
+  .ms-sello h2 {
+    font-size: 1.2rem;
+    font-weight: 800;
+    color: var(--ms-rojo);
+    margin-bottom: 0.6rem;
+  }
+
+  .ms-sello p {
+    font-size: 0.85rem;
+    color: var(--ms-gris);
+    line-height: 1.5;
+  }
+
+  .ms-sello__marcas {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.6rem 1.4rem;
+    margin-top: 1.5rem;
+  }
+
+  .ms-sello__marcas span {
+    font-weight: 800;
+    font-size: 0.95rem;
+    color: var(--ms-negro);
+    opacity: 0.75;
+  }
+
+  .ms-sello small {
+    display: block;
+    margin-top: 1.1rem;
+    font-size: 0.68rem;
+    color: var(--ms-gris-tenue);
+  }
+</style>

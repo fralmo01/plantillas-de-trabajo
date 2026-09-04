@@ -1,0 +1,158 @@
+---
+import { marca, footerCols } from '../datos/mascotas.js';
+import Icono from '../componentes/Icono.astro';
+---
+
+<footer class="ms-pie" id="footer">
+  <div class="ms-wrap ms-pie__grid">
+    <div class="ms-pie__col">
+      <div class="ms-pie__loc">
+        <Icono name="pin" size={16} />
+        <b>{footerCols.tienda.titulo}</b>
+      </div>
+      <p>{footerCols.tienda.texto}</p>
+    </div>
+
+    <div class="ms-pie__col">
+      <b>{footerCols.ayuda.titulo}</b>
+      <ul>
+        {footerCols.ayuda.items.map((it: string) => <li><a href="#top">{it}</a></li>)}
+      </ul>
+    </div>
+
+    <div class="ms-pie__col">
+      <b>{footerCols.guia.titulo}</b>
+      <ul>
+        {footerCols.guia.items.map((it: string) => <li><a href="#top">{it}</a></li>)}
+        <li>
+          <a href="#top" class="ms-pie__libro">
+            <Icono name="catalogo" size={16} /> Libro de Reclamaciones
+          </a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="ms-pie__col">
+      <b>{footerCols.contacto.titulo}</b>
+      <ul>
+        <li>Mail: {footerCols.contacto.mail}</li>
+        <li>Telefono: {footerCols.contacto.tel}</li>
+        <li>{footerCols.contacto.whatsapp}</li>
+        <li>{footerCols.contacto.horario1}</li>
+        <li>{footerCols.contacto.horario2}</li>
+        <li><a href="#top">{footerCols.contacto.denuncias}</a></li>
+      </ul>
+    </div>
+
+    <div class="ms-pie__col">
+      <b>{footerCols.marca.titulo}</b>
+      <ul>
+        {footerCols.marca.items.map((it: string) => <li><a href="#top">{it}</a></li>)}
+      </ul>
+    </div>
+  </div>
+
+  <div class="ms-wrap ms-pie__bottom">
+    <a href="#top" class="ms-pie__logo">
+      <Icono name="pelota" size={20} /> {marca.nombre}
+    </a>
+    <span>© {marca.nombre} - Todos los derechos reservados</span>
+    <div class="ms-pie__social">
+      <a href="#top" aria-label="Instagram"><Icono name="corazon" size={16} /></a>
+      <a href="#top" aria-label="Facebook"><Icono name="chat" size={16} /></a>
+      <a href="#top" aria-label="YouTube"><Icono name="chevron" size={16} /></a>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .ms-pie {
+    background: var(--ms-fondo);
+    padding-top: 2.5rem;
+  }
+
+  .ms-pie__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 1.75rem;
+    padding-bottom: 2rem;
+  }
+
+  .ms-pie__col b {
+    display: block;
+    font-size: 0.9rem;
+    font-weight: 800;
+    margin-bottom: 0.9rem;
+  }
+
+  .ms-pie__col p {
+    font-size: 0.78rem;
+    color: var(--ms-gris);
+    line-height: 1.55;
+  }
+
+  .ms-pie__col ul {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    font-size: 0.78rem;
+    color: var(--ms-gris);
+  }
+
+  .ms-pie__col a:hover {
+    color: var(--ms-rojo);
+  }
+
+  .ms-pie__loc {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    color: var(--ms-rojo);
+    margin-bottom: 0.6rem;
+  }
+
+  .ms-pie__libro {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    color: var(--ms-rojo);
+    font-weight: 700;
+  }
+
+  .ms-pie__bottom {
+    border-top: 1px solid var(--ms-linea);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1rem;
+    padding-block: 1.5rem;
+    font-size: 0.78rem;
+    color: var(--ms-gris);
+  }
+
+  .ms-pie__logo {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    color: var(--ms-rojo);
+    font-weight: 800;
+    font-size: 1.05rem;
+  }
+
+  .ms-pie__social {
+    display: flex;
+    gap: 0.75rem;
+  }
+
+  .ms-pie__social a {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: #fff;
+    border: 1px solid var(--ms-linea);
+    display: grid;
+    place-items: center;
+    color: var(--ms-texto);
+  }
+</style>

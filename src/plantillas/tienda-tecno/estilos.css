@@ -1,0 +1,208 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto+Flex:opsz,wght@8..144,400;8..144,500;8..144,600;8..144,700;8..144,800&display=swap");
+
+.tpl-tienda-tecno {
+  --tn-rojo: #ea0029;
+  --tn-rojo-osc: #c40022;
+  --tn-negro: #141414;
+  --tn-fondo: #f5f5f5;
+  --tn-blanco: #fff;
+  --tn-texto: #212121;
+  --tn-gris: #505050;
+  --tn-gris-tenue: #9a9a9a;
+  --tn-verde: #41ae3b;
+  --tn-linea: #e0e0e0;
+
+  --tn-font: "Roboto Flex", system-ui, -apple-system, "Segoe UI", Arial, sans-serif;
+  --tn-maxw: 1280px;
+
+  background: var(--tn-fondo);
+  color: var(--tn-texto);
+  font-family: var(--tn-font);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+.tpl-tienda-tecno *,
+.tpl-tienda-tecno *::before,
+.tpl-tienda-tecno *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+.tpl-tienda-tecno h1,
+.tpl-tienda-tecno h2,
+.tpl-tienda-tecno h3,
+.tpl-tienda-tecno h4 {
+  line-height: 1.2;
+  color: var(--tn-texto);
+  font-weight: 700;
+}
+
+.tpl-tienda-tecno img {
+  max-width: 100%;
+  display: block;
+}
+
+.tpl-tienda-tecno a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.tpl-tienda-tecno button {
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+  border: none;
+  background: none;
+}
+
+.tpl-tienda-tecno input {
+  font: inherit;
+}
+
+.tpl-tienda-tecno .tn-wrap {
+  max-width: var(--tn-maxw);
+  margin-inline: auto;
+  padding-inline: clamp(1rem, 3vw, 2rem);
+}
+
+.tpl-tienda-tecno .tn-seccion {
+  padding-block: clamp(1.75rem, 4vw, 2.75rem);
+}
+
+.tpl-tienda-tecno .tn-titulo {
+  font-size: clamp(1.1rem, 2.4vw, 1.4rem);
+  font-weight: 700;
+  margin-bottom: 1.1rem;
+}
+
+.tpl-tienda-tecno .tn-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.7rem 1.5rem;
+  font-weight: 700;
+  font-size: 0.82rem;
+  border-radius: 5px;
+  transition: background 0.15s ease, color 0.15s ease, transform 0.15s ease;
+}
+
+.tpl-tienda-tecno .tn-btn:hover {
+  transform: translateY(-1px);
+}
+
+.tpl-tienda-tecno .tn-btn--rojo {
+  background: var(--tn-rojo);
+  color: #fff;
+}
+
+.tpl-tienda-tecno .tn-btn--rojo:hover {
+  background: var(--tn-rojo-osc);
+}
+
+.tpl-tienda-tecno .tn-btn--negro {
+  background: var(--tn-negro);
+  color: #fff;
+}
+
+.tpl-tienda-tecno .tn-btn--negro:hover {
+  background: #000;
+}
+
+.tpl-tienda-tecno .tn-btn--outline {
+  border: 1.5px solid #fff;
+  color: #fff;
+  background: transparent;
+}
+
+.tpl-tienda-tecno .tn-btn--outline:hover {
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.tpl-tienda-tecno .tn-fila {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(190px, 1fr);
+  gap: 1rem;
+  overflow-x: auto;
+  scroll-snap-type: x proximity;
+  padding-bottom: 0.5rem;
+  scrollbar-width: thin;
+}
+
+.tpl-tienda-tecno .tn-fila > * {
+  scroll-snap-align: start;
+}
+
+.tpl-tienda-tecno .tn-flecha {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  color: var(--tn-texto);
+  font-size: 1.3rem;
+  line-height: 1;
+  background: #fff;
+  border: 1px solid var(--tn-linea);
+  flex-shrink: 0;
+  box-shadow: 0 4px 14px -8px rgba(0, 0, 0, 0.4);
+}
+
+.tpl-tienda-tecno .tn-flecha:hover {
+  background: var(--tn-negro);
+  color: #fff;
+}
+
+.tpl-tienda-tecno .tn-carr-area {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.tpl-tienda-tecno .tn-fila-cabecera {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.tpl-tienda-tecno .tn-fila-cabecera .tn-titulo {
+  margin-bottom: 0;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+
+.tpl-tienda-tecno .tn-fila-cabecera a {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--tn-gris);
+}
+
+.tpl-tienda-tecno .tn-fila-cabecera a:hover {
+  color: var(--tn-rojo);
+}
+
+.tpl-tienda-tecno .tn-chat__msg {
+  max-width: 82%;
+  padding: 0.6rem 0.85rem;
+  border-radius: 10px;
+  font-size: 0.82rem;
+  line-height: 1.45;
+}
+
+.tpl-tienda-tecno .tn-chat__msg--bot {
+  background: var(--tn-fondo);
+  color: var(--tn-texto);
+  align-self: flex-start;
+}
+
+.tpl-tienda-tecno .tn-chat__msg--yo {
+  background: var(--tn-rojo);
+  color: #fff;
+  align-self: flex-end;
+}

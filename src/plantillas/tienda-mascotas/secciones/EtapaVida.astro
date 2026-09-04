@@ -1,0 +1,63 @@
+---
+import { etapaVida } from '../datos/mascotas.js';
+
+interface Item { titulo: string; img: string }
+---
+
+<section class="ms-seccion">
+  <div class="ms-wrap">
+    <h2 class="ms-titulo">Compras por etapa de vida</h2>
+    <div class="ms-etapa__grid">
+      {etapaVida.map((e: Item) => (
+        <a href="#ofertas" class="ms-etapa__card">
+          <img src={e.img} alt={e.titulo} loading="lazy" />
+          <div class="ms-etapa__overlay"></div>
+          <span>{e.titulo}</span>
+        </a>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .ms-etapa__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1.25rem;
+  }
+
+  .ms-etapa__card {
+    position: relative;
+    border-radius: 12px;
+    overflow: hidden;
+    height: 220px;
+  }
+
+  .ms-etapa__card img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+  }
+
+  .ms-etapa__card:hover img {
+    transform: scale(1.05);
+  }
+
+  .ms-etapa__overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(0, 0, 0, 0) 45%, rgba(0, 0, 0, 0.65) 100%);
+  }
+
+  .ms-etapa__card span {
+    position: absolute;
+    left: 1.1rem;
+    bottom: 1rem;
+    color: #fff;
+    font-size: 1.15rem;
+    font-weight: 800;
+  }
+</style>

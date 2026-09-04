@@ -1,0 +1,280 @@
+---
+import { marca } from '../datos/tecno.js';
+import Icono from '../componentes/Icono.astro';
+---
+
+<div class="tn-chat" id="tn-chat">
+  <button type="button" class="tn-chat__toggle" id="tn-chat-toggle" aria-label="Abrir opciones de ayuda" aria-expanded="false">
+    <Icono name="chat" size={24} />
+    <span class="tn-chat__i-close" aria-hidden="true">&times;</span>
+  </button>
+
+  <div class="tn-chat__fan" id="tn-chat-fan" hidden>
+    <button type="button" class="tn-chat__opcion" id="tn-chat-whatsapp">
+      <span class="tn-chat__opcion-ico tn-chat__opcion-ico--wsp"><Icono name="whatsapp" size={20} /></span>
+      Escribenos al WhatsApp
+    </button>
+    <button type="button" class="tn-chat__opcion" id="tn-chat-abrir">
+      <span class="tn-chat__opcion-ico"><Icono name="chat" size={18} /></span>
+      Chatea con nosotros
+    </button>
+  </div>
+
+  <section class="tn-chat__panel" id="tn-chat-panel" hidden aria-label="Chat de ayuda">
+    <header class="tn-chat__head">
+      <span class="tn-chat__ava" aria-hidden="true"><Icono name="carrito" size={16} /></span>
+      <div>
+        <b>Asistente {marca.nombre}</b>
+        <small>En linea</small>
+      </div>
+      <button type="button" class="tn-chat__cerrar-panel" id="tn-chat-cerrar-panel" aria-label="Cerrar chat">
+        <Icono name="cerrar" size={16} />
+      </button>
+    </header>
+
+    <div class="tn-chat__body" id="tn-chat-body">
+      <p class="tn-chat__msg tn-chat__msg--bot">Hola! Buscas audio, celulares, computo, gaming o smart home?</p>
+      <p class="tn-chat__msg tn-chat__msg--bot">Cuentame que necesitas y te ayudo a encontrarlo.</p>
+    </div>
+
+    <form class="tn-chat__form" id="tn-chat-form">
+      <input type="text" id="tn-chat-input" placeholder="Escribe aqui..." aria-label="Mensaje" autocomplete="off" />
+      <button type="submit" aria-label="Enviar">&#10148;</button>
+    </form>
+    <p class="tn-chat__pow">Demo &mdash; respuestas automaticas</p>
+  </section>
+</div>
+
+<script>
+  import { chatCanned } from '../datos/tecno.js';
+
+  const toggle = document.getElementById('tn-chat-toggle');
+  const fan = document.getElementById('tn-chat-fan');
+  const panel = document.getElementById('tn-chat-panel');
+  const abrirChatBtn = document.getElementById('tn-chat-abrir');
+  const cerrarPanelBtn = document.getElementById('tn-chat-cerrar-panel');
+  const whatsappBtn = document.getElementById('tn-chat-whatsapp');
+  const body = document.getElementById('tn-chat-body');
+  const form = document.getElementById('tn-chat-form');
+  const input = document.getElementById('tn-chat-input') as HTMLInputElement | null;
+  let paso = 0;
+
+  function abrirFan(v: boolean) {
+    if (!fan || !toggle) return;
+    fan.hidden = !v;
+    toggle.classList.toggle('is-open', v);
+    toggle.setAttribute('aria-expanded', String(v));
+  }
+
+  toggle?.addEventListener('click', () => abrirFan(fan?.hidden ?? true));
+
+  whatsappBtn?.addEventListener('click', () => {
+    abrirFan(false);
+  });
+
+  abrirChatBtn?.addEventListener('click', () => {
+    abrirFan(false);
+    if (panel) panel.hidden = false;
+    input?.focus();
+  });
+
+  cerrarPanelBtn?.addEventListener('click', () => {
+    if (panel) panel.hidden = true;
+  });
+
+  function push(texto: string, quien: 'bot' | 'yo') {
+    if (!body) return;
+    const p = document.createElement('p');
+    p.className = `tn-chat__msg tn-chat__msg--${quien}`;
+    p.textContent = texto;
+    body.appendChild(p);
+    body.scrollTop = body.scrollHeight;
+  }
+
+  form?.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const txt = (input?.value || '').trim();
+    if (!txt) return;
+    push(txt, 'yo');
+    if (input) input.value = '';
+    const reply = chatCanned[Math.min(paso, chatCanned.length - 1)];
+    paso++;
+    window.setTimeout(() => push(reply, 'bot'), 650);
+  });
+</script>
+
+<style>
+  .tn-chat {
+    position: fixed;
+    right: clamp(1rem, 3vw, 2rem);
+    bottom: clamp(1rem, 3vw, 2rem);
+    z-index: 120;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 0.75rem;
+  }
+
+  .tn-chat__toggle {
+    width: 54px;
+    height: 54px;
+    border-radius: 50%;
+    background: var(--tn-rojo);
+    color: #fff;
+    display: grid;
+    place-items: center;
+    box-shadow: 0 12px 30px -10px rgba(234, 0, 41, 0.6);
+    order: 3;
+  }
+
+  .tn-chat__i-close {
+    display: none;
+    font-size: 1.6rem;
+    line-height: 1;
+  }
+
+  .tn-chat__toggle.is-open :global(svg) { display: none; }
+  .tn-chat__toggle.is-open .tn-chat__i-close { display: block; }
+
+  .tn-chat__fan[hidden] {
+    display: none;
+  }
+
+  .tn-chat__fan {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    order: 2;
+  }
+
+  .tn-chat__opcion {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    background: #fff;
+    box-shadow: 0 12px 30px -14px rgba(0, 0, 0, 0.4);
+    padding: 0.7rem 1rem;
+    border-radius: 999px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--tn-texto);
+    white-space: nowrap;
+  }
+
+  .tn-chat__opcion-ico {
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    background: var(--tn-rojo);
+    color: #fff;
+    flex-shrink: 0;
+  }
+
+  .tn-chat__opcion-ico--wsp {
+    background: #25d366;
+  }
+
+  .tn-chat__panel[hidden] {
+    display: none;
+  }
+
+  .tn-chat__panel {
+    width: min(340px, 88vw);
+    background: #fff;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 24px 60px -16px rgba(0, 0, 0, 0.45);
+    display: flex;
+    flex-direction: column;
+    order: 1;
+  }
+
+  .tn-chat__head {
+    background: var(--tn-negro);
+    color: #fff;
+    padding: 0.9rem 1.1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+  }
+
+  .tn-chat__ava {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: var(--tn-rojo);
+    display: grid;
+    place-items: center;
+    flex-shrink: 0;
+  }
+
+  .tn-chat__head > div {
+    flex: 1;
+  }
+
+  .tn-chat__head b {
+    color: #fff;
+    font-size: 0.88rem;
+    display: block;
+  }
+
+  .tn-chat__head small {
+    font-size: 0.66rem;
+    opacity: 0.75;
+  }
+
+  .tn-chat__cerrar-panel {
+    color: #fff;
+    opacity: 0.7;
+  }
+
+  .tn-chat__body {
+    background: var(--tn-fondo);
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    max-height: 300px;
+    min-height: 170px;
+    overflow-y: auto;
+  }
+
+  .tn-chat__form {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.6rem;
+    border-top: 1px solid var(--tn-linea);
+  }
+
+  .tn-chat__form input {
+    flex: 1;
+    border: 1px solid var(--tn-linea);
+    border-radius: 999px;
+    padding: 0.55rem 0.9rem;
+    font-size: 0.8rem;
+    outline: none;
+  }
+
+  .tn-chat__form input:focus {
+    border-color: var(--tn-rojo);
+  }
+
+  .tn-chat__form button {
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    background: var(--tn-rojo);
+    color: #fff;
+    flex-shrink: 0;
+  }
+
+  .tn-chat__pow {
+    text-align: center;
+    font-size: 0.6rem;
+    color: var(--tn-gris-tenue);
+    padding: 0 0 0.6rem;
+  }
+</style>

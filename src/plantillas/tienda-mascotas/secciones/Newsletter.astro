@@ -1,0 +1,125 @@
+---
+import { IMG } from '../datos/mascotas.js';
+---
+
+<section class="ms-news">
+  <div class="ms-wrap ms-news__grid">
+    <div class="ms-news__foto">
+      <img src={IMG.gatitoCama} alt="Suscribete al newsletter" loading="lazy" />
+    </div>
+    <div class="ms-news__tx">
+      <h2>¿Quieres recibir ofertas en tu email?</h2>
+      <p>Unete a nuestra newsletter y recibiras toda la informacion sobre nuestros productos, promociones y campañas. Se el primero en enterarte de todo...</p>
+      <form id="ms-news-form">
+        <input type="email" placeholder="Email" aria-label="Email" required />
+        <button type="submit" class="ms-btn ms-btn--negro">¡Unete!</button>
+      </form>
+      <label class="ms-news__check">
+        <input type="checkbox" />
+        He leido y acepto la <a href="#footer">Politica de privacidad</a> y deseo recibir ofertas personalizadas para mi mascota.
+      </label>
+      <p class="ms-news__ok" id="ms-news-ok" hidden>¡Gracias por unirte! Revisa tu correo pronto.</p>
+    </div>
+  </div>
+</section>
+
+<script>
+  const form = document.getElementById('ms-news-form');
+  const ok = document.getElementById('ms-news-ok');
+  form?.addEventListener('submit', (e) => {
+    e.preventDefault();
+    form?.setAttribute('hidden', '');
+    ok?.removeAttribute('hidden');
+  });
+</script>
+
+<style>
+  .ms-news {
+    background: var(--ms-rojo);
+    color: #fff;
+  }
+
+  .ms-news__grid {
+    display: grid;
+    grid-template-columns: 1fr 1.1fr;
+    align-items: center;
+    gap: 2rem;
+    padding-block: 2.5rem;
+  }
+
+  .ms-news__foto {
+    border-radius: 12px;
+    overflow: hidden;
+    height: 280px;
+  }
+
+  .ms-news__foto img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .ms-news__tx h2 {
+    font-size: clamp(1.4rem, 2.6vw, 1.9rem);
+    font-weight: 800;
+    margin-bottom: 0.9rem;
+  }
+
+  .ms-news__tx > p {
+    font-size: 0.85rem;
+    opacity: 0.92;
+    max-width: 46ch;
+    margin-bottom: 1.25rem;
+  }
+
+  #ms-news-form {
+    display: flex;
+    gap: 0.7rem;
+    margin-bottom: 0.9rem;
+    flex-wrap: wrap;
+  }
+
+  #ms-news-form input {
+    flex: 1;
+    min-width: 220px;
+    padding: 0.7rem 1rem;
+    border-radius: 8px;
+    border: none;
+    font-size: 0.85rem;
+  }
+
+  .ms-news__check {
+    display: flex;
+    gap: 0.55rem;
+    font-size: 0.72rem;
+    line-height: 1.4;
+    opacity: 0.9;
+    align-items: flex-start;
+  }
+
+  .ms-news__check a {
+    text-decoration: underline;
+    font-weight: 700;
+  }
+
+  .ms-news__check input {
+    margin-top: 0.2rem;
+  }
+
+  .ms-news__ok {
+    font-size: 0.85rem;
+    font-weight: 700;
+    background: rgba(255, 255, 255, 0.15);
+    padding: 0.7rem 1rem;
+    border-radius: 8px;
+  }
+
+  @media (max-width: 780px) {
+    .ms-news__grid {
+      grid-template-columns: 1fr;
+    }
+    .ms-news__foto {
+      height: 200px;
+    }
+  }
+</style>

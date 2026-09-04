@@ -1,0 +1,155 @@
+---
+import { soles } from '../datos/tecno.js';
+
+interface Producto {
+  marca?: string;
+  nombre: string;
+  precio: number;
+  antes?: number | null;
+  dscto?: string | null;
+  img: string;
+}
+const { producto } = Astro.props as { producto: Producto };
+---
+
+<article class="tn-prod" data-nombre={producto.nombre.toLowerCase()} data-precio={producto.precio}>
+  <div class="tn-prod__media">
+    <img src={producto.img} alt={producto.nombre} loading="lazy" decoding="async" />
+  </div>
+  <div class="tn-prod__body">
+    {producto.marca && <span class="tn-prod__marca">{producto.marca}</span>}
+    <h3 class="tn-prod__nombre">{producto.nombre}</h3>
+    <div class="tn-prod__precios">
+      {producto.antes && <s>{soles(producto.antes)}</s>}
+      <div class="tn-prod__preciofila">
+        <b>{soles(producto.precio)}</b>
+        {producto.dscto && <span class="tn-prod__dscto">{producto.dscto}</span>}
+      </div>
+    </div>
+    <div class="tn-prod__qty" role="group" aria-label="Cantidad">
+      <button type="button" class="tn-qty__b" data-step="-1" aria-label="Quitar uno">-</button>
+      <span class="tn-qty__n">1</span>
+      <button type="button" class="tn-qty__b" data-step="1" aria-label="Agregar uno">+</button>
+    </div>
+    <button type="button" class="tn-btn tn-btn--negro tn-prod__add">Anadir al carrito</button>
+  </div>
+</article>
+
+<style>
+  .tn-prod[hidden] {
+    display: none;
+  }
+
+  .tn-prod {
+    display: flex;
+    flex-direction: column;
+    background: #fff;
+    border-radius: 4px;
+    overflow: hidden;
+    transition: box-shadow 0.15s ease, transform 0.15s ease;
+  }
+
+  .tn-prod:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 14px 30px -16px rgba(0, 0, 0, 0.35);
+  }
+
+  .tn-prod__media {
+    aspect-ratio: 1 / 1;
+    background: #fff;
+  }
+
+  .tn-prod__media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .tn-prod__body {
+    padding: 0.75rem 0.9rem 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    flex: 1;
+  }
+
+  .tn-prod__marca {
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    color: var(--tn-gris-tenue);
+    text-transform: uppercase;
+  }
+
+  .tn-prod__nombre {
+    font-weight: 500;
+    font-size: 0.82rem;
+    color: var(--tn-texto);
+    min-height: 2.3em;
+  }
+
+  .tn-prod__precios s {
+    color: var(--tn-gris-tenue);
+    font-size: 0.72rem;
+  }
+
+  .tn-prod__preciofila {
+    display: flex;
+    align-items: baseline;
+    gap: 0.5rem;
+  }
+
+  .tn-prod__preciofila b {
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: var(--tn-gris);
+  }
+
+  .tn-prod__dscto {
+    font-size: 0.7rem;
+    font-weight: 700;
+    color: var(--tn-verde);
+  }
+
+  .tn-prod__qty {
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+    margin-top: 0.15rem;
+  }
+
+  .tn-qty__b {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: var(--tn-fondo);
+    color: var(--tn-texto);
+    font-weight: 700;
+    line-height: 1;
+    display: grid;
+    place-items: center;
+  }
+
+  .tn-qty__b:hover {
+    background: var(--tn-rojo);
+    color: #fff;
+  }
+
+  .tn-qty__n {
+    min-width: 1.4ch;
+    text-align: center;
+    font-weight: 600;
+    font-size: 0.85rem;
+  }
+
+  .tn-prod__add {
+    margin-top: auto;
+    width: 100%;
+    font-size: 0.72rem;
+    padding-block: 0.6rem;
+  }
+
+  .tn-prod__add.is-ok {
+    background: var(--tn-rojo);
+  }
+</style>

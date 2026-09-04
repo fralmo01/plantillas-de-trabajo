@@ -1,0 +1,43 @@
+---
+import { productosCarrusel } from '../datos/mascotas.js';
+import TarjetaProducto from '../componentes/TarjetaProducto.astro';
+
+interface Producto { marca: string; nombre: string; precio: number; antes: number | null; dscto: string | null; img: string }
+---
+
+<section class="ms-seccion" id="bomba">
+  <div class="ms-wrap">
+    <div class="ms-fila-cabecera">
+      <h2 class="ms-titulo">Precios Bomba</h2>
+    </div>
+    <div class="ms-carr-area">
+      <button type="button" class="ms-flecha" data-dir="-1" aria-label="Anterior">‹</button>
+      <div class="ms-fila">
+        {productosCarrusel.map((p: Producto) => <TarjetaProducto producto={p} />)}
+      </div>
+      <button type="button" class="ms-flecha" data-dir="1" aria-label="Siguiente">›</button>
+    </div>
+  </div>
+</section>
+
+<script>
+  document.querySelectorAll<HTMLElement>('.ms-carr-area').forEach((area) => {
+    if (area.dataset.wired) return;
+    area.dataset.wired = '1';
+    const row = area.querySelector<HTMLElement>('.ms-fila');
+    area.querySelectorAll<HTMLButtonElement>('[data-dir]').forEach((b) => {
+      b.addEventListener('click', () => {
+        const dir = Number(b.dataset.dir || '1');
+        row?.scrollBy({ left: dir * 260, behavior: 'smooth' });
+      });
+    });
+  });
+</script>
+
+<style>
+  .ms-fila-cabecera {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+</style>
