@@ -1,0 +1,90 @@
+---
+import TarjetaProducto from './TarjetaProducto.astro';
+
+interface Producto {
+  nombre: string;
+  precio: number;
+  antes?: number;
+  tag?: string;
+  marca?: string;
+  img: string;
+}
+interface Tab { label: string; productos: Producto[] }
+const { id, titulo, tabs, boton } = Astro.props as { id: string; titulo: string; tabs: Tab[]; boton?: string };
+---
+
+<div class="tb-grillatabs" id={id}>
+  <div class="tb-grillatabs__head">
+    <h2 class="tb-titulo">{titulo}</h2>
+    {boton && <a href="#footer" class="tb-btn tb-btn--negro">{boton}</a>}
+  </div>
+
+  <div class="tb-tabs" data-tabs={id}>
+    {tabs.map((tb, i) => (
+      <button type="button" class={i === 0 ? 'is-on' : ''} data-tab={`${id}-${i}`}>{tb.label}</button>
+    ))}
+  </div>
+
+  {tabs.map((tb, i) => (
+    <div class="tb-grillatabs__grid" data-panel={`${id}-${i}`} hidden={i !== 0}>
+      {tb.productos.map((p: Producto) => <TarjetaProducto producto={p} />)}
+    </div>
+  ))}
+</div>
+
+<script>
+  document.querySelectorAll<HTMLElement>('.tb-grillatabs').forEach((box) => {
+    if (box.dataset.wired) return;
+    box.dataset.wired = '1';
+    const id = box.id;
+    const botones = Array.from(box.querySelectorAll<HTMLButtonElement>(`[data-tabs="${id}"] button`));
+    botones.forEach((b) => {
+      b.addEventListener('click', () => {
+        botones.forEach((x) => x.classList.toggle('is-on', x === b));
+        box.querySelectorAll<HTMLElement>('.tb-grillatabs__grid').forEach((panel) => {
+          panel.hidden = panel.dataset.panel !== b.dataset.tab;
+        });
+      });
+    });
+  });
+</script>
+
+<style>
+  .tb-grillatabs__head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 0;
+  }
+
+  .tb-grillatabs__head .tb-titulo {
+    margin-bottom: 0;
+  }
+
+  .tb-tabs {
+    margin-top: 1rem;
+  }
+
+  .tb-grillatabs__grid[hidden] {
+    display: none;
+  }
+
+  .tb-grillatabs__grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.25rem;
+  }
+
+  @media (max-width: 900px) {
+    .tb-grillatabs__grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 520px) {
+    .tb-grillatabs__grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

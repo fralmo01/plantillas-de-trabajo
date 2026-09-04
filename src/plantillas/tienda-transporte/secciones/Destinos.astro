@@ -1,0 +1,113 @@
+---
+import { destinos, soles } from '../datos/transporte.js';
+
+interface Destino { ciudad: string; precio: number; img: string }
+const lista = destinos as Destino[];
+---
+
+<section class="tt-seccion tt-wrap" id="destinos">
+  <div class="tt-seccion-cabecera">
+    <h2 class="tt-titulo">Descubre mas destinos</h2>
+  </div>
+
+  <div class="tt-carr-area">
+    <button type="button" class="tt-flecha" data-dir="-1" aria-label="Anterior">&lsaquo;</button>
+    <div class="tt-fila" id="tt-dest-row">
+      {lista.map((d) => (
+        <article class="tt-destino">
+          <img src={d.img} alt={d.ciudad} loading="lazy" />
+          <div class="tt-destino__overlay"></div>
+          <div class="tt-destino__tx">
+            <span>Descubre la magia de</span>
+            <b>{d.ciudad}</b>
+            <p>Pasajes desde: <strong>{soles(d.precio)}</strong></p>
+            <a href="#top" class="tt-btn tt-btn--outline">Conoce mas</a>
+          </div>
+        </article>
+      ))}
+    </div>
+    <button type="button" class="tt-flecha" data-dir="1" aria-label="Siguiente">&rsaquo;</button>
+  </div>
+
+  <div class="tt-destinos__cta">
+    <a href="#servicios" class="tt-btn tt-btn--naranja">Ver todos los destinos</a>
+  </div>
+</section>
+
+<script>
+  const row = document.getElementById('tt-dest-row');
+  const area = row?.closest('.tt-carr-area');
+  area?.querySelectorAll<HTMLButtonElement>('[data-dir]').forEach((b) => {
+    b.addEventListener('click', () => {
+      const dir = Number(b.dataset.dir || '1');
+      row?.scrollBy({ left: dir * 300, behavior: 'smooth' });
+    });
+  });
+</script>
+
+<style>
+  #tt-dest-row {
+    grid-auto-columns: minmax(260px, 1fr);
+  }
+
+  .tt-destino {
+    position: relative;
+    aspect-ratio: 3 / 4;
+    border-radius: 12px;
+    overflow: hidden;
+  }
+
+  .tt-destino img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+  }
+
+  .tt-destino:hover img {
+    transform: scale(1.06);
+  }
+
+  .tt-destino__overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(0deg, rgba(0, 0, 0, 0.85) 15%, rgba(0, 0, 0, 0.05) 60%);
+  }
+
+  .tt-destino__tx {
+    position: absolute;
+    left: 1rem;
+    right: 1rem;
+    bottom: 1rem;
+    color: #fff;
+  }
+
+  .tt-destino__tx span {
+    font-size: 0.72rem;
+    color: #ddd;
+  }
+
+  .tt-destino__tx b {
+    display: block;
+    font-size: 1.35rem;
+    margin: 0.1rem 0 0.6rem;
+  }
+
+  .tt-destino__tx p {
+    font-size: 0.75rem;
+    color: #ddd;
+    margin-bottom: 0.75rem;
+  }
+
+  .tt-destino__tx strong {
+    font-size: 1rem;
+    color: #fff;
+  }
+
+  .tt-destinos__cta {
+    text-align: center;
+    margin-top: 2rem;
+  }
+</style>

@@ -1,0 +1,16 @@
+---
+import { novedadesPorMarca } from '../datos/juguetes.js';
+import FilaCarrusel from '../componentes/FilaCarrusel.astro';
+
+interface Producto { nombre: string; precio: number; img: string }
+interface Fila { marca: string; productos: Producto[] }
+const filas = novedadesPorMarca as Fila[];
+---
+
+<section class="tj-seccion tj-wrap" id="novedades">
+  {filas.map((f, i) => (
+    <div class="tj-novedades__fila" style={i > 0 ? 'margin-top: 2.5rem' : ''}>
+      <FilaCarrusel titulo={f.marca} productos={f.productos} icono={i === 0 ? 'cohete' : 'fiesta'} />
+    </div>
+  ))}
+</section>

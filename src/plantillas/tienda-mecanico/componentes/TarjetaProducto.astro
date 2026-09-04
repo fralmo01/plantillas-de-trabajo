@@ -1,0 +1,138 @@
+---
+import { soles } from '../datos/mecanico.js';
+
+interface Producto {
+  nombre: string;
+  codigo: string;
+  precio: number;
+  img: string;
+}
+const { producto } = Astro.props as { producto: Producto };
+---
+
+<article class="tm-prod" data-nombre={producto.nombre.toLowerCase()} data-precio={producto.precio}>
+  <div class="tm-prod__media">
+    <img src={producto.img} alt={producto.nombre} loading="lazy" decoding="async" />
+  </div>
+  <div class="tm-prod__body">
+    <h3 class="tm-prod__nombre">{producto.nombre}</h3>
+    <span class="tm-prod__codigo">{producto.codigo}</span>
+    <p class="tm-prod__precio">{soles(producto.precio)}</p>
+    <div class="tm-prod__qty" role="group" aria-label="Cantidad">
+      <button type="button" class="tm-qty__b" data-step="-1" aria-label="Quitar uno">-</button>
+      <span class="tm-qty__n">1</span>
+      <button type="button" class="tm-qty__b" data-step="1" aria-label="Agregar uno">+</button>
+    </div>
+    <button type="button" class="tm-btn tm-btn--outline tm-prod__add">Anadir</button>
+  </div>
+</article>
+
+<style>
+  .tm-prod[hidden] {
+    display: none;
+  }
+
+  .tm-prod {
+    display: flex;
+    flex-direction: column;
+    background: #fff;
+    color: var(--tm-negro);
+    border-radius: 14px;
+    overflow: hidden;
+    transition: box-shadow 0.15s ease, transform 0.15s ease;
+  }
+
+  .tm-prod:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 18px 40px -18px rgba(0, 0, 0, 0.6);
+  }
+
+  .tm-prod__media {
+    aspect-ratio: 1 / 1;
+    display: grid;
+    place-items: center;
+    padding: 1.25rem;
+  }
+
+  .tm-prod__media img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+
+  .tm-prod__body {
+    padding: 0 1.1rem 1.25rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 0.4rem;
+    flex: 1;
+  }
+
+  .tm-prod__nombre {
+    font-family: var(--tm-font);
+    text-transform: none;
+    font-size: 0.92rem;
+    font-weight: 700;
+    color: var(--tm-negro);
+    min-height: 2.4em;
+  }
+
+  .tm-prod__codigo {
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--tm-naranja-osc);
+  }
+
+  .tm-prod__precio {
+    font-size: 1rem;
+    font-weight: 800;
+    color: var(--tm-negro);
+    margin-top: 0.15rem;
+  }
+
+  .tm-prod__qty {
+    display: flex;
+    align-items: center;
+    gap: 0.9rem;
+    margin-top: 0.3rem;
+  }
+
+  .tm-qty__b {
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    background: #f1f1f1;
+    color: var(--tm-negro);
+    font-weight: 700;
+    line-height: 1;
+    display: grid;
+    place-items: center;
+  }
+
+  .tm-qty__b:hover {
+    background: var(--tm-naranja);
+    color: #fff;
+  }
+
+  .tm-qty__n {
+    min-width: 1.4ch;
+    text-align: center;
+    font-weight: 700;
+  }
+
+  .tm-prod__add {
+    margin-top: 0.4rem;
+    width: 100%;
+    border-color: var(--tm-negro) !important;
+    color: var(--tm-negro) !important;
+  }
+
+  .tm-prod__add:hover,
+  .tm-prod__add.is-ok {
+    background: var(--tm-naranja) !important;
+    border-color: var(--tm-naranja) !important;
+    color: #fff !important;
+  }
+</style>

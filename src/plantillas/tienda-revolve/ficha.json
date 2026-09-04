@@ -7,7 +7,7 @@
   "tags": ["moda", "lujo", "marketplace", "ecommerce", "mega-menu", "multipagina", "disenadores"],
   "paleta": ["#111111", "#faf9f7", "#767676", "#b1261f"],
   "destacada": false,
-  "nuevo": true,
+  "nuevo": false,
   "inspiradoEn": "revolveclothing.es",
   "orden": 40
 }

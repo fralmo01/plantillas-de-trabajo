@@ -1,0 +1,49 @@
+---
+import { marcasChip } from '../datos/barberia.js';
+---
+
+<div class="tb-marcas" aria-label="Marcas disponibles">
+  <div class="tb-wrap">
+    <div class="tb-marcas__track">
+      {[...marcasChip, ...marcasChip].map((m: string) => (
+        <span class="tb-marcas__item">{m}</span>
+      ))}
+    </div>
+  </div>
+</div>
+
+<style>
+  .tb-marcas {
+    padding-block: 1.75rem;
+    border-bottom: 1px solid var(--tb-linea);
+    overflow: hidden;
+  }
+
+  .tb-marcas__track {
+    display: flex;
+    align-items: center;
+    gap: 3rem;
+    width: max-content;
+    animation: tb-marcas-scroll 32s linear infinite;
+  }
+
+  .tb-marcas__item {
+    font-family: var(--tb-titulos);
+    font-size: 1.1rem;
+    letter-spacing: 0.05em;
+    color: var(--tb-gris-osc);
+    white-space: nowrap;
+  }
+
+  @keyframes tb-marcas-scroll {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .tb-marcas__track {
+      animation: none;
+      flex-wrap: wrap;
+    }
+  }
+</style>

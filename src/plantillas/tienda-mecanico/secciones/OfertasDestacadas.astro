@@ -1,0 +1,166 @@
+---
+import { ofertasDestacadas, soles } from '../datos/mecanico.js';
+
+interface Oferta {
+  tag: string;
+  marca: string;
+  nombre: string;
+  detalle: string;
+  regalo: string | null;
+  precio: number;
+  antes: number | null;
+  img: string;
+}
+const ofertas = ofertasDestacadas as Oferta[];
+---
+
+<section class="tm-seccion tm-wrap" id="ofertas">
+  <a href="#productos" class="tm-cats__pill">Aprovecha los descuentos</a>
+
+  <div class="tm-ofertas">
+    {ofertas.map((o) => (
+      <article class="tm-oferta">
+        <div class="tm-oferta__media">
+          <img src={o.img} alt={o.nombre} loading="lazy" />
+          <div class="tm-oferta__overlay"></div>
+          <span class="tm-oferta__tag">{o.tag}</span>
+          <div class="tm-oferta__info">
+            <b class="tm-oferta__marca">{o.marca}</b>
+            <span class="tm-oferta__nombre">{o.nombre}</span>
+            <small>{o.detalle}</small>
+          </div>
+          {o.regalo && <span class="tm-oferta__regalo">{o.regalo}</span>}
+          <div class="tm-oferta__precio">
+            {o.antes && <s>{soles(o.antes)}</s>}
+            <b>{soles(o.precio)}</b>
+          </div>
+        </div>
+        <a href="#nosotros" class="tm-btn tm-btn--outline tm-oferta__btn">Obtener Oferta</a>
+      </article>
+    ))}
+  </div>
+</section>
+
+<style>
+  .tm-ofertas {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+  }
+
+  .tm-oferta {
+    display: flex;
+    flex-direction: column;
+    gap: 0.9rem;
+  }
+
+  .tm-oferta__media {
+    position: relative;
+    aspect-ratio: 4 / 5;
+    border-radius: 10px;
+    overflow: hidden;
+  }
+
+  .tm-oferta__media img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .tm-oferta__overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(0deg, rgba(0, 0, 0, 0.85) 10%, rgba(0, 0, 0, 0.1) 45%, rgba(0, 0, 0, 0.55) 100%);
+  }
+
+  .tm-oferta__tag {
+    position: absolute;
+    top: 0.9rem;
+    left: 0.9rem;
+    right: 0.9rem;
+    background: var(--tm-naranja);
+    color: #fff;
+    font-family: var(--tm-titulos);
+    font-size: 0.78rem;
+    letter-spacing: 0.02em;
+    padding: 0.35rem 0.7rem;
+    text-align: center;
+    border-radius: 3px;
+  }
+
+  .tm-oferta__info {
+    position: absolute;
+    left: 0.9rem;
+    right: 0.9rem;
+    top: 3.5rem;
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+  }
+
+  .tm-oferta__marca {
+    font-size: 0.75rem;
+    color: var(--tm-naranja);
+    letter-spacing: 0.05em;
+  }
+
+  .tm-oferta__nombre {
+    font-family: var(--tm-titulos);
+    font-size: 1.15rem;
+    line-height: 1.15;
+  }
+
+  .tm-oferta__info small {
+    text-transform: none;
+    font-size: 0.7rem;
+    color: #ddd;
+  }
+
+  .tm-oferta__regalo {
+    position: absolute;
+    left: 0.9rem;
+    bottom: 3.5rem;
+    background: #fff;
+    color: var(--tm-negro);
+    font-size: 0.66rem;
+    font-weight: 800;
+    padding: 0.25rem 0.6rem;
+    border-radius: 3px;
+    letter-spacing: 0.03em;
+  }
+
+  .tm-oferta__precio {
+    position: absolute;
+    left: 0.9rem;
+    right: 0.9rem;
+    bottom: 0.9rem;
+    display: flex;
+    align-items: baseline;
+    gap: 0.6rem;
+    color: #fff;
+  }
+
+  .tm-oferta__precio s {
+    font-size: 0.85rem;
+    color: #bbb;
+  }
+
+  .tm-oferta__precio b {
+    font-family: var(--tm-titulos);
+    font-size: 1.9rem;
+    color: var(--tm-naranja);
+  }
+
+  .tm-oferta__btn {
+    width: 100%;
+  }
+
+  @media (max-width: 900px) {
+    .tm-ofertas {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

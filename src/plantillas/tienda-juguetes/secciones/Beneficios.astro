@@ -1,0 +1,71 @@
+---
+import { beneficios } from '../datos/juguetes.js';
+import Icono from '../componentes/Icono.astro';
+---
+
+<section class="tj-benef tj-wrap" aria-label="Beneficios de la tienda">
+  <ul class="tj-benef__lista">
+    {beneficios.map((b: { t: string; d: string; ico: string; color: string }) => (
+      <li>
+        <span class={`tj-benef__ico tj-benef__ico--${b.color}`} aria-hidden="true"><Icono name={b.ico} /></span>
+        <div>
+          <b>{b.t}</b>
+          <p>{b.d}</p>
+        </div>
+      </li>
+    ))}
+  </ul>
+</section>
+
+<style>
+  .tj-benef {
+    padding-block: 1.25rem;
+  }
+
+  .tj-benef__lista {
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+  }
+
+  .tj-benef__lista li {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .tj-benef__ico {
+    width: 46px;
+    height: 46px;
+    flex-shrink: 0;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    font-size: 1.25rem;
+    color: #fff;
+  }
+
+  .tj-benef__ico--verde { background: var(--tj-verde); }
+  .tj-benef__ico--oro { background: var(--tj-oro); }
+  .tj-benef__ico--terracota { background: var(--tj-terracota); }
+  .tj-benef__ico--rosa { background: var(--tj-rosa); }
+
+  .tj-benef__lista b {
+    display: block;
+    font-size: 0.82rem;
+    font-weight: 800;
+  }
+
+  .tj-benef__lista p {
+    font-size: 0.76rem;
+    color: var(--tj-gris);
+  }
+
+  @media (max-width: 820px) {
+    .tj-benef__lista {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.25rem 1rem;
+    }
+  }
+</style>

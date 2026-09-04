@@ -1,0 +1,201 @@
+@import url("https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap");
+
+.tpl-tienda-transporte {
+  --tt-naranja: #f2691f;
+  --tt-naranja-osc: #d6520f;
+  --tt-negro: #1c1c1c;
+  --tt-gris-osc: #474747;
+  --tt-gris: #6f6f6f;
+  --tt-gris-claro: #f4f4f4;
+  --tt-linea: #e6e6e6;
+  --tt-blanco: #fff;
+
+  --tt-font: "Manrope", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+  --tt-maxw: 1280px;
+
+  background: #fff;
+  color: var(--tt-negro);
+  font-family: var(--tt-font);
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+}
+
+.tpl-tienda-transporte *,
+.tpl-tienda-transporte *::before,
+.tpl-tienda-transporte *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+.tpl-tienda-transporte h1,
+.tpl-tienda-transporte h2,
+.tpl-tienda-transporte h3,
+.tpl-tienda-transporte h4 {
+  line-height: 1.15;
+  color: var(--tt-negro);
+  font-weight: 800;
+}
+
+.tpl-tienda-transporte img {
+  max-width: 100%;
+  display: block;
+}
+
+.tpl-tienda-transporte a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.tpl-tienda-transporte button {
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+  border: none;
+  background: none;
+}
+
+.tpl-tienda-transporte input,
+.tpl-tienda-transporte select {
+  font: inherit;
+}
+
+.tpl-tienda-transporte .tt-wrap {
+  max-width: var(--tt-maxw);
+  margin-inline: auto;
+  padding-inline: clamp(1rem, 3vw, 2rem);
+}
+
+.tpl-tienda-transporte .tt-seccion {
+  padding-block: clamp(2.25rem, 5vw, 3.75rem);
+}
+
+.tpl-tienda-transporte .tt-titulo {
+  font-size: clamp(1.4rem, 3.2vw, 2rem);
+  font-weight: 800;
+  margin-bottom: 1.75rem;
+}
+
+.tpl-tienda-transporte .tt-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.8rem 1.75rem;
+  font-weight: 700;
+  font-size: 0.85rem;
+  border-radius: 999px;
+  transition: background 0.15s ease, color 0.15s ease, transform 0.15s ease;
+}
+
+.tpl-tienda-transporte .tt-btn:hover {
+  transform: translateY(-2px);
+}
+
+.tpl-tienda-transporte .tt-btn--naranja {
+  background: var(--tt-naranja);
+  color: #fff;
+}
+
+.tpl-tienda-transporte .tt-btn--naranja:hover {
+  background: var(--tt-naranja-osc);
+}
+
+.tpl-tienda-transporte .tt-btn--outline {
+  border: 1.5px solid #fff;
+  color: #fff;
+  background: transparent;
+}
+
+.tpl-tienda-transporte .tt-btn--outline:hover {
+  background: #fff;
+  color: var(--tt-negro);
+}
+
+.tpl-tienda-transporte .tt-btn--outline-dark {
+  border: 1.5px solid var(--tt-negro);
+  color: var(--tt-negro);
+  background: transparent;
+}
+
+.tpl-tienda-transporte .tt-btn--outline-dark:hover {
+  background: var(--tt-negro);
+  color: #fff;
+}
+
+.tpl-tienda-transporte .tt-fila {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(230px, 1fr);
+  gap: 1.25rem;
+  overflow-x: auto;
+  scroll-snap-type: x proximity;
+  padding-bottom: 0.5rem;
+  scrollbar-width: thin;
+}
+
+.tpl-tienda-transporte .tt-fila > * {
+  scroll-snap-align: start;
+}
+
+.tpl-tienda-transporte .tt-flecha {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  color: var(--tt-negro);
+  font-size: 1.4rem;
+  line-height: 1;
+  background: #fff;
+  border: 1.5px solid var(--tt-linea);
+  flex-shrink: 0;
+  box-shadow: 0 6px 18px -10px rgba(0, 0, 0, 0.4);
+}
+
+.tpl-tienda-transporte .tt-flecha:hover {
+  background: var(--tt-naranja);
+  border-color: var(--tt-naranja);
+  color: #fff;
+}
+
+.tpl-tienda-transporte .tt-carr-area {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.tpl-tienda-transporte .tt-seccion-cabecera {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.tpl-tienda-transporte .tt-seccion-cabecera .tt-titulo {
+  margin-bottom: 0;
+}
+
+.tpl-tienda-transporte .tt-chat__msg {
+  max-width: 82%;
+  padding: 0.6rem 0.85rem;
+  border-radius: 12px;
+  font-size: 0.82rem;
+  line-height: 1.45;
+}
+
+.tpl-tienda-transporte .tt-chat__msg--bot {
+  background: var(--tt-gris-claro);
+  color: var(--tt-negro);
+  align-self: flex-start;
+  border-bottom-left-radius: 3px;
+}
+
+.tpl-tienda-transporte .tt-chat__msg--yo {
+  background: var(--tt-naranja);
+  color: #fff;
+  align-self: flex-end;
+  border-bottom-right-radius: 3px;
+}

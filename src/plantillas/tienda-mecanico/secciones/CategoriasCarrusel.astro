@@ -1,0 +1,81 @@
+---
+import { categorias } from '../datos/mecanico.js';
+import Icono from '../componentes/Icono.astro';
+---
+
+<section class="tm-seccion tm-wrap" id="categorias">
+  <a href="#productos" class="tm-cats__pill">Categorias</a>
+
+  <div class="tm-carr-area tm-cats__area">
+    <button type="button" class="tm-flecha tm-cats__prev" data-dir="-1" aria-label="Anterior">&lsaquo;</button>
+    <div class="tm-fila tm-cats__row" id="tm-cats-row">
+      {categorias.map((c: { t: string; ico: string }) => (
+        <a href="#productos" class="tm-cats__item">
+          <span class="tm-cats__circulo" aria-hidden="true"><Icono name={c.ico} /></span>
+          <span class="tm-cats__lbl">{c.t}</span>
+        </a>
+      ))}
+    </div>
+    <button type="button" class="tm-flecha tm-cats__next" data-dir="1" aria-label="Siguiente">&rsaquo;</button>
+  </div>
+</section>
+
+<script>
+  const row = document.getElementById('tm-cats-row');
+  const area = row?.closest('.tm-cats__area');
+  area?.querySelectorAll<HTMLButtonElement>('[data-dir]').forEach((b) => {
+    b.addEventListener('click', () => {
+      const dir = Number(b.dataset.dir || '1');
+      row?.scrollBy({ left: dir * 320, behavior: 'smooth' });
+    });
+  });
+</script>
+
+<style>
+  .tm-cats__pill {
+    display: inline-flex;
+    background: #fff;
+    color: var(--tm-negro);
+    font-weight: 700;
+    font-size: 0.85rem;
+    padding: 0.65rem 1.5rem;
+    border-radius: 6px;
+    margin-bottom: 2rem;
+  }
+
+  .tm-cats__row {
+    grid-auto-columns: 140px;
+  }
+
+  .tm-cats__item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.9rem;
+    text-align: center;
+  }
+
+  .tm-cats__circulo {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    border: 1.5px solid var(--tm-linea);
+    display: grid;
+    place-items: center;
+    font-size: 2rem;
+    transition: border-color 0.15s ease, background 0.15s ease;
+  }
+
+  .tm-cats__item:hover .tm-cats__circulo {
+    border-color: var(--tm-naranja);
+    background: rgba(244, 124, 32, 0.1);
+  }
+
+  .tm-cats__lbl {
+    font-size: 0.76rem;
+    font-weight: 600;
+    color: #ddd;
+    text-transform: none;
+    letter-spacing: 0;
+  }
+</style>

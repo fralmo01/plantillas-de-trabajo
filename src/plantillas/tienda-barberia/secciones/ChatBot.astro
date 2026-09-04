@@ -1,0 +1,209 @@
+---
+import { marca } from '../datos/barberia.js';
+---
+
+<div class="tb-chat" id="tb-chat">
+  <button type="button" class="tb-chat__toggle" id="tb-chat-toggle" aria-label="Abrir chat de ayuda" aria-expanded="false">
+    <svg class="tb-chat__i-open" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <path d="M21 15a4 4 0 0 1-4 4H8l-5 3V6a4 4 0 0 1 4-4h10a4 4 0 0 1 4 4z"></path>
+    </svg>
+    <span class="tb-chat__i-close" aria-hidden="true">&times;</span>
+  </button>
+
+  <section class="tb-chat__panel" id="tb-chat-panel" hidden aria-label="Chat de ayuda">
+    <header class="tb-chat__head">
+      <span class="tb-chat__ava" aria-hidden="true">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="6" cy="6" r="2.3"></circle>
+          <circle cx="6" cy="18" r="2.3"></circle>
+          <path d="M20 6 7.5 13.5M20 18 7.5 10.5"></path>
+        </svg>
+      </span>
+      <div>
+        <b>Asistente {marca.nombre}</b>
+        <small>En linea</small>
+      </div>
+    </header>
+
+    <div class="tb-chat__body" id="tb-chat-body">
+      <p class="tb-chat__msg tb-chat__msg--bot">Hola! Buscas maquinas, ceras, accesorios o sillas de barberia?</p>
+      <p class="tb-chat__msg tb-chat__msg--bot">Cuentame que necesitas y te ayudo a encontrarlo.</p>
+    </div>
+
+    <form class="tb-chat__form" id="tb-chat-form">
+      <input type="text" id="tb-chat-input" placeholder="Escribe aqui..." aria-label="Mensaje" autocomplete="off" />
+      <button type="submit" aria-label="Enviar">&#10148;</button>
+    </form>
+    <p class="tb-chat__pow">Demo &mdash; respuestas automaticas</p>
+  </section>
+</div>
+
+<script>
+  import { chatCanned } from '../datos/barberia.js';
+
+  const toggle = document.getElementById('tb-chat-toggle');
+  const panel = document.getElementById('tb-chat-panel');
+  const body = document.getElementById('tb-chat-body');
+  const form = document.getElementById('tb-chat-form');
+  const input = document.getElementById('tb-chat-input') as HTMLInputElement | null;
+  let paso = 0;
+
+  function abrir(v: boolean) {
+    if (!panel || !toggle) return;
+    panel.hidden = !v;
+    toggle.classList.toggle('is-open', v);
+    toggle.setAttribute('aria-expanded', String(v));
+    if (v) input?.focus();
+  }
+
+  toggle?.addEventListener('click', () => abrir(panel?.hidden ?? true));
+
+  function push(texto: string, quien: 'bot' | 'yo') {
+    if (!body) return;
+    const p = document.createElement('p');
+    p.className = `tb-chat__msg tb-chat__msg--${quien}`;
+    p.textContent = texto;
+    body.appendChild(p);
+    body.scrollTop = body.scrollHeight;
+  }
+
+  form?.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const txt = (input?.value || '').trim();
+    if (!txt) return;
+    push(txt, 'yo');
+    if (input) input.value = '';
+    const reply = chatCanned[Math.min(paso, chatCanned.length - 1)];
+    paso++;
+    window.setTimeout(() => push(reply, 'bot'), 650);
+  });
+</script>
+
+<style>
+  .tb-chat {
+    position: fixed;
+    right: clamp(1rem, 3vw, 2rem);
+    bottom: clamp(1rem, 3vw, 2rem);
+    z-index: 120;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 0.75rem;
+  }
+
+  .tb-chat__toggle {
+    width: 54px;
+    height: 54px;
+    border-radius: 50%;
+    background: var(--tb-negro);
+    color: #fff;
+    display: grid;
+    place-items: center;
+    box-shadow: 0 12px 30px -10px rgba(0, 0, 0, 0.6);
+    order: 2;
+    border: 2px solid var(--tb-dorado);
+  }
+
+  .tb-chat__i-close {
+    display: none;
+    font-size: 1.6rem;
+    line-height: 1;
+  }
+
+  .tb-chat__toggle.is-open .tb-chat__i-open { display: none; }
+  .tb-chat__toggle.is-open .tb-chat__i-close { display: block; }
+
+  .tb-chat__panel[hidden] {
+    display: none;
+  }
+
+  .tb-chat__panel {
+    width: min(340px, 88vw);
+    background: #fff;
+    overflow: hidden;
+    box-shadow: 0 24px 60px -16px rgba(0, 0, 0, 0.45);
+    display: flex;
+    flex-direction: column;
+    order: 1;
+  }
+
+  .tb-chat__head {
+    background: var(--tb-negro);
+    color: #fff;
+    padding: 0.9rem 1.1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+  }
+
+  .tb-chat__ava {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: var(--tb-dorado);
+    color: var(--tb-negro);
+    display: grid;
+    place-items: center;
+    font-size: 1rem;
+  }
+
+  .tb-chat__head b {
+    color: #fff;
+    font-size: 0.9rem;
+    display: block;
+    font-family: var(--tb-font);
+    text-transform: none;
+  }
+
+  .tb-chat__head small {
+    font-size: 0.68rem;
+    opacity: 0.75;
+  }
+
+  .tb-chat__body {
+    background: var(--tb-crema);
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    max-height: 320px;
+    min-height: 180px;
+    overflow-y: auto;
+  }
+
+  .tb-chat__form {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.6rem;
+    border-top: 1px solid var(--tb-linea);
+  }
+
+  .tb-chat__form input {
+    flex: 1;
+    border: 1px solid var(--tb-linea);
+    padding: 0.55rem 0.9rem;
+    font-size: 0.82rem;
+    outline: none;
+  }
+
+  .tb-chat__form input:focus {
+    border-color: var(--tb-negro);
+  }
+
+  .tb-chat__form button {
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    background: var(--tb-negro);
+    color: #fff;
+    flex-shrink: 0;
+  }
+
+  .tb-chat__pow {
+    text-align: center;
+    font-size: 0.6rem;
+    color: var(--tb-gris);
+    padding: 0 0 0.6rem;
+  }
+</style>

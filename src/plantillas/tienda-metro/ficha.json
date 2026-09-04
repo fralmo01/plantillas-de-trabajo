@@ -7,7 +7,7 @@
   "tags": ["supermercado", "hipermercado", "ecommerce", "mega-menu", "cuotas", "delivery", "carrito"],
   "paleta": ["#ffd100", "#e4032e", "#1a1a1a", "#f7f7f7"],
   "destacada": false,
-  "nuevo": true,
+  "nuevo": false,
   "inspiradoEn": "metro.pe",
   "orden": 18
 }

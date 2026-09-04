@@ -1,0 +1,113 @@
+---
+---
+
+<section class="tb-news">
+  <div class="tb-wrap tb-news__inner">
+    <h2>Mantente Informado</h2>
+    <p>Se el primero en enterarte de nuestras ofertas y novedades.</p>
+    <form class="tb-news__form" id="tb-news-form">
+      <label class="tb-news__check">
+        <input type="checkbox" id="tb-news-check" required />
+        Acepto la politica de suscripcion al newsletter.
+      </label>
+      <div class="tb-news__row">
+        <input type="email" required placeholder="Tu email" aria-label="Correo electronico" />
+        <button type="submit" aria-label="Suscribirme">&rarr;</button>
+      </div>
+    </form>
+    <p class="tb-news__ok" id="tb-news-ok" hidden>Listo, te avisaremos de cada novedad.</p>
+  </div>
+</section>
+
+<script>
+  const f = document.getElementById('tb-news-form');
+  const ok = document.getElementById('tb-news-ok');
+  f?.addEventListener('submit', (e) => {
+    e.preventDefault();
+    (f as HTMLFormElement).reset();
+    if (ok) ok.hidden = false;
+  });
+</script>
+
+<style>
+  .tb-news {
+    background: var(--tb-negro);
+    color: #fff;
+    padding-block: clamp(2.5rem, 6vw, 4rem);
+  }
+
+  .tb-news__inner {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .tb-news__inner h2 {
+    color: #fff;
+    font-size: clamp(1.8rem, 4vw, 2.6rem);
+  }
+
+  .tb-news__inner > p {
+    text-transform: none;
+    color: rgba(255, 255, 255, 0.75);
+    font-size: 0.92rem;
+  }
+
+  .tb-news__form {
+    margin-top: 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.9rem;
+    width: 100%;
+    max-width: 380px;
+  }
+
+  .tb-news__check {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.76rem;
+    color: rgba(255, 255, 255, 0.75);
+    text-align: left;
+  }
+
+  .tb-news__row {
+    display: flex;
+    width: 100%;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.35);
+  }
+
+  .tb-news__row input {
+    flex: 1;
+    background: transparent;
+    border: none;
+    color: #fff;
+    padding: 0.6rem 0;
+    font-size: 0.95rem;
+    outline: none;
+  }
+
+  .tb-news__row input::placeholder {
+    color: rgba(255, 255, 255, 0.5);
+  }
+
+  .tb-news__row button {
+    color: #fff;
+    font-size: 1.2rem;
+    padding: 0 0.5rem;
+  }
+
+  .tb-news__row button:hover {
+    color: var(--tb-dorado);
+  }
+
+  .tb-news__ok {
+    text-transform: none;
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: var(--tb-dorado);
+  }
+</style>

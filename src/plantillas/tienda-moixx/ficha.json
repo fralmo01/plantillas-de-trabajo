@@ -7,7 +7,7 @@
   "tags": ["moda", "boutique", "editorial", "ecommerce", "mega-menu", "whatsapp", "multipagina"],
   "paleta": ["#f0ebdc", "#1c1a17", "#b3312c", "#25d366"],
   "destacada": false,
-  "nuevo": true,
+  "nuevo": false,
   "inspiradoEn": "moixx.com.pe",
   "orden": 26
 }

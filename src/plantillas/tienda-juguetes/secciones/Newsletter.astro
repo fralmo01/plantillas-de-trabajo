@@ -1,0 +1,116 @@
+---
+import { marca } from '../datos/juguetes.js';
+
+const imgIzq = 'https://images.unsplash.com/photo-1638802538115-041e14d28d6a?auto=format&fit=crop&w=760&q=80';
+const imgDer = 'https://images.unsplash.com/photo-1687708522434-6197bb47c933?auto=format&fit=crop&w=760&q=80';
+---
+
+<section class="tj-seccion" id="newsletter">
+  <div class="tj-news">
+    <div class="tj-news__foto tj-news__foto--izq">
+      <img src={imgIzq} alt="" loading="lazy" />
+    </div>
+    <div class="tj-news__panel">
+      <h2>Suscribete a nuestro Newsletter</h2>
+      <p>Se el primero en enterarte de nuestras novedades y promociones.</p>
+      <form class="tj-news__form" id="tj-news-form">
+        <input type="email" required placeholder="Correo Electronico" aria-label="Correo electronico" />
+        <button type="submit" class="tj-btn tj-btn--verde">Suscribirme</button>
+      </form>
+      <p class="tj-news__ok" id="tj-news-ok" hidden>Listo, te avisaremos de cada novedad, {marca.nombre}.</p>
+    </div>
+    <div class="tj-news__foto tj-news__foto--der">
+      <img src={imgDer} alt="" loading="lazy" />
+    </div>
+  </div>
+</section>
+
+<script>
+  const f = document.getElementById('tj-news-form');
+  const ok = document.getElementById('tj-news-ok');
+  f?.addEventListener('submit', (e) => {
+    e.preventDefault();
+    (f as HTMLFormElement).reset();
+    if (ok) ok.hidden = false;
+  });
+</script>
+
+<style>
+  .tj-news {
+    display: grid;
+    grid-template-columns: 1fr minmax(280px, 640px) 1fr;
+    align-items: stretch;
+    min-height: 280px;
+  }
+
+  .tj-news__foto {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .tj-news__foto img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .tj-news__panel {
+    background: #fff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    gap: 0.6rem;
+    padding: clamp(1.5rem, 4vw, 2.5rem);
+  }
+
+  .tj-news__panel h2 {
+    font-size: clamp(1.2rem, 3vw, 1.6rem);
+  }
+
+  .tj-news__panel > p {
+    color: var(--tj-gris);
+    font-size: 0.88rem;
+    max-width: 30ch;
+  }
+
+  .tj-news__form {
+    display: flex;
+    flex-direction: column;
+    gap: 0.7rem;
+    width: 100%;
+    max-width: 320px;
+    margin-top: 0.5rem;
+  }
+
+  .tj-news__form input {
+    border: 1.5px solid var(--tj-linea);
+    border-radius: var(--tj-pill);
+    padding: 0.7rem 1.1rem;
+    font-size: 0.85rem;
+    outline: none;
+    text-align: center;
+  }
+
+  .tj-news__form input:focus {
+    border-color: var(--tj-verde);
+  }
+
+  .tj-news__ok {
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: var(--tj-verde-osc);
+  }
+
+  @media (max-width: 780px) {
+    .tj-news {
+      grid-template-columns: 1fr;
+    }
+    .tj-news__foto {
+      min-height: 160px;
+    }
+  }
+</style>

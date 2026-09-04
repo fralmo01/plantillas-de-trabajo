@@ -1,0 +1,58 @@
+---
+import { beneficios } from '../datos/barberia.js';
+import Icono from '../componentes/Icono.astro';
+---
+
+<section class="tb-benef tb-wrap" aria-label="Beneficios de la tienda">
+  {beneficios.map((b: { t: string; ico: string }) => (
+    <div class="tb-benef__item">
+      <span aria-hidden="true"><Icono name={b.ico} /></span>
+      <b>{b.t}</b>
+    </div>
+  ))}
+</section>
+
+<style>
+  .tb-benef {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    border-top: 1px solid var(--tb-linea);
+  }
+
+  .tb-benef__item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.6rem;
+    text-align: center;
+    padding-block: 2rem;
+    border-left: 1px solid var(--tb-linea);
+  }
+
+  .tb-benef__item:first-child {
+    border-left: none;
+  }
+
+  .tb-benef__item span {
+    font-size: 1.6rem;
+  }
+
+  .tb-benef__item b {
+    font-family: var(--tb-titulos);
+    font-size: 0.92rem;
+    letter-spacing: 0.04em;
+  }
+
+  @media (max-width: 720px) {
+    .tb-benef {
+      grid-template-columns: 1fr;
+    }
+    .tb-benef__item {
+      border-left: none;
+      border-top: 1px solid var(--tb-linea);
+    }
+    .tb-benef__item:first-child {
+      border-top: none;
+    }
+  }
+</style>

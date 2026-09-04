@@ -1,0 +1,222 @@
+@import url("https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Nunito:wght@400;500;600;700;800&display=swap");
+
+.tpl-tienda-juguetes {
+  --tj-verde: #6fa684;
+  --tj-verde-osc: #4f8a68;
+  --tj-verde-claro: #e4f0e7;
+  --tj-oro: #d6a23b;
+  --tj-oro-osc: #b1832a;
+  --tj-terracota: #c96b52;
+  --tj-terracota-osc: #a85641;
+  --tj-rosa: #e2a7ab;
+  --tj-crema: #fbf7ef;
+  --tj-tinta: #332f29;
+  --tj-gris: #74706a;
+  --tj-linea: #ece6d8;
+
+  --tj-font: "Nunito", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+  --tj-titulos: "Baloo 2", var(--tj-font);
+  --tj-maxw: 1240px;
+  --tj-pill: 999px;
+
+  background: var(--tj-crema);
+  color: var(--tj-tinta);
+  font-family: var(--tj-font);
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+}
+
+.tpl-tienda-juguetes *,
+.tpl-tienda-juguetes *::before,
+.tpl-tienda-juguetes *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+.tpl-tienda-juguetes h1,
+.tpl-tienda-juguetes h2,
+.tpl-tienda-juguetes h3,
+.tpl-tienda-juguetes h4 {
+  line-height: 1.2;
+  color: var(--tj-tinta);
+  font-family: var(--tj-titulos);
+  font-weight: 700;
+}
+
+.tpl-tienda-juguetes img {
+  max-width: 100%;
+  display: block;
+}
+
+.tpl-tienda-juguetes a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.tpl-tienda-juguetes button {
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+  border: none;
+  background: none;
+}
+
+.tpl-tienda-juguetes input {
+  font: inherit;
+}
+
+.tpl-tienda-juguetes .tj-wrap {
+  max-width: var(--tj-maxw);
+  margin-inline: auto;
+  padding-inline: clamp(1rem, 3vw, 2rem);
+}
+
+.tpl-tienda-juguetes .tj-seccion {
+  padding-block: clamp(2rem, 5vw, 3.25rem);
+}
+
+.tpl-tienda-juguetes .tj-titulo {
+  text-align: center;
+  font-size: clamp(1.3rem, 3.2vw, 1.9rem);
+  font-weight: 700;
+  color: var(--tj-tinta);
+  margin-bottom: 1.75rem;
+}
+
+.tpl-tienda-juguetes .tj-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.7rem 1.5rem;
+  font-weight: 700;
+  font-family: var(--tj-titulos);
+  font-size: 0.85rem;
+  border-radius: var(--tj-pill);
+  transition: background 0.15s ease, color 0.15s ease, transform 0.15s ease;
+}
+
+.tpl-tienda-juguetes .tj-btn:hover {
+  transform: translateY(-2px);
+}
+
+.tpl-tienda-juguetes .tj-btn--verde {
+  background: var(--tj-verde);
+  color: #fff;
+}
+
+.tpl-tienda-juguetes .tj-btn--verde:hover {
+  background: var(--tj-verde-osc);
+}
+
+.tpl-tienda-juguetes .tj-btn--outline {
+  border: 1.5px solid var(--tj-oro);
+  color: var(--tj-oro-osc);
+  background: #fff;
+}
+
+.tpl-tienda-juguetes .tj-btn--outline:hover {
+  background: var(--tj-oro);
+  color: #fff;
+}
+
+.tpl-tienda-juguetes .tj-btn--claro {
+  background: #fff;
+  color: var(--tj-tinta);
+}
+
+.tpl-tienda-juguetes .tj-fila {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(200px, 1fr);
+  gap: 1.1rem;
+  overflow-x: auto;
+  scroll-snap-type: x proximity;
+  padding-bottom: 0.5rem;
+  scrollbar-width: thin;
+}
+
+.tpl-tienda-juguetes .tj-fila > * {
+  scroll-snap-align: start;
+}
+
+.tpl-tienda-juguetes .tj-flecha {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  color: var(--tj-verde-osc);
+  font-size: 1.4rem;
+  line-height: 1;
+  background: #fff;
+  box-shadow: 0 6px 18px -8px rgba(51, 47, 41, 0.35);
+  flex-shrink: 0;
+}
+
+.tpl-tienda-juguetes .tj-flecha:hover {
+  background: var(--tj-verde);
+  color: #fff;
+}
+
+.tpl-tienda-juguetes .tj-fila-cabecera {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1.1rem;
+}
+
+.tpl-tienda-juguetes .tj-fila-cabecera h2 {
+  font-size: clamp(1.1rem, 2.6vw, 1.5rem);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.tpl-tienda-juguetes .tj-fila-cabecera__ico {
+  display: inline-flex;
+  color: var(--tj-terracota);
+  flex-shrink: 0;
+}
+
+.tpl-tienda-juguetes .tj-fila-cabecera a {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--tj-verde-osc);
+  flex-shrink: 0;
+}
+
+.tpl-tienda-juguetes .tj-fila-cabecera a:hover {
+  color: var(--tj-terracota);
+}
+
+.tpl-tienda-juguetes .tj-carr-area {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.tpl-tienda-juguetes .tj-chat__msg {
+  max-width: 82%;
+  padding: 0.6rem 0.85rem;
+  border-radius: 12px;
+  font-size: 0.82rem;
+  line-height: 1.45;
+}
+
+.tpl-tienda-juguetes .tj-chat__msg--bot {
+  background: var(--tj-verde-claro);
+  color: var(--tj-tinta);
+  align-self: flex-start;
+  border-bottom-left-radius: 3px;
+}
+
+.tpl-tienda-juguetes .tj-chat__msg--yo {
+  background: var(--tj-verde);
+  color: #fff;
+  align-self: flex-end;
+  border-bottom-right-radius: 3px;
+}

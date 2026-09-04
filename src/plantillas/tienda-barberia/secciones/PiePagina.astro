@@ -1,0 +1,165 @@
+---
+import { marca, footerLinks, pagoMetodos } from '../datos/barberia.js';
+---
+
+<footer class="tb-foot" id="footer">
+  <div class="tb-wrap tb-foot__grid">
+    <div class="tb-foot__about">
+      <p>Especialistas en insumos para barberia. Maquinas, accesorios y productos de cuidado personal, trabajamos con las mejores marcas del mercado.</p>
+    </div>
+    <nav class="tb-foot__links" aria-label="Enlaces legales">
+      <ul>
+        {footerLinks.map((l: string) => <li><a href="#top">{l}</a></li>)}
+      </ul>
+    </nav>
+    <div class="tb-foot__news">
+      <p>Enterate primero de nuestras novedades y ofertas.</p>
+      <a href="#novedades" class="tb-btn tb-btn--dorado">Ver Novedades</a>
+    </div>
+  </div>
+
+  <div class="tb-wrap tb-foot__marca">
+    <span>{marca.nombre.toUpperCase()} {marca.sub.toUpperCase()}</span>
+  </div>
+
+  <div class="tb-wrap tb-foot__base">
+    <div class="tb-foot__redes" aria-label="Redes sociales">
+      <a href="#" aria-label="Instagram">&#9678;</a>
+      <a href="#" aria-label="TikTok">&#9835;</a>
+      <a href="#" aria-label="Facebook">f</a>
+    </div>
+    <span>&copy; 2026, {marca.nombre.toUpperCase()} {marca.sub.toUpperCase()} S.A.C.</span>
+    <ul class="tb-foot__pagos">
+      {pagoMetodos.map((p: string) => <li>{p}</li>)}
+    </ul>
+  </div>
+</footer>
+
+<style>
+  .tb-foot {
+    background: var(--tb-negro);
+    color: #fff;
+    margin-top: 2rem;
+  }
+
+  .tb-foot__grid {
+    display: grid;
+    grid-template-columns: 1.3fr 1fr 1fr;
+    gap: 2.5rem;
+    padding-block: 3rem 2rem;
+    border-bottom: 1px solid var(--tb-linea);
+  }
+
+  .tb-foot__about p {
+    text-transform: none;
+    font-size: 0.85rem;
+    color: rgba(255, 255, 255, 0.75);
+    max-width: 34ch;
+  }
+
+  .tb-foot__links ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.65rem;
+  }
+
+  .tb-foot__links a {
+    font-size: 0.82rem;
+    color: rgba(255, 255, 255, 0.8);
+  }
+
+  .tb-foot__links a:hover {
+    color: var(--tb-dorado);
+  }
+
+  .tb-foot__news p {
+    text-transform: none;
+    font-size: 0.85rem;
+    color: rgba(255, 255, 255, 0.75);
+    margin-bottom: 1rem;
+  }
+
+  .tb-foot__marca {
+    padding-block: 1.5rem;
+  }
+
+  .tb-foot__marca span {
+    display: block;
+    font-family: var(--tb-titulos);
+    font-size: clamp(2.5rem, 9vw, 6rem);
+    letter-spacing: 0.02em;
+    color: #1c1c1c;
+    line-height: 1;
+    white-space: nowrap;
+    overflow: hidden;
+  }
+
+  .tb-foot__base {
+    border-top: 1px solid var(--tb-linea);
+    padding-block: 1.25rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    font-size: 0.75rem;
+    color: rgba(255, 255, 255, 0.7);
+    flex-wrap: wrap;
+  }
+
+  .tb-foot__redes {
+    display: flex;
+    gap: 0.5rem;
+    order: 1;
+  }
+
+  .tb-foot__redes a {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    border: 1px solid var(--tb-linea);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-weight: 700;
+    font-size: 0.78rem;
+  }
+
+  .tb-foot__redes a:hover {
+    border-color: var(--tb-dorado);
+    color: var(--tb-dorado);
+  }
+
+  .tb-foot__base > span {
+    order: 2;
+  }
+
+  .tb-foot__pagos {
+    order: 3;
+    list-style: none;
+    display: flex;
+    gap: 0.4rem;
+  }
+
+  .tb-foot__pagos li {
+    border: 1px solid var(--tb-linea);
+    padding: 0.2rem 0.55rem;
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.03em;
+  }
+
+  @media (max-width: 900px) {
+    .tb-foot__grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 600px) {
+    .tb-foot__base {
+      justify-content: center;
+      text-align: center;
+    }
+  }
+</style>

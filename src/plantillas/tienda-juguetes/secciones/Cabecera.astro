@@ -1,0 +1,515 @@
+---
+import { marca, navPrincipal, megaMenu, marcasChip, edadesChip, precioChip } from '../datos/juguetes.js';
+---
+
+<header class="tj-hdr" id="top">
+  <div class="tj-wrap tj-hdr__row">
+    <a href="#top" class="tj-logo" aria-label={`${marca.nombre} ${marca.sub}`}>
+      <span class="tj-logo__ico" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <rect x="3" y="9" width="7" height="7" rx="1.5"></rect>
+          <rect x="14" y="9" width="7" height="7" rx="1.5"></rect>
+          <path d="M6.5 9V6a1.5 1.5 0 0 1 3 0v3M17.5 9V6a1.5 1.5 0 0 0-3 0v3"></path>
+        </svg>
+      </span>
+      <span class="tj-logo__tx">{marca.nombre}<b>{marca.sub}</b></span>
+    </a>
+
+    <nav class="tj-nav" aria-label="Navegacion principal">
+      <div class="tj-nav__item">
+        <button type="button" class="tj-nav__btn" data-menu="cat" aria-expanded="false" aria-controls="tj-panel-cat">
+          Categorias <span class="tj-nav__chev" aria-hidden="true">&#9662;</span>
+        </button>
+        <div class="tj-panel tj-panel--cat" id="tj-panel-cat" hidden>
+          <ul class="tj-acc">
+            {megaMenu.map((m: { cat: string; sub: string[] }, i: number) => (
+              <li class="tj-acc__item">
+                <button type="button" class="tj-acc__btn" data-acc={i}>
+                  {m.cat} <span aria-hidden="true">&#9662;</span>
+                </button>
+                <ul class="tj-acc__sub" data-acc-panel={i} hidden>
+                  {m.sub.map((s: string) => <li><a href="#novedades">{s}</a></li>)}
+                </ul>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+
+      <div class="tj-nav__item">
+        <button type="button" class="tj-nav__btn" data-menu="marcas" aria-expanded="false" aria-controls="tj-panel-marcas">
+          Marcas <span class="tj-nav__chev" aria-hidden="true">&#9662;</span>
+        </button>
+        <div class="tj-panel tj-panel--chips" id="tj-panel-marcas" hidden>
+          <ul>
+            {marcasChip.map((m: string) => <li><a href="#novedades">{m}</a></li>)}
+          </ul>
+        </div>
+      </div>
+
+      <div class="tj-nav__item">
+        <button type="button" class="tj-nav__btn" data-menu="edades" aria-expanded="false" aria-controls="tj-panel-edades">
+          Edades <span class="tj-nav__chev" aria-hidden="true">&#9662;</span>
+        </button>
+        <div class="tj-panel tj-panel--chips" id="tj-panel-edades" hidden>
+          <ul>
+            {edadesChip.map((m: string) => <li><a href="#novedades">{m}</a></li>)}
+          </ul>
+        </div>
+      </div>
+
+      <div class="tj-nav__item">
+        <button type="button" class="tj-nav__btn" data-menu="precio" aria-expanded="false" aria-controls="tj-panel-precio">
+          Por Precio <span class="tj-nav__chev" aria-hidden="true">&#9662;</span>
+        </button>
+        <div class="tj-panel tj-panel--chips" id="tj-panel-precio" hidden>
+          <ul>
+            {precioChip.map((m: string) => <li><a href="#novedades">{m}</a></li>)}
+          </ul>
+        </div>
+      </div>
+
+      {navPrincipal.map((n: { t: string; href: string }) => (
+        <a class="tj-nav__link" href={n.href}>{n.t}</a>
+      ))}
+    </nav>
+
+    <div class="tj-hdr__acc">
+      <button type="button" class="tj-hdr__ico" id="tj-search-toggle" aria-label="Buscar" aria-expanded="false">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+          <circle cx="11" cy="11" r="7"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+        </svg>
+      </button>
+      <button type="button" class="tj-hdr__ico tj-hdr__cart" id="tj-cart" aria-label="Ver carrito">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M6 6h15l-1.5 9h-12z"></path><path d="M6 6 5 3H2"></path><circle cx="9" cy="20" r="1.6"></circle><circle cx="18" cy="20" r="1.6"></circle>
+        </svg>
+        <span class="tj-hdr__badge" id="tj-cart-count" hidden>0</span>
+      </button>
+    </div>
+  </div>
+
+  <div class="tj-buscar" id="tj-buscar" hidden>
+    <form class="tj-wrap tj-buscar__row" id="tj-buscar-form" role="search">
+      <input type="search" id="tj-buscar-input" placeholder="Buscar juguetes, marcas, edades..." aria-label="Buscar productos" />
+      <button type="submit" class="tj-btn tj-btn--verde">Buscar</button>
+      <button type="button" class="tj-buscar__cerrar" id="tj-buscar-cerrar" aria-label="Cerrar buscador">&times;</button>
+    </form>
+    <p class="tj-wrap tj-buscar__nota" id="tj-buscar-nota" hidden></p>
+  </div>
+</header>
+
+<script>
+  const menuBtns = Array.from(document.querySelectorAll<HTMLButtonElement>('.tj-nav__btn[data-menu]'));
+
+  function cerrarTodos() {
+    menuBtns.forEach((b) => {
+      const panel = document.getElementById(`tj-panel-${b.dataset.menu}`);
+      if (panel) panel.hidden = true;
+      b.setAttribute('aria-expanded', 'false');
+    });
+  }
+
+  menuBtns.forEach((b) => {
+    b.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const panel = document.getElementById(`tj-panel-${b.dataset.menu}`);
+      const abierto = panel ? !panel.hidden : false;
+      cerrarTodos();
+      if (panel) {
+        panel.hidden = abierto;
+        b.setAttribute('aria-expanded', String(!abierto));
+      }
+    });
+  });
+
+  document.querySelectorAll<HTMLButtonElement>('.tj-acc__btn').forEach((b) => {
+    b.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const sub = document.querySelector<HTMLElement>(`[data-acc-panel="${b.dataset.acc}"]`);
+      if (!sub) return;
+      const abierto = !sub.hidden;
+      sub.hidden = abierto;
+      b.classList.toggle('is-open', !abierto);
+    });
+  });
+
+  document.addEventListener('click', (e) => {
+    const t = e.target as Node;
+    const dentro = menuBtns.some((b) => {
+      const panel = document.getElementById(`tj-panel-${b.dataset.menu}`);
+      return b.contains(t) || (panel && panel.contains(t));
+    });
+    if (!dentro) cerrarTodos();
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') cerrarTodos();
+  });
+
+  const searchToggle = document.getElementById('tj-search-toggle');
+  const buscar = document.getElementById('tj-buscar');
+  const buscarInput = document.getElementById('tj-buscar-input') as HTMLInputElement | null;
+  const buscarForm = document.getElementById('tj-buscar-form');
+  const buscarCerrar = document.getElementById('tj-buscar-cerrar');
+  const buscarNota = document.getElementById('tj-buscar-nota');
+
+  function abrirBuscar(v: boolean) {
+    if (!buscar || !searchToggle) return;
+    buscar.hidden = !v;
+    searchToggle.setAttribute('aria-expanded', String(v));
+    if (v) buscarInput?.focus();
+  }
+
+  searchToggle?.addEventListener('click', (e) => {
+    e.stopPropagation();
+    abrirBuscar(buscar?.hidden ?? true);
+  });
+  buscarCerrar?.addEventListener('click', () => abrirBuscar(false));
+
+  buscarForm?.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const q = (buscarInput?.value || '').trim().toLowerCase();
+    let visibles = 0;
+    document.querySelectorAll<HTMLElement>('.tj-prod').forEach((card) => {
+      const hit = !q || (card.dataset.nombre || '').includes(q);
+      card.hidden = !hit;
+      if (hit) visibles++;
+    });
+    if (buscarNota) {
+      buscarNota.hidden = !q;
+      buscarNota.textContent = q ? `${visibles} resultado(s) para "${q}"` : '';
+    }
+    if (q) {
+      abrirBuscar(false);
+      document.getElementById('novedades')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  });
+
+  const badge = document.getElementById('tj-cart-count');
+  let total = 0;
+
+  document.addEventListener('click', (e) => {
+    const el = e.target as HTMLElement;
+
+    const step = el.closest<HTMLButtonElement>('.tj-qty__b');
+    if (step) {
+      const cont = step.closest('.tj-prod__qty');
+      const n = cont?.querySelector<HTMLElement>('.tj-qty__n');
+      if (n) {
+        const val = Math.max(1, (parseInt(n.textContent || '1', 10) || 1) + Number(step.dataset.step));
+        n.textContent = String(val);
+      }
+      return;
+    }
+
+    const add = el.closest<HTMLButtonElement>('.tj-prod__add');
+    if (add) {
+      const card = add.closest('.tj-prod');
+      const n = card?.querySelector<HTMLElement>('.tj-qty__n');
+      total += parseInt(n?.textContent || '1', 10) || 1;
+      if (badge) {
+        badge.textContent = String(total);
+        badge.hidden = false;
+      }
+      const prev = add.textContent;
+      add.textContent = 'Agregado!';
+      add.classList.add('is-ok');
+      window.setTimeout(() => {
+        add.textContent = prev;
+        add.classList.remove('is-ok');
+      }, 1100);
+    }
+  });
+</script>
+
+<style>
+  .tj-hdr {
+    background: #fff;
+    position: sticky;
+    top: 0;
+    z-index: 80;
+    box-shadow: 0 2px 12px -8px rgba(0, 0, 0, 0.25);
+  }
+
+  .tj-hdr__row {
+    display: flex;
+    align-items: center;
+    gap: clamp(0.75rem, 3vw, 2rem);
+    padding-block: 0.85rem;
+  }
+
+  .tj-logo {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    flex-shrink: 0;
+  }
+
+  .tj-logo__ico {
+    width: 2.1rem;
+    height: 2.1rem;
+    display: grid;
+    place-items: center;
+    color: var(--tj-verde);
+  }
+
+  .tj-logo__ico svg {
+    width: 100%;
+    height: 100%;
+  }
+
+  .tj-logo__tx {
+    font-family: var(--tj-titulos);
+    font-weight: 700;
+    font-size: 1.4rem;
+    color: var(--tj-verde-osc);
+    line-height: 1;
+  }
+
+  .tj-logo__tx b {
+    display: block;
+    font-family: var(--tj-font);
+    font-style: normal;
+    font-size: 0.58rem;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--tj-gris);
+    margin-top: 0.2rem;
+  }
+
+  .tj-nav {
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+    flex-wrap: wrap;
+    flex: 1;
+  }
+
+  .tj-nav__item {
+    position: relative;
+  }
+
+  .tj-nav__btn,
+  .tj-nav__link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    padding: 0.5rem 0.7rem;
+    border-radius: 8px;
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: var(--tj-tinta);
+  }
+
+  .tj-nav__btn:hover,
+  .tj-nav__link:hover {
+    background: var(--tj-verde-claro);
+    color: var(--tj-verde-osc);
+  }
+
+  .tj-nav__chev {
+    font-size: 0.65rem;
+  }
+
+  .tj-panel {
+    position: absolute;
+    top: calc(100% + 0.5rem);
+    left: 0;
+    background: #fff;
+    border: 1px solid var(--tj-linea);
+    border-radius: 12px;
+    box-shadow: 0 24px 50px -20px rgba(0, 0, 0, 0.3);
+    z-index: 90;
+  }
+
+  .tj-panel--chips {
+    padding: 0.75rem;
+    min-width: 200px;
+  }
+
+  .tj-panel--chips ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+  }
+
+  .tj-panel--chips a {
+    display: block;
+    padding: 0.45rem 0.6rem;
+    border-radius: 7px;
+    font-size: 0.82rem;
+  }
+
+  .tj-panel--chips a:hover {
+    background: var(--tj-verde-claro);
+    color: var(--tj-verde-osc);
+  }
+
+  .tj-panel--cat {
+    min-width: 280px;
+    max-height: 70vh;
+    overflow-y: auto;
+    padding: 0.5rem;
+  }
+
+  .tj-acc {
+    list-style: none;
+  }
+
+  .tj-acc__btn {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.6rem 0.7rem;
+    border-radius: 8px;
+    font-size: 0.85rem;
+    font-weight: 700;
+    text-align: left;
+  }
+
+  .tj-acc__btn:hover {
+    background: var(--tj-verde-claro);
+    color: var(--tj-verde-osc);
+  }
+
+  .tj-acc__btn span {
+    transition: transform 0.15s ease;
+    font-size: 0.7rem;
+  }
+
+  .tj-acc__btn.is-open span {
+    transform: rotate(180deg);
+  }
+
+  .tj-acc__sub[hidden] {
+    display: none;
+  }
+
+  .tj-acc__sub {
+    list-style: none;
+    padding: 0.15rem 0.5rem 0.6rem 1.1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+  }
+
+  .tj-acc__sub a {
+    font-size: 0.8rem;
+    color: var(--tj-gris);
+  }
+
+  .tj-acc__sub a:hover {
+    color: var(--tj-verde-osc);
+  }
+
+  .tj-hdr__acc {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    flex-shrink: 0;
+  }
+
+  .tj-hdr__ico {
+    position: relative;
+    width: 38px;
+    height: 38px;
+    display: grid;
+    place-items: center;
+    border-radius: 50%;
+    color: var(--tj-tinta);
+  }
+
+  .tj-hdr__ico:hover {
+    background: var(--tj-verde-claro);
+    color: var(--tj-verde-osc);
+  }
+
+  .tj-hdr__badge[hidden] {
+    display: none;
+  }
+
+  .tj-hdr__badge {
+    position: absolute;
+    top: 0;
+    right: 0;
+    min-width: 16px;
+    height: 16px;
+    padding: 0 4px;
+    border-radius: var(--tj-pill);
+    background: var(--tj-terracota);
+    color: #fff;
+    font-size: 0.6rem;
+    font-weight: 700;
+    display: grid;
+    place-items: center;
+  }
+
+  .tj-buscar[hidden] {
+    display: none;
+  }
+
+  .tj-buscar {
+    border-top: 1px solid var(--tj-linea);
+    background: #fff;
+    padding-block: 0.9rem;
+  }
+
+  .tj-buscar__row {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+  }
+
+  .tj-buscar__row input {
+    flex: 1;
+    border: 1.5px solid var(--tj-linea);
+    border-radius: var(--tj-pill);
+    padding: 0.6rem 1.1rem;
+    font-size: 0.88rem;
+    outline: none;
+  }
+
+  .tj-buscar__row input:focus {
+    border-color: var(--tj-verde);
+  }
+
+  .tj-buscar__cerrar {
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    font-size: 1.3rem;
+    line-height: 1;
+    color: var(--tj-gris);
+    flex-shrink: 0;
+  }
+
+  .tj-buscar__cerrar:hover {
+    background: var(--tj-verde-claro);
+  }
+
+  .tj-buscar__nota {
+    margin-top: 0.5rem;
+    font-size: 0.8rem;
+    color: var(--tj-gris);
+  }
+
+  @media (max-width: 980px) {
+    .tj-hdr__row {
+      flex-wrap: wrap;
+    }
+    .tj-nav {
+      order: 3;
+      flex-basis: 100%;
+      flex-wrap: nowrap;
+      overflow-x: auto;
+      padding-bottom: 0.25rem;
+    }
+    .tj-nav__link {
+      display: none;
+    }
+  }
+</style>

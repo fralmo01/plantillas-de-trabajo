@@ -1,0 +1,64 @@
+---
+import { anunciosTop } from '../datos/juguetes.js';
+---
+
+<div class="tj-top" id="tj-top">
+  <div class="tj-wrap tj-top__inner">
+    <p class="tj-top__msg" id="tj-top-msg">
+      <b>{anunciosTop[0].split(':')[0]}</b>{anunciosTop[0].includes(':') ? ': ' + anunciosTop[0].split(':').slice(1).join(':') : ''}
+    </p>
+  </div>
+</div>
+
+<script define:vars={{ anuncios: anunciosTop }}>
+  const msg = document.getElementById('tj-top-msg');
+  let i = 0;
+
+  function render() {
+    if (!msg) return;
+    const texto = anuncios[i];
+    const partes = texto.split(':');
+    if (partes.length > 1) {
+      msg.innerHTML = `<b>${partes[0]}</b>: ${partes.slice(1).join(':').trim()}`;
+    } else {
+      msg.textContent = texto;
+    }
+  }
+
+  if (anuncios.length > 1) {
+    window.setInterval(() => {
+      if (!msg) return;
+      msg.style.opacity = '0';
+      window.setTimeout(() => {
+        i = (i + 1) % anuncios.length;
+        render();
+        msg.style.opacity = '1';
+      }, 250);
+    }, 4500);
+  }
+</script>
+
+<style>
+  .tj-top {
+    background: var(--tj-verde);
+    color: #fff;
+    font-size: 0.76rem;
+    font-weight: 600;
+  }
+
+  .tj-top__inner {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding-block: 0.45rem;
+  }
+
+  .tj-top__msg {
+    transition: opacity 0.25s ease;
+  }
+
+  .tj-top__msg b {
+    font-weight: 800;
+  }
+</style>

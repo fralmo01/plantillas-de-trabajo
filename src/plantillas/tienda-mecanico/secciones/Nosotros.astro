@@ -1,0 +1,44 @@
+---
+import { nosotros } from '../datos/mecanico.js';
+---
+
+<section class="tm-nosotros" id="nosotros">
+  <div class="tm-wrap tm-nosotros__inner">
+    <h2>{nosotros.titulo}</h2>
+    {nosotros.parrafos.map((p: string) => <p>{p}</p>)}
+    <a href="#top" class="tm-btn tm-btn--naranja">Escribenos por WhatsApp</a>
+  </div>
+</section>
+
+<style>
+  .tm-nosotros {
+    background: var(--tm-negro2);
+    border-block: 1px solid var(--tm-linea);
+    padding-block: clamp(2.5rem, 6vw, 4rem);
+  }
+
+  .tm-nosotros__inner {
+    max-width: 760px;
+    margin-inline: auto;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.1rem;
+  }
+
+  .tm-nosotros__inner h2 {
+    font-size: clamp(1.3rem, 3vw, 1.8rem);
+    margin-bottom: 0.5rem;
+  }
+
+  .tm-nosotros__inner p {
+    text-transform: none;
+    font-size: 0.92rem;
+    color: #ccc;
+  }
+
+  .tm-nosotros__inner .tm-btn {
+    margin-top: 0.75rem;
+  }
+</style>

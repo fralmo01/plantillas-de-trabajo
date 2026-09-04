@@ -7,7 +7,7 @@
   "tags": ["salud", "organico", "vitaminas", "suplementos", "ecommerce", "mega-menu", "tiendas", "multipagina"],
   "paleta": ["#2fae52", "#1f8f3f", "#eaf7ee", "#1c1c1c"],
   "destacada": false,
-  "nuevo": true,
+  "nuevo": false,
   "inspiradoEn": "organa.com.pe",
   "orden": 20
 }

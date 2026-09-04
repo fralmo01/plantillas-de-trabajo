@@ -1,0 +1,357 @@
+---
+import { ciudadesDestino } from '../datos/transporte.js';
+import Icono from './Icono.astro';
+---
+
+<div class="tt-buscador-wrap">
+  <div class="tt-wrap">
+    <form class="tt-buscador" id="tt-buscador-form">
+      <span class="tt-buscador__label">Compra tu pasaje:</span>
+
+      <div class="tt-buscador__campo">
+        <span class="tt-buscador__cLabel">Origen:</span>
+        <span class="tt-buscador__cVal">LIMA</span>
+      </div>
+
+      <div class="tt-buscador__campo tt-buscador__campo--dest" id="tt-dest-campo">
+        <button type="button" class="tt-buscador__btnCampo" id="tt-dest-btn" aria-haspopup="listbox" aria-expanded="false">
+          <span class="tt-buscador__cLabel">Destino:</span>
+          <span class="tt-buscador__cVal" id="tt-dest-val">Seleccionar</span>
+          <Icono name="chevron" size={14} />
+        </button>
+        <div class="tt-buscador__panel" id="tt-dest-panel" hidden>
+          <div class="tt-buscador__panelBuscar">
+            <Icono name="busqueda" size={15} />
+            <input type="text" id="tt-dest-filtro" placeholder="Buscar destino" aria-label="Buscar destino" />
+          </div>
+          <ul class="tt-buscador__lista" id="tt-dest-lista" role="listbox">
+            {ciudadesDestino.map((c: string) => (
+              <li role="option"><button type="button" data-ciudad={c}>{c}</button></li>
+            ))}
+          </ul>
+        </div>
+      </div>
+
+      <div class="tt-buscador__campo">
+        <span class="tt-buscador__cLabel">Fecha salida:</span>
+        <input type="date" class="tt-buscador__fecha" id="tt-fecha-salida" aria-label="Fecha de salida" />
+      </div>
+
+      <div class="tt-buscador__campo">
+        <span class="tt-buscador__cLabel">Fecha retorno:</span>
+        <input type="date" class="tt-buscador__fecha" id="tt-fecha-retorno" aria-label="Fecha de retorno" />
+      </div>
+
+      <div class="tt-buscador__campo tt-buscador__campo--pax" id="tt-pax-campo">
+        <button type="button" class="tt-buscador__btnCampo" id="tt-pax-btn" aria-haspopup="true" aria-expanded="false">
+          <span class="tt-buscador__cLabel">N&deg; pasajeros:</span>
+          <span class="tt-buscador__cVal" id="tt-pax-val">1 pasajero</span>
+          <Icono name="chevron" size={14} />
+        </button>
+        <div class="tt-buscador__panel tt-buscador__panel--pax" id="tt-pax-panel" hidden>
+          <div class="tt-buscador__paxRow">
+            <span>Pasajeros</span>
+            <div class="tt-buscador__stepper">
+              <button type="button" id="tt-pax-menos" aria-label="Quitar pasajero">-</button>
+              <span id="tt-pax-n">1</span>
+              <button type="button" id="tt-pax-mas" aria-label="Agregar pasajero">+</button>
+            </div>
+          </div>
+          <button type="button" class="tt-btn tt-btn--naranja tt-buscador__listo" id="tt-pax-listo">Listo</button>
+        </div>
+      </div>
+
+      <button type="submit" class="tt-btn tt-btn--naranja tt-buscador__submit">Buscar</button>
+    </form>
+    <p class="tt-buscador__nota" id="tt-buscador-nota" hidden></p>
+  </div>
+</div>
+
+<script>
+  const destBtn = document.getElementById('tt-dest-btn');
+  const destPanel = document.getElementById('tt-dest-panel');
+  const destVal = document.getElementById('tt-dest-val');
+  const destFiltro = document.getElementById('tt-dest-filtro') as HTMLInputElement | null;
+  const destLista = document.getElementById('tt-dest-lista');
+
+  const paxBtn = document.getElementById('tt-pax-btn');
+  const paxPanel = document.getElementById('tt-pax-panel');
+  const paxVal = document.getElementById('tt-pax-val');
+  const paxN = document.getElementById('tt-pax-n');
+
+  function cerrarPaneles() {
+    if (destPanel) destPanel.hidden = true;
+    if (paxPanel) paxPanel.hidden = true;
+    destBtn?.setAttribute('aria-expanded', 'false');
+    paxBtn?.setAttribute('aria-expanded', 'false');
+  }
+
+  destBtn?.addEventListener('click', (e) => {
+    e.stopPropagation();
+    const abierto = destPanel ? !destPanel.hidden : false;
+    cerrarPaneles();
+    if (destPanel) {
+      destPanel.hidden = abierto;
+      destBtn.setAttribute('aria-expanded', String(!abierto));
+      if (!abierto) destFiltro?.focus();
+    }
+  });
+
+  paxBtn?.addEventListener('click', (e) => {
+    e.stopPropagation();
+    const abierto = paxPanel ? !paxPanel.hidden : false;
+    cerrarPaneles();
+    if (paxPanel) {
+      paxPanel.hidden = abierto;
+      paxBtn.setAttribute('aria-expanded', String(!abierto));
+    }
+  });
+
+  document.addEventListener('click', (e) => {
+    const t = e.target as Node;
+    const destCampo = document.getElementById('tt-dest-campo');
+    const paxCampo = document.getElementById('tt-pax-campo');
+    const dentroDest = destCampo?.contains(t);
+    const dentroPax = paxCampo?.contains(t);
+    if (!dentroDest && !dentroPax) cerrarPaneles();
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') cerrarPaneles();
+  });
+
+  destFiltro?.addEventListener('input', () => {
+    const q = destFiltro.value.trim().toLowerCase();
+    destLista?.querySelectorAll<HTMLLIElement>('li').forEach((li) => {
+      const nombre = (li.querySelector('button')?.dataset.ciudad || '').toLowerCase();
+      li.hidden = !nombre.includes(q);
+    });
+  });
+
+  destLista?.querySelectorAll<HTMLButtonElement>('button[data-ciudad]').forEach((b) => {
+    b.addEventListener('click', () => {
+      if (destVal) destVal.textContent = b.dataset.ciudad || 'Seleccionar';
+      cerrarPaneles();
+    });
+  });
+
+  let pax = 1;
+  document.getElementById('tt-pax-menos')?.addEventListener('click', () => {
+    pax = Math.max(1, pax - 1);
+    if (paxN) paxN.textContent = String(pax);
+  });
+  document.getElementById('tt-pax-mas')?.addEventListener('click', () => {
+    pax = Math.min(9, pax + 1);
+    if (paxN) paxN.textContent = String(pax);
+  });
+  document.getElementById('tt-pax-listo')?.addEventListener('click', () => {
+    if (paxVal) paxVal.textContent = `${pax} pasajero${pax === 1 ? '' : 's'}`;
+    cerrarPaneles();
+  });
+
+  const form = document.getElementById('tt-buscador-form');
+  const nota = document.getElementById('tt-buscador-nota');
+  form?.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const destino = destVal?.textContent === 'Seleccionar' ? null : destVal?.textContent;
+    if (nota) {
+      nota.hidden = false;
+      nota.textContent = destino
+        ? `Mostrando buses disponibles de LIMA a ${destino}.`
+        : 'Selecciona un destino para ver los buses disponibles.';
+    }
+    document.getElementById('destinos')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+</script>
+
+<style>
+  .tt-buscador-wrap {
+    position: sticky;
+    top: 0;
+    z-index: 60;
+  }
+
+  .tt-buscador {
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 20px 45px -20px rgba(0, 0, 0, 0.4);
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+    padding: 1rem 1.5rem;
+    flex-wrap: wrap;
+  }
+
+  .tt-buscador__label {
+    font-weight: 800;
+    font-size: 0.92rem;
+    flex-shrink: 0;
+  }
+
+  .tt-buscador__campo {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+    min-width: 110px;
+  }
+
+  .tt-buscador__cLabel {
+    font-size: 0.68rem;
+    color: var(--tt-gris);
+    font-weight: 600;
+  }
+
+  .tt-buscador__cVal {
+    font-size: 0.85rem;
+    font-weight: 700;
+  }
+
+  .tt-buscador__btnCampo {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    text-align: left;
+  }
+
+  .tt-buscador__btnCampo :global(svg) {
+    color: var(--tt-gris);
+    margin-left: auto;
+  }
+
+  .tt-buscador__fecha {
+    border: none;
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--tt-negro);
+    outline: none;
+    background: none;
+    width: 130px;
+  }
+
+  .tt-buscador__submit {
+    margin-left: auto;
+    flex-shrink: 0;
+  }
+
+  .tt-buscador__panel[hidden] {
+    display: none;
+  }
+
+  .tt-buscador__panel {
+    position: absolute;
+    top: calc(100% + 0.75rem);
+    left: 0;
+    width: 260px;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 24px 50px -20px rgba(0, 0, 0, 0.45);
+    border: 1px solid var(--tt-linea);
+    z-index: 70;
+    padding: 0.75rem;
+  }
+
+  .tt-buscador__panelBuscar {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    border: 1px solid var(--tt-linea);
+    border-radius: 8px;
+    padding: 0.5rem 0.7rem;
+    color: var(--tt-gris);
+    margin-bottom: 0.5rem;
+  }
+
+  .tt-buscador__panelBuscar input {
+    border: none;
+    outline: none;
+    flex: 1;
+    font-size: 0.82rem;
+    color: var(--tt-negro);
+  }
+
+  .tt-buscador__lista {
+    list-style: none;
+    max-height: 220px;
+    overflow-y: auto;
+  }
+
+  .tt-buscador__lista li[hidden] {
+    display: none;
+  }
+
+  .tt-buscador__lista button {
+    width: 100%;
+    text-align: left;
+    padding: 0.5rem 0.6rem;
+    font-size: 0.8rem;
+    font-weight: 600;
+    border-radius: 6px;
+  }
+
+  .tt-buscador__lista button:hover {
+    background: var(--tt-gris-claro);
+    color: var(--tt-naranja-osc);
+  }
+
+  .tt-buscador__panel--pax {
+    width: 210px;
+  }
+
+  .tt-buscador__paxRow {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 0.85rem;
+    font-weight: 700;
+    margin-bottom: 0.85rem;
+  }
+
+  .tt-buscador__stepper {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .tt-buscador__stepper button {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: var(--tt-gris-claro);
+    font-weight: 700;
+    display: grid;
+    place-items: center;
+  }
+
+  .tt-buscador__stepper button:hover {
+    background: var(--tt-naranja);
+    color: #fff;
+  }
+
+  .tt-buscador__listo {
+    width: 100%;
+    border-radius: 8px;
+    padding-block: 0.55rem;
+  }
+
+  .tt-buscador__nota {
+    text-align: center;
+    color: #fff;
+    background: var(--tt-negro);
+    font-size: 0.8rem;
+    font-weight: 600;
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    margin-top: 0.75rem;
+  }
+
+  @media (max-width: 900px) {
+    .tt-buscador {
+      justify-content: center;
+    }
+    .tt-buscador__submit {
+      margin-left: 0;
+      width: 100%;
+    }
+  }
+</style>

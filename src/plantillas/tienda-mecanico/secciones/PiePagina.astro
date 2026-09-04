@@ -1,0 +1,136 @@
+---
+import { marca, footerInfo } from '../datos/mecanico.js';
+import Icono from '../componentes/Icono.astro';
+---
+
+<footer class="tm-foot">
+  <div class="tm-wrap tm-foot__inner">
+    <a href="#top" class="tm-logo tm-foot__logo">
+      <span class="tm-logo__linea">LA TIENDA DEL</span>
+      <span class="tm-logo__marca">{marca.sub}</span>
+    </a>
+
+    <div class="tm-foot__datos">
+      <p>{footerInfo.direccion}</p>
+      <p>
+        {footerInfo.telefonos.map((t: string) => (
+          <span class="tm-foot__tel"><Icono name="telefono" size={14} /> {t}<br /></span>
+        ))}
+      </p>
+    </div>
+
+    <div class="tm-foot__redes" aria-label="Redes sociales">
+      <a href="#" aria-label="Facebook">f</a>
+      <a href="#" aria-label="TikTok">&#9835;</a>
+      <a href="#" aria-label="Instagram">&#9678;</a>
+    </div>
+
+    <a href="#top" class="tm-foot__lr">Libro de<br />Reclamaciones</a>
+  </div>
+</footer>
+
+<style>
+  .tm-foot {
+    background: var(--tm-negro);
+    border-top: 1px solid var(--tm-linea);
+    padding-block: 2rem;
+  }
+
+  .tm-foot__inner {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.5rem;
+  }
+
+  .tm-foot__logo {
+    display: flex;
+    flex-direction: column;
+    line-height: 1;
+    transform: skewX(-6deg);
+  }
+
+  .tm-foot__logo .tm-logo__linea {
+    font-family: var(--tm-titulos);
+    font-size: 0.62rem;
+    letter-spacing: 0.06em;
+    color: #fff;
+  }
+
+  .tm-foot__logo .tm-logo__marca {
+    font-family: var(--tm-titulos);
+    font-size: 1.5rem;
+    color: #fff;
+    position: relative;
+  }
+
+  .tm-foot__logo .tm-logo__marca::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 2px;
+    width: 100%;
+    height: 8px;
+    background: var(--tm-naranja);
+    z-index: -1;
+  }
+
+  .tm-foot__datos p {
+    text-transform: none;
+    font-size: 0.8rem;
+    color: #ccc;
+    line-height: 1.6;
+  }
+
+  .tm-foot__tel {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+
+  .tm-foot__tel :global(svg) {
+    color: var(--tm-naranja);
+  }
+
+  .tm-foot__redes {
+    display: flex;
+    gap: 0.5rem;
+  }
+
+  .tm-foot__redes a {
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    background: #1e1e1e;
+    display: grid;
+    place-items: center;
+    font-weight: 700;
+    font-size: 0.85rem;
+  }
+
+  .tm-foot__redes a:hover {
+    background: var(--tm-naranja);
+  }
+
+  .tm-foot__lr {
+    display: inline-flex;
+    align-items: center;
+    text-align: center;
+    background: #fff;
+    color: var(--tm-negro);
+    font-size: 0.68rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    padding: 0.5rem 0.9rem;
+    border-radius: 6px;
+    line-height: 1.25;
+  }
+
+  @media (max-width: 780px) {
+    .tm-foot__inner {
+      flex-direction: column;
+      text-align: center;
+    }
+  }
+</style>

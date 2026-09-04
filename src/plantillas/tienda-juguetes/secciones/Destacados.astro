@@ -1,0 +1,11 @@
+---
+import { destacados } from '../datos/juguetes.js';
+import FilaCarrusel from '../componentes/FilaCarrusel.astro';
+
+interface Producto { nombre: string; precio: number; tag?: string; img: string }
+const productos = destacados as Producto[];
+---
+
+<section class="tj-seccion tj-wrap" id="destacados">
+  <FilaCarrusel titulo="Imperdibles de tienda.com" productos={productos} icono="reloj-arena" />
+</section>

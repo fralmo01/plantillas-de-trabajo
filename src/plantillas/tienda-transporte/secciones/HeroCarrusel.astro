@@ -1,0 +1,184 @@
+---
+import { heroSlides } from '../datos/transporte.js';
+import BuscadorPasaje from '../componentes/BuscadorPasaje.astro';
+---
+
+<section class="tt-hero" aria-roledescription="carrusel">
+  <div class="tt-hero__track" id="tt-hero-track">
+    {heroSlides.map((s: { pct: string; desc: string; leyenda: string; img: string }) => (
+      <article class="tt-hero__slide">
+        <img src={s.img} alt={s.desc} loading="eager" />
+        <div class="tt-hero__overlay"></div>
+        <div class="tt-wrap tt-hero__tx">
+          {s.pct && <span class="tt-hero__pct">{s.pct}</span>}
+          <h2>{s.desc}</h2>
+          <p>{s.leyenda}</p>
+        </div>
+      </article>
+    ))}
+  </div>
+  <div class="tt-hero__nav">
+    <button type="button" id="tt-hero-next" aria-label="Siguiente">&rarr;</button>
+    <button type="button" id="tt-hero-prev" aria-label="Anterior">&larr;</button>
+  </div>
+  <div class="tt-hero__dots" id="tt-hero-dots">
+    {heroSlides.map((_: unknown, i: number) => <button aria-label={`Ir al slide ${i + 1}`} data-dot={i}></button>)}
+  </div>
+
+  <div class="tt-hero__buscador">
+    <BuscadorPasaje />
+  </div>
+</section>
+
+<script>
+  const track = document.getElementById('tt-hero-track');
+  const dots = Array.from(document.querySelectorAll<HTMLButtonElement>('#tt-hero-dots button'));
+  const total = track ? track.children.length : 0;
+  let idx = 0;
+
+  function ir(n: number) {
+    if (!track) return;
+    idx = (n + total) % total;
+    track.style.transform = `translateX(-${idx * 100}%)`;
+    dots.forEach((d, i) => d.classList.toggle('is-on', i === idx));
+  }
+
+  document.getElementById('tt-hero-prev')?.addEventListener('click', () => ir(idx - 1));
+  document.getElementById('tt-hero-next')?.addEventListener('click', () => ir(idx + 1));
+  dots.forEach((d, i) => d.addEventListener('click', () => ir(i)));
+
+  let timer = window.setInterval(() => ir(idx + 1), 6500);
+  const box = track?.closest('section');
+  box?.addEventListener('mouseenter', () => window.clearInterval(timer));
+  box?.addEventListener('mouseleave', () => (timer = window.setInterval(() => ir(idx + 1), 6500)));
+  ir(0);
+</script>
+
+<style>
+  .tt-hero {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .tt-hero__track {
+    display: flex;
+    transition: transform 0.5s ease;
+  }
+
+  .tt-hero__slide {
+    position: relative;
+    flex: 0 0 100%;
+    min-height: clamp(380px, 46vw, 620px);
+  }
+
+  .tt-hero__slide img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .tt-hero__overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg, rgba(0, 0, 0, 0.72) 0%, rgba(0, 0, 0, 0.15) 55%, transparent 80%);
+  }
+
+  .tt-hero__tx {
+    position: relative;
+    z-index: 1;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 0.5rem;
+    padding-block: clamp(2rem, 8vw, 4rem);
+  }
+
+  .tt-hero__pct {
+    font-size: clamp(3.5rem, 9vw, 6rem);
+    font-weight: 800;
+    color: var(--tt-naranja);
+    line-height: 1;
+  }
+
+  .tt-hero__tx h2 {
+    color: #fff;
+    font-size: clamp(1.6rem, 3.6vw, 2.6rem);
+    max-width: 18ch;
+  }
+
+  .tt-hero__tx p {
+    color: #eee;
+    font-size: clamp(0.85rem, 1.5vw, 1rem);
+    max-width: 34ch;
+  }
+
+  .tt-hero__nav {
+    position: absolute;
+    right: clamp(1rem, 3vw, 2.5rem);
+    top: 45%;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    z-index: 2;
+  }
+
+  .tt-hero__nav button {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.9);
+    color: var(--tt-negro);
+    font-size: 1.1rem;
+  }
+
+  .tt-hero__nav button:hover {
+    background: var(--tt-naranja);
+    color: #fff;
+  }
+
+  .tt-hero__dots {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: clamp(6.5rem, 16vw, 9rem);
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    z-index: 2;
+  }
+
+  .tt-hero__dots button {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.5);
+  }
+
+  .tt-hero__dots button.is-on {
+    background: var(--tt-naranja);
+    width: 26px;
+    border-radius: 999px;
+  }
+
+  .tt-hero__buscador {
+    position: relative;
+    z-index: 3;
+    margin-top: -3.75rem;
+    padding-bottom: 1.5rem;
+  }
+
+  @media (max-width: 780px) {
+    .tt-hero__nav {
+      display: none;
+    }
+    .tt-hero__dots {
+      bottom: 8.5rem;
+    }
+    .tt-hero__buscador {
+      margin-top: -2rem;
+    }
+  }
+</style>

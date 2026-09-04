@@ -1,0 +1,57 @@
+---
+import { marcasCarrusel } from '../datos/mecanico.js';
+---
+
+<section class="tm-seccion tm-wrap">
+  <a href="#productos" class="tm-cats__pill">Marcas</a>
+
+  <div class="tm-carr-area tm-marcas__area">
+    <button type="button" class="tm-flecha tm-marcas__prev" data-dir="-1" aria-label="Anterior">&lsaquo;</button>
+    <div class="tm-fila tm-marcas__row" id="tm-marcas-row">
+      {marcasCarrusel.map((m: { nombre: string }) => (
+        <div class="tm-marcas__item">
+          <span>{m.nombre}</span>
+        </div>
+      ))}
+    </div>
+    <button type="button" class="tm-flecha tm-marcas__next" data-dir="1" aria-label="Siguiente">&rsaquo;</button>
+  </div>
+</section>
+
+<script>
+  const row = document.getElementById('tm-marcas-row');
+  const area = row?.closest('.tm-marcas__area');
+  area?.querySelectorAll<HTMLButtonElement>('[data-dir]').forEach((b) => {
+    b.addEventListener('click', () => {
+      const dir = Number(b.dataset.dir || '1');
+      row?.scrollBy({ left: dir * 220, behavior: 'smooth' });
+    });
+  });
+</script>
+
+<style>
+  .tm-marcas__row {
+    grid-auto-columns: 180px;
+  }
+
+  .tm-marcas__item {
+    aspect-ratio: 1 / 1;
+    border-radius: 50%;
+    border: 1.5px solid var(--tm-linea);
+    display: grid;
+    place-items: center;
+    padding: 1rem;
+  }
+
+  .tm-marcas__item:hover {
+    border-color: var(--tm-naranja);
+  }
+
+  .tm-marcas__item span {
+    font-family: var(--tm-titulos);
+    font-size: 1.15rem;
+    letter-spacing: 0.02em;
+    text-align: center;
+    color: #fff;
+  }
+</style>

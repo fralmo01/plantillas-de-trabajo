@@ -1,0 +1,20 @@
+---
+import { productosDiagnostico, productosBooster, productosTaller, productosPintura } from '../datos/mecanico.js';
+import FilaCarrusel from '../componentes/FilaCarrusel.astro';
+
+interface Producto { nombre: string; codigo: string; precio: number; img: string }
+const filas = [
+  { titulo: 'Equipos de Diagnostico', productos: productosDiagnostico as Producto[] },
+  { titulo: 'Booster, Arrancadores y Cargadores', productos: productosBooster as Producto[] },
+  { titulo: 'Coches Portaherramientas', productos: productosTaller as Producto[] },
+  { titulo: 'Planchado, Pintura y Mas', productos: productosPintura as Producto[] },
+];
+---
+
+<section class="tm-seccion tm-wrap" id="productos">
+  {filas.map((f, i) => (
+    <div style={i > 0 ? 'margin-top: 2.75rem' : ''}>
+      <FilaCarrusel titulo={f.titulo} productos={f.productos} />
+    </div>
+  ))}
+</section>

@@ -1,0 +1,66 @@
+---
+import { garantiasFinal } from '../datos/juguetes.js';
+import Icono from '../componentes/Icono.astro';
+---
+
+<section class="tj-gar" id="garantias">
+  <div class="tj-wrap tj-gar__lista">
+    {garantiasFinal.map((g: { t: string; d: string; ico: string }) => (
+      <div class="tj-gar__item">
+        <span aria-hidden="true"><Icono name={g.ico} size={20} /></span>
+        <div>
+          <b>{g.t}</b>
+          <p>{g.d}</p>
+        </div>
+      </div>
+    ))}
+  </div>
+</section>
+
+<style>
+  .tj-gar {
+    background: var(--tj-verde-claro);
+  }
+
+  .tj-gar__lista {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+    padding-block: 1.1rem;
+  }
+
+  .tj-gar__item {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+  }
+
+  .tj-gar__item span {
+    font-size: 1.3rem;
+    line-height: 1;
+  }
+
+  .tj-gar__item b {
+    display: block;
+    font-size: 0.8rem;
+    font-weight: 800;
+    color: var(--tj-verde-osc);
+  }
+
+  .tj-gar__item p {
+    font-size: 0.72rem;
+    color: var(--tj-gris);
+  }
+
+  @media (max-width: 820px) {
+    .tj-gar__lista {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 480px) {
+    .tj-gar__lista {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

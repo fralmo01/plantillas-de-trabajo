@@ -1,0 +1,40 @@
+---
+import TarjetaProducto from './TarjetaProducto.astro';
+import Icono from './Icono.astro';
+
+interface Producto {
+  nombre: string;
+  precio: number;
+  antes?: number;
+  tag?: string;
+  img: string;
+}
+const { titulo, productos, icono } = Astro.props as { titulo: string; productos: Producto[]; icono?: string };
+---
+
+<div class="tj-fila-cabecera">
+  <h2>{icono && <span class="tj-fila-cabecera__ico" aria-hidden="true"><Icono name={icono} size={19} /></span>}{titulo}</h2>
+  <a href="#destacados">Ver mas &rarr;</a>
+</div>
+
+<div class="tj-carr-area">
+  <button type="button" class="tj-flecha tj-carr__prev" data-dir="-1" aria-label="Anterior">&lsaquo;</button>
+  <div class="tj-fila tj-carr__row">
+    {productos.map((p: Producto) => <TarjetaProducto producto={p} />)}
+  </div>
+  <button type="button" class="tj-flecha tj-carr__next" data-dir="1" aria-label="Siguiente">&rsaquo;</button>
+</div>
+
+<script>
+  document.querySelectorAll<HTMLElement>('.tj-carr-area').forEach((area) => {
+    if (area.dataset.wired) return;
+    area.dataset.wired = '1';
+    const row = area.querySelector<HTMLElement>('.tj-carr__row');
+    area.querySelectorAll<HTMLButtonElement>('[data-dir]').forEach((b) => {
+      b.addEventListener('click', () => {
+        const dir = Number(b.dataset.dir || '1');
+        row?.scrollBy({ left: dir * 300, behavior: 'smooth' });
+      });
+    });
+  });
+</script>

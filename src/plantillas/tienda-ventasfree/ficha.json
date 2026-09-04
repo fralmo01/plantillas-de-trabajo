@@ -7,7 +7,7 @@
   "tags": ["ecommerce", "electronica", "repuestos", "b2b", "mega-menu", "whatsapp", "multipagina"],
   "paleta": ["#1a56c4", "#e0272a", "#1a9b4a", "#f5f7fa"],
   "destacada": false,
-  "nuevo": true,
+  "nuevo": false,
   "inspiradoEn": "ventasfree.com",
   "orden": 42
 }

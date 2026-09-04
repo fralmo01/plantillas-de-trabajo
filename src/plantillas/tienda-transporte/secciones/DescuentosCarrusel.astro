@@ -1,0 +1,96 @@
+---
+import { descuentos } from '../datos/transporte.js';
+
+interface Descuento { pct: string; titulo: string; sub: string; img: string }
+const lista = descuentos as Descuento[];
+---
+
+<section class="tt-seccion tt-wrap" id="descuentos">
+  <div class="tt-seccion-cabecera">
+    <h2 class="tt-titulo">Descuentos especiales</h2>
+  </div>
+
+  <div class="tt-carr-area">
+    <button type="button" class="tt-flecha" data-dir="-1" aria-label="Anterior">&lsaquo;</button>
+    <div class="tt-fila" id="tt-desc-row">
+      {lista.map((d) => (
+        <article class="tt-desc">
+          <img src={d.img} alt={d.titulo} loading="lazy" />
+          <div class="tt-desc__overlay"></div>
+          <div class="tt-desc__tx">
+            <span class="tt-desc__pct">{d.pct}</span>
+            <b>{d.titulo}</b>
+            <p>{d.sub}</p>
+          </div>
+        </article>
+      ))}
+    </div>
+    <button type="button" class="tt-flecha" data-dir="1" aria-label="Siguiente">&rsaquo;</button>
+  </div>
+</section>
+
+<script>
+  const row = document.getElementById('tt-desc-row');
+  const area = row?.closest('.tt-carr-area');
+  area?.querySelectorAll<HTMLButtonElement>('[data-dir]').forEach((b) => {
+    b.addEventListener('click', () => {
+      const dir = Number(b.dataset.dir || '1');
+      row?.scrollBy({ left: dir * 340, behavior: 'smooth' });
+    });
+  });
+</script>
+
+<style>
+  #tt-desc-row {
+    grid-auto-columns: minmax(320px, 1fr);
+  }
+
+  .tt-desc {
+    position: relative;
+    aspect-ratio: 4 / 5;
+    border-radius: 14px;
+    overflow: hidden;
+  }
+
+  .tt-desc img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .tt-desc__overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(0deg, rgba(0, 0, 0, 0.75) 20%, rgba(0, 0, 0, 0.05) 55%);
+  }
+
+  .tt-desc__tx {
+    position: absolute;
+    left: 1.25rem;
+    right: 1.25rem;
+    bottom: 1.25rem;
+    color: #fff;
+  }
+
+  .tt-desc__pct {
+    display: block;
+    font-size: 2.75rem;
+    font-weight: 800;
+    color: var(--tt-naranja);
+    line-height: 1;
+  }
+
+  .tt-desc__tx b {
+    display: block;
+    font-size: 1.1rem;
+    margin-top: 0.35rem;
+  }
+
+  .tt-desc__tx p {
+    font-size: 0.8rem;
+    color: #eee;
+    margin-top: 0.35rem;
+  }
+</style>

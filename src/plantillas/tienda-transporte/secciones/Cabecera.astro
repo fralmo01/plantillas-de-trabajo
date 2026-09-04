@@ -1,0 +1,208 @@
+---
+import { marca, navPrincipal, menuLateral } from '../datos/transporte.js';
+import Icono from '../componentes/Icono.astro';
+---
+
+<header class="tt-hdr" id="top">
+  <div class="tt-wrap tt-hdr__row">
+    <a href="#top" class="tt-logo" aria-label={`${marca.nombre} ${marca.sub}`}>
+      <span class="tt-logo__ico" aria-hidden="true"><Icono name="bus" size={26} /></span>
+      <span class="tt-logo__tx">{marca.nombre}<b>{marca.sub}</b></span>
+    </a>
+
+    <nav class="tt-nav" aria-label="Navegacion principal">
+      {navPrincipal.map((n: { t: string; href: string }) => (
+        <a href={n.href}>{n.t}</a>
+      ))}
+    </nav>
+
+    <div class="tt-hdr__acc">
+      <a href="#footer" class="tt-hdr__tel">
+        <Icono name="telefono" size={17} />
+        <span>{marca.tel}</span>
+      </a>
+      <button type="button" class="tt-hdr__menu" id="tt-menu-toggle" aria-label="Abrir menu" aria-expanded="false">
+        <Icono name="menu" size={22} />
+      </button>
+    </div>
+  </div>
+</header>
+
+<div class="tt-drawer-overlay" id="tt-drawer-overlay" hidden></div>
+<aside class="tt-drawer" id="tt-drawer" hidden aria-label="Menu de navegacion">
+  <button type="button" class="tt-drawer__cerrar" id="tt-drawer-cerrar" aria-label="Cerrar menu">
+    <Icono name="cerrar" size={22} />
+  </button>
+  <nav class="tt-drawer__nav" aria-label="Mapa del sitio">
+    {menuLateral.map((n: { t: string; href: string }) => (
+      <a href={n.href} class="tt-drawer__link">{n.t}</a>
+    ))}
+  </nav>
+</aside>
+
+<script>
+  const toggle = document.getElementById('tt-menu-toggle');
+  const drawer = document.getElementById('tt-drawer');
+  const overlay = document.getElementById('tt-drawer-overlay');
+  const cerrar = document.getElementById('tt-drawer-cerrar');
+
+  function abrir(v: boolean) {
+    if (!drawer || !overlay || !toggle) return;
+    drawer.hidden = !v;
+    overlay.hidden = !v;
+    toggle.setAttribute('aria-expanded', String(v));
+  }
+
+  toggle?.addEventListener('click', () => abrir(true));
+  cerrar?.addEventListener('click', () => abrir(false));
+  overlay?.addEventListener('click', () => abrir(false));
+  drawer?.querySelectorAll('a').forEach((a) => a.addEventListener('click', () => abrir(false)));
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') abrir(false);
+  });
+</script>
+
+<style>
+  .tt-hdr {
+    background: #fff;
+    position: relative;
+    z-index: 65;
+    border-bottom: 1px solid var(--tt-linea);
+  }
+
+  .tt-hdr__row {
+    display: flex;
+    align-items: center;
+    gap: clamp(1rem, 3vw, 2.5rem);
+    padding-block: 0.85rem;
+  }
+
+  .tt-logo {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    flex-shrink: 0;
+  }
+
+  .tt-logo__ico {
+    color: var(--tt-naranja);
+    display: grid;
+    place-items: center;
+  }
+
+  .tt-logo__tx {
+    font-size: 1.3rem;
+    font-weight: 800;
+    color: var(--tt-negro);
+  }
+
+  .tt-logo__tx b {
+    font-weight: 800;
+    color: var(--tt-naranja);
+  }
+
+  .tt-nav {
+    display: flex;
+    gap: 1.75rem;
+    flex: 1;
+  }
+
+  .tt-nav a {
+    font-size: 0.86rem;
+    font-weight: 700;
+    color: var(--tt-negro);
+  }
+
+  .tt-nav a:hover {
+    color: var(--tt-naranja);
+  }
+
+  .tt-hdr__acc {
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+    flex-shrink: 0;
+  }
+
+  .tt-hdr__tel {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--tt-naranja);
+    font-weight: 800;
+    font-size: 0.9rem;
+  }
+
+  .tt-hdr__menu {
+    color: var(--tt-naranja);
+    display: grid;
+    place-items: center;
+  }
+
+  .tt-drawer-overlay[hidden] {
+    display: none;
+  }
+
+  .tt-drawer-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 140;
+  }
+
+  .tt-drawer[hidden] {
+    display: none;
+  }
+
+  .tt-drawer {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: min(320px, 85vw);
+    background: #fff;
+    z-index: 150;
+    padding: 1.5rem;
+    box-shadow: -20px 0 40px -20px rgba(0, 0, 0, 0.5);
+    overflow-y: auto;
+  }
+
+  .tt-drawer__cerrar {
+    margin-left: auto;
+    display: grid;
+    place-items: center;
+    width: 36px;
+    height: 36px;
+    color: var(--tt-naranja);
+  }
+
+  .tt-drawer__nav {
+    margin-top: 1.5rem;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .tt-drawer__link {
+    padding: 0.75rem 0.25rem;
+    font-weight: 700;
+    font-size: 0.92rem;
+    color: var(--tt-negro);
+    border-bottom: 1px solid var(--tt-linea);
+  }
+
+  .tt-drawer__link:hover {
+    color: var(--tt-naranja);
+  }
+
+  @media (max-width: 1050px) {
+    .tt-nav {
+      display: none;
+    }
+  }
+
+  @media (max-width: 600px) {
+    .tt-hdr__tel span {
+      display: none;
+    }
+  }
+</style>

@@ -1,0 +1,175 @@
+---
+import { marca, footerEnlaces1, footerEnlaces2, footerInfo, ciudadesDestino } from '../datos/transporte.js';
+import Icono from '../componentes/Icono.astro';
+
+const mitad = Math.ceil(ciudadesDestino.length / 2);
+const rutas1 = ciudadesDestino.slice(0, mitad);
+const rutas2 = ciudadesDestino.slice(mitad);
+---
+
+<footer class="tt-foot" id="footer">
+  <div class="tt-wrap tt-foot__grid">
+    <div class="tt-foot__marca">
+      <a href="#top" class="tt-logo">
+        <span class="tt-logo__ico" aria-hidden="true"><Icono name="bus" size={24} /></span>
+        <span class="tt-logo__tx">{marca.nombre}<b>{marca.sub}</b></span>
+      </a>
+      <div class="tt-foot__redes" aria-label="Redes sociales">
+        <a href="#" aria-label="Facebook">f</a>
+        <a href="#" aria-label="YouTube">&#9654;</a>
+        <a href="#" aria-label="TikTok">&#9835;</a>
+        <a href="#" aria-label="Instagram">&#9678;</a>
+      </div>
+      <p class="tt-foot__dato"><Icono name="pin" size={15} /> {footerInfo.direccion}</p>
+      <p class="tt-foot__dato"><Icono name="telefono" size={15} /> Central: {footerInfo.telefono}</p>
+      <p class="tt-foot__dato"><Icono name="sobre" size={15} /> {footerInfo.correo}</p>
+    </div>
+
+    <nav class="tt-foot__col" aria-label="Enlaces">
+      <h3>Enlaces</h3>
+      <ul>
+        {footerEnlaces1.map((l: string) => <li><a href="#top">{l}</a></li>)}
+      </ul>
+    </nav>
+
+    <nav class="tt-foot__col" aria-label="Enlaces legales">
+      <h3>Enlaces</h3>
+      <ul>
+        {footerEnlaces2.map((l: string) => <li><a href="#top">{l}</a></li>)}
+      </ul>
+    </nav>
+
+    <nav class="tt-foot__col" aria-label="Rutas frecuentes">
+      <h3>Rutas frecuentes</h3>
+      <ul>
+        {rutas1.map((c: string) => <li><a href="#destinos">Pasaje en bus a {c}</a></li>)}
+      </ul>
+    </nav>
+
+    <nav class="tt-foot__col" aria-label="Rutas frecuentes">
+      <h3>Rutas frecuentes</h3>
+      <ul>
+        {rutas2.map((c: string) => <li><a href="#destinos">Pasaje en bus a {c}</a></li>)}
+      </ul>
+    </nav>
+  </div>
+
+  <div class="tt-wrap tt-foot__base">
+    <span>&copy; {marca.nombre} {marca.sub} - 2026. Derechos reservados.</span>
+  </div>
+</footer>
+
+<style>
+  .tt-foot {
+    background: var(--tt-negro);
+    color: #fff;
+    margin-top: 1rem;
+  }
+
+  .tt-foot__grid {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr 1fr 1fr 1fr;
+    gap: 2rem;
+    padding-block: 3rem 2rem;
+  }
+
+  .tt-foot__marca .tt-logo {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .tt-foot__marca .tt-logo__ico {
+    color: var(--tt-naranja);
+  }
+
+  .tt-foot__marca .tt-logo__tx {
+    font-size: 1.15rem;
+    font-weight: 800;
+    color: #fff;
+  }
+
+  .tt-foot__marca .tt-logo__tx b {
+    color: var(--tt-naranja);
+  }
+
+  .tt-foot__redes {
+    display: flex;
+    gap: 0.5rem;
+    margin: 1rem 0;
+  }
+
+  .tt-foot__redes a {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.12);
+    color: #fff;
+    font-weight: 700;
+    font-size: 0.8rem;
+  }
+
+  .tt-foot__redes a:hover {
+    background: var(--tt-naranja);
+  }
+
+  .tt-foot__dato {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.5rem;
+    font-size: 0.78rem;
+    color: #ccc;
+    margin-top: 0.5rem;
+  }
+
+  .tt-foot__dato :global(svg) {
+    color: var(--tt-naranja);
+    flex-shrink: 0;
+    margin-top: 0.1rem;
+  }
+
+  .tt-foot__col h3 {
+    color: #fff;
+    font-size: 0.85rem;
+    margin-bottom: 1rem;
+  }
+
+  .tt-foot__col ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+  }
+
+  .tt-foot__col a {
+    font-size: 0.78rem;
+    color: #ccc;
+  }
+
+  .tt-foot__col a:hover {
+    color: var(--tt-naranja);
+  }
+
+  .tt-foot__base {
+    border-top: 1px solid rgba(255, 255, 255, 0.12);
+    padding-block: 1.25rem;
+    font-size: 0.76rem;
+    color: #aaa;
+    text-align: center;
+  }
+
+  @media (max-width: 1000px) {
+    .tt-foot__grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 560px) {
+    .tt-foot__grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

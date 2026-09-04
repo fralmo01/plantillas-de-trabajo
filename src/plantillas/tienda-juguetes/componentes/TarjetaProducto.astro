@@ -1,0 +1,152 @@
+---
+import { soles } from '../datos/juguetes.js';
+
+interface Producto {
+  nombre: string;
+  precio: number;
+  antes?: number;
+  tag?: string;
+  img: string;
+}
+const { producto } = Astro.props as { producto: Producto };
+---
+
+<article class="tj-prod" data-nombre={producto.nombre.toLowerCase()} data-precio={producto.precio}>
+  <div class="tj-prod__media">
+    {producto.tag && <span class="tj-prod__tag">{producto.tag}</span>}
+    <img src={producto.img} alt={producto.nombre} loading="lazy" decoding="async" />
+  </div>
+  <div class="tj-prod__body">
+    <h3 class="tj-prod__nombre">{producto.nombre}</h3>
+    <p class="tj-prod__precio">
+      {producto.antes && <s>{soles(producto.antes)}</s>}
+      <b>{soles(producto.precio)}</b>
+    </p>
+    <div class="tj-prod__qty" role="group" aria-label="Cantidad">
+      <button type="button" class="tj-qty__b" data-step="-1" aria-label="Quitar uno">-</button>
+      <span class="tj-qty__n">1</span>
+      <button type="button" class="tj-qty__b" data-step="1" aria-label="Agregar uno">+</button>
+    </div>
+    <button type="button" class="tj-btn tj-btn--outline tj-prod__add">+ Carrito</button>
+  </div>
+</article>
+
+<style>
+  .tj-prod[hidden] {
+    display: none;
+  }
+
+  .tj-prod {
+    display: flex;
+    flex-direction: column;
+    background: #fff;
+    border: 1px solid var(--tj-linea);
+    border-radius: 14px;
+    overflow: hidden;
+    transition: box-shadow 0.15s ease, transform 0.15s ease;
+  }
+
+  .tj-prod:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 18px 40px -20px rgba(51, 47, 41, 0.35);
+  }
+
+  .tj-prod__media {
+    position: relative;
+    aspect-ratio: 1 / 1;
+    background: var(--tj-verde-claro);
+  }
+
+  .tj-prod__media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .tj-prod__tag {
+    position: absolute;
+    top: 0.7rem;
+    left: 0.7rem;
+    background: var(--tj-oro);
+    color: #fff;
+    font-size: 0.65rem;
+    font-weight: 700;
+    padding: 0.2rem 0.6rem;
+    border-radius: var(--tj-pill);
+  }
+
+  .tj-prod__body {
+    padding: 0.85rem 1rem 1.05rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.55rem;
+    flex: 1;
+  }
+
+  .tj-prod__nombre {
+    font-family: var(--tj-font);
+    font-size: 0.85rem;
+    font-weight: 700;
+    text-align: center;
+    min-height: 2.3em;
+  }
+
+  .tj-prod__precio {
+    text-align: center;
+    display: flex;
+    gap: 0.5rem;
+    justify-content: center;
+    align-items: baseline;
+  }
+
+  .tj-prod__precio s {
+    color: var(--tj-gris);
+    font-size: 0.78rem;
+  }
+
+  .tj-prod__precio b {
+    color: var(--tj-terracota-osc);
+    font-size: 1.02rem;
+    font-weight: 800;
+  }
+
+  .tj-prod__qty {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.9rem;
+  }
+
+  .tj-qty__b {
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    background: var(--tj-verde-claro);
+    color: var(--tj-tinta);
+    font-weight: 700;
+    line-height: 1;
+    display: grid;
+    place-items: center;
+  }
+
+  .tj-qty__b:hover {
+    background: var(--tj-verde);
+    color: #fff;
+  }
+
+  .tj-qty__n {
+    min-width: 1.4ch;
+    text-align: center;
+    font-weight: 700;
+  }
+
+  .tj-prod__add {
+    margin-top: auto;
+    width: 100%;
+  }
+
+  .tj-prod__add.is-ok {
+    background: var(--tj-oro);
+    color: #fff;
+  }
+</style>

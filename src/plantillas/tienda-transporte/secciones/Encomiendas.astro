@@ -1,0 +1,143 @@
+---
+import { encomiendas } from '../datos/transporte.js';
+import Icono from '../componentes/Icono.astro';
+---
+
+<section class="tt-enc" id="encomiendas">
+  <img src={encomiendas.img} alt={encomiendas.tituloDestacado} loading="lazy" class="tt-enc__bg" />
+  <div class="tt-enc__overlay"></div>
+  <div class="tt-wrap tt-enc__inner">
+    <h2>{encomiendas.titulo}<br /><span>{encomiendas.tituloDestacado}</span></h2>
+    <p>{encomiendas.sub}</p>
+    <div class="tt-enc__acciones">
+      <button type="button" class="tt-btn tt-btn--outline" id="tt-rastrear-btn">Rastrear envio</button>
+      <a href="#servicios" class="tt-btn tt-btn--outline">Ver mas</a>
+    </div>
+
+    <form class="tt-enc__rastreo" id="tt-enc-form" hidden>
+      <div class="tt-enc__rastreo-row">
+        <Icono name="sobre" size={18} />
+        <input type="text" id="tt-enc-codigo" placeholder="Ingresa tu codigo de envio" aria-label="Codigo de envio" />
+        <button type="submit" class="tt-btn tt-btn--naranja">Rastrear</button>
+      </div>
+      <p class="tt-enc__estado" id="tt-enc-estado" hidden></p>
+    </form>
+  </div>
+</section>
+
+<script>
+  const rastrearBtn = document.getElementById('tt-rastrear-btn');
+  const form = document.getElementById('tt-enc-form');
+  const input = document.getElementById('tt-enc-codigo') as HTMLInputElement | null;
+  const estado = document.getElementById('tt-enc-estado');
+
+  rastrearBtn?.addEventListener('click', () => {
+    if (!form) return;
+    form.hidden = !form.hidden;
+    if (!form.hidden) input?.focus();
+  });
+
+  form?.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const codigo = (input?.value || '').trim();
+    if (!estado) return;
+    estado.hidden = false;
+    estado.textContent = codigo
+      ? `Envio ${codigo.toUpperCase()}: en transito hacia su agencia de destino.`
+      : 'Ingresa un codigo de envio para rastrearlo.';
+  });
+</script>
+
+<style>
+  .tt-enc {
+    position: relative;
+    min-height: clamp(340px, 42vw, 560px);
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+  }
+
+  .tt-enc__bg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .tt-enc__overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg, rgba(0, 0, 0, 0.75) 0%, rgba(0, 0, 0, 0.2) 55%, transparent 85%);
+  }
+
+  .tt-enc__inner {
+    position: relative;
+    z-index: 1;
+    max-width: 34rem;
+  }
+
+  .tt-enc__inner h2 {
+    color: #fff;
+    font-size: clamp(1.6rem, 3.6vw, 2.4rem);
+  }
+
+  .tt-enc__inner h2 span {
+    color: var(--tt-naranja);
+  }
+
+  .tt-enc__inner > p {
+    color: #eee;
+    font-size: 0.92rem;
+    margin: 0.9rem 0 1.5rem;
+    max-width: 32ch;
+  }
+
+  .tt-enc__acciones {
+    display: flex;
+    gap: 0.9rem;
+    flex-wrap: wrap;
+  }
+
+  .tt-enc__rastreo[hidden] {
+    display: none;
+  }
+
+  .tt-enc__rastreo {
+    margin-top: 1.5rem;
+  }
+
+  .tt-enc__rastreo-row {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    background: #fff;
+    border-radius: 999px;
+    padding: 0.4rem 0.4rem 0.4rem 1rem;
+    color: var(--tt-gris);
+    max-width: 26rem;
+  }
+
+  .tt-enc__rastreo-row input {
+    flex: 1;
+    border: none;
+    outline: none;
+    font-size: 0.85rem;
+    color: var(--tt-negro);
+  }
+
+  .tt-enc__estado[hidden] {
+    display: none;
+  }
+
+  .tt-enc__estado {
+    margin-top: 0.75rem;
+    background: rgba(255, 255, 255, 0.15);
+    color: #fff;
+    font-size: 0.82rem;
+    font-weight: 600;
+    padding: 0.6rem 1rem;
+    border-radius: 10px;
+    max-width: 26rem;
+  }
+</style>

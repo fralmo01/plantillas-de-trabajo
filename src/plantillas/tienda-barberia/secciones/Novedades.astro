@@ -1,0 +1,14 @@
+---
+import { loNuestro, ofertas } from '../datos/barberia.js';
+import GrillaTabs from '../componentes/GrillaTabs.astro';
+
+interface Producto { nombre: string; precio: number; antes?: number; tag?: string; marca?: string; img: string }
+const tabs = [
+  { label: 'Lo Nuestro', productos: loNuestro as Producto[] },
+  { label: 'Ofertas', productos: ofertas as Producto[] },
+];
+---
+
+<section class="tb-seccion tb-wrap" id="novedades">
+  <GrillaTabs id="tb-novedades" titulo="Lo Nuevo" tabs={tabs} boton="Ver Coleccion" />
+</section>

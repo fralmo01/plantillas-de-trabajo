@@ -1,0 +1,120 @@
+---
+import { testimonios } from '../datos/juguetes.js';
+import Icono from '../componentes/Icono.astro';
+
+interface Testimonio { estrellas: number; titulo: string; texto: string; autor: string; img: string }
+const lista = testimonios as Testimonio[];
+---
+
+<section class="tj-seccion tj-wrap">
+  <div class="tj-test__head">
+    <h2 class="tj-titulo">
+      <span class="tj-test__ico" aria-hidden="true"><Icono name="chat" size={22} /></span> Ellos lo dicen mejor
+    </h2>
+    <p class="tj-test__prom">
+      <span aria-hidden="true">&#9733;&#9733;&#9733;&#9733;&#9733;</span> de {lista.length * 47} resenas
+    </p>
+  </div>
+
+  <div class="tj-carr-area">
+    <button type="button" class="tj-flecha" data-dir="-1" aria-label="Anterior">&lsaquo;</button>
+    <div class="tj-fila" id="tj-test-row">
+      {lista.map((t) => (
+        <article class="tj-test">
+          <div class="tj-test__estrellas" aria-hidden="true">{'★'.repeat(t.estrellas)}</div>
+          <b class="tj-test__titulo">{t.titulo}</b>
+          <p class="tj-test__texto">{t.texto}</p>
+          <div class="tj-test__autor">
+            <img src={t.img} alt="" loading="lazy" />
+            <span>{t.autor}</span>
+          </div>
+        </article>
+      ))}
+    </div>
+    <button type="button" class="tj-flecha" data-dir="1" aria-label="Siguiente">&rsaquo;</button>
+  </div>
+</section>
+
+<script>
+  const row = document.getElementById('tj-test-row');
+  const area = row?.closest('.tj-carr-area');
+  area?.querySelectorAll<HTMLButtonElement>('[data-dir]').forEach((b) => {
+    b.addEventListener('click', () => {
+      const dir = Number(b.dataset.dir || '1');
+      row?.scrollBy({ left: dir * 280, behavior: 'smooth' });
+    });
+  });
+</script>
+
+<style>
+  .tj-test__head {
+    text-align: center;
+    margin-bottom: 1.5rem;
+  }
+
+  .tj-test__head .tj-titulo {
+    margin-bottom: 0.5rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .tj-test__ico {
+    display: inline-flex;
+    color: var(--tj-terracota);
+  }
+
+  .tj-test__prom {
+    color: var(--tj-oro-osc);
+    font-size: 0.85rem;
+    font-weight: 700;
+  }
+
+  .tj-test {
+    background: #fff;
+    border: 1px solid var(--tj-linea);
+    border-radius: 14px;
+    padding: 1.1rem 1.2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    min-height: 100%;
+  }
+
+  .tj-test__estrellas {
+    color: var(--tj-oro);
+    font-size: 0.9rem;
+    letter-spacing: 1px;
+  }
+
+  .tj-test__titulo {
+    font-family: var(--tj-titulos);
+    font-size: 0.92rem;
+  }
+
+  .tj-test__texto {
+    font-size: 0.8rem;
+    color: var(--tj-gris);
+    flex: 1;
+  }
+
+  .tj-test__autor {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 0.4rem;
+  }
+
+  .tj-test__autor img {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+
+  .tj-test__autor span {
+    font-size: 0.76rem;
+    font-weight: 700;
+    color: var(--tj-tinta);
+  }
+</style>

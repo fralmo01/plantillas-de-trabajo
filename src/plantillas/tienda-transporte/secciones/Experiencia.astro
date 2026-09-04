@@ -1,0 +1,80 @@
+---
+import { experiencia } from '../datos/transporte.js';
+import Icono from '../componentes/Icono.astro';
+
+interface Amenidad { ico: string; label: string }
+const amenidades = experiencia.amenidades as Amenidad[];
+---
+
+<section class="tt-exp">
+  <img src={experiencia.img} alt={experiencia.tituloDestacado} loading="lazy" class="tt-exp__bg" />
+  <div class="tt-exp__overlay"></div>
+  <div class="tt-wrap tt-exp__inner">
+    <h2>{experiencia.titulo}<br /><span>{experiencia.tituloDestacado}</span></h2>
+    <div class="tt-exp__amenidades">
+      {amenidades.map((a) => (
+        <span class="tt-exp__amen" title={a.label}>
+          <Icono name={a.ico} size={20} />
+        </span>
+      ))}
+    </div>
+    <a href="#servicios" class="tt-btn tt-btn--outline">Ver servicios</a>
+  </div>
+</section>
+
+<style>
+  .tt-exp {
+    position: relative;
+    min-height: clamp(320px, 40vw, 480px);
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    background: var(--tt-negro);
+  }
+
+  .tt-exp__bg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .tt-exp__overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0.35) 60%, rgba(0, 0, 0, 0.1) 100%);
+  }
+
+  .tt-exp__inner {
+    position: relative;
+    z-index: 1;
+    max-width: 30rem;
+  }
+
+  .tt-exp__inner h2 {
+    color: #fff;
+    font-size: clamp(1.6rem, 3.6vw, 2.4rem);
+    margin-bottom: 1.5rem;
+  }
+
+  .tt-exp__inner h2 span {
+    color: var(--tt-naranja);
+  }
+
+  .tt-exp__amenidades {
+    display: flex;
+    gap: 0.9rem;
+    margin-bottom: 1.75rem;
+  }
+
+  .tt-exp__amen {
+    width: 46px;
+    height: 46px;
+    border-radius: 50%;
+    border: 1.5px solid rgba(255, 255, 255, 0.5);
+    color: #fff;
+    display: grid;
+    place-items: center;
+  }
+</style>

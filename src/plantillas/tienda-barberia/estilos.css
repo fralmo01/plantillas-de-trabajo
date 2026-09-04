@@ -1,0 +1,218 @@
+@import url("https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700;800&display=swap");
+
+.tpl-tienda-barberia {
+  --tb-negro: #0c0c0c;
+  --tb-negro2: #171717;
+  --tb-blanco: #fff;
+  --tb-crema: #f4f2ee;
+  --tb-dorado: #d4a72c;
+  --tb-dorado-osc: #b3891c;
+  --tb-rojo: #e5372f;
+  --tb-morado: #6d28d9;
+  --tb-gris: #8a8a8a;
+  --tb-gris-osc: #4a4a4a;
+  --tb-linea: #262626;
+
+  --tb-font: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+  --tb-titulos: "Bebas Neue", var(--tb-font);
+  --tb-maxw: 1280px;
+
+  background: var(--tb-blanco);
+  color: var(--tb-negro);
+  font-family: var(--tb-font);
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+}
+
+.tpl-tienda-barberia *,
+.tpl-tienda-barberia *::before,
+.tpl-tienda-barberia *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+.tpl-tienda-barberia h1,
+.tpl-tienda-barberia h2,
+.tpl-tienda-barberia h3,
+.tpl-tienda-barberia h4 {
+  line-height: 1.05;
+  color: var(--tb-negro);
+  font-family: var(--tb-titulos);
+  font-weight: 400;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+.tpl-tienda-barberia img {
+  max-width: 100%;
+  display: block;
+}
+
+.tpl-tienda-barberia a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.tpl-tienda-barberia button {
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+  border: none;
+  background: none;
+}
+
+.tpl-tienda-barberia input {
+  font: inherit;
+}
+
+.tpl-tienda-barberia .tb-wrap {
+  max-width: var(--tb-maxw);
+  margin-inline: auto;
+  padding-inline: clamp(1rem, 3vw, 2rem);
+}
+
+.tpl-tienda-barberia .tb-seccion {
+  padding-block: clamp(2.25rem, 5vw, 3.75rem);
+}
+
+.tpl-tienda-barberia .tb-titulo {
+  font-size: clamp(1.6rem, 4vw, 2.4rem);
+  font-weight: 400;
+  margin-bottom: 1.75rem;
+  letter-spacing: 0.03em;
+}
+
+.tpl-tienda-barberia .tb-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.85rem 1.75rem;
+  font-family: var(--tb-titulos);
+  font-size: 0.95rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  border-radius: 2px;
+  transition: background 0.15s ease, color 0.15s ease, transform 0.15s ease;
+}
+
+.tpl-tienda-barberia .tb-btn:hover {
+  transform: translateY(-2px);
+}
+
+.tpl-tienda-barberia .tb-btn--negro {
+  background: var(--tb-negro);
+  color: #fff;
+}
+
+.tpl-tienda-barberia .tb-btn--negro:hover {
+  background: var(--tb-negro2);
+}
+
+.tpl-tienda-barberia .tb-btn--claro {
+  background: #fff;
+  color: var(--tb-negro);
+}
+
+.tpl-tienda-barberia .tb-btn--outline {
+  border: 1.5px solid #fff;
+  color: #fff;
+  background: transparent;
+}
+
+.tpl-tienda-barberia .tb-btn--outline:hover {
+  background: #fff;
+  color: var(--tb-negro);
+}
+
+.tpl-tienda-barberia .tb-btn--dorado {
+  background: var(--tb-dorado);
+  color: var(--tb-negro);
+}
+
+.tpl-tienda-barberia .tb-btn--dorado:hover {
+  background: var(--tb-dorado-osc);
+}
+
+.tpl-tienda-barberia .tb-fila {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(210px, 1fr);
+  gap: 1.25rem;
+  overflow-x: auto;
+  scroll-snap-type: x proximity;
+  padding-bottom: 0.5rem;
+  scrollbar-width: thin;
+}
+
+.tpl-tienda-barberia .tb-fila > * {
+  scroll-snap-align: start;
+}
+
+.tpl-tienda-barberia .tb-flecha {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  color: var(--tb-negro);
+  font-size: 1.4rem;
+  line-height: 1;
+  background: #fff;
+  border: 1.5px solid var(--tb-negro);
+  flex-shrink: 0;
+}
+
+.tpl-tienda-barberia .tb-flecha:hover {
+  background: var(--tb-negro);
+  color: #fff;
+}
+
+.tpl-tienda-barberia .tb-carr-area {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.tpl-tienda-barberia .tb-tabs {
+  display: flex;
+  gap: 1.5rem;
+  border-bottom: 1px solid var(--tb-linea);
+  margin-bottom: 1.75rem;
+}
+
+.tpl-tienda-barberia .tb-tabs button {
+  padding-bottom: 0.6rem;
+  font-family: var(--tb-titulos);
+  font-size: 1rem;
+  letter-spacing: 0.05em;
+  color: var(--tb-gris);
+  border-bottom: 2px solid transparent;
+}
+
+.tpl-tienda-barberia .tb-tabs button.is-on {
+  color: var(--tb-negro);
+  border-color: var(--tb-dorado);
+}
+
+.tpl-tienda-barberia .tb-chat__msg {
+  max-width: 82%;
+  padding: 0.6rem 0.85rem;
+  border-radius: 4px;
+  font-size: 0.82rem;
+  line-height: 1.45;
+}
+
+.tpl-tienda-barberia .tb-chat__msg--bot {
+  background: var(--tb-crema);
+  color: var(--tb-negro);
+  align-self: flex-start;
+}
+
+.tpl-tienda-barberia .tb-chat__msg--yo {
+  background: var(--tb-negro);
+  color: #fff;
+  align-self: flex-end;
+}

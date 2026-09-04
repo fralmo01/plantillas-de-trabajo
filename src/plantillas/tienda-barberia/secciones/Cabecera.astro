@@ -1,0 +1,607 @@
+---
+import { marca, navPrincipal, navSecundaria, megaMenu } from '../datos/barberia.js';
+---
+
+<header class="tb-hdr" id="top">
+  <div class="tb-wrap tb-hdr__row">
+    <nav class="tb-hdr__izq" aria-label="Navegacion principal">
+      <div class="tb-cat" id="tb-cat">
+        <button type="button" class="tb-hdr__link" id="tb-cat-btn" aria-expanded="false" aria-controls="tb-mega">Categorias</button>
+        <div class="tb-mega" id="tb-mega" hidden>
+          <div class="tb-wrap tb-mega__grid">
+            {megaMenu.columnas.map((c: { t: string; links: string[] }) => (
+              <div class="tb-mega__col">
+                <h3>{c.t}</h3>
+                <ul>
+                  {c.links.map((l: string) => <li><a href="#novedades">{l}</a></li>)}
+                </ul>
+              </div>
+            ))}
+            <div class="tb-mega__promos">
+              {megaMenu.promos.map((p: { t: string; sub: string; img: string }) => (
+                <a href="#destacados" class="tb-mega__promo">
+                  <img src={p.img} alt={p.t} loading="lazy" />
+                  <span class="tb-mega__promo-tx">
+                    <b>{p.t}</b>
+                    <small>{p.sub}</small>
+                  </span>
+                </a>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+      {navPrincipal.map((n: { t: string; href: string }) => (
+        <a class="tb-hdr__link" href={n.href}>{n.t}</a>
+      ))}
+    </nav>
+
+    <a href="#top" class="tb-logo" aria-label={`${marca.nombre} ${marca.sub}`}>{marca.nombre.toUpperCase()} <b>{marca.sub}</b></a>
+
+    <div class="tb-hdr__der">
+      <nav class="tb-hdr__der-links" aria-label="Enlaces secundarios">
+        {navSecundaria.map((n: { t: string; href: string }) => (
+          <a class="tb-hdr__link" href={n.href}>{n.t}</a>
+        ))}
+      </nav>
+      <button type="button" class="tb-hdr__ico" id="tb-search-toggle" aria-label="Buscar" aria-expanded="false">
+        <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+          <circle cx="11" cy="11" r="7"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+        </svg>
+      </button>
+      <button type="button" class="tb-hdr__ico" id="tb-cart-toggle" aria-label="Ver carrito">
+        <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M6 6h15l-1.5 9h-12z"></path><path d="M6 6 5 3H2"></path><circle cx="9" cy="20" r="1.6"></circle><circle cx="18" cy="20" r="1.6"></circle>
+        </svg>
+        <span class="tb-hdr__badge" id="tb-cart-count" hidden>0</span>
+      </button>
+    </div>
+  </div>
+
+  <div class="tb-buscar" id="tb-buscar" hidden>
+    <form class="tb-wrap tb-buscar__row" id="tb-buscar-form" role="search">
+      <input type="search" id="tb-buscar-input" placeholder="Buscar maquinas, ceras, accesorios..." aria-label="Buscar productos" />
+      <button type="button" class="tb-buscar__cerrar" id="tb-buscar-cerrar" aria-label="Cerrar buscador">&times;</button>
+    </form>
+    <p class="tb-wrap tb-buscar__nota" id="tb-buscar-nota" hidden></p>
+  </div>
+</header>
+
+<div class="tb-cart-overlay" id="tb-cart-overlay" hidden></div>
+<aside class="tb-cart" id="tb-cart" hidden aria-label="Carrito de compras">
+  <header class="tb-cart__head">
+    <h2>Carrito <small id="tb-cart-n">(0 productos)</small></h2>
+    <button type="button" id="tb-cart-cerrar" aria-label="Cerrar carrito">&times;</button>
+  </header>
+  <div class="tb-cart__body" id="tb-cart-body">
+    <p class="tb-cart__vacio" id="tb-cart-vacio">Tu carrito esta vacio.</p>
+  </div>
+  <footer class="tb-cart__foot">
+    <p>Envio gratis para compras superiores a S/ 100.</p>
+    <div class="tb-cart__total">
+      <span>Subtotal</span>
+      <b id="tb-cart-total">S/ 0.00</b>
+    </div>
+  </footer>
+</aside>
+
+<script>
+  const catBtn = document.getElementById('tb-cat-btn');
+  const catBox = document.getElementById('tb-cat');
+  const mega = document.getElementById('tb-mega');
+
+  function abrirMega(v: boolean) {
+    if (!mega || !catBtn) return;
+    mega.hidden = !v;
+    catBtn.setAttribute('aria-expanded', String(v));
+  }
+
+  catBtn?.addEventListener('click', (e) => {
+    e.stopPropagation();
+    abrirMega(mega?.hidden ?? true);
+  });
+  catBox?.addEventListener('mouseenter', () => abrirMega(true));
+  catBox?.addEventListener('mouseleave', () => abrirMega(false));
+  document.addEventListener('click', (e) => {
+    const t = e.target as Node;
+    if (catBox && !catBox.contains(t)) abrirMega(false);
+  });
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') abrirMega(false);
+  });
+
+  const searchToggle = document.getElementById('tb-search-toggle');
+  const buscar = document.getElementById('tb-buscar');
+  const buscarInput = document.getElementById('tb-buscar-input') as HTMLInputElement | null;
+  const buscarForm = document.getElementById('tb-buscar-form');
+  const buscarCerrar = document.getElementById('tb-buscar-cerrar');
+  const buscarNota = document.getElementById('tb-buscar-nota');
+
+  function abrirBuscar(v: boolean) {
+    if (!buscar || !searchToggle) return;
+    buscar.hidden = !v;
+    searchToggle.setAttribute('aria-expanded', String(v));
+    if (v) buscarInput?.focus();
+  }
+
+  searchToggle?.addEventListener('click', (e) => {
+    e.stopPropagation();
+    abrirBuscar(buscar?.hidden ?? true);
+  });
+  buscarCerrar?.addEventListener('click', () => abrirBuscar(false));
+
+  buscarForm?.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const q = (buscarInput?.value || '').trim().toLowerCase();
+    let visibles = 0;
+    document.querySelectorAll<HTMLElement>('.tb-prod').forEach((card) => {
+      const hit = !q || (card.dataset.nombre || '').includes(q);
+      card.hidden = !hit;
+      if (hit) visibles++;
+    });
+    if (buscarNota) {
+      buscarNota.hidden = !q;
+      buscarNota.textContent = q ? `${visibles} resultado(s) para "${q}"` : '';
+    }
+    if (q) {
+      abrirBuscar(false);
+      document.getElementById('novedades')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  });
+
+  interface ItemCarrito { nombre: string; precio: number; img: string; cantidad: number }
+  const carrito: ItemCarrito[] = [];
+
+  const cartToggle = document.getElementById('tb-cart-toggle');
+  const cartPanel = document.getElementById('tb-cart');
+  const cartOverlay = document.getElementById('tb-cart-overlay');
+  const cartCerrar = document.getElementById('tb-cart-cerrar');
+  const cartBody = document.getElementById('tb-cart-body');
+  const cartVacio = document.getElementById('tb-cart-vacio');
+  const cartN = document.getElementById('tb-cart-n');
+  const cartTotalEl = document.getElementById('tb-cart-total');
+  const badge = document.getElementById('tb-cart-count');
+
+  function soles(n: number): string {
+    return 'S/ ' + n.toLocaleString('es-PE', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  }
+
+  function pintarCarrito() {
+    if (!cartBody || !cartN || !cartTotalEl || !badge) return;
+    const totalItems = carrito.reduce((a, i) => a + i.cantidad, 0);
+    const totalSoles = carrito.reduce((a, i) => a + i.cantidad * i.precio, 0);
+    cartN.textContent = `(${totalItems} producto${totalItems === 1 ? '' : 's'})`;
+    cartTotalEl.textContent = soles(totalSoles);
+    badge.textContent = String(totalItems);
+    badge.hidden = totalItems === 0;
+
+    cartBody.querySelectorAll('.tb-cart__item').forEach((el) => el.remove());
+    if (cartVacio) cartVacio.hidden = carrito.length > 0;
+
+    carrito.forEach((item) => {
+      const row = document.createElement('div');
+      row.className = 'tb-cart__item';
+      row.innerHTML = `
+        <img src="${item.img}" alt="" />
+        <div class="tb-cart__item-tx">
+          <b>${item.nombre}</b>
+          <span>${item.cantidad} x ${soles(item.precio)}</span>
+        </div>
+      `;
+      cartBody.appendChild(row);
+    });
+  }
+
+  function abrirCarrito(v: boolean) {
+    if (!cartPanel || !cartOverlay) return;
+    cartPanel.hidden = !v;
+    cartOverlay.hidden = !v;
+  }
+
+  cartToggle?.addEventListener('click', () => abrirCarrito(true));
+  cartCerrar?.addEventListener('click', () => abrirCarrito(false));
+  cartOverlay?.addEventListener('click', () => abrirCarrito(false));
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') abrirCarrito(false);
+  });
+
+  document.addEventListener('click', (e) => {
+    const el = e.target as HTMLElement;
+
+    const step = el.closest<HTMLButtonElement>('.tb-qty__b');
+    if (step) {
+      const cont = step.closest('.tb-prod__qty');
+      const n = cont?.querySelector<HTMLElement>('.tb-qty__n');
+      if (n) {
+        const val = Math.max(1, (parseInt(n.textContent || '1', 10) || 1) + Number(step.dataset.step));
+        n.textContent = String(val);
+      }
+      return;
+    }
+
+    const add = el.closest<HTMLButtonElement>('.tb-prod__add');
+    if (add) {
+      const card = add.closest<HTMLElement>('.tb-prod');
+      const n = card?.querySelector<HTMLElement>('.tb-qty__n');
+      const cantidad = parseInt(n?.textContent || '1', 10) || 1;
+      const nombre = card?.querySelector<HTMLElement>('.tb-prod__nombre')?.textContent || 'Producto';
+      const precio = Number(card?.dataset.precio || '0');
+      const img = card?.querySelector('img')?.getAttribute('src') || '';
+
+      const existente = carrito.find((i) => i.nombre === nombre);
+      if (existente) existente.cantidad += cantidad;
+      else carrito.push({ nombre, precio, img, cantidad });
+      pintarCarrito();
+
+      const prev = add.textContent;
+      add.textContent = 'Agregado!';
+      add.classList.add('is-ok');
+      window.setTimeout(() => {
+        add.textContent = prev;
+        add.classList.remove('is-ok');
+      }, 1100);
+    }
+  });
+</script>
+
+<style>
+  .tb-hdr {
+    background: var(--tb-negro);
+    color: #fff;
+    position: sticky;
+    top: 0;
+    z-index: 80;
+  }
+
+  .tb-hdr__row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding-block: 1rem;
+  }
+
+  .tb-hdr__izq,
+  .tb-hdr__der {
+    display: flex;
+    align-items: center;
+    gap: 1.4rem;
+    flex: 1;
+  }
+
+  .tb-hdr__der {
+    justify-content: flex-end;
+  }
+
+  .tb-hdr__der-links {
+    display: flex;
+    gap: 1.4rem;
+  }
+
+  .tb-hdr__link {
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: #fff;
+    white-space: nowrap;
+  }
+
+  .tb-hdr__link:hover {
+    color: var(--tb-dorado);
+  }
+
+  .tb-cat {
+    position: static;
+  }
+
+  .tb-logo {
+    font-family: var(--tb-titulos);
+    font-size: clamp(1.4rem, 3vw, 1.9rem);
+    letter-spacing: 0.04em;
+    color: #fff;
+    flex-shrink: 0;
+    text-align: center;
+  }
+
+  .tb-logo b {
+    display: block;
+    font-family: var(--tb-font);
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 0.55rem;
+    letter-spacing: 0.28em;
+    color: var(--tb-dorado);
+  }
+
+  .tb-hdr__ico {
+    position: relative;
+    width: 34px;
+    height: 34px;
+    display: grid;
+    place-items: center;
+    color: #fff;
+  }
+
+  .tb-hdr__ico:hover {
+    color: var(--tb-dorado);
+  }
+
+  .tb-hdr__badge[hidden] {
+    display: none;
+  }
+
+  .tb-hdr__badge {
+    position: absolute;
+    top: -2px;
+    right: -2px;
+    min-width: 16px;
+    height: 16px;
+    padding: 0 4px;
+    border-radius: 50%;
+    background: var(--tb-dorado);
+    color: var(--tb-negro);
+    font-size: 0.6rem;
+    font-weight: 800;
+    display: grid;
+    place-items: center;
+  }
+
+  .tb-mega[hidden] {
+    display: none;
+  }
+
+  .tb-mega {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 100%;
+    background: var(--tb-negro);
+    border-top: 1px solid var(--tb-linea);
+    box-shadow: 0 30px 50px -20px rgba(0, 0, 0, 0.6);
+    z-index: 90;
+  }
+
+  .tb-mega__grid {
+    display: grid;
+    grid-template-columns: repeat(3, 0.85fr) 1.6fr;
+    align-items: stretch;
+    gap: 2rem;
+    padding-block: 2.25rem;
+  }
+
+  .tb-mega__col h3 {
+    font-size: 1rem;
+    color: var(--tb-dorado);
+    margin-bottom: 1rem;
+  }
+
+  .tb-mega__col ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.65rem;
+  }
+
+  .tb-mega__col a {
+    font-size: 0.82rem;
+    color: #d8d8d8;
+  }
+
+  .tb-mega__col a:hover {
+    color: #fff;
+  }
+
+  .tb-mega__promos {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    align-self: stretch;
+    min-height: 240px;
+  }
+
+  .tb-mega__promo {
+    position: relative;
+    height: 100%;
+    min-height: 240px;
+    overflow: hidden;
+    display: block;
+  }
+
+  .tb-mega__promo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .tb-mega__promo-tx {
+    position: absolute;
+    left: 0.75rem;
+    bottom: 0.75rem;
+    color: #fff;
+  }
+
+  .tb-mega__promo-tx b {
+    display: block;
+    font-family: var(--tb-titulos);
+    font-size: 1rem;
+    letter-spacing: 0.03em;
+  }
+
+  .tb-mega__promo-tx small {
+    font-size: 0.62rem;
+    letter-spacing: 0.05em;
+    color: #ddd;
+  }
+
+  .tb-buscar[hidden] {
+    display: none;
+  }
+
+  .tb-buscar {
+    background: var(--tb-negro2);
+    border-top: 1px solid var(--tb-linea);
+    padding-block: 1rem;
+  }
+
+  .tb-buscar__row {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .tb-buscar__row input {
+    flex: 1;
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid var(--tb-gris-osc);
+    color: #fff;
+    padding: 0.5rem 0;
+    font-size: 1.1rem;
+    outline: none;
+  }
+
+  .tb-buscar__row input::placeholder {
+    color: var(--tb-gris);
+  }
+
+  .tb-buscar__cerrar {
+    color: #fff;
+    font-size: 1.5rem;
+    line-height: 1;
+    width: 32px;
+    height: 32px;
+  }
+
+  .tb-buscar__nota {
+    margin-top: 0.6rem;
+    font-size: 0.78rem;
+    color: var(--tb-gris);
+  }
+
+  .tb-cart-overlay[hidden] {
+    display: none;
+  }
+
+  .tb-cart-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 140;
+  }
+
+  .tb-cart[hidden] {
+    display: none;
+  }
+
+  .tb-cart {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: min(400px, 92vw);
+    background: #fff;
+    color: var(--tb-negro);
+    z-index: 150;
+    display: flex;
+    flex-direction: column;
+    box-shadow: -20px 0 40px -20px rgba(0, 0, 0, 0.5);
+  }
+
+  .tb-cart__head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.25rem 1.5rem;
+    border-bottom: 1px solid var(--tb-linea);
+  }
+
+  .tb-cart__head h2 {
+    font-size: 1.3rem;
+  }
+
+  .tb-cart__head small {
+    font-family: var(--tb-font);
+    text-transform: none;
+    font-size: 0.75rem;
+    color: var(--tb-gris);
+    font-weight: 600;
+    letter-spacing: 0;
+  }
+
+  .tb-cart__head button {
+    font-size: 1.6rem;
+    line-height: 1;
+  }
+
+  .tb-cart__body {
+    flex: 1;
+    overflow-y: auto;
+    padding: 1.25rem 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .tb-cart__vacio[hidden] {
+    display: none;
+  }
+
+  .tb-cart__vacio {
+    color: var(--tb-gris);
+    font-size: 0.88rem;
+  }
+
+  .tb-cart__item {
+    display: flex;
+    gap: 0.75rem;
+    align-items: center;
+  }
+
+  .tb-cart__item img {
+    width: 56px;
+    height: 56px;
+    object-fit: cover;
+    background: var(--tb-crema);
+  }
+
+  .tb-cart__item-tx {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+  }
+
+  .tb-cart__item-tx b {
+    font-size: 0.82rem;
+  }
+
+  .tb-cart__item-tx span {
+    font-size: 0.76rem;
+    color: var(--tb-gris);
+  }
+
+  .tb-cart__foot {
+    border-top: 1px solid var(--tb-linea);
+    padding: 1.25rem 1.5rem;
+  }
+
+  .tb-cart__foot p {
+    font-size: 0.74rem;
+    color: var(--tb-gris);
+    margin-bottom: 0.75rem;
+  }
+
+  .tb-cart__total {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.95rem;
+  }
+
+  @media (max-width: 1100px) {
+    .tb-hdr__der-links,
+    .tb-hdr__izq .tb-hdr__link:not(:first-child) {
+      display: none;
+    }
+  }
+</style>

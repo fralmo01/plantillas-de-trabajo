@@ -1,0 +1,56 @@
+---
+import { anunciosTop, marcasChip } from '../datos/mecanico.js';
+---
+
+<div class="tm-top">
+  <div class="tm-wrap tm-top__inner">
+    <p class="tm-top__msg">{anunciosTop}</p>
+    <div class="tm-top__marcas">
+      {marcasChip.map((m: string) => <span>{m}</span>)}
+    </div>
+  </div>
+</div>
+
+<style>
+  .tm-top {
+    background: var(--tm-naranja);
+    color: #fff;
+  }
+
+  .tm-top__inner {
+    display: flex;
+    align-items: center;
+    gap: clamp(1rem, 4vw, 3rem);
+    padding-block: 0.7rem;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+
+  .tm-top__msg {
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  .tm-top__marcas {
+    display: flex;
+    align-items: center;
+    gap: clamp(1rem, 3vw, 2.25rem);
+  }
+
+  .tm-top__marcas span {
+    font-family: var(--tm-titulos);
+    font-size: 0.9rem;
+    letter-spacing: 0.03em;
+    white-space: nowrap;
+  }
+
+  @media (max-width: 780px) {
+    .tm-top__marcas {
+      display: none;
+    }
+  }
+</style>

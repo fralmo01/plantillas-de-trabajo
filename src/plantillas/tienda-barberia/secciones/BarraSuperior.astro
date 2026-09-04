@@ -1,0 +1,46 @@
+---
+import { anunciosTicker } from '../datos/barberia.js';
+---
+
+<div class="tb-ticker" aria-label="Avisos">
+  <div class="tb-ticker__track">
+    {[...anunciosTicker, ...anunciosTicker].map((msg: string) => (
+      <span class="tb-ticker__item">{msg}</span>
+    ))}
+  </div>
+</div>
+
+<style>
+  .tb-ticker {
+    background: var(--tb-crema);
+    color: var(--tb-negro);
+    overflow: hidden;
+    border-bottom: 1px solid var(--tb-linea);
+  }
+
+  .tb-ticker__track {
+    display: flex;
+    align-items: center;
+    width: max-content;
+    animation: tb-scroll 28s linear infinite;
+  }
+
+  .tb-ticker__item {
+    padding: 0.5rem 2.5rem;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    white-space: nowrap;
+  }
+
+  @keyframes tb-scroll {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .tb-ticker__track {
+      animation: none;
+    }
+  }
+</style>

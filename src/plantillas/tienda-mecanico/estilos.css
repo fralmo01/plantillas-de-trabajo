@@ -1,0 +1,207 @@
+@import url("https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;600;700;800&display=swap");
+
+.tpl-tienda-mecanico {
+  --tm-negro: #0a0a0a;
+  --tm-negro2: #161616;
+  --tm-blanco: #fff;
+  --tm-naranja: #f47c20;
+  --tm-naranja-osc: #d9650a;
+  --tm-gris: #9a9a9a;
+  --tm-gris-osc: #4d4d4d;
+  --tm-linea: #2a2a2a;
+
+  --tm-font: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+  --tm-titulos: "Anton", var(--tm-font);
+  --tm-maxw: 1320px;
+
+  background: var(--tm-negro);
+  color: #fff;
+  font-family: var(--tm-font);
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+}
+
+.tpl-tienda-mecanico *,
+.tpl-tienda-mecanico *::before,
+.tpl-tienda-mecanico *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+.tpl-tienda-mecanico h1,
+.tpl-tienda-mecanico h2,
+.tpl-tienda-mecanico h3,
+.tpl-tienda-mecanico h4 {
+  line-height: 1.05;
+  color: #fff;
+  font-family: var(--tm-titulos);
+  font-weight: 400;
+  letter-spacing: 0.01em;
+  text-transform: uppercase;
+}
+
+.tpl-tienda-mecanico img {
+  max-width: 100%;
+  display: block;
+}
+
+.tpl-tienda-mecanico a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.tpl-tienda-mecanico button {
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+  border: none;
+  background: none;
+}
+
+.tpl-tienda-mecanico input {
+  font: inherit;
+}
+
+.tpl-tienda-mecanico .tm-wrap {
+  max-width: var(--tm-maxw);
+  margin-inline: auto;
+  padding-inline: clamp(1rem, 3vw, 2rem);
+}
+
+.tpl-tienda-mecanico .tm-seccion {
+  padding-block: clamp(2.25rem, 5vw, 3.75rem);
+}
+
+.tpl-tienda-mecanico .tm-titulo {
+  font-size: clamp(1.5rem, 3.6vw, 2.2rem);
+  font-weight: 400;
+  margin-bottom: 1.75rem;
+}
+
+.tpl-tienda-mecanico .tm-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.8rem 1.75rem;
+  font-weight: 700;
+  font-size: 0.85rem;
+  letter-spacing: 0.03em;
+  border-radius: 4px;
+  transition: background 0.15s ease, color 0.15s ease, transform 0.15s ease;
+}
+
+.tpl-tienda-mecanico .tm-btn:hover {
+  transform: translateY(-2px);
+}
+
+.tpl-tienda-mecanico .tm-btn--naranja {
+  background: var(--tm-naranja);
+  color: #fff;
+}
+
+.tpl-tienda-mecanico .tm-btn--naranja:hover {
+  background: var(--tm-naranja-osc);
+}
+
+.tpl-tienda-mecanico .tm-btn--claro {
+  background: #fff;
+  color: var(--tm-negro);
+}
+
+.tpl-tienda-mecanico .tm-btn--outline {
+  border: 1.5px solid #fff;
+  color: #fff;
+  background: transparent;
+}
+
+.tpl-tienda-mecanico .tm-btn--outline:hover {
+  background: #fff;
+  color: var(--tm-negro);
+}
+
+.tpl-tienda-mecanico .tm-fila {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(210px, 1fr);
+  gap: 1.25rem;
+  overflow-x: auto;
+  scroll-snap-type: x proximity;
+  padding-bottom: 0.5rem;
+  scrollbar-width: thin;
+}
+
+.tpl-tienda-mecanico .tm-fila > * {
+  scroll-snap-align: start;
+}
+
+.tpl-tienda-mecanico .tm-flecha {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  color: #fff;
+  font-size: 1.4rem;
+  line-height: 1;
+  background: transparent;
+  border: 1.5px solid var(--tm-linea);
+  flex-shrink: 0;
+}
+
+.tpl-tienda-mecanico .tm-flecha:hover {
+  background: var(--tm-naranja);
+  border-color: var(--tm-naranja);
+}
+
+.tpl-tienda-mecanico .tm-carr-area {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.tpl-tienda-mecanico .tm-fila-cabecera {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1.25rem;
+}
+
+.tpl-tienda-mecanico .tm-fila-cabecera h2 {
+  font-size: clamp(1.1rem, 2.6vw, 1.5rem);
+  margin: 0;
+}
+
+.tpl-tienda-mecanico .tm-fila-cabecera a {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--tm-naranja);
+  flex-shrink: 0;
+}
+
+.tpl-tienda-mecanico .tm-fila-cabecera a:hover {
+  color: #fff;
+}
+
+.tpl-tienda-mecanico .tm-chat__msg {
+  max-width: 82%;
+  padding: 0.6rem 0.85rem;
+  border-radius: 6px;
+  font-size: 0.82rem;
+  line-height: 1.45;
+}
+
+.tpl-tienda-mecanico .tm-chat__msg--bot {
+  background: var(--tm-negro2);
+  color: #fff;
+  align-self: flex-start;
+}
+
+.tpl-tienda-mecanico .tm-chat__msg--yo {
+  background: var(--tm-naranja);
+  color: #fff;
+  align-self: flex-end;
+}

@@ -1,0 +1,72 @@
+---
+import { instagram } from '../datos/barberia.js';
+
+const imgs = instagram.imgs as string[];
+---
+
+<section class="tb-seccion tb-wrap">
+  <div class="tb-insta__head">
+    <h2 class="tb-titulo">Siguenos en Instagram</h2>
+    <a href="#footer" class="tb-insta__handle">{instagram.handle}</a>
+  </div>
+
+  <div class="tb-carr-area">
+    <button type="button" class="tb-flecha" data-dir="-1" aria-label="Anterior">&lsaquo;</button>
+    <div class="tb-fila" id="tb-insta-row">
+      {imgs.map((src: string, i: number) => (
+        <figure class="tb-insta__item">
+          <img src={src} alt={`Publicacion de Instagram ${i + 1}`} loading="lazy" />
+        </figure>
+      ))}
+    </div>
+    <button type="button" class="tb-flecha" data-dir="1" aria-label="Siguiente">&rsaquo;</button>
+  </div>
+</section>
+
+<script>
+  const row = document.getElementById('tb-insta-row');
+  const area = row?.closest('.tb-carr-area');
+  area?.querySelectorAll<HTMLButtonElement>('[data-dir]').forEach((b) => {
+    b.addEventListener('click', () => {
+      const dir = Number(b.dataset.dir || '1');
+      row?.scrollBy({ left: dir * 300, behavior: 'smooth' });
+    });
+  });
+</script>
+
+<style>
+  .tb-insta__head {
+    text-align: center;
+    margin-bottom: 1.5rem;
+  }
+
+  .tb-insta__head .tb-titulo {
+    margin-bottom: 0.4rem;
+  }
+
+  .tb-insta__handle {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--tb-dorado-osc);
+  }
+
+  .tb-insta__handle:hover {
+    text-decoration: underline;
+  }
+
+  .tb-insta__item {
+    aspect-ratio: 1 / 1;
+    overflow: hidden;
+  }
+
+  .tb-insta__item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+  }
+
+  .tb-insta__item:hover img {
+    transform: scale(1.06);
+  }
+</style>

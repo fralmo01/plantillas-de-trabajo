@@ -1,0 +1,48 @@
+---
+import { metodosPago } from '../datos/transporte.js';
+---
+
+<div class="tt-pagos">
+  <div class="tt-wrap tt-pagos__inner">
+    <span>Paga tus pasajes con:</span>
+    <ul>
+      {metodosPago.map((m: string) => <li>{m}</li>)}
+    </ul>
+  </div>
+</div>
+
+<style>
+  .tt-pagos {
+    background: var(--tt-gris-osc);
+    color: #fff;
+  }
+
+  .tt-pagos__inner {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem 1.5rem;
+    padding-block: 1.25rem;
+  }
+
+  .tt-pagos__inner span {
+    font-weight: 700;
+    font-size: 0.85rem;
+    flex-shrink: 0;
+  }
+
+  .tt-pagos__inner ul {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+  }
+
+  .tt-pagos__inner li {
+    background: rgba(255, 255, 255, 0.12);
+    padding: 0.4rem 1rem;
+    border-radius: 6px;
+    font-size: 0.78rem;
+    font-weight: 700;
+  }
+</style>

@@ -1,0 +1,102 @@
+---
+import { servicios } from '../datos/transporte.js';
+import Icono from '../componentes/Icono.astro';
+
+interface Servicio { nombre: string; img: string; amenidades: string[] }
+const lista = servicios as Servicio[];
+---
+
+<section class="tt-seccion tt-wrap" id="servicios">
+  <div class="tt-seccion-cabecera">
+    <h2 class="tt-titulo">Nuestros servicios</h2>
+  </div>
+
+  <div class="tt-servicios">
+    {lista.map((s) => (
+      <article class="tt-serv">
+        <img src={s.img} alt={s.nombre} loading="lazy" />
+        <div class="tt-serv__overlay"></div>
+        <div class="tt-serv__tx">
+          <span>Servicio</span>
+          <b>{s.nombre}</b>
+          <div class="tt-serv__amen">
+            {s.amenidades.map((a: string) => (
+              <span class="tt-serv__ico" aria-hidden="true"><Icono name={a} size={17} /></span>
+            ))}
+          </div>
+          <a href="#top" class="tt-btn tt-btn--outline">Ver servicio</a>
+        </div>
+      </article>
+    ))}
+  </div>
+</section>
+
+<style>
+  .tt-servicios {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+  }
+
+  .tt-serv {
+    position: relative;
+    aspect-ratio: 4 / 3;
+    border-radius: 14px;
+    overflow: hidden;
+  }
+
+  .tt-serv img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .tt-serv__overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg, rgba(0, 0, 0, 0.72) 0%, rgba(0, 0, 0, 0.1) 60%);
+  }
+
+  .tt-serv__tx {
+    position: absolute;
+    left: 1.5rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #fff;
+    max-width: 15rem;
+  }
+
+  .tt-serv__tx span {
+    font-size: 0.8rem;
+    color: #ddd;
+  }
+
+  .tt-serv__tx b {
+    display: block;
+    font-size: 1.7rem;
+    margin: 0.1rem 0 0.9rem;
+  }
+
+  .tt-serv__amen {
+    display: flex;
+    gap: 0.6rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .tt-serv__ico {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.15);
+    display: grid;
+    place-items: center;
+  }
+
+  @media (max-width: 720px) {
+    .tt-servicios {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

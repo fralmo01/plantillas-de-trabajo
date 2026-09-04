@@ -1,0 +1,160 @@
+---
+import { heroSlides } from '../datos/juguetes.js';
+---
+
+<section class="tj-hero tj-wrap" aria-roledescription="carrusel">
+  <div class="tj-hero__main">
+    <div class="tj-hero__track" id="tj-hero-track">
+      {heroSlides.map((s: { kicker: string; titulo: string; sub: string; cta: string; img: string }, i: number) => (
+        <article class="tj-hero__slide">
+          <img src={s.img} alt={s.titulo} loading={i === 0 ? 'eager' : 'lazy'} />
+          <div class="tj-hero__texto">
+            <span class="tj-hero__kicker">{s.kicker}</span>
+            <h2>{s.titulo}</h2>
+            <p>{s.sub}</p>
+            <a href="#novedades" class="tj-btn tj-btn--claro">{s.cta}</a>
+          </div>
+        </article>
+      ))}
+    </div>
+    <button class="tj-hero__nav tj-hero__nav--prev" id="tj-hero-prev" aria-label="Anterior">&lsaquo;</button>
+    <button class="tj-hero__nav tj-hero__nav--next" id="tj-hero-next" aria-label="Siguiente">&rsaquo;</button>
+    <div class="tj-hero__dots" id="tj-hero-dots">
+      {heroSlides.map((_: unknown, i: number) => <button aria-label={`Ir al slide ${i + 1}`} data-dot={i}></button>)}
+    </div>
+  </div>
+</section>
+
+<script>
+  const track = document.getElementById('tj-hero-track');
+  const dots = Array.from(document.querySelectorAll<HTMLButtonElement>('#tj-hero-dots button'));
+  const total = track ? track.children.length : 0;
+  let idx = 0;
+
+  function ir(n: number) {
+    if (!track) return;
+    idx = (n + total) % total;
+    track.style.transform = `translateX(-${idx * 100}%)`;
+    dots.forEach((d, i) => d.classList.toggle('is-on', i === idx));
+  }
+
+  document.getElementById('tj-hero-prev')?.addEventListener('click', () => ir(idx - 1));
+  document.getElementById('tj-hero-next')?.addEventListener('click', () => ir(idx + 1));
+  dots.forEach((d, i) => d.addEventListener('click', () => ir(i)));
+
+  let timer = window.setInterval(() => ir(idx + 1), 6000);
+  const box = track?.parentElement;
+  box?.addEventListener('mouseenter', () => window.clearInterval(timer));
+  box?.addEventListener('mouseleave', () => (timer = window.setInterval(() => ir(idx + 1), 6000)));
+  ir(0);
+</script>
+
+<style>
+  .tj-hero {
+    padding-top: 1.25rem;
+  }
+
+  .tj-hero__main {
+    position: relative;
+    overflow: hidden;
+    border-radius: 20px;
+    background: var(--tj-verde-claro);
+  }
+
+  .tj-hero__track {
+    display: flex;
+    transition: transform 0.5s ease;
+  }
+
+  .tj-hero__slide {
+    position: relative;
+    flex: 0 0 100%;
+    min-height: clamp(300px, 32vw, 420px);
+    display: flex;
+    align-items: center;
+  }
+
+  .tj-hero__slide img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .tj-hero__texto {
+    position: relative;
+    z-index: 1;
+    color: #fff;
+    max-width: 30rem;
+    padding: clamp(1.5rem, 4vw, 3rem);
+  }
+
+  .tj-hero__texto::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg, rgba(51, 47, 41, 0.72), rgba(51, 47, 41, 0.2) 70%, transparent);
+    z-index: -1;
+  }
+
+  .tj-hero__kicker {
+    font-size: 0.68rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    background: var(--tj-oro);
+    padding: 0.25rem 0.65rem;
+    border-radius: var(--tj-pill);
+  }
+
+  .tj-hero__texto h2 {
+    color: #fff;
+    font-family: var(--tj-titulos);
+    font-size: clamp(1.6rem, 4vw, 2.6rem);
+    margin: 0.7rem 0 0.5rem;
+  }
+
+  .tj-hero__texto p {
+    font-size: clamp(0.85rem, 1.6vw, 1rem);
+    margin-bottom: 1.2rem;
+  }
+
+  .tj-hero__nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.9);
+    color: var(--tj-verde-osc);
+    font-size: 1.4rem;
+    line-height: 1;
+  }
+
+  .tj-hero__nav--prev { left: 0.8rem; }
+  .tj-hero__nav--next { right: 0.8rem; }
+
+  .tj-hero__dots {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 14px;
+    display: flex;
+    justify-content: center;
+    gap: 6px;
+  }
+
+  .tj-hero__dots button {
+    width: 9px;
+    height: 9px;
+    border-radius: var(--tj-pill);
+    background: rgba(255, 255, 255, 0.55);
+  }
+
+  .tj-hero__dots button.is-on {
+    background: #fff;
+    width: 22px;
+  }
+</style>

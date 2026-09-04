@@ -7,7 +7,7 @@
   "tags": ["supermercado", "hipermercado", "membresia", "ecommerce", "mega-menu", "delivery", "carrito"],
   "paleta": ["#e4032e", "#101010", "#ff2f92", "#f7f7f7"],
   "destacada": false,
-  "nuevo": true,
+  "nuevo": false,
   "inspiradoEn": "wong.pe",
   "orden": 22
 }

@@ -1,0 +1,14 @@
+---
+import { destacados, masVendidos } from '../datos/barberia.js';
+import GrillaTabs from '../componentes/GrillaTabs.astro';
+
+interface Producto { nombre: string; precio: number; antes?: number; tag?: string; marca?: string; img: string }
+const tabs = [
+  { label: 'Destacados', productos: destacados as Producto[] },
+  { label: 'Mas Vendidos', productos: masVendidos as Producto[] },
+];
+---
+
+<section class="tb-seccion tb-wrap" id="destacados">
+  <GrillaTabs id="tb-destacados" titulo="Todos los Productos" tabs={tabs} boton="Ver la Coleccion" />
+</section>
